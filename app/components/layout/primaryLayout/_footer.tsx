@@ -1,6 +1,8 @@
 import { StyleSheet, View, Text } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
-const Footer: React.FC = ({ navigation }: any) => {
+const Footer: React.FC = () => {
+const navigation = useNavigation<any>();
   return (
     <View style={styles.footer}>
       <Text style={styles.footerItem} onPress={() => navigation.navigate('home')}>Home</Text>
@@ -15,12 +17,12 @@ export default Footer;
 
 const styles = StyleSheet.create({
   footer: {
-    flex: 1,
     flexDirection: 'row',
-    backgroundColor: '#fff',
+    backgroundColor: 'red',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     height: 50,
+    width: '100%',
   },
   footerItem: {
     padding: 10

@@ -6,6 +6,53 @@ const HomeScreen: React.FC = ({ navigation }: any) => {
     <View style={styles.container}>
       <PrimaryLayout>
         <Text>Home Screen</Text>
+        <Text>Home Screen</Text>
+        <Text>Home Screen</Text>
+        <Text>Home Screen</Text>
+        <Text>Home Screen</Text>
+        <Text>Home Screen</Text>
+        <Text>Home Screen</Text>
+        <Text>Home Screen</Text>
+        <Text>Home Screen</Text>
+        <Text>Home Screen</Text>
+        <Text>Home Screen</Text>
+        <Text>Home Screen</Text>
+        <Text>Home Screen</Text>
+        <Text>Home Screen</Text>
+        <Text>Home Screen</Text>
+        <Text>Home Screen</Text>
+        <Text>Home Screen</Text>
+        <Text>Home Screen</Text>
+        <Text>Home Screen</Text>
+        <Text>Home Screen</Text>
+        <Text>Home Screen</Text>
+        <Text>Home Screen</Text>
+        <Text>Home Screen</Text>
+        <Text>Home Screen</Text>
+        <Text>Home Screen</Text>
+        <Text>Home Screen</Text>
+        <Text>Home Screen</Text>
+        <Text>Home Screen</Text>
+        <Text>Home Screen</Text>
+        <Text>Home Screen</Text>
+        <Text>Home Screen</Text>
+        <Text>Home Screen</Text>
+        <Text>Home Screen</Text>
+        <Text>Home Screen</Text>
+        <Text>Home Screen</Text>
+        <Text>Home Screen</Text>
+        <Text>Home Screen</Text>
+        <Text>Home Screen</Text>
+        <Text>Home Screen</Text>
+        <Text>Home Screen</Text>
+        <Text>Home Screen</Text>
+        <Text>Home Screen</Text>
+        <Text>Home Screen</Text>
+        <Text>Home Screen</Text>
+        <Text>Home Screen</Text>
+        <Text>Home Screen</Text>
+        <Text>Home Screen</Text>
+        <Text>Home Screen</Text>
         <Button title="Go to About" onPress={() => navigation.navigate('about')} />
       </PrimaryLayout>
     </View>

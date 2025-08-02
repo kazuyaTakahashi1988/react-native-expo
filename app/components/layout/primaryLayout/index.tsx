@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, ScrollView } from 'react-native';
 import Header from './_header';
 import Footer from './_footer';
 
@@ -12,7 +12,7 @@ export const PrimaryLayout: React.FC<TypeLayout> = (props) => {
   return (
     <View style={styles.container}>
       <Header />
-      <View>{children}</View>
+      <ScrollView contentContainerStyle={styles.children}>{children}</ScrollView>
       <Footer />
     </View>
   );
@@ -20,10 +20,14 @@ export const PrimaryLayout: React.FC<TypeLayout> = (props) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    width: '100%',
+    flex: 1, // 全体に広がる
+    flexDirection: 'column',
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+  },
+  children: {
+    padding: 16,
+    flexGrow: 1,
   },
 });
 
