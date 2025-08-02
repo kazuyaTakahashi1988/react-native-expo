@@ -13,7 +13,7 @@ const Navigation = () => {
         <Stack.Screen
           name="home"
           component={HomeScreen}
-          options={{ animation: 'fade' }} // JSベースではこの指定になる
+          options={{ animation: 'fade' }}
         />
         <Stack.Screen
           name="about"
