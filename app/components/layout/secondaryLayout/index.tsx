@@ -1,15 +1,14 @@
 import { StyleSheet, View, Text, Button } from 'react-native';
 
-const AboutScreen: React.FC = ({ navigation }: any) => {
+const SecondaryLayout = () => {
   return (
     <View style={styles.container}>
-      <Text>About Screen</Text>
-      <Button title="Go to About" onPress={() => navigation.navigate('home')} />
+      <Text>SecondaryLayout</Text>
     </View>
   );
 }
 
-export default AboutScreen;
+export default SecondaryLayout;
 
 const styles = StyleSheet.create({
   container: {

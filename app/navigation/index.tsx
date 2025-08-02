@@ -6,7 +6,7 @@ import AboutScreen from '../features/about';
 
 const Stack = createNativeStackNavigator();
 
-const Navigation = () => {
+const Navigation: React.FC = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>

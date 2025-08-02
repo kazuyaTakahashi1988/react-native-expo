@@ -6,7 +6,7 @@ import { enableScreens } from 'react-native-screens';
 
 enableScreens(); // App起動前に呼び出す
 
-const App = () => {
+const App: React.FC = () => {
   return (
     <SafeAreaProvider>
       <Navigation />
