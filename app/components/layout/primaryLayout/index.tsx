@@ -21,7 +21,7 @@ export const PrimaryLayout: React.FC<TypeLayout> = (props) => {
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    flex: 1, // 全体に広がる
+    flex: 1,
     flexDirection: 'column',
     backgroundColor: '#fff',
   },

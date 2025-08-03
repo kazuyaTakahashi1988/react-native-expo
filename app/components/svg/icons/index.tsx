@@ -1,0 +1,1 @@
+export { default as IconCaution } from './_iconCaution';
