@@ -1,6 +1,6 @@
 import { StyleSheet, View, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { IconBtNav01, IconBtNav02, IconBtNav03, IconBtNav04 } from '../../svg'
+import { IconBtNav01, IconBtNav02, IconBtNav03, IconBtNav04 } from '../../../assets/svg/'
 
 const Footer: React.FC = () => {
 const navigation = useNavigation<any>();
