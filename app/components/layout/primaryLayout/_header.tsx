@@ -7,7 +7,7 @@ const navigation = useNavigation<any>();
   return (
     <View style={styles.header}>
       <Text style={styles.headerItem}><Logo /></Text>
-      <Text style={styles.headerItem}><IconCaution /></Text>
+      <Text style={styles.headerItem} onPress={() => navigation.navigate('about')}><IconCaution /></Text>
     </View>
   );
 }

@@ -7,7 +7,7 @@ const navigation = useNavigation<any>();
   return (
     <View style={styles.footer}>
       <Text style={styles.footerItem} onPress={() => navigation.navigate('home')}><IconBtNav01 /></Text>
-      <Text style={styles.footerItem} onPress={() => navigation.navigate('about')}><IconBtNav02 /></Text>
+      <Text style={styles.footerItem}><IconBtNav02 /></Text>
       <Text style={styles.footerItem}><IconBtNav03 /></Text>
       <Text style={styles.footerItem}><IconBtNav04 /></Text>
     </View>
