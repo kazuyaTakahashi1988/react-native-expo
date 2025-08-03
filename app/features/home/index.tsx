@@ -1,5 +1,5 @@
 import { StyleSheet, View, Text, Button } from 'react-native';
-import { PrimaryLayout } from '../../components/layout/primaryLayout';
+import { PrimaryLayout } from '../../components/layout';
 
 const HomeScreen: React.FC = ({ navigation }: any) => {
   return (
