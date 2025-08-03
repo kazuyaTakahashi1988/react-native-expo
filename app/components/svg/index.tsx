@@ -1,3 +1,2 @@
-export * from './iconBtNav';
-export * from './icons';
+export * from './icon';
 export * from './logo';
