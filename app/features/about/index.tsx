@@ -9,8 +9,6 @@ const AboutScreen: React.FC = ({ navigation }: any) => {
   );
 }
 
-export default AboutScreen;
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -19,3 +17,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+export default AboutScreen;

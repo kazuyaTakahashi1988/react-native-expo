@@ -12,8 +12,6 @@ const navigation = useNavigation<any>();
   );
 }
 
-export default Header;
-
 const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
@@ -27,3 +25,5 @@ const styles = StyleSheet.create({
     padding: 10
   }
 });
+
+export default Header;

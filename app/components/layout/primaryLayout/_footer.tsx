@@ -14,8 +14,6 @@ const navigation = useNavigation<any>();
   );
 }
 
-export default Footer;
-
 const styles = StyleSheet.create({
   footer: {
     flexDirection: 'row',
@@ -29,3 +27,5 @@ const styles = StyleSheet.create({
     padding: 10
   }
 });
+
+export default Footer;
