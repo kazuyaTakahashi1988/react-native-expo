@@ -16,7 +16,7 @@ export const PrimaryLayout: React.FC<TypeLayout> = (props) => {
       <Footer />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

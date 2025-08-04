@@ -1,16 +1,24 @@
 import { StyleSheet, View, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { Logo, IconInfo } from '../../../assets/svg/'
+import { Logo, IconInfo } from '../../../assets/svg/';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../../../navigation';
+
+type AboutScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'about'>;
 
 const Header: React.FC = () => {
-const navigation = useNavigation<any>();
+  const navigation = useNavigation<AboutScreenNavigationProp>();
   return (
     <View style={styles.header}>
-      <Text style={styles.headerItem}><Logo /></Text>
-      <Text style={styles.headerItem} onPress={() => navigation.navigate('about')}><IconInfo /></Text>
+      <Text style={styles.headerItem}>
+        <Logo />
+      </Text>
+      <Text style={styles.headerItem} onPress={() => navigation.navigate('about')}>
+        <IconInfo />
+      </Text>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   header: {
@@ -22,8 +30,8 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   headerItem: {
-    padding: 10
-  }
+    padding: 10,
+  },
 });
 
 export default Header;

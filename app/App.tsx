@@ -13,6 +13,6 @@ const App: React.FC = () => {
       <StatusBar />
     </SafeAreaProvider>
   );
-}
+};
 
 export default App;

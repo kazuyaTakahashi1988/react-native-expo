@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, Button } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 
 const SecondaryLayout = () => {
   return (
@@ -6,7 +6,7 @@ const SecondaryLayout = () => {
       <Text>SecondaryLayout</Text>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

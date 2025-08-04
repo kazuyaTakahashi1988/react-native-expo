@@ -1,18 +1,30 @@
 import { StyleSheet, View, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { IconBtNav01, IconBtNav02, IconBtNav03, IconBtNav04 } from '../../../assets/svg/'
+import { IconBtNav01, IconBtNav02, IconBtNav03, IconBtNav04 } from '../../../assets/svg/';
+import { RootStackParamList } from '../../../navigation';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+
+type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'home'>;
 
 const Footer: React.FC = () => {
-const navigation = useNavigation<any>();
+  const navigation = useNavigation<HomeScreenNavigationProp>();
   return (
     <View style={styles.footer}>
-      <Text style={styles.footerItem} onPress={() => navigation.navigate('home')}><IconBtNav01 /></Text>
-      <Text style={styles.footerItem}><IconBtNav02 /></Text>
-      <Text style={styles.footerItem}><IconBtNav03 /></Text>
-      <Text style={styles.footerItem}><IconBtNav04 /></Text>
+      <Text style={styles.footerItem} onPress={() => navigation.navigate('home')}>
+        <IconBtNav01 />
+      </Text>
+      <Text style={styles.footerItem}>
+        <IconBtNav02 />
+      </Text>
+      <Text style={styles.footerItem}>
+        <IconBtNav03 />
+      </Text>
+      <Text style={styles.footerItem}>
+        <IconBtNav04 />
+      </Text>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   footer: {
@@ -24,8 +36,8 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   footerItem: {
-    padding: 10
-  }
+    padding: 10,
+  },
 });
 
 export default Footer;
