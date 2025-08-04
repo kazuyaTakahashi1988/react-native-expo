@@ -1,8 +1,10 @@
-import { StyleSheet, View, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { StyleSheet, View, Text } from 'react-native';
+
 import { IconBtNav01, IconBtNav02, IconBtNav03, IconBtNav04 } from '../../../assets/svg/';
-import { RootStackParamList } from '../../../navigation';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+
+import type { RootStackParamList } from '../../../navigation';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'home'>;
 

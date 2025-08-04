@@ -1,8 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import Navigation from './navigation';
 import { enableScreens } from 'react-native-screens';
+
+import Navigation from './navigation';
 
 enableScreens(); // App起動前に呼び出す
 

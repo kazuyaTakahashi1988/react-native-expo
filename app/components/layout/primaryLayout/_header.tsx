@@ -1,8 +1,11 @@
-import { StyleSheet, View, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { StyleSheet, View, Text } from 'react-native';
+
 import { Logo, IconInfo } from '../../../assets/svg/';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../../../navigation';
+
+import type { RootStackParamList } from '../../../navigation';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+
 
 type AboutScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'about'>;
 

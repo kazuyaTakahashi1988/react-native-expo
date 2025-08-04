@@ -1,8 +1,10 @@
-import { StyleSheet, View, Text, Button } from 'react-native';
-import { PrimaryLayout } from '../../components/layout/primaryLayout';
-import { RootStackParamList } from '../../navigation';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
+import { StyleSheet, View, Text, Button } from 'react-native';
+
+import { PrimaryLayout } from '../../components/layout/primaryLayout';
+
+import type { RootStackParamList } from '../../navigation';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 type AbouteScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'About'>;
 

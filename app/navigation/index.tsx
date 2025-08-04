@@ -1,8 +1,9 @@
-import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import HomeScreen from '../features/home';
+import React from 'react';
+
 import AboutScreen from '../features/about';
+import HomeScreen from '../features/home';
 
 export type RootStackParamList = {
   home: undefined;

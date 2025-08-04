@@ -1,6 +1,7 @@
 import { StyleSheet, View, ScrollView } from 'react-native';
-import Header from './_header';
+
 import Footer from './_footer';
+import Header from './_header';
 
 // Layout
 export type TypeLayout = {

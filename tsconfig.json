@@ -22,6 +22,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["app/**/*.ts", "app/**/*.tsx"],
+  "include": ["app/**/*.ts", "app/**/*.tsx", "index.ts"],
   "exclude": ["node_modules", ".expo"]
 }

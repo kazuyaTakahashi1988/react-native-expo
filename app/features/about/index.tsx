@@ -1,7 +1,8 @@
-import { StyleSheet, View, Text, Button } from 'react-native';
-import { RootStackParamList } from '../../navigation';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
+import { StyleSheet, View, Text, Button } from 'react-native';
+
+import type { RootStackParamList } from '../../navigation';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'home'>;
 const AboutScreen: React.FC = () => {
