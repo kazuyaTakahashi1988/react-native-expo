@@ -6,7 +6,7 @@ import { PrimaryLayout } from '../../components/layout/primaryLayout';
 import type { RootStackParamList } from '../../navigation';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
-type AbouteScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'About'>;
+type AbouteScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'about'>;
 
 const HomeScreen: React.FC = () => {
   const navigation = useNavigation<AbouteScreenNavigationProp>();
