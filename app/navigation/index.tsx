@@ -7,7 +7,7 @@ import HomeScreen from '../features/home';
 
 export type RootStackParamList = {
   home: undefined;
-  about: undefined; // 必要に応じてパラメータ
+  about: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -16,11 +16,11 @@ const Navigation: React.FC = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name='home' component={HomeScreen} options={{ animation: 'fade' }} />
+        <Stack.Screen name='home' component={HomeScreen} options={{ title: 'ホーム画面' }} />
         <Stack.Screen
           name='about'
           component={AboutScreen}
-          options={{ animation: 'slide_from_right', headerShown: true }}
+          options={{ title: 'アバウト画面', animation: 'slide_from_right' }}
         />
       </Stack.Navigator>
     </NavigationContainer>

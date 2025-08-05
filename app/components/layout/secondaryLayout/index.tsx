@@ -1,19 +1,32 @@
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, ScrollView } from 'react-native';
 
-const SecondaryLayout = () => {
+import Header from './_header';
+
+// Layout
+export type TypeLayout = {
+  children?: React.ReactNode;
+};
+
+export const SecondaryLayout: React.FC<TypeLayout> = (props) => {
+  const { children } = props;
   return (
     <View style={styles.container}>
-      <Text>SecondaryLayout</Text>
+      <Header />
+      <ScrollView contentContainerStyle={styles.children}>{children}</ScrollView>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    width: '100%',
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    flexDirection: 'column',
+    backgroundColor: '#ccc',
+  },
+  children: {
+    padding: 16,
+    flexGrow: 1,
   },
 });
 
