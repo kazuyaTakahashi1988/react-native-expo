@@ -10,7 +10,7 @@ export default [
   ...tseslint.configs.recommended,
   prettier,
   {
-    files: ['./app/**/*.ts', './app/**/*.tsx', 'eslint.config.js'],
+    files: ['./app/**/*.ts', './app/**/*.tsx'],
     languageOptions: {
       parser: tseslint.parser,
       parserOptions: {
@@ -38,17 +38,31 @@ export default [
       },
     },
     rules: {
+      /* 未定義の変数を使うことを禁止するルールを"off" */
       'no-undef': 'off',
+      /* TypeScriptで型定義している場合は、PropTypesで重ねて型検証する意味がないので"off" */
       'react/prop-types': 'off',
+      /* console.warn, error, info以外に警告。開発中のLog消し忘れ対策 */
       'no-console': ['error', { allow: ['warn', 'error', 'info'] }],
+      /* 特定のモジュールやパスからのインポートを禁止するためのルール */
       'no-restricted-imports': ['error', { patterns: ['@/????/**'] }],
+      /* async 関数なのに await を使ってない場合の警告は"off"、"error"とする */
       'require-await': 'off',
       '@typescript-eslint/require-await': 'error',
-      '@typescript-eslint/no-require-imports': 'off',
+      /* require() を使うことを禁止するルール (0：許可, 1：警告, 2：エラー) */
+      '@typescript-eslint/no-require-imports': 2,
+      /* "!" を使った 非nullアサーション を禁止 */
       '@typescript-eslint/no-non-null-assertion': 'error',
+      /* 配列や文字列に対して "indexOf(...) !== -1" よりも "includes(...)" を使うことを推奨するルール */
       '@typescript-eslint/prefer-includes': 'error',
+      /* 型が"any"や"unknown"の値に対して、プロパティアクセスやメソッド呼び出しを行うと警告 */
       '@typescript-eslint/no-unsafe-member-access': 'error',
+      /* 型(type)だけをimportする場合は "import type ~~~" を使うことを強制 */
       '@typescript-eslint/consistent-type-imports': ['error', { prefer: 'type-imports' }],
+
+      /* -------------------------------------------------------
+        import並び順、自動補正
+      ---------------------------------------------------------- */
       'import/order': [
         'error',
         {
@@ -70,7 +84,11 @@ export default [
       ],
       'import/default': 'off',
       'import/no-named-as-default': 'off',
-      'sonarjs/cognitive-complexity': ['error', 15],
+
+      /* -------------------------------------------------------
+        認知的複雑度（sonarjs / total-functions / ESLintコア
+      ---------------------------------------------------------- */
+      'sonarjs/cognitive-complexity': ['error', 10],
       'sonarjs/no-small-switch': ['error'],
       // 'total-functions/no-unsafe-type-assertion': 'error',
       complexity: ['error', { max: 5 }],
@@ -79,6 +97,6 @@ export default [
     },
   },
   {
-    ignores: ['node_modules', '.expo'],
+    ignores: ['node_modules', '.expo', 'eslint.config.js'],
   },
 ];
