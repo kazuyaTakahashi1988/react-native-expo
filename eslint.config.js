@@ -10,7 +10,7 @@ export default [
   ...tseslint.configs.recommended,
   prettier,
   {
-    files: ['./app/**/*.ts', './app/**/*.tsx'],
+    files: ['app/**/*.ts', 'app/**/*.tsx', 'index.ts', 'eslint.config.js'],
     languageOptions: {
       parser: tseslint.parser,
       parserOptions: {
@@ -53,8 +53,6 @@ export default [
       '@typescript-eslint/no-require-imports': 2,
       /* 配列や文字列に対して "indexOf(...) !== -1" よりも "includes(...)" を使うことを推奨するルール */
       '@typescript-eslint/prefer-includes': 'error',
-      /* 型が"any"や"unknown"の値に対して、プロパティアクセスやメソッド呼び出しを行うと警告 */
-      '@typescript-eslint/no-unsafe-member-access': 'error',
       /* 型(type)だけをimportする場合は "import type ~~~" を使うことを強制 */
       '@typescript-eslint/consistent-type-imports': ['error', { prefer: 'type-imports' }],
 
@@ -105,11 +103,11 @@ export default [
         'warn',
         { assertionStyle: 'as', objectLiteralTypeAssertions: 'allow' },
       ],
-      /* any/unknown 型からのプロパティアクセスを禁止 */
+      /* 型が"any"や"unknown"の値に対して、プロパティアクセスやメソッド呼び出しを行うと警告 */
       '@typescript-eslint/no-unsafe-member-access': 'error',
     },
   },
   {
-    ignores: ['node_modules', '.expo', 'eslint.config.js'],
+    ignores: ['node_modules', '.expo'],
   },
 ];
