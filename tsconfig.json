@@ -23,5 +23,5 @@
     "noFallthroughCasesInSwitch": true
   },
   "include": ["app/**/*.ts", "app/**/*.tsx", "index.ts", "eslint.config.js"],
-  "exclude": ["node_modules", ".expo"]
+  "exclude": ["node_modules", ".expo", "ios", "android"]
 }

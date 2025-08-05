@@ -108,6 +108,6 @@ export default [
     },
   },
   {
-    ignores: ['node_modules', '.expo'],
+    ignores: ['node_modules', '.expo', 'ios', 'android'],
   },
 ];
