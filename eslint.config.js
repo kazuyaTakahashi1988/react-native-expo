@@ -51,8 +51,6 @@ export default [
       '@typescript-eslint/require-await': 'error',
       /* require() を使うことを禁止するルール (0：許可, 1：警告, 2：エラー) */
       '@typescript-eslint/no-require-imports': 2,
-      /* "!" を使った 非nullアサーション を禁止 */
-      '@typescript-eslint/no-non-null-assertion': 'error',
       /* 配列や文字列に対して "indexOf(...) !== -1" よりも "includes(...)" を使うことを推奨するルール */
       '@typescript-eslint/prefer-includes': 'error',
       /* 型が"any"や"unknown"の値に対して、プロパティアクセスやメソッド呼び出しを行うと警告 */
@@ -90,10 +88,25 @@ export default [
       ---------------------------------------------------------- */
       'sonarjs/cognitive-complexity': ['error', 10],
       'sonarjs/no-small-switch': ['error'],
-      // 'total-functions/no-unsafe-type-assertion': 'error',
       complexity: ['error', { max: 5 }],
       'max-depth': ['error', 5],
       'no-else-return': ['error'],
+
+      /* -------------------------------------------------------
+        'total-functions/no-unsafe-type-assertion': 'error'
+        が最新のESlintに対応してないため以下にて代替
+      ---------------------------------------------------------- */
+      /* 型推論ができない場合のアサーション を禁止 */
+      '@typescript-eslint/no-unnecessary-type-assertion': 'error',
+      /* "!" を使った 非nullアサーション を禁止 */
+      '@typescript-eslint/no-non-null-assertion': 'error',
+      /* <Type> スタイルは警告、object literal の場合は許容 */
+      '@typescript-eslint/consistent-type-assertions': [
+        'warn',
+        { assertionStyle: 'as', objectLiteralTypeAssertions: 'allow' },
+      ],
+      /* any/unknown 型からのプロパティアクセスを禁止 */
+      '@typescript-eslint/no-unsafe-member-access': 'error',
     },
   },
   {
