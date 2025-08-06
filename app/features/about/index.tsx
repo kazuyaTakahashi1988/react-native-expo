@@ -3,13 +3,10 @@ import { StyleSheet, View, Text, Button } from 'react-native';
 
 import { SecondaryLayout } from '../../components/layout/secondaryLayout';
 
-import type { RootStackParamList } from '../../navigation';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-
-type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList>;
+import type { ScreenNavigationProp } from '../../navigation';
 
 const AboutScreen: React.FC = () => {
-  const navigation = useNavigation<HomeScreenNavigationProp>();
+  const navigation = useNavigation<ScreenNavigationProp>();
   return (
     <View style={styles.container}>
       <SecondaryLayout>
