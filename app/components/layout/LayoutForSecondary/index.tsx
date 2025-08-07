@@ -4,15 +4,15 @@ import Header from './_header';
 
 // Layout
 export type TypeLayout = {
-  title?: string;
+  headerTitle?: string;
   children?: React.ReactNode;
 };
 
 export const LayoutForSecondary: React.FC<TypeLayout> = (props) => {
-  const { title, children } = props;
+  const { headerTitle, children } = props;
   return (
     <View style={styles.container}>
-      <Header title={title} />
+      <Header headerTitle={headerTitle} />
       <ScrollView contentContainerStyle={styles.children}>{children}</ScrollView>
     </View>
   );

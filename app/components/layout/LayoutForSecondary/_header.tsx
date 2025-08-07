@@ -4,11 +4,11 @@ import { StyleSheet, View, Text } from 'react-native';
 import { IconArrow } from '../../../assets/svg';
 
 type typePorps = {
-  title?: string;
+  headerTitle?: string;
 };
 
 const Header: React.FC<typePorps> = (props) => {
-  const { title } = props;
+  const { headerTitle } = props;
   const navigation = useNavigation();
 
   return (
@@ -16,7 +16,7 @@ const Header: React.FC<typePorps> = (props) => {
       <Text style={styles.headerItem} onPress={() => navigation.goBack()}>
         <IconArrow />
       </Text>
-      <Text style={styles.headerItem}>{title}</Text>
+      <Text style={styles.headerItem}>{headerTitle}</Text>
       <Text style={styles.headerItem} />
     </View>
   );
