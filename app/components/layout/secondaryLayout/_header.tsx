@@ -2,20 +2,21 @@ import { useNavigation } from '@react-navigation/native';
 import { StyleSheet, View, Text } from 'react-native';
 
 import { IconArrow } from '../../../assets/svg';
-import { stackScreenList } from '../../../navigation';
 
-const Header: React.FC = () => {
+type typePorps = {
+  title?: string;
+};
+
+const Header: React.FC<typePorps> = (props) => {
+  const { title } = props;
   const navigation = useNavigation();
-  const state = navigation.getState();
-  const getTitle = () => {
-    return state?.index !== undefined && stackScreenList[state?.index].options.title;
-  };
+
   return (
     <View style={styles.header}>
       <Text style={styles.headerItem} onPress={() => navigation.goBack()}>
         <IconArrow />
       </Text>
-      <Text style={styles.headerItem}>{getTitle()}</Text>
+      <Text style={styles.headerItem}>{title}</Text>
       <Text style={styles.headerItem} />
     </View>
   );

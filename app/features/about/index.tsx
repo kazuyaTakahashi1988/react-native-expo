@@ -9,7 +9,7 @@ const AboutScreen: React.FC = () => {
   const navigation = useNavigation<ScreenNavigationProp>();
   return (
     <View style={styles.container}>
-      <SecondaryLayout>
+      <SecondaryLayout title='アバウト画面'>
         <Text>About Screen</Text>
         <Text>About Screen</Text>
         <Text>About Screen</Text>
