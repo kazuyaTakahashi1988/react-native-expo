@@ -8,7 +8,7 @@ export type TypeLayout = {
   children?: React.ReactNode;
 };
 
-export const SecondaryLayout: React.FC<TypeLayout> = (props) => {
+export const LayoutForSecondary: React.FC<TypeLayout> = (props) => {
   const { title, children } = props;
   return (
     <View style={styles.container}>
@@ -31,4 +31,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SecondaryLayout;
+export default LayoutForSecondary;

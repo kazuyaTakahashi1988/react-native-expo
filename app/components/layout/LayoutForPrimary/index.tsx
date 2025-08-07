@@ -8,7 +8,7 @@ export type TypeLayout = {
   children?: React.ReactNode;
 };
 
-export const PrimaryLayout: React.FC<TypeLayout> = (props) => {
+export const LayoutForPrimary: React.FC<TypeLayout> = (props) => {
   const { children } = props;
   return (
     <View style={styles.container}>
@@ -32,4 +32,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PrimaryLayout;
+export default LayoutForPrimary;
