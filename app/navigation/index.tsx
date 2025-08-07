@@ -30,6 +30,7 @@ export type ScreenNavigationProp = NativeStackNavigationProp<{
 
 const Navigation: React.FC = () => {
   const Stack = createNativeStackNavigator();
+
   type StackScreenType = {
     name: string;
     component: FC<{
