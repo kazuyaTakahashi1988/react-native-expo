@@ -11,7 +11,7 @@ const App: React.FC = () => {
   return (
     <SafeAreaProvider>
       <Navigation />
-      <StatusBar />
+      <StatusBar style='auto' />
     </SafeAreaProvider>
   );
 };
