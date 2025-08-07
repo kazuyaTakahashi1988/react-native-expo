@@ -3,13 +3,10 @@ import { StyleSheet, View, Text } from 'react-native';
 
 import { IconBtNav01, IconBtNav02, IconBtNav03, IconBtNav04 } from '../../../assets/svg/';
 
-import type { RootStackParamList } from '../../../navigation';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-
-type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'home'>;
+import type { ScreenNavigationProp } from '../../../navigation';
 
 const Footer: React.FC = () => {
-  const navigation = useNavigation<HomeScreenNavigationProp>();
+  const navigation = useNavigation<ScreenNavigationProp>();
   return (
     <View style={styles.footer}>
       <Text style={styles.footerItem} onPress={() => navigation.navigate('home')}>

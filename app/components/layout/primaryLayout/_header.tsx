@@ -3,14 +3,10 @@ import { StyleSheet, View, Text } from 'react-native';
 
 import { Logo, IconInfo } from '../../../assets/svg/';
 
-import type { RootStackParamList } from '../../../navigation';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-
-
-type AboutScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'about'>;
+import type { ScreenNavigationProp } from '../../../navigation';
 
 const Header: React.FC = () => {
-  const navigation = useNavigation<AboutScreenNavigationProp>();
+  const navigation = useNavigation<ScreenNavigationProp>();
   return (
     <View style={styles.header}>
       <Text style={styles.headerItem}>
