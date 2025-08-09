@@ -7,7 +7,8 @@
   "editor.detectIndentation": false,
   "[typescript]": {
     "editor.tabSize": 2,
-    "editor.insertSpaces": true
+    "editor.insertSpaces": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "typescript.tsdk": "node_modules/typescript/lib",
   "editor.codeActionsOnSave": {
