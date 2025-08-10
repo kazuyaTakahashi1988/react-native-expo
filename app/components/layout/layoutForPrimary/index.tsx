@@ -4,11 +4,11 @@ import Footer from './_footer';
 import Header from './_header';
 
 // Layout
-export type TypeLayout = {
+export type TypePorps = {
   children?: React.ReactNode;
 };
 
-export const LayoutForPrimary: React.FC<TypeLayout> = (props) => {
+export const LayoutForPrimary: React.FC<TypePorps> = (props) => {
   const { children } = props;
   return (
     <View style={styles.container}>

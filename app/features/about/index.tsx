@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import { StyleSheet, View, Text, Button } from 'react-native';
 
-import { LayoutForSecondary } from '../../components/layout/layoutForSecondary';
+import { LayoutForSecondary } from '../../components/layout';
 
 import type { ScreenNavigationProp } from '../../lib/types/navigationType';
 
