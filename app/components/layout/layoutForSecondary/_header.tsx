@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import { StyleSheet, View, Text } from 'react-native';
 
-import { IconArrow } from '../../../assets/svg';
+import { IconArrow } from '../../svg';
 
 type typePorps = {
   headerTitle?: string;

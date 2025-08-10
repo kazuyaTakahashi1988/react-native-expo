@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import { StyleSheet, View, Text } from 'react-native';
 
-import { IconBtNav01, IconBtNav02, IconBtNav03, IconBtNav04 } from '../../../assets/svg';
+import { IconBtNav01, IconBtNav02, IconBtNav03, IconBtNav04 } from '../../svg';
 
 import type { ScreenNavigationProp } from '../../../lib/types/navigationType';
 
