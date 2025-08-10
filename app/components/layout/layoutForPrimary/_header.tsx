@@ -3,7 +3,7 @@ import { StyleSheet, View, Text } from 'react-native';
 
 import { Logo, IconInfo } from '../../../assets/svg';
 
-import type { ScreenNavigationProp } from '../../../navigation';
+import type { ScreenNavigationProp } from '../../../lib/types/navigationType';
 
 const Header: React.FC = () => {
   const navigation = useNavigation<ScreenNavigationProp>();

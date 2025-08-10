@@ -5,11 +5,9 @@ import React from 'react';
 import AboutScreen from '../features/about';
 import HomeScreen from '../features/home';
 
-import type { NavigationProp, ParamListBase, RouteProp } from '@react-navigation/native';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import type { FC } from 'react';
+import type { StackScreenType } from '../lib/types/navigationType';
 
-export const stackScreenList = [
+const stackScreenList = [
   {
     name: 'home',
     component: HomeScreen,
@@ -22,23 +20,8 @@ export const stackScreenList = [
   },
 ];
 
-export type ScreenNavigationProp = NativeStackNavigationProp<{
-  home: undefined;
-  about: undefined;
-  // [x: string]: undefined;
-}>;
-
 const Navigation: React.FC = () => {
   const Stack = createNativeStackNavigator();
-
-  type StackScreenType = {
-    name: string;
-    component: FC<{
-      navigation: NavigationProp<ParamListBase>;
-      route: RouteProp<ParamListBase, string>;
-    }>;
-    options: object;
-  };
 
   return (
     <NavigationContainer>

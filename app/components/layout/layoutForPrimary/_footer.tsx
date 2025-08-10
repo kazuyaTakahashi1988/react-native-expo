@@ -3,7 +3,7 @@ import { StyleSheet, View, Text } from 'react-native';
 
 import { IconBtNav01, IconBtNav02, IconBtNav03, IconBtNav04 } from '../../../assets/svg';
 
-import type { ScreenNavigationProp } from '../../../navigation';
+import type { ScreenNavigationProp } from '../../../lib/types/navigationType';
 
 const Footer: React.FC = () => {
   const navigation = useNavigation<ScreenNavigationProp>();

@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, Button } from 'react-native';
 
 import { LayoutForPrimary } from '../../components/layout/layoutForPrimary';
 
-import type { ScreenNavigationProp } from '../../navigation';
+import type { ScreenNavigationProp } from '../../lib/types/navigationType';
 
 const HomeScreen: React.FC = () => {
   const navigation = useNavigation<ScreenNavigationProp>();
