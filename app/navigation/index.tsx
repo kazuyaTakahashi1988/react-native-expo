@@ -5,7 +5,7 @@ import React from 'react';
 import AboutScreen from '../features/about';
 import HomeScreen from '../features/home';
 
-import type { StackScreenType } from '../lib/types/navigationType';
+import type { StackScreenType } from '../lib/types';
 
 const stackScreenList = [
   {

@@ -3,11 +3,9 @@ import { StyleSheet, View, Text } from 'react-native';
 
 import { IconArrow } from '../../svg';
 
-type TypePorps = {
-  headerTitle?: string;
-};
+import type { TypelayoutPorps } from '../../../lib/types';
 
-const Header: React.FC<TypePorps> = (props) => {
+const Header: React.FC<TypelayoutPorps> = (props) => {
   const { headerTitle } = props;
   const navigation = useNavigation();
 

@@ -1,11 +1,9 @@
 import React from 'react';
 import Svg, { G, Polygon } from 'react-native-svg';
 
-type Props = {
-  color?: string;
-  size?: number;
-};
-const IconArrow: React.FC<Props> = ({ color = '#000', size = 24 }) => (
+import type { SvgProps } from '../../../lib/types';
+
+const IconArrow: React.FC<SvgProps> = ({ color = '#000', size = 24 }) => (
   <Svg width={size} height={size} viewBox='0 0 512 512' fill='none'>
     <G>
       <Polygon

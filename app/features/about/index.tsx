@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, Button } from 'react-native';
 
 import { LayoutForSecondary } from '../../components/layout';
 
-import type { ScreenNavigationProp } from '../../lib/types/navigationType';
+import type { ScreenNavigationProp } from '../../lib/types';
 
 const AboutScreen: React.FC = () => {
   const navigation = useNavigation<ScreenNavigationProp>();

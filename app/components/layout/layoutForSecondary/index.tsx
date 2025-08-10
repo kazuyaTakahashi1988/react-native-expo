@@ -2,12 +2,9 @@ import { StyleSheet, View, ScrollView } from 'react-native';
 
 import Header from './_header';
 
-type TypePorps = {
-  headerTitle?: string;
-  children?: React.ReactNode;
-};
+import type { TypelayoutPorps } from '../../../lib/types';
 
-export const LayoutForSecondary: React.FC<TypePorps> = (props) => {
+export const LayoutForSecondary: React.FC<TypelayoutPorps> = (props) => {
   const { headerTitle, children } = props;
   return (
     <View style={styles.container}>
