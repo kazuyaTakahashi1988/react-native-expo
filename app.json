@@ -2,6 +2,7 @@
   "expo": {
     "name": "react-native-expo",
     "slug": "react-native-expo",
+    "scheme": "react-native-expo",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./app/assets/images/appInfo/icon.png",
