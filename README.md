@@ -5,7 +5,7 @@ $ node -v
 v22.x
 
 $ yarn install
-$ yarn dev
+$ yarn web
 ```
 
 ↓↓↓↓<br>
