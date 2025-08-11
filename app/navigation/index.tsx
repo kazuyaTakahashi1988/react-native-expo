@@ -10,6 +10,9 @@ import type { StackScreenType } from '../lib/types';
 import type { RootStackParamList } from '../lib/types';
 import type { LinkingOptions } from '@react-navigation/native';
 
+/* --------------------------------------------------
+ * stackScreen 画面リスト
+ * ----------------------------------------------- */
 const stackScreenList = [
   {
     name: 'home',
@@ -31,29 +34,28 @@ const stackScreenList = [
   },
 ];
 
-const prefixes = [
-  createURL('/'), // myapp:// の形（dev時は exp+〜 の形になることも）
-  'https://example.com', // 後述のUniversal/App Links用（任意）
-];
-
-// DeepLink設定をstackScreenListから生成
-const generateScreensConfig = () => {
-  const config: Record<string, string> = {};
+/* --------------------------------------------------
+ * DeepLink の設定
+ * stackScreenListから、linkingおよびDeepLink設定を生成
+ * ----------------------------------------------- */
+const getLinkingConfig = () => {
+  const screensConfig: Record<string, string> = {};
   for (const stackScreen of stackScreenList) {
-    if (stackScreen.deepLink != null) {
-      config[stackScreen.name] = stackScreen.deepLink;
+    if (stackScreen.deepLink !== null) {
+      screensConfig[stackScreen.name] = stackScreen.deepLink;
     }
   }
-  return config;
+  return {
+    prefixes: [createURL('/'), 'https://example.com'],
+    config: { screens: screensConfig },
+  };
 };
 
-const linking: LinkingOptions<RootStackParamList> = {
-  prefixes,
-  config: {
-    screens: generateScreensConfig(),
-  },
-};
+const linking: LinkingOptions<RootStackParamList> = getLinkingConfig();
 
+/* --------------------------------------------------
+ * Navigation 設定
+ * ----------------------------------------------- */
 const Navigation: React.FC = () => {
   const Stack = createNativeStackNavigator();
 
