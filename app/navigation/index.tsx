@@ -4,6 +4,7 @@ import { createURL } from 'expo-linking';
 import React from 'react';
 
 import { AboutScreen } from '../features/about';
+import { AboutChildScreen } from '../features/about/aboutChild';
 import { HomeScreen } from '../features/home';
 
 import type { StackScreenType } from '../lib/types';
@@ -28,7 +29,7 @@ const stackScreenList = [
   },
   {
     name: 'aboutChild',
-    component: AboutScreen,
+    component: AboutChildScreen,
     options: { title: 'アバウトチャイルド画面', animation: 'slide_from_right' },
     deepLink: 'about/aboutChild',
   },
