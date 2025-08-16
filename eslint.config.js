@@ -1,3 +1,6 @@
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
 import js from '@eslint/js';
 import prettier from 'eslint-config-prettier';
 import importPlugin from 'eslint-plugin-import';
@@ -5,19 +8,22 @@ import sonarjs from 'eslint-plugin-sonarjs';
 import totalFunctions from 'eslint-plugin-total-functions';
 import tseslint from 'typescript-eslint';
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
 export default [
   js.configs.recommended,
   ...tseslint.configs.recommended,
   prettier,
   {
-    files: ['app/**/*.ts', 'app/**/*.tsx', 'index.ts', 'eslint.config.js'],
+    files: ['app/**/*.ts', 'app/**/*.tsx', 'index.ts'],
     languageOptions: {
       parser: tseslint.parser,
       parserOptions: {
         ecmaVersion: 'latest',
         sourceType: 'module',
-        project: ['./tsconfig.eslint.json'],
-        tsconfigRootDir: process.cwd(),
+        project: path.resolve(__dirname, 'tsconfig.eslint.json'),
+        tsconfigRootDir: __dirname,
+        projectService: true,
       },
     },
     plugins: {
@@ -89,11 +95,7 @@ export default [
       complexity: ['error', { max: 5 }],
       'max-depth': ['error', 5],
       'no-else-return': ['error'],
-
-      /* -------------------------------------------------------
-        'total-functions/no-unsafe-type-assertion': 'error'
-        が最新のESlintに対応してないため以下にて代替
-      ---------------------------------------------------------- */
+      'total-functions/no-unsafe-type-assertion': 'error',
       /* 型推論ができない場合のアサーション を禁止 */
       '@typescript-eslint/no-unnecessary-type-assertion': 'error',
       /* "!" を使った 非nullアサーション を禁止 */
