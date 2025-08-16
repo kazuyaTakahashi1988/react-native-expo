@@ -8,6 +8,8 @@ import tseslint from 'typescript-eslint';
 export default [
   js.configs.recommended,
   ...tseslint.configs.recommended,
+  ...tseslint.configs.recommendedTypeChecked,
+  ...tseslint.configs.strictTypeChecked,
   prettier,
   {
     files: ['app/**/*.ts', 'app/**/*.tsx', 'index.ts', 'eslint.config.js'],
@@ -24,7 +26,7 @@ export default [
       '@typescript-eslint': tseslint.plugin,
       import: importPlugin,
       sonarjs: sonarjs,
-      'total-functions': totalFunctions,
+      // 'total-functions': totalFunctions,
     },
     settings: {
       react: {
@@ -59,6 +61,14 @@ export default [
       '@typescript-eslint/no-unnecessary-condition': [
         'error',
         { allowConstantLoopConditions: true },
+      ],
+      /* truthy/falsy 判定を厳格化し、`undefined` を見逃さない */
+      '@typescript-eslint/strict-boolean-expressions': [
+        'error',
+        {
+          allowString: false,
+          allowNumber: false,
+        },
       ],
 
       /* -------------------------------------------------------

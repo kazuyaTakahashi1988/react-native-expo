@@ -58,7 +58,12 @@ const HomeScreen: React.FC = () => {
         <Text>Home Screen</Text>
         <Text>Home Screen</Text>
         <Text>Home Screen</Text>
-        <Button title='Go to About' onPress={() => navigation.navigate('about')} />
+        <Button
+          title='Go to About'
+          onPress={() => {
+            navigation.navigate('about');
+          }}
+        />
       </LayoutForPrimary>
     </View>
   );
