@@ -8,6 +8,8 @@ import tseslint from 'typescript-eslint';
 export default [
   js.configs.recommended,
   ...tseslint.configs.recommended,
+  ...tseslint.configs.recommendedTypeChecked,
+  ...tseslint.configs.strictTypeChecked,
   prettier,
   {
     files: ['app/**/*.ts', 'app/**/*.tsx', 'index.ts', 'eslint.config.js'],
@@ -24,7 +26,7 @@ export default [
       '@typescript-eslint': tseslint.plugin,
       import: importPlugin,
       sonarjs: sonarjs,
-      'total-functions': totalFunctions,
+      // 'total-functions': totalFunctions,
     },
     settings: {
       react: {
@@ -55,6 +57,19 @@ export default [
       '@typescript-eslint/prefer-includes': 'error',
       /* 型(type)だけをimportする場合は "import type ~~~" を使うことを強制 */
       '@typescript-eslint/consistent-type-imports': ['error', { prefer: 'type-imports' }],
+      /* 未定義の可能性がある値をそのまま条件分岐に使うのを禁止 */
+      '@typescript-eslint/no-unnecessary-condition': [
+        'error',
+        { allowConstantLoopConditions: true },
+      ],
+      /* truthy/falsy 判定を厳格化し、`undefined` を見逃さない */
+      '@typescript-eslint/strict-boolean-expressions': [
+        'error',
+        {
+          allowString: false,
+          allowNumber: false,
+        },
+      ],
 
       /* -------------------------------------------------------
         import並び順、自動補正

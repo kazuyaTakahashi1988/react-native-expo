@@ -19,4 +19,5 @@ export type StackScreenType = {
     route: RouteProp<ParamListBase, string>;
   }>;
   options: object;
+  deepLink?: string | null;
 };

@@ -9,7 +9,9 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "lint": "eslint . --ext .ts,.tsx && tsc --noEmit",
-    "lint:fix": "eslint --fix --ext .ts,.tsx ./app"
+    "lint:fix": "eslint --fix --ext .ts,.tsx ./app",
+    "format": "prettier --write ./app",
+    "fix": "yarn format && yarn lint:fix"
   },
   "dependencies": {
     "@expo/metro-runtime": "~5.0.4",

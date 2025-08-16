@@ -14,7 +14,7 @@ import type { LinkingOptions } from '@react-navigation/native';
 /* --------------------------------------------------
  * stackScreen 画面リスト
  * ----------------------------------------------- */
-const stackScreenList = [
+const stackScreenList: StackScreenType[] = [
   {
     name: 'home',
     component: HomeScreen,
@@ -42,7 +42,7 @@ const stackScreenList = [
 const getLinkingConfig = () => {
   const screensConfig: Record<string, string> = {};
   for (const stackScreen of stackScreenList) {
-    if (stackScreen.deepLink !== null) {
+    if (stackScreen.deepLink != null) {
       screensConfig[stackScreen.name] = stackScreen.deepLink;
     }
   }

@@ -12,7 +12,7 @@ const Header: React.FC = () => {
       <Text style={styles.headerItem}>
         <Logo />
       </Text>
-      <Text style={styles.headerItem} onPress={() => navigation.navigate('about')}>
+      <Text style={styles.headerItem} onPress={() => { navigation.navigate('about'); }}>
         <IconInfo />
       </Text>
     </View>

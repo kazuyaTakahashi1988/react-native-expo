@@ -11,7 +11,7 @@ const Header: React.FC<TypelayoutPorps> = (props) => {
 
   return (
     <View style={styles.header}>
-      <Text style={styles.headerItem} onPress={() => navigation.goBack()}>
+      <Text style={styles.headerItem} onPress={() => { navigation.goBack(); }}>
         <IconArrow />
       </Text>
       <Text style={styles.headerItem}>{headerTitle}</Text>
