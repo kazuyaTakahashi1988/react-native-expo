@@ -2,7 +2,6 @@ import js from '@eslint/js';
 import prettier from 'eslint-config-prettier';
 import importPlugin from 'eslint-plugin-import';
 import sonarjs from 'eslint-plugin-sonarjs';
-import totalFunctions from 'eslint-plugin-total-functions';
 import tseslint from 'typescript-eslint';
 
 export default [
@@ -26,7 +25,6 @@ export default [
       '@typescript-eslint': tseslint.plugin,
       import: importPlugin,
       sonarjs: sonarjs,
-      // 'total-functions': totalFunctions,
     },
     settings: {
       react: {

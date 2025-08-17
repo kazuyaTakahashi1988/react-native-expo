@@ -9,7 +9,12 @@ const Footer: React.FC = () => {
   const navigation = useNavigation<ScreenNavigationProp>();
   return (
     <View style={styles.footer}>
-      <Text style={styles.footerItem} onPress={() => { navigation.navigate('home'); }}>
+      <Text
+        style={styles.footerItem}
+        onPress={() => {
+          navigation.navigate('home');
+        }}
+      >
         <IconBtNav01 />
       </Text>
       <Text style={styles.footerItem}>

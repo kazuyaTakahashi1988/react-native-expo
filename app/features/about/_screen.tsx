@@ -58,8 +58,18 @@ const AboutScreen: React.FC = () => {
         <Text>About Screen</Text>
         <Text>About Screen</Text>
         <Text>About Screen</Text>
-        <Button title='Go to Home' onPress={() => { navigation.navigate('home'); }} />
-        <Button title='Go to AboutChild' onPress={() => { navigation.navigate('aboutChild'); }} />
+        <Button
+          title='Go to Home'
+          onPress={() => {
+            navigation.navigate('home');
+          }}
+        />
+        <Button
+          title='Go to AboutChild'
+          onPress={() => {
+            navigation.navigate('aboutChild');
+          }}
+        />
       </LayoutForSecondary>
     </View>
   );
