@@ -18,23 +18,23 @@ import type { RootStackParamList } from '../lib/types';
  * ----------------------------------------------- */
 
 const Navigation: React.FC = () => {
-  const Tab = createBottomTabNavigator<RootStackParamList>();
-  const Tabs = createMaterialTopTabNavigator<RootStackParamList>();
-  const Stack = createNativeStackNavigator<RootStackParamList>();
+  const BottomTab = createBottomTabNavigator<RootStackParamList>();
+  const NestTab = createMaterialTopTabNavigator<RootStackParamList>();
+  const NestStack = createNativeStackNavigator<RootStackParamList>();
 
   return (
     <NavigationContainer>
-      <Tab.Navigator
+      <BottomTab.Navigator
         screenOptions={() => ({
           headerShown: false,
           tabBarActiveTintColor: '#0ea5e9', // アクティブ文字/アイコン
           tabBarInactiveTintColor: '#fff', // 非アクティブ文字/アイコン
-          tabBarLabelStyle: TabNavigator.tabBarLabelStyle,
-          tabBarStyle: TabNavigator.tabBarStyle,
-          tabBarItemStyle: TabNavigator.tabBarItemStyle, // ★ 各タブの右側に白線
+          tabBarLabelStyle: styles.tabBarLabelStyle,
+          tabBarStyle: styles.tabBarStyle,
+          tabBarItemStyle: styles.tabBarItemStyle,
         })}
       >
-        <Tab.Screen
+        <BottomTab.Screen
           name='home'
           options={{
             headerShown: true,
@@ -43,35 +43,30 @@ const Navigation: React.FC = () => {
           }}
         >
           {() => (
-            <Stack.Navigator>
-              <Stack.Screen name='homeTabs' options={{ headerShown: false }}>
+            <NestStack.Navigator>
+              <NestStack.Screen name='homeTabs' options={{ headerShown: false }}>
                 {() => (
-                  <Tabs.Navigator
-                    screenOptions={{
-                      swipeEnabled: true,
-                      tabBarIndicatorStyle: { height: 3 },
-                    }}
-                  >
-                    <Tabs.Screen
+                  <NestTab.Navigator screenOptions={{ swipeEnabled: true }}>
+                    <NestTab.Screen
                       name='homeChild'
                       component={HomeChildScreen}
                       options={{ title: 'HomeChildo1' }}
                     />
-                    <Tabs.Screen
+                    <NestTab.Screen
                       name='homeChild02'
                       component={HomeChild02Screen}
                       options={{ title: 'HomeChild02' }}
                     />
-                  </Tabs.Navigator>
+                  </NestTab.Navigator>
                 )}
-              </Stack.Screen>
+              </NestStack.Screen>
 
               {/* 例：将来の詳細画面 */}
-              {/* <Stack.Screen name="HomeDetail" component={HomeDetailScreen} /> */}
-            </Stack.Navigator>
+              {/* <NestStack.Screen name="HomeDetail" component={HomeDetailScreen} /> */}
+            </NestStack.Navigator>
           )}
-        </Tab.Screen>
-        <Tab.Screen
+        </BottomTab.Screen>
+        <BottomTab.Screen
           name='about'
           component={AboutScreen}
           options={{
@@ -80,21 +75,21 @@ const Navigation: React.FC = () => {
             tabBarBadge: 3,
           }}
         />
-        <Tab.Screen
+        <BottomTab.Screen
           name='work'
           component={WorkScreen}
           options={{
             tabBarLabel: 'Work',
-            tabBarItemStyle: { borderRightWidth: 0 },
+            tabBarItemStyle: styles.tabBarLastChildStyle,
             tabBarIcon: ({ color, size }) => <IconWork size={size} color={color} />,
           }}
         />
-      </Tab.Navigator>
+      </BottomTab.Navigator>
     </NavigationContainer>
   );
 };
 
-const TabNavigator = StyleSheet.create({
+const styles = StyleSheet.create({
   tabBarLabelStyle: { fontSize: 12, fontWeight: '600' },
   tabBarStyle: {
     height: 58,
@@ -114,6 +109,7 @@ const TabNavigator = StyleSheet.create({
     borderRightColor: 'white',
     borderRightWidth: StyleSheet.hairlineWidth, // 物理1px相当
   },
+  tabBarLastChildStyle: { borderRightWidth: 0 },
 });
 
 export default Navigation;
