@@ -1,6 +1,5 @@
 import { StyleSheet, View, ScrollView } from 'react-native';
 
-import Footer from './_footer';
 import Header from './_header';
 
 import type { TypelayoutPorps } from '../../../lib/types';
@@ -11,7 +10,6 @@ export const LayoutForPrimary: React.FC<TypelayoutPorps> = (props) => {
     <View style={styles.container}>
       <Header />
       <ScrollView contentContainerStyle={styles.children}>{children}</ScrollView>
-      <Footer />
     </View>
   );
 };

@@ -5,22 +5,16 @@ import { LayoutForPrimary } from '../../components/layout';
 
 import type { ScreenNavigationProp } from '../../lib/types';
 
-const AboutScreen: React.FC = () => {
+const WorkScreen: React.FC = () => {
   const navigation = useNavigation<ScreenNavigationProp>();
   return (
     <View style={styles.container}>
       <LayoutForPrimary>
-        <Text>About Screen</Text>
+        <Text>Work Screen</Text>
         <Button
-          title='Go to Home'
+          title='Go to About'
           onPress={() => {
-            navigation.navigate('home');
-          }}
-        />
-        <Button
-          title='Go to AboutChild'
-          onPress={() => {
-            navigation.navigate('aboutChild');
+            navigation.navigate('about');
           }}
         />
       </LayoutForPrimary>
@@ -31,10 +25,10 @@ const AboutScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ccc',
+    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
   },
 });
 
-export default AboutScreen;
+export default WorkScreen;
