@@ -16,64 +16,11 @@ import type { RootStackParamList } from '../lib/types';
 /* --------------------------------------------------
  * Navigation 設定
  * ----------------------------------------------- */
-// --- Top Tabs（スワイプで切替え）---
-type HomeTopTabsParamList = {
-  HomeChild: undefined;
-  HomeChild02: undefined;
-};
-const HomeTopTabs = createMaterialTopTabNavigator<HomeTopTabsParamList>();
-
-function HomeSwipeTabs() {
-  return (
-    <HomeTopTabs.Navigator
-      // タブを下に置きたい場合は 'bottom' に（デフォルトは 'top'）
-      // tabBarPosition="bottom"
-      screenOptions={{
-        swipeEnabled: true, // 横スワイプ切替え
-        tabBarIndicatorStyle: { height: 3 }, // 下線などはお好みで
-        // 見た目の微調整（任意）
-        // tabBarActiveTintColor: '#fff',
-        // tabBarInactiveTintColor: '#9ca3af',
-        // tabBarStyle: { backgroundColor: '#0b1220' },
-      }}
-    >
-      <HomeTopTabs.Screen
-        name='HomeChild'
-        component={HomeChildScreen}
-        options={{ title: 'Child 1' }}
-      />
-      <HomeTopTabs.Screen
-        name='HomeChild02'
-        component={HomeChild02Screen}
-        options={{ title: 'Child 2' }}
-      />
-    </HomeTopTabs.Navigator>
-  );
-}
-
-// --- Home配下は Stack（将来 Detail など増やしやすい）---
-type HomeStackParamList = {
-  HomeTabs: undefined; // ← これが上のスワイプタブ
-  HomeDetail: { id: string }; // 例：詳細画面（任意）
-};
-const HomeStack = createNativeStackNavigator<HomeStackParamList>();
-
-function HomeStackNavigator() {
-  return (
-    <HomeStack.Navigator>
-      <HomeStack.Screen
-        name='HomeTabs'
-        component={HomeSwipeTabs}
-        options={{ headerShown: false }} // ヘッダーはタブに任せるなら非表示
-      />
-      {/* 例：詳細画面を足したいとき */}
-      {/* <HomeStack.Screen name="HomeDetail" component={HomeDetail} /> */}
-    </HomeStack.Navigator>
-  );
-}
 
 const Navigation: React.FC = () => {
   const Tab = createBottomTabNavigator<RootStackParamList>();
+  const Tabs = createMaterialTopTabNavigator<RootStackParamList>();
+  const Stack = createNativeStackNavigator<RootStackParamList>();
 
   return (
     <NavigationContainer>
@@ -82,36 +29,48 @@ const Navigation: React.FC = () => {
           headerShown: false,
           tabBarActiveTintColor: '#0ea5e9', // アクティブ文字/アイコン
           tabBarInactiveTintColor: '#fff', // 非アクティブ文字/アイコン
-          tabBarLabelStyle: { fontSize: 12, fontWeight: '600' },
-          tabBarStyle: {
-            height: 58,
-            paddingTop: 6,
-            paddingBottom: 8, // iPhoneのセーフエリアでも読みやすく
-            backgroundColor: '#0b1220',
-            borderTopColor: 'rgba(255,255,255,0.08)',
-            borderTopWidth: 1,
-            // Androidの影感
-            elevation: 12,
-            // iOSの影感
-            // boxShadowColor: '#000',
-            // boxShadowOpacity: 0.08,
-            // boxShadowRadius: 10,
-          },
-          // ★ 各タブの右側に白線
-          tabBarItemStyle: {
-            borderRightColor: 'white',
-            borderRightWidth: StyleSheet.hairlineWidth, // 物理1px相当
-          },
+          tabBarLabelStyle: TabNavigator.tabBarLabelStyle,
+          tabBarStyle: TabNavigator.tabBarStyle,
+          tabBarItemStyle: TabNavigator.tabBarItemStyle, // ★ 各タブの右側に白線
         })}
       >
         <Tab.Screen
           name='home'
-          component={HomeStackNavigator}
           options={{
+            headerShown: true,
             tabBarLabel: 'Home',
             tabBarIcon: ({ color, size }) => <IconHome size={size} color={color} />,
           }}
-        />
+        >
+          {() => (
+            <Stack.Navigator>
+              <Stack.Screen name='homeTabs' options={{ headerShown: false }}>
+                {() => (
+                  <Tabs.Navigator
+                    screenOptions={{
+                      swipeEnabled: true,
+                      tabBarIndicatorStyle: { height: 3 },
+                    }}
+                  >
+                    <Tabs.Screen
+                      name='homeChild'
+                      component={HomeChildScreen}
+                      options={{ title: 'HomeChildo1' }}
+                    />
+                    <Tabs.Screen
+                      name='homeChild02'
+                      component={HomeChild02Screen}
+                      options={{ title: 'HomeChild02' }}
+                    />
+                  </Tabs.Navigator>
+                )}
+              </Stack.Screen>
+
+              {/* 例：将来の詳細画面 */}
+              {/* <Stack.Screen name="HomeDetail" component={HomeDetailScreen} /> */}
+            </Stack.Navigator>
+          )}
+        </Tab.Screen>
         <Tab.Screen
           name='about'
           component={AboutScreen}
@@ -134,5 +93,27 @@ const Navigation: React.FC = () => {
     </NavigationContainer>
   );
 };
+
+const TabNavigator = StyleSheet.create({
+  tabBarLabelStyle: { fontSize: 12, fontWeight: '600' },
+  tabBarStyle: {
+    height: 58,
+    paddingTop: 6,
+    paddingBottom: 8, // iPhoneのセーフエリアでも読みやすく
+    backgroundColor: '#0b1220',
+    borderTopColor: 'rgba(255,255,255,0.08)',
+    borderTopWidth: 1,
+    // Androidの影感
+    elevation: 12,
+    // iOSの影感
+    shadowColor: '#000',
+    shadowOpacity: 0.08,
+    shadowRadius: 10,
+  },
+  tabBarItemStyle: {
+    borderRightColor: 'white',
+    borderRightWidth: StyleSheet.hairlineWidth, // 物理1px相当
+  },
+});
 
 export default Navigation;
