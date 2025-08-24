@@ -7,6 +7,7 @@ import type { ScreenNavigationProp } from '../../../lib/types';
 
 const Header: React.FC = () => {
   const navigation = useNavigation<ScreenNavigationProp>();
+
   return (
     <View style={styles.header}>
       <Text style={styles.headerItem}>
@@ -26,11 +27,11 @@ const Header: React.FC = () => {
 
 const styles = StyleSheet.create({
   header: {
-    flexDirection: 'row',
-    backgroundColor: 'red',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    backgroundColor: 'red',
+    flexDirection: 'row',
     height: 50,
+    justifyContent: 'space-between',
     width: '100%',
   },
   headerItem: {

@@ -27,20 +27,20 @@ const Header: React.FC<TypelayoutPorps> = (props) => {
 
 const styles = StyleSheet.create({
   header: {
-    flexDirection: 'row',
-    backgroundColor: 'red',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    backgroundColor: 'red',
+    flexDirection: 'row',
     height: 50,
+    justifyContent: 'space-between',
     width: '100%',
   },
   headerItem: {
-    padding: 10,
-    display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center',
+    display: 'flex',
     fontSize: 20,
     fontWeight: 'bold',
+    justifyContent: 'center',
+    padding: 10,
   },
 });
 

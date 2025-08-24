@@ -1,79 +1,113 @@
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { createURL } from 'expo-linking';
 import React from 'react';
+import { StyleSheet } from 'react-native';
 
+import { IconAbout, IconHome, IconWork } from '../components/svg';
 import { AboutScreen } from '../features/about';
-import { AboutChildScreen } from '../features/about/aboutChild';
-import { HomeScreen } from '../features/home';
+import { HomeChildScreen } from '../features/home/homeChild';
+import { HomeChild02Screen } from '../features/home/homeChild02';
+import { WorkScreen } from '../features/work';
 
-import type { StackScreenType } from '../lib/types';
 import type { RootStackParamList } from '../lib/types';
-import type { LinkingOptions } from '@react-navigation/native';
-
-/* --------------------------------------------------
- * stackScreen 画面リスト
- * ----------------------------------------------- */
-const stackScreenList: StackScreenType[] = [
-  {
-    name: 'home',
-    component: HomeScreen,
-    options: { title: 'ホーム画面' },
-    deepLink: '',
-  },
-  {
-    name: 'about',
-    component: AboutScreen,
-    options: { title: 'アバウト画面', animation: 'slide_from_right' },
-    deepLink: 'about',
-  },
-  {
-    name: 'aboutChild',
-    component: AboutChildScreen,
-    options: { title: 'アバウトチャイルド画面', animation: 'slide_from_right' },
-    deepLink: 'about/aboutChild',
-  },
-];
-
-/* --------------------------------------------------
- * DeepLink の設定
- * stackScreenListから、linkingおよびDeepLink設定を生成
- * ----------------------------------------------- */
-const getLinkingConfig = () => {
-  const screensConfig: Record<string, string> = {};
-  for (const stackScreen of stackScreenList) {
-    if (stackScreen.deepLink != null) {
-      screensConfig[stackScreen.name] = stackScreen.deepLink;
-    }
-  }
-  return {
-    prefixes: [createURL('/'), 'https://example.com'],
-    config: { screens: screensConfig },
-  };
-};
-
-const linking: LinkingOptions<RootStackParamList> = getLinkingConfig();
 
 /* --------------------------------------------------
  * Navigation 設定
  * ----------------------------------------------- */
+
 const Navigation: React.FC = () => {
-  const Stack = createNativeStackNavigator();
+  const BottomTab = createBottomTabNavigator<RootStackParamList>();
+  const NestTab = createMaterialTopTabNavigator<RootStackParamList>();
+  const NestStack = createNativeStackNavigator<RootStackParamList>();
 
   return (
-    <NavigationContainer linking={linking}>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
-        {stackScreenList.map((stackScreen: StackScreenType, i: number) => (
-          <Stack.Screen
-            key={i}
-            name={stackScreen.name}
-            component={stackScreen.component}
-            options={stackScreen.options}
-          />
-        ))}
-      </Stack.Navigator>
+    <NavigationContainer>
+      <BottomTab.Navigator
+        screenOptions={() => ({
+          headerShown: false,
+          tabBarActiveTintColor: '#0ea5e9', // アクティブ文字/アイコン
+          tabBarInactiveTintColor: '#fff', // 非アクティブ文字/アイコン
+          tabBarLabelStyle: styles.tabBarLabelStyle,
+          tabBarStyle: styles.tabBarStyle,
+          tabBarItemStyle: styles.tabBarItemStyle,
+        })}
+      >
+        <BottomTab.Screen
+          name='home'
+          options={{
+            headerShown: true,
+            tabBarLabel: 'Home',
+            tabBarIcon: ({ color, size }) => <IconHome size={size} color={color} />,
+          }}
+        >
+          {() => (
+            <NestStack.Navigator>
+              <NestStack.Screen name='homeTabs' options={{ headerShown: false }}>
+                {() => (
+                  <NestTab.Navigator screenOptions={{ swipeEnabled: true }}>
+                    <NestTab.Screen
+                      name='homeChild'
+                      component={HomeChildScreen}
+                      options={{ title: 'HomeChildo1' }}
+                    />
+                    <NestTab.Screen
+                      name='homeChild02'
+                      component={HomeChild02Screen}
+                      options={{ title: 'HomeChild02' }}
+                    />
+                  </NestTab.Navigator>
+                )}
+              </NestStack.Screen>
+
+              {/* 例：将来の詳細画面 */}
+              {/* <NestStack.Screen name="HomeDetail" component={HomeDetailScreen} /> */}
+            </NestStack.Navigator>
+          )}
+        </BottomTab.Screen>
+        <BottomTab.Screen
+          name='about'
+          component={AboutScreen}
+          options={{
+            tabBarLabel: 'About',
+            tabBarIcon: ({ color, size }) => <IconAbout size={size} color={color} />,
+            tabBarBadge: 3,
+          }}
+        />
+        <BottomTab.Screen
+          name='work'
+          component={WorkScreen}
+          options={{
+            tabBarLabel: 'Work',
+            tabBarItemStyle: styles.tabBarLastChildStyle,
+            tabBarIcon: ({ color, size }) => <IconWork size={size} color={color} />,
+          }}
+        />
+      </BottomTab.Navigator>
     </NavigationContainer>
   );
 };
+
+const styles = StyleSheet.create({
+  tabBarItemStyle: {
+    borderRightColor: 'white',
+    borderRightWidth: StyleSheet.hairlineWidth, // 物理1px相当
+  },
+  tabBarLabelStyle: { fontSize: 12, fontWeight: '600' },
+  tabBarLastChildStyle: { borderRightWidth: 0 },
+  tabBarStyle: {
+    backgroundColor: '#0b1220',
+    borderTopColor: 'rgba(255,255,255,0.08)',
+    borderTopWidth: 1,
+    elevation: 12,
+    height: 58,
+    paddingBottom: 8,
+    paddingTop: 6,
+    shadowColor: '#000',
+    shadowOpacity: 0.08,
+    shadowRadius: 10,
+  },
+});
 
 export default Navigation;

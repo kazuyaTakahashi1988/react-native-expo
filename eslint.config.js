@@ -1,8 +1,16 @@
 import js from '@eslint/js';
 import prettier from 'eslint-config-prettier';
 import importPlugin from 'eslint-plugin-import';
+import react from 'eslint-plugin-react';
+import reactNative from 'eslint-plugin-react-native';
 import sonarjs from 'eslint-plugin-sonarjs';
 import tseslint from 'typescript-eslint';
+
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/** @type {import('eslint').ESLint.Plugin} */
+const reactPlugin = react;
+/** @type {import('eslint').ESLint.Plugin} */
+const reactNativePlugin = reactNative;
 
 export default [
   js.configs.recommended,
@@ -23,8 +31,10 @@ export default [
     },
     plugins: {
       '@typescript-eslint': tseslint.plugin,
+      react: reactPlugin,
+      'react-native': reactNativePlugin,
       import: importPlugin,
-      sonarjs: sonarjs,
+      sonarjs,
     },
     settings: {
       react: {
@@ -38,6 +48,10 @@ export default [
       },
     },
     rules: {
+      ...reactPlugin.configs.recommended.rules,
+      ...reactPlugin.configs['jsx-runtime'].rules,
+      ...reactNativePlugin.configs.all.rules,
+      'react-native/no-color-literals': 'off',
       /* 未定義の変数を使うことを禁止するルールを"off" */
       'no-undef': 'off',
       /* TypeScriptで型定義している場合は、PropTypesで重ねて型検証する意味がないので"off" */
