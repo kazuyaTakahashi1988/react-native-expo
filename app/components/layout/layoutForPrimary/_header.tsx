@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
-import { Logo, IconInfo } from '../../svg';
+import { IconInfo, Logo } from '../../svg';
 
 import type { ScreenNavigationProp } from '../../../lib/types';
 

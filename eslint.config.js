@@ -109,6 +109,16 @@ export default [
       'import/default': 'off',
       'import/no-named-as-default': 'off',
 
+      /* インポートのメンバーをアルファベット順に */
+      'sort-imports': [
+        'error',
+        {
+          ignoreCase: true,
+          ignoreDeclarationSort: true,
+          memberSyntaxSortOrder: ['none', 'all', 'multiple', 'single'],
+        },
+      ],
+
       /* -------------------------------------------------------
         認知的複雑度（sonarjs / total-functions / ESLintコア
       ---------------------------------------------------------- */
