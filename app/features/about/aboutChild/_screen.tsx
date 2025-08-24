@@ -77,9 +77,9 @@ const AboutChildScreen: React.FC = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#ccc',
     alignItems: 'center',
+    backgroundColor: '#ccc',
+    flex: 1,
     justifyContent: 'center',
   },
 });

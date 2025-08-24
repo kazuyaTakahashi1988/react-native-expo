@@ -90,26 +90,24 @@ const Navigation: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
-  tabBarLabelStyle: { fontSize: 12, fontWeight: '600' },
-  tabBarStyle: {
-    height: 58,
-    paddingTop: 6,
-    paddingBottom: 8, // iPhoneのセーフエリアでも読みやすく
-    backgroundColor: '#0b1220',
-    borderTopColor: 'rgba(255,255,255,0.08)',
-    borderTopWidth: 1,
-    // Androidの影感
-    elevation: 12,
-    // iOSの影感
-    shadowColor: '#000',
-    shadowOpacity: 0.08,
-    shadowRadius: 10,
-  },
   tabBarItemStyle: {
     borderRightColor: 'white',
     borderRightWidth: StyleSheet.hairlineWidth, // 物理1px相当
   },
+  tabBarLabelStyle: { fontSize: 12, fontWeight: '600' },
   tabBarLastChildStyle: { borderRightWidth: 0 },
+  tabBarStyle: {
+    backgroundColor: '#0b1220',
+    borderTopColor: 'rgba(255,255,255,0.08)',
+    borderTopWidth: 1,
+    elevation: 12,
+    height: 58,
+    paddingBottom: 8,
+    paddingTop: 6,
+    shadowColor: '#000',
+    shadowOpacity: 0.08,
+    shadowRadius: 10,
+  },
 });
 
 export default Navigation;

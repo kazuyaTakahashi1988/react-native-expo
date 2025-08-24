@@ -15,15 +15,15 @@ export const LayoutForPrimary: React.FC<TypelayoutPorps> = (props) => {
 };
 
 const styles = StyleSheet.create({
+  children: {
+    flexGrow: 1,
+    padding: 16,
+  },
   container: {
-    width: '100%',
+    backgroundColor: '#fff',
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: '#fff',
-  },
-  children: {
-    padding: 16,
-    flexGrow: 1,
+    width: '100%',
   },
 });
 

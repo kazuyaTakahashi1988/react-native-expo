@@ -43,6 +43,7 @@
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-native": "^5.0.0",
     "eslint-plugin-sonarjs": "^3.0.4",
+    "jiti": "^2.5.1",
     "prettier": "^3.6.2",
     "react-dom": "19.0.0",
     "react-native-web": "^0.20.0",
