@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import { StyleSheet, View, Text, Button } from 'react-native';
+import { Button, StyleSheet, Text, View } from 'react-native';
 
 import { LayoutForPrimary } from '../../components/layout';
 
