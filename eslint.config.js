@@ -51,6 +51,7 @@ export default [
       ...reactPlugin.configs.recommended.rules,
       ...reactPlugin.configs['jsx-runtime'].rules,
       ...reactNativePlugin.configs.all.rules,
+      /* 色コードを直接書くことを禁止するルールを"off" */
       'react-native/no-color-literals': 'off',
       /* 未定義の変数を使うことを禁止するルールを"off" */
       'no-undef': 'off',
