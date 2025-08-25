@@ -34,23 +34,28 @@ const Navigation: React.FC = () => {
           tabBarItemStyle: styles.tabBarItemStyle,
         })}
       >
+        {/* --------------------------------------------------
+         * BottomTabの画面追加
+         * -------------------------------------------------- */}
         <BottomTab.Screen
           name='home'
           options={{
-            headerShown: true,
             tabBarLabel: 'Home',
             tabBarIcon: ({ color, size }) => <IconHome size={size} color={color} />,
           }}
         >
           {() => (
             <NestStack.Navigator>
-              <NestStack.Screen name='homeTabs' options={{ headerShown: false }}>
+              <NestStack.Screen name='homeTab' options={{ headerShown: false }}>
                 {() => (
                   <NestTab.Navigator screenOptions={{ swipeEnabled: true }}>
+                    {/* --------------------------------------
+                     * homeTabの画面追加
+                     * -------------------------------------- */}
                     <NestTab.Screen
                       name='homeChild'
                       component={HomeChildScreen}
-                      options={{ title: 'HomeChildo1' }}
+                      options={{ title: 'HomeChild' }}
                     />
                     <NestTab.Screen
                       name='homeChild02'
@@ -61,8 +66,10 @@ const Navigation: React.FC = () => {
                 )}
               </NestStack.Screen>
 
-              {/* 例：将来の詳細画面 */}
-              {/* <NestStack.Screen name="HomeDetail" component={HomeDetailScreen} /> */}
+              {/* --------------------------------------
+               * 他tab外での詳細画面追加
+               * -------------------------------------- */}
+              {/* <NestStack.Screen name="anotherDetail" component={AnotherScreen} /> */}
             </NestStack.Navigator>
           )}
         </BottomTab.Screen>
@@ -80,8 +87,8 @@ const Navigation: React.FC = () => {
           component={WorkScreen}
           options={{
             tabBarLabel: 'Work',
-            tabBarItemStyle: styles.tabBarLastChildStyle,
             tabBarIcon: ({ color, size }) => <IconWork size={size} color={color} />,
+            tabBarItemStyle: styles.tabBarLastChildStyle,
           }}
         />
       </BottomTab.Navigator>
@@ -92,7 +99,7 @@ const Navigation: React.FC = () => {
 const styles = StyleSheet.create({
   tabBarItemStyle: {
     borderRightColor: 'white',
-    borderRightWidth: StyleSheet.hairlineWidth, // 物理1px相当
+    borderRightWidth: StyleSheet.hairlineWidth,
   },
   tabBarLabelStyle: { fontSize: 12, fontWeight: '600' },
   tabBarLastChildStyle: { borderRightWidth: 0 },
