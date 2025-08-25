@@ -7,6 +7,7 @@ import { StyleSheet } from 'react-native';
 
 import { IconAbout, IconHome, IconWork } from '../components/svg';
 import { AboutScreen } from '../features/about';
+import { HomeScreen } from '../features/home';
 import { HomeChildScreen } from '../features/home/homeChild';
 import { HomeChild02Screen } from '../features/home/homeChild02';
 import { WorkScreen } from '../features/work';
@@ -38,9 +39,9 @@ const Navigation: React.FC = () => {
          * BottomTabの画面追加
          * -------------------------------------------------- */}
         <BottomTab.Screen
-          name='home'
+          name='homeParent'
           options={{
-            tabBarLabel: 'Home',
+            tabBarLabel: 'HomeParent',
             tabBarIcon: ({ color, size }) => <IconHome size={size} color={color} />,
           }}
         >
@@ -52,6 +53,11 @@ const Navigation: React.FC = () => {
                     {/* --------------------------------------
                      * homeTabの画面追加
                      * -------------------------------------- */}
+                    <NestTab.Screen
+                      name='home'
+                      component={HomeScreen}
+                      options={{ title: 'Home' }}
+                    />
                     <NestTab.Screen
                       name='homeChild'
                       component={HomeChildScreen}
