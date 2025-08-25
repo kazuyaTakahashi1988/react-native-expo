@@ -41,7 +41,7 @@ const Navigation: React.FC = () => {
         <BottomTab.Screen
           name='homeParent'
           options={{
-            tabBarLabel: 'HomeParent',
+            tabBarLabel: 'Home',
             tabBarIcon: ({ color, size }) => <IconHome size={size} color={color} />,
           }}
         >
