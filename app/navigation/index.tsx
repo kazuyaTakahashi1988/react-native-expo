@@ -149,12 +149,12 @@ const bottomTabNone = (navigation: NativeStackNavigationProp<RootStackParamList>
   return {
     focus: () => {
       navigation.getParent()?.setOptions({
-        tabBarStyle: [bottomTabStyles, { display: 'none' }],
+        tabBarStyle: { display: 'none' },
       });
     },
-    blur: () => {
+    beforeRemove: () => {
       navigation.getParent()?.setOptions({
-        tabBarStyle: bottomTabStyles,
+        ...bottomTabStyles,
       });
     },
   };
