@@ -144,7 +144,7 @@ const tabBarItemLastChild: BottomTabNavigationOptions = {
   tabBarItemStyle: { borderRightWidth: 0 },
 };
 
-/* BottomTab非表示（display: 'none'）の設定 */
+/* BottomTab非表示の設定 */
 const bottomTabNone = (navigation: NativeStackNavigationProp<RootStackParamList>) => {
   return {
     focus: () => {
