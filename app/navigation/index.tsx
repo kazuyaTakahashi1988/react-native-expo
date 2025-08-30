@@ -12,6 +12,7 @@ import { HomeChild00Screen, HomeChild01Screen, HomeChild02Screen } from '../feat
 import { WorkScreen } from '../features/work';
 
 import type { RootStackParamList } from '../lib/types';
+import type { BottomTabNavigationOptions } from '@react-navigation/bottom-tabs';
 
 /* --------------------------------------------------
  * Navigation 設定
@@ -27,25 +28,25 @@ const Navigation: React.FC = () => {
       <BottomTab.Navigator
         screenOptions={() => ({
           headerShown: false,
-          tabBarActiveTintColor: '#0ea5e9', // アクティブ文字/アイコン
-          tabBarInactiveTintColor: '#fff', // 非アクティブ文字/アイコン
-          tabBarLabelStyle: styles.tabBarLabelStyle,
-          tabBarStyle: styles.tabBarStyle,
-          tabBarItemStyle: styles.tabBarItemStyle,
+          ...bottomTabStyles, // BottomTabのスタイル設定
         })}
       >
         {/* --------------------------------------------------
-         * BottomTabの画面追加
+         * BottomTabの各画面追加
          * -------------------------------------------------- */}
         <BottomTab.Screen
           name='home'
           options={{
             tabBarLabel: 'Home',
             tabBarIcon: ({ color, size }) => <IconHome size={size} color={color} />,
+            tabBarBadge: undefined,
           }}
         >
           {() => (
             <NestStack.Navigator>
+              {/* --------------------------------------
+               * home配下（およびhomeTab下）の画面追加
+               * -------------------------------------- */}
               <NestStack.Screen
                 name='homeTab'
                 options={{
@@ -55,9 +56,6 @@ const Navigation: React.FC = () => {
               >
                 {() => (
                   <NestTab.Navigator screenOptions={{ swipeEnabled: true }}>
-                    {/* --------------------------------------
-                     * homeTabの画面追加
-                     * -------------------------------------- */}
                     <NestTab.Screen
                       name='homeChild00'
                       component={HomeChild00Screen}
@@ -78,12 +76,13 @@ const Navigation: React.FC = () => {
               </NestStack.Screen>
 
               {/* --------------------------------------
-               * 他tab外での詳細画面追加
+               * home配下（およびhomeTab外）の画面追加
                * -------------------------------------- */}
               {/* <NestStack.Screen name="anotherDetail" component={AnotherScreen} /> */}
             </NestStack.Navigator>
           )}
         </BottomTab.Screen>
+
         <BottomTab.Screen
           name='about'
           component={AboutScreen}
@@ -93,13 +92,15 @@ const Navigation: React.FC = () => {
             tabBarBadge: 3,
           }}
         />
+
         <BottomTab.Screen
           name='work'
           component={WorkScreen}
           options={{
             tabBarLabel: 'Work',
             tabBarIcon: ({ color, size }) => <IconWork size={size} color={color} />,
-            tabBarItemStyle: styles.tabBarLastChildStyle,
+            tabBarBadge: undefined,
+            ...tabBarItemLastChild, // :last-child用のスタイル
           }}
         />
       </BottomTab.Navigator>
@@ -107,13 +108,9 @@ const Navigation: React.FC = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  tabBarItemStyle: {
-    borderRightColor: 'white',
-    borderRightWidth: StyleSheet.hairlineWidth,
-  },
-  tabBarLabelStyle: { fontSize: 12, fontWeight: '600' },
-  tabBarLastChildStyle: { borderRightWidth: 0 },
+const bottomTabStyles: BottomTabNavigationOptions = {
+  tabBarActiveTintColor: '#0ea5e9', // アクティブカラー
+  tabBarInactiveTintColor: '#fff', // 非アクティブカラー
   tabBarStyle: {
     backgroundColor: '#0b1220',
     borderTopColor: 'rgba(255,255,255,0.08)',
@@ -122,10 +119,16 @@ const styles = StyleSheet.create({
     height: 58,
     paddingBottom: 8,
     paddingTop: 6,
-    shadowColor: '#000',
-    shadowOpacity: 0.08,
-    shadowRadius: 10,
-  },
-});
+  }, // タブバーのViewスタイル（全体背景色など）
+  tabBarItemStyle: {
+    borderRightColor: 'white',
+    borderRightWidth: StyleSheet.hairlineWidth,
+  }, // タブバーのTextラッパースタイル
+  tabBarLabelStyle: { fontSize: 12, fontWeight: '600' }, // タブバーのTextスタイル
+};
+
+const tabBarItemLastChild: BottomTabNavigationOptions = {
+  tabBarItemStyle: { borderRightWidth: 0 }, // :last-child用のスタイル
+};
 
 export default Navigation;
