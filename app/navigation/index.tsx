@@ -83,7 +83,22 @@ const Navigation: React.FC = () => {
               {/* --------------------------------------
                * home配下（およびhomeTab外）の画面追加
                * -------------------------------------- */}
-              <NestStack.Screen name='homeOthers' component={HomeOthersScreen} />
+              <NestStack.Screen
+                name='homeOthers'
+                component={HomeOthersScreen}
+                listeners={({ navigation }) => ({
+                  focus: () => {
+                    navigation.getParent()?.setOptions({
+                      tabBarStyle: [bottomTabStyles, { display: 'none' }],
+                    });
+                  },
+                  blur: () => {
+                    navigation.getParent()?.setOptions({
+                      tabBarStyle: bottomTabStyles,
+                    });
+                  },
+                })}
+              />
             </NestStack.Navigator>
           )}
         </BottomTab.Screen>
