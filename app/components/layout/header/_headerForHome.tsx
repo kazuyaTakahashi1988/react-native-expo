@@ -5,7 +5,7 @@ import { IconInfo, Logo } from '../../svg';
 
 import type { ScreenNavigationProp } from '../../../lib/types';
 
-const Header: React.FC = () => {
+const HeaderForHome: React.FC = () => {
   const navigation = useNavigation<ScreenNavigationProp>();
 
   return (
@@ -16,7 +16,7 @@ const Header: React.FC = () => {
       <Text
         style={styles.headerItem}
         onPress={() => {
-          navigation.navigate('about');
+          navigation.navigate('homeOthers');
         }}
       >
         <IconInfo />
@@ -39,4 +39,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Header;
+export default HeaderForHome;

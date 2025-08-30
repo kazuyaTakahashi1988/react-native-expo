@@ -5,10 +5,15 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 import { StyleSheet } from 'react-native';
 
-import Header from '../components/layout/layoutForPrimary/_header';
+import { HeaderForHome } from '../components/layout';
 import { IconAbout, IconHome, IconWork } from '../components/svg';
 import { AboutScreen } from '../features/about';
-import { HomeChild00Screen, HomeChild01Screen, HomeChild02Screen } from '../features/home';
+import {
+  HomeChild00Screen,
+  HomeChild01Screen,
+  HomeChild02Screen,
+  HomeOthersScreen,
+} from '../features/home';
 import { WorkScreen } from '../features/work';
 
 import type { RootStackParamList } from '../lib/types';
@@ -51,7 +56,7 @@ const Navigation: React.FC = () => {
                 name='homeTab'
                 options={{
                   headerShown: true,
-                  header: () => <Header />, // home用共通ヘッダー
+                  header: () => <HeaderForHome />, // home配下用共通ヘッダー
                 }}
               >
                 {() => (
@@ -78,7 +83,7 @@ const Navigation: React.FC = () => {
               {/* --------------------------------------
                * home配下（およびhomeTab外）の画面追加
                * -------------------------------------- */}
-              {/* <NestStack.Screen name="anotherDetail" component={AnotherScreen} /> */}
+              <NestStack.Screen name='homeOthers' component={HomeOthersScreen} />
             </NestStack.Navigator>
           )}
         </BottomTab.Screen>
