@@ -5,10 +5,11 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 import { StyleSheet } from 'react-native';
 
+import Header from '../components/layout/layoutForPrimary/_header';
 import { IconAbout, IconHome, IconWork } from '../components/svg';
 import { AboutScreen } from '../features/about';
-import { HomeScreen } from '../features/home';
-import { HomeChildScreen } from '../features/home/homeChild';
+import { HomeChild00Screen } from '../features/home/homeChild00';
+import { HomeChild01Screen } from '../features/home/homeChild01';
 import { HomeChild02Screen } from '../features/home/homeChild02';
 import { WorkScreen } from '../features/work';
 
@@ -39,7 +40,7 @@ const Navigation: React.FC = () => {
          * BottomTabの画面追加
          * -------------------------------------------------- */}
         <BottomTab.Screen
-          name='homeParent'
+          name='home'
           options={{
             tabBarLabel: 'Home',
             tabBarIcon: ({ color, size }) => <IconHome size={size} color={color} />,
@@ -47,21 +48,27 @@ const Navigation: React.FC = () => {
         >
           {() => (
             <NestStack.Navigator>
-              <NestStack.Screen name='homeTab' options={{ headerShown: false }}>
+              <NestStack.Screen
+                name='homeTab'
+                options={{
+                  headerShown: true,
+                  header: () => <Header />,
+                }}
+              >
                 {() => (
                   <NestTab.Navigator screenOptions={{ swipeEnabled: true }}>
                     {/* --------------------------------------
                      * homeTabの画面追加
                      * -------------------------------------- */}
                     <NestTab.Screen
-                      name='home'
-                      component={HomeScreen}
-                      options={{ title: 'Home' }}
+                      name='homeChild00'
+                      component={HomeChild00Screen}
+                      options={{ title: 'HomeChild00' }}
                     />
                     <NestTab.Screen
-                      name='homeChild'
-                      component={HomeChildScreen}
-                      options={{ title: 'HomeChild' }}
+                      name='homeChild01'
+                      component={HomeChild01Screen}
+                      options={{ title: 'HomeChild01' }}
                     />
                     <NestTab.Screen
                       name='homeChild02'

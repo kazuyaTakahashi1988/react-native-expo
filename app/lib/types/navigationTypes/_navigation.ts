@@ -2,13 +2,7 @@ import type { NavigationProp, ParamListBase, RouteProp } from '@react-navigation
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { FC } from 'react';
 
-export type RootStackParamList = {
-  [x: string]:
-    | undefined
-    | {
-        [x: string]: undefined;
-      }[];
-};
+export type RootStackParamList = Record<string, undefined | { [key: string]: string | object }>;
 
 export type ScreenNavigationProp = NativeStackNavigationProp<RootStackParamList>;
 

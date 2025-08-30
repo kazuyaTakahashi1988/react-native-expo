@@ -5,12 +5,12 @@ import { LayoutForSecondary } from '../../../components/layout';
 
 import type { ScreenNavigationProp } from '../../../lib/types';
 
-const HomeChildScreen: React.FC = () => {
+const HomeChild01Screen: React.FC = () => {
   const navigation = useNavigation<ScreenNavigationProp>();
   return (
     <View style={styles.container}>
-      <LayoutForSecondary headerTitle='ホームチャイルド画面'>
-        <Text>HomeChild Screen</Text>
+      <LayoutForSecondary headerTitle='ホームチャイルド01画面'>
+        <Text>HomeChild01 Screen</Text>
         <Button
           title='Go to Home'
           onPress={() => {
@@ -37,4 +37,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeChildScreen;
+export default HomeChild01Screen;

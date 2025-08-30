@@ -1,16 +1,16 @@
 import { useNavigation } from '@react-navigation/native';
 import { Button, StyleSheet, Text, View } from 'react-native';
 
-import { LayoutForPrimary } from '../../components/layout';
+import { LayoutForSecondary } from '../../../components/layout';
 
-import type { ScreenNavigationProp } from '../../lib/types';
+import type { ScreenNavigationProp } from '../../../lib/types';
 
-const AboutScreen: React.FC = () => {
+const HomeChild00Screen: React.FC = () => {
   const navigation = useNavigation<ScreenNavigationProp>();
   return (
     <View style={styles.container}>
-      <LayoutForPrimary>
-        <Text>About Screen</Text>
+      <LayoutForSecondary headerTitle='ホームチャイルド00画面'>
+        <Text>HomeChild00 Screen</Text>
         <Button
           title='Go to Home'
           onPress={() => {
@@ -18,17 +18,12 @@ const AboutScreen: React.FC = () => {
           }}
         />
         <Button
-          title='Go to HomeChild'
+          title='Go to About'
           onPress={() => {
-            navigation.navigate('home', {
-              screen: 'homeTab',
-              params: {
-                screen: 'homeChild02',
-              },
-            });
+            navigation.navigate('about');
           }}
         />
-      </LayoutForPrimary>
+      </LayoutForSecondary>
     </View>
   );
 };
@@ -42,4 +37,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AboutScreen;
+export default HomeChild00Screen;
