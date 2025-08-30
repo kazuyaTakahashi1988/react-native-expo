@@ -57,7 +57,7 @@ const Navigation: React.FC = () => {
                 name='homeTab'
                 options={{
                   headerShown: true,
-                  header: () => <HeaderForHome />, // home配下用共通ヘッダー
+                  header: () => <HeaderForHome />, // homeTab配下共通ヘッダー
                 }}
               >
                 {() => (
