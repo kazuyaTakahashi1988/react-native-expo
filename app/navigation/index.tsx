@@ -34,7 +34,7 @@ const Navigation: React.FC = () => {
       <BottomTab.Navigator
         screenOptions={() => ({
           headerShown: false,
-          ...bottomTabStyles, // BottomTabのスタイル設定
+          ...bottomTabStyles, // BottomTabスタイル
         })}
       >
         {/* --------------------------------------------------
@@ -111,7 +111,7 @@ const Navigation: React.FC = () => {
             tabBarLabel: 'Work',
             tabBarIcon: ({ color, size }) => <IconWork size={size} color={color} />,
             tabBarBadge: undefined,
-            ...tabBarItemLastChild, // :last-child用スタイル
+            ...tabBarItemLastChild, // :last-childスタイル
           }}
         />
       </BottomTab.Navigator>
@@ -119,7 +119,7 @@ const Navigation: React.FC = () => {
   );
 };
 
-/* BottomTabのスタイル設定 */
+/* BottomTabスタイル */
 const bottomTabStyles: BottomTabNavigationOptions = {
   tabBarActiveTintColor: '#0ea5e9', // アクティブカラー
   tabBarInactiveTintColor: '#fff', // 非アクティブカラー
@@ -139,7 +139,7 @@ const bottomTabStyles: BottomTabNavigationOptions = {
   tabBarLabelStyle: { fontSize: 12, fontWeight: '600' }, // タブバーのTextスタイル
 };
 
-/* :last-child用スタイル */
+/* :last-childスタイル */
 const tabBarItemLastChild: BottomTabNavigationOptions = {
   tabBarItemStyle: { borderRightWidth: 0 },
 };
