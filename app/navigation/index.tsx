@@ -18,6 +18,7 @@ import { WorkScreen } from '../features/work';
 
 import type { RootStackParamList } from '../lib/types';
 import type { BottomTabNavigationOptions } from '@react-navigation/bottom-tabs';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 /* --------------------------------------------------
  * Navigation 設定
@@ -86,18 +87,7 @@ const Navigation: React.FC = () => {
               <NestStack.Screen
                 name='homeOthers'
                 component={HomeOthersScreen}
-                listeners={({ navigation }) => ({
-                  focus: () => {
-                    navigation.getParent()?.setOptions({
-                      tabBarStyle: [bottomTabStyles, { display: 'none' }],
-                    });
-                  },
-                  blur: () => {
-                    navigation.getParent()?.setOptions({
-                      tabBarStyle: bottomTabStyles,
-                    });
-                  },
-                })}
+                listeners={({ navigation }) => bottomTabNone(navigation)} // BottomTab非表示（display: 'none'）の設定
               />
             </NestStack.Navigator>
           )}
@@ -151,6 +141,22 @@ const bottomTabStyles: BottomTabNavigationOptions = {
 /* :last-child用スタイル */
 const tabBarItemLastChild: BottomTabNavigationOptions = {
   tabBarItemStyle: { borderRightWidth: 0 },
+};
+
+/* BottomTab非表示（display: 'none'）の設定 */
+const bottomTabNone = (navigation: NativeStackNavigationProp<RootStackParamList>) => {
+  return {
+    focus: () => {
+      navigation.getParent()?.setOptions({
+        tabBarStyle: [bottomTabStyles, { display: 'none' }],
+      });
+    },
+    blur: () => {
+      navigation.getParent()?.setOptions({
+        tabBarStyle: bottomTabStyles,
+      });
+    },
+  };
 };
 
 export default Navigation;
