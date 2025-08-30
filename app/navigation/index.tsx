@@ -128,8 +128,9 @@ const bottomTabStyles: BottomTabNavigationOptions = {
   tabBarLabelStyle: { fontSize: 12, fontWeight: '600' }, // タブバーのTextスタイル
 };
 
+/* :last-child用スタイル */
 const tabBarItemLastChild: BottomTabNavigationOptions = {
-  tabBarItemStyle: { borderRightWidth: 0 }, // タブバーのTextラッパー:last-child用スタイル
+  tabBarItemStyle: { borderRightWidth: 0 },
 };
 
 export default Navigation;
