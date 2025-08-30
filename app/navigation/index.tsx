@@ -51,7 +51,7 @@ const Navigation: React.FC = () => {
           {() => (
             <NestStack.Navigator>
               {/* --------------------------------------
-               * home配下（およびhomeTab下）の画面追加
+               * home配下（およびhomeTab配下）の画面追加
                * -------------------------------------- */}
               <NestStack.Screen
                 name='homeTab'
@@ -82,13 +82,13 @@ const Navigation: React.FC = () => {
               </NestStack.Screen>
 
               {/* --------------------------------------
-               * home配下（およびhomeTab外）の画面追加
+               * home配下（かつhomeTab外）の画面追加
                * -------------------------------------- */}
               <NestStack.Screen
                 name='homeOthers'
                 component={HomeOthersScreen}
                 options={{ title: 'HomeOthers' }}
-                listeners={({ navigation }) => bottomTabNone(navigation)} // BottomTab非表示（display: 'none'）の設定
+                listeners={({ navigation }) => bottomTabNone(navigation)} // BottomTab非表示の設定
               />
             </NestStack.Navigator>
           )}
