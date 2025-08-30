@@ -9,7 +9,7 @@ const HomeChild00Screen: React.FC = () => {
   const navigation = useNavigation<ScreenNavigationProp>();
   return (
     <View style={styles.container}>
-      <LayoutForSecondary headerTitle='ホームチャイルド00画面'>
+      <LayoutForSecondary>
         <Text>HomeChild00 Screen</Text>
         <Button
           title='Go to Home'

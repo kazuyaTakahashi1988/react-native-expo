@@ -1,14 +1,11 @@
 import { ScrollView, StyleSheet, View } from 'react-native';
 
-import Header from './_header';
-
 import type { TypelayoutPorps } from '../../../lib/types';
 
 export const LayoutForSecondary: React.FC<TypelayoutPorps> = (props) => {
-  const { headerTitle, children } = props;
+  const { children } = props;
   return (
     <View style={styles.container}>
-      <Header headerTitle={headerTitle} />
       <ScrollView contentContainerStyle={styles.children}>{children}</ScrollView>
     </View>
   );
