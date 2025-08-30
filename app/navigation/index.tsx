@@ -87,6 +87,7 @@ const Navigation: React.FC = () => {
               <NestStack.Screen
                 name='homeOthers'
                 component={HomeOthersScreen}
+                options={{ title: 'HomeOthers' }}
                 listeners={({ navigation }) => bottomTabNone(navigation)} // BottomTab非表示（display: 'none'）の設定
               />
             </NestStack.Navigator>
