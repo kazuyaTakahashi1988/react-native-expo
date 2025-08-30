@@ -8,9 +8,7 @@ import { StyleSheet } from 'react-native';
 import Header from '../components/layout/layoutForPrimary/_header';
 import { IconAbout, IconHome, IconWork } from '../components/svg';
 import { AboutScreen } from '../features/about';
-import { HomeChild00Screen } from '../features/home/homeChild00';
-import { HomeChild01Screen } from '../features/home/homeChild01';
-import { HomeChild02Screen } from '../features/home/homeChild02';
+import { HomeChild00Screen, HomeChild01Screen, HomeChild02Screen } from '../features/home';
 import { WorkScreen } from '../features/work';
 
 import type { RootStackParamList } from '../lib/types';
