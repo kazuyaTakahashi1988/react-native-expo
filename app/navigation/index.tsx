@@ -56,7 +56,6 @@ const Navigation: React.FC = () => {
               <NestStack.Screen
                 name='homeTab'
                 options={{
-                  headerShown: true,
                   header: () => <HeaderForHome />, // homeTab配下共通ヘッダー
                 }}
               >
