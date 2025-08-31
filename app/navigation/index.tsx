@@ -29,6 +29,22 @@ const Navigation: React.FC = () => {
   const NestTab = createMaterialTopTabNavigator<RootStackParamList>();
   const NestStack = createNativeStackNavigator<RootStackParamList>();
 
+  /* BottomTab非表示処理 */
+  const bottomTabNone = (navigation: NativeStackNavigationProp<RootStackParamList>) => {
+    return {
+      focus: () => {
+        navigation.getParent()?.setOptions({
+          tabBarStyle: { display: 'none' },
+        });
+      },
+      beforeRemove: () => {
+        navigation.getParent()?.setOptions({
+          ...bottomTabStyles,
+        });
+      },
+    };
+  };
+
   return (
     <NavigationContainer>
       <BottomTab.Navigator
@@ -87,7 +103,7 @@ const Navigation: React.FC = () => {
                 name='homeOthers'
                 component={HomeOthersScreen}
                 options={{ title: 'HomeOthers' }}
-                listeners={({ navigation }) => bottomTabNone(navigation)} // BottomTab非表示の設定
+                listeners={({ navigation }) => bottomTabNone(navigation)} // BottomTab非表示処理
               />
             </NestStack.Navigator>
           )}
@@ -141,22 +157,6 @@ const bottomTabStyles: BottomTabNavigationOptions = {
 /* :last-childスタイル */
 const tabBarItemLastChild: BottomTabNavigationOptions = {
   tabBarItemStyle: { borderRightWidth: 0 },
-};
-
-/* BottomTab非表示の設定 */
-const bottomTabNone = (navigation: NativeStackNavigationProp<RootStackParamList>) => {
-  return {
-    focus: () => {
-      navigation.getParent()?.setOptions({
-        tabBarStyle: { display: 'none' },
-      });
-    },
-    beforeRemove: () => {
-      navigation.getParent()?.setOptions({
-        ...bottomTabStyles,
-      });
-    },
-  };
 };
 
 export default Navigation;
