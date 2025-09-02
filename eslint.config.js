@@ -2,6 +2,7 @@ import js from '@eslint/js';
 import prettier from 'eslint-config-prettier';
 import importPlugin from 'eslint-plugin-import';
 import react from 'eslint-plugin-react';
+import reactHooks from 'eslint-plugin-react-hooks';
 import reactNative from 'eslint-plugin-react-native';
 import sonarjs from 'eslint-plugin-sonarjs';
 import tseslint from 'typescript-eslint';
@@ -14,10 +15,13 @@ const reactNativePlugin = reactNative;
 
 export default [
   js.configs.recommended,
+  sonarjs.configs.recommended,
   ...tseslint.configs.recommended,
   ...tseslint.configs.recommendedTypeChecked,
   ...tseslint.configs.strictTypeChecked,
-  prettier,
+  reactPlugin.configs.flat.recommended,
+  reactPlugin.configs.flat['jsx-runtime'],
+  reactHooks.configs['recommended-latest'],
   {
     files: ['app/**/*.ts', 'app/**/*.tsx', 'index.ts', 'eslint.config.js'],
     languageOptions: {
@@ -30,11 +34,8 @@ export default [
       },
     },
     plugins: {
-      '@typescript-eslint': tseslint.plugin,
-      react: reactPlugin,
       'react-native': reactNativePlugin,
       import: importPlugin,
-      sonarjs,
     },
     settings: {
       react: {
@@ -48,8 +49,6 @@ export default [
       },
     },
     rules: {
-      ...reactPlugin.configs.recommended.rules,
-      ...reactPlugin.configs['jsx-runtime'].rules,
       ...reactNativePlugin.configs.all.rules,
       /* 色コードを直接書くことを禁止するルールを"off" */
       'react-native/no-color-literals': 'off',
@@ -70,11 +69,6 @@ export default [
       '@typescript-eslint/prefer-includes': 'error',
       /* 型(type)だけをimportする場合は "import type ~~~" を使うことを強制 */
       '@typescript-eslint/consistent-type-imports': ['error', { prefer: 'type-imports' }],
-      /* 未定義の可能性がある値をそのまま条件分岐に使うのを禁止 */
-      '@typescript-eslint/no-unnecessary-condition': [
-        'error',
-        { allowConstantLoopConditions: true },
-      ],
       /* truthy/falsy 判定を厳格化し、`undefined` を見逃さない */
       '@typescript-eslint/strict-boolean-expressions': [
         'error',
@@ -132,10 +126,6 @@ export default [
         'total-functions/no-unsafe-type-assertion': 'error'
         が最新のESlintに対応してないため以下にて代替
       ---------------------------------------------------------- */
-      /* 型推論ができない場合のアサーション を禁止 */
-      '@typescript-eslint/no-unnecessary-type-assertion': 'error',
-      /* "!" を使った 非nullアサーション を禁止 */
-      '@typescript-eslint/no-non-null-assertion': 'error',
       /* <Type> スタイルは警告、object literal の場合は許容 */
       '@typescript-eslint/consistent-type-assertions': [
         'warn',
@@ -145,6 +135,7 @@ export default [
       '@typescript-eslint/no-unsafe-member-access': 'error',
     },
   },
+  prettier, // ←prettierはこの位置（最後尾近く）に置いておくこと
   {
     ignores: ['node_modules', '.expo', 'ios', 'android'],
   },

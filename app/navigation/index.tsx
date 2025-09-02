@@ -2,7 +2,6 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import React from 'react';
 import { StyleSheet } from 'react-native';
 
 import { HeaderForHome } from '../components/layout';
@@ -19,6 +18,7 @@ import { WorkScreen } from '../features/work';
 import type { RootStackParamList } from '../lib/types';
 import type { BottomTabNavigationOptions } from '@react-navigation/bottom-tabs';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import type React from 'react';
 
 /* --------------------------------------------------
  * Navigation 設定

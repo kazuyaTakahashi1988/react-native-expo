@@ -1,7 +1,7 @@
-import React from 'react';
 import Svg, { Path } from 'react-native-svg';
 
 import type { SvgProps } from '../../../lib/types';
+import type React from 'react';
 
 const IconInfo: React.FC<SvgProps> = ({ color = '#000', size = 24 }) => (
   <Svg width={size} height={size} viewBox='0 0 512 512' fill='none'>

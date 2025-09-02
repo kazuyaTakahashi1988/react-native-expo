@@ -1,7 +1,7 @@
-import React from 'react';
 import Svg, { Text } from 'react-native-svg';
 
 import type { SvgProps } from '../../../lib/types';
+import type React from 'react';
 
 const Logo: React.FC<SvgProps> = ({ color = '#000', size = 100 }) => (
   <Svg width={size} height={size} viewBox='0 0 200 60' fill='none'>
