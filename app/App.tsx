@@ -6,7 +6,7 @@ import Navigation from './navigation';
 
 import type React from 'react';
 
-enableScreens(); //  App起動前に呼び出す
+enableScreens(); // App起動前に呼び出す
 
 const App: React.FC = () => {
   return (
