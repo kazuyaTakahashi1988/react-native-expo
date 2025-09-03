@@ -52,7 +52,7 @@
     "lint-staged": "^15.2.8"
   },
   "lint-staged": {
-    "*.{ts,tsx}": "eslint --max-warnings=0"
+    "**/*.{ts,tsx}": "eslint --max-warnings=0"
   },
   "private": true
 }
