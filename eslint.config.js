@@ -6,6 +6,7 @@ import reactHooks from 'eslint-plugin-react-hooks';
 import reactNative from 'eslint-plugin-react-native';
 import sonarjs from 'eslint-plugin-sonarjs';
 import tseslint from 'typescript-eslint';
+import totalFunctions from 'eslint-plugin-total-functions';
 
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /** @type {import('eslint').ESLint.Plugin} */
@@ -36,6 +37,7 @@ export default [
     plugins: {
       'react-native': reactNativePlugin,
       import: importPlugin,
+      'total-functions': totalFunctions,
     },
     settings: {
       react: {
@@ -124,8 +126,8 @@ export default [
 
       /* -------------------------------------------------------
         'total-functions/no-unsafe-type-assertion': 'error'
-        が最新のESlintに対応してないため以下にて代替
       ---------------------------------------------------------- */
+      'total-functions/no-unsafe-type-assertion': 'error',
       /* <Type> スタイルは警告、object literal の場合は許容 */
       '@typescript-eslint/consistent-type-assertions': [
         'warn',
