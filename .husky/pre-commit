@@ -1,0 +1,3 @@
+#!/usr/bin/env sh
+# Lint staged files and block commit on warnings or errors
+npx lint-staged || exit 1
