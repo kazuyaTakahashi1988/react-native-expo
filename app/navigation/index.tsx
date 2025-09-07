@@ -21,7 +21,7 @@ import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type React from 'react';
 
 /* --------------------------------------------------
- * Navigation 設定
+ * Navigation & 共通レイアウト 設定
  * ----------------------------------------------- */
 
 const Navigation: React.FC = () => {

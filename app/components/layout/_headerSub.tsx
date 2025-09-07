@@ -1,34 +1,39 @@
 import { StyleSheet, Text, View } from 'react-native';
 
-import { IconArrow } from '../../svg';
+import { IconArrow } from '../svg';
 
-import type { TypeHeaderSub } from '../../../lib/types';
+import type { TypeHeaderSub } from '../../lib/types';
 
 const HeaderSub = ({ navigation, isBack = true, route, options }: TypeHeaderSub) => {
   const headerTitle = options.title ?? route.name;
 
   return (
     <View style={styles.header}>
-      {isBack && (
-        <Text
-          style={[styles.headerItem, styles.headerLeft]}
-          onPress={() => {
-            navigation.goBack();
-          }}
-        >
-          <IconArrow />
-        </Text>
-      )}
-      <Text style={styles.headerItem}>{headerTitle}</Text>
-      <Text style={[styles.headerItem, styles.headerRight]} />
+      <View style={styles.headerInner}>
+        {isBack && (
+          <Text
+            style={[styles.headerItem, styles.headerLeft]}
+            onPress={() => {
+              navigation.goBack();
+            }}
+          >
+            <IconArrow />
+          </Text>
+        )}
+        <Text style={styles.headerItem}>{headerTitle}</Text>
+        <Text style={[styles.headerItem, styles.headerRight]} />
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   header: {
-    alignItems: 'center',
     backgroundColor: 'red',
+    paddingTop: 20,
+  },
+  headerInner: {
+    alignItems: 'center',
     height: 50,
     justifyContent: 'center',
     width: '100%',
@@ -42,12 +47,12 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   headerLeft: {
-    left: 10,
+    left: 0,
     position: 'absolute',
   },
   headerRight: {
     position: 'absolute',
-    right: 10,
+    right: 0,
   },
 });
 
