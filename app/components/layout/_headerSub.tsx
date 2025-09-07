@@ -2,9 +2,10 @@ import { StyleSheet, Text, View } from 'react-native';
 
 import { IconArrow } from '../svg';
 
-import type { TypeHeaderSub } from '../../lib/types';
+import type { TypeHeaderSubProps } from '../../lib/types';
 
-const HeaderSub = ({ navigation, isBack = true, route, options }: TypeHeaderSub) => {
+const HeaderSub: React.FC<TypeHeaderSubProps> = (props) => {
+  const { navigation, isBack = true, route, options } = props;
   const headerTitle = options.title ?? route.name;
 
   return (

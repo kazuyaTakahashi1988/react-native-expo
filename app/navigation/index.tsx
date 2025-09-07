@@ -72,7 +72,7 @@ const Navigation: React.FC = () => {
               <NestStack.Screen
                 name='homeTab'
                 options={{
-                  header: () => <HeaderHome />, // 共通ヘッダー（Home用）
+                  header: (props) => <HeaderHome {...props} />, // 共通ヘッダー（Home用）
                 }}
               >
                 {() => (

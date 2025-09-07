@@ -1,12 +1,11 @@
-import { useNavigation } from '@react-navigation/native';
 import { StyleSheet, Text, View } from 'react-native';
 
 import { IconInfo, Logo } from '../svg';
 
-import type { TypeNavigation } from '../../lib/types';
+import type { TypeHeaderHomeProps } from '../../lib/types';
 
-const HeaderHome: React.FC = () => {
-  const navigation = useNavigation<TypeNavigation>();
+const HeaderHome: React.FC<TypeHeaderHomeProps> = (props) => {
+  const { navigation } = props;
 
   return (
     <View style={styles.header}>
