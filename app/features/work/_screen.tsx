@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import { Button, StyleSheet, Text, View } from 'react-native';
 
-import { LayoutForPrimary } from '../../components/layout';
+import { Layout } from '../../components/layout';
 
 import type { ScreenNavigationProp } from '../../lib/types';
 
@@ -9,7 +9,7 @@ const WorkScreen: React.FC = () => {
   const navigation = useNavigation<ScreenNavigationProp>();
   return (
     <View style={styles.container}>
-      <LayoutForPrimary>
+      <Layout>
         <Text>Work Screen</Text>
         <Button
           title='Go to About'
@@ -17,7 +17,7 @@ const WorkScreen: React.FC = () => {
             navigation.navigate('about');
           }}
         />
-      </LayoutForPrimary>
+      </Layout>
     </View>
   );
 };

@@ -1,26 +1,26 @@
 import { useNavigation } from '@react-navigation/native';
 import { StyleSheet, Text, View } from 'react-native';
 
-import { IconArrow } from '../../svg';
+import { IconInfo, Logo } from '../svg';
 
-import type { TypelayoutPorps } from '../../../lib/types';
+import type { ScreenNavigationProp } from '../../lib/types';
 
-const Header: React.FC<TypelayoutPorps> = (props) => {
-  const { headerTitle } = props;
-  const navigation = useNavigation();
+const HeaderHome: React.FC = () => {
+  const navigation = useNavigation<ScreenNavigationProp>();
 
   return (
     <View style={styles.header}>
+      <Text style={styles.headerItem}>
+        <Logo />
+      </Text>
       <Text
         style={styles.headerItem}
         onPress={() => {
-          navigation.goBack();
+          navigation.navigate('homeOthers');
         }}
       >
-        <IconArrow />
+        <IconInfo />
       </Text>
-      <Text style={styles.headerItem}>{headerTitle}</Text>
-      <Text style={styles.headerItem} />
     </View>
   );
 };
@@ -35,13 +35,8 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   headerItem: {
-    alignItems: 'center',
-    display: 'flex',
-    fontSize: 20,
-    fontWeight: 'bold',
-    justifyContent: 'center',
     padding: 10,
   },
 });
 
-export default Header;
+export default HeaderHome;

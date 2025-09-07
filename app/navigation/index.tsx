@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StyleSheet } from 'react-native';
 
-import { HeaderForHome } from '../components/layout';
+import { HeaderHome, HeaderSub } from '../components/layout';
 import { IconAbout, IconHome, IconWork } from '../components/svg';
 import { AboutScreen } from '../features/about';
 import {
@@ -59,8 +59,8 @@ const Navigation: React.FC = () => {
         <BottomTab.Screen
           name='home'
           options={{
-            tabBarLabel: 'Home',
-            tabBarIcon: ({ color, size }) => <IconHome size={size} color={color} />,
+            title: 'Home',
+            tabBarIcon: ({ color }) => <IconHome color={color} />,
             tabBarBadge: undefined,
           }}
         >
@@ -72,7 +72,7 @@ const Navigation: React.FC = () => {
               <NestStack.Screen
                 name='homeTab'
                 options={{
-                  header: () => <HeaderForHome />, // homeTab配下共通ヘッダー
+                  header: () => <HeaderHome />, // 共通ヘッダー（Home用）
                 }}
               >
                 {() => (
@@ -102,7 +102,10 @@ const Navigation: React.FC = () => {
               <NestStack.Screen
                 name='homeOthers'
                 component={HomeOthersScreen}
-                options={{ title: 'HomeOthers' }}
+                options={{
+                  title: 'HomeOthers',
+                  header: (props) => <HeaderSub {...props} />, // 共通ヘッダー（サブ用）
+                }}
                 listeners={({ navigation }) => bottomTabNone(navigation)} // BottomTab非表示処理
               />
             </NestStack.Navigator>
@@ -113,9 +116,11 @@ const Navigation: React.FC = () => {
           name='about'
           component={AboutScreen}
           options={{
-            tabBarLabel: 'About',
-            tabBarIcon: ({ color, size }) => <IconAbout size={size} color={color} />,
+            title: 'About',
+            tabBarIcon: ({ color }) => <IconAbout color={color} />,
             tabBarBadge: 3,
+            headerShown: true,
+            header: (props) => <HeaderSub {...props} isBack={false} />, // 共通ヘッダー（サブ用）
           }}
         />
 
@@ -123,9 +128,11 @@ const Navigation: React.FC = () => {
           name='work'
           component={WorkScreen}
           options={{
-            tabBarLabel: 'Work',
-            tabBarIcon: ({ color, size }) => <IconWork size={size} color={color} />,
+            title: 'Work',
+            tabBarIcon: ({ color }) => <IconWork color={color} />,
             tabBarBadge: undefined,
+            headerShown: true,
+            header: (props) => <HeaderSub {...props} isBack={false} />, // 共通ヘッダー（サブ用）
             ...tabBarItemLastChild, // :last-childスタイル
           }}
         />

@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import { Button, StyleSheet, Text, View } from 'react-native';
 
-import { LayoutForSecondary } from '../../../components/layout';
+import { Layout } from '../../../components/layout';
 
 import type { ScreenNavigationProp } from '../../../lib/types';
 
@@ -9,7 +9,7 @@ const HomeChild00Screen: React.FC = () => {
   const navigation = useNavigation<ScreenNavigationProp>();
   return (
     <View style={styles.container}>
-      <LayoutForSecondary>
+      <Layout>
         <Text>HomeChild00 Screen</Text>
         <Button
           title='Go to Home'
@@ -23,7 +23,7 @@ const HomeChild00Screen: React.FC = () => {
             navigation.navigate('about');
           }}
         />
-      </LayoutForSecondary>
+      </Layout>
     </View>
   );
 };

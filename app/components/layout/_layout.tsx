@@ -1,14 +1,11 @@
 import { ScrollView, StyleSheet, View } from 'react-native';
 
-import Header from './_header';
+import type { Typelayout } from '../../lib/types';
 
-import type { TypelayoutPorps } from '../../../lib/types';
-
-export const LayoutForPrimary: React.FC<TypelayoutPorps> = (props) => {
+export const Layout: React.FC<Typelayout> = (props) => {
   const { children } = props;
   return (
     <View style={styles.container}>
-      <Header />
       <ScrollView contentContainerStyle={styles.children}>{children}</ScrollView>
     </View>
   );
@@ -20,11 +17,11 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   container: {
-    backgroundColor: '#fff',
+    backgroundColor: '#ccc',
     flex: 1,
     flexDirection: 'column',
     width: '100%',
   },
 });
 
-export default LayoutForPrimary;
+export default Layout;
