@@ -1,4 +1,4 @@
-export type SvgProps = {
+export type TypeSvg = {
   color?: string;
   size?: number;
 };

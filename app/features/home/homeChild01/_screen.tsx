@@ -3,10 +3,10 @@ import { Button, StyleSheet, Text, View } from 'react-native';
 
 import { Layout } from '../../../components/layout';
 
-import type { ScreenNavigationProp } from '../../../lib/types';
+import type { TypeNavigation } from '../../../lib/types';
 
 const HomeChild01Screen: React.FC = () => {
-  const navigation = useNavigation<ScreenNavigationProp>();
+  const navigation = useNavigation<TypeNavigation>();
   return (
     <View style={styles.container}>
       <Layout>

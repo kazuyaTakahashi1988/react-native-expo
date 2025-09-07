@@ -15,7 +15,7 @@ import {
 } from '../features/home';
 import { WorkScreen } from '../features/work';
 
-import type { RootStackParamList } from '../lib/types';
+import type { TypeRootList } from '../lib/types';
 import type { BottomTabNavigationOptions } from '@react-navigation/bottom-tabs';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type React from 'react';
@@ -25,12 +25,12 @@ import type React from 'react';
  * ----------------------------------------------- */
 
 const Navigation: React.FC = () => {
-  const BottomTab = createBottomTabNavigator<RootStackParamList>();
-  const NestTab = createMaterialTopTabNavigator<RootStackParamList>();
-  const NestStack = createNativeStackNavigator<RootStackParamList>();
+  const BottomTab = createBottomTabNavigator<TypeRootList>();
+  const NestTab = createMaterialTopTabNavigator<TypeRootList>();
+  const NestStack = createNativeStackNavigator<TypeRootList>();
 
   /* BottomTab非表示処理 */
-  const bottomTabNone = (navigation: NativeStackNavigationProp<RootStackParamList>) => {
+  const bottomTabNone = (navigation: NativeStackNavigationProp<TypeRootList>) => {
     return {
       focus: () => {
         navigation.getParent()?.setOptions({
@@ -49,7 +49,6 @@ const Navigation: React.FC = () => {
     <NavigationContainer>
       <BottomTab.Navigator
         screenOptions={() => ({
-          headerShown: false,
           ...bottomTabStyles, // BottomTabスタイル
         })}
       >
@@ -62,6 +61,7 @@ const Navigation: React.FC = () => {
             title: 'Home',
             tabBarIcon: ({ color }) => <IconHome color={color} />,
             tabBarBadge: undefined,
+            headerShown: false,
           }}
         >
           {() => (
@@ -119,7 +119,6 @@ const Navigation: React.FC = () => {
             title: 'About',
             tabBarIcon: ({ color }) => <IconAbout color={color} />,
             tabBarBadge: 3,
-            headerShown: true,
             header: (props) => <HeaderSub {...props} isBack={false} />, // 共通ヘッダー（サブ用）
           }}
         />
@@ -131,7 +130,6 @@ const Navigation: React.FC = () => {
             title: 'Work',
             tabBarIcon: ({ color }) => <IconWork color={color} />,
             tabBarBadge: undefined,
-            headerShown: true,
             header: (props) => <HeaderSub {...props} isBack={false} />, // 共通ヘッダー（サブ用）
             ...tabBarItemLastChild, // :last-childスタイル
           }}
