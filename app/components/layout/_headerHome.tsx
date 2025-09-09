@@ -2,9 +2,9 @@ import { StyleSheet, Text, View } from 'react-native';
 
 import { IconInfo, Logo } from '../svg';
 
-import type { TypeHeaderHomeProps } from '../../lib/types';
+import type { TypeHeaderHome } from '../../lib/types';
 
-const HeaderHome: React.FC<TypeHeaderHomeProps> = (props) => {
+const HeaderHome: React.FC<TypeHeaderHome> = (props) => {
   const { navigation } = props;
 
   return (

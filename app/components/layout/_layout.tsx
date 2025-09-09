@@ -1,8 +1,8 @@
 import { ScrollView, StyleSheet, View } from 'react-native';
 
-import type { TypeLayoutProps } from '../../lib/types';
+import type { TypeLayout } from '../../lib/types';
 
-export const Layout: React.FC<TypeLayoutProps> = (props) => {
+export const Layout: React.FC<TypeLayout> = (props) => {
   const { children } = props;
 
   return (
@@ -13,15 +13,15 @@ export const Layout: React.FC<TypeLayoutProps> = (props) => {
 };
 
 const styles = StyleSheet.create({
-  children: {
-    flexGrow: 1,
-    padding: 16,
-  },
   container: {
     backgroundColor: '#ccc',
     flex: 1,
     flexDirection: 'column',
     width: '100%',
+  },
+  children: {
+    flexGrow: 1,
+    padding: 16,
   },
 });
 
