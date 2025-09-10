@@ -1,12 +1,11 @@
-import { useNavigation } from '@react-navigation/native';
 import { Button, StyleSheet, Text, View } from 'react-native';
 
 import { Layout } from '../../../components/layout';
 
-import type { TypeNavigation } from '../../../lib/types';
+import type { TypeHomeOthersScreen } from '../../../lib/types';
 
-const HomeOthersScreen: React.FC = () => {
-  const navigation = useNavigation<TypeNavigation>();
+const HomeOthersScreen: React.FC<TypeHomeOthersScreen> = (props) => {
+  const { navigation } = props;
   return (
     <View style={styles.container}>
       <Layout>

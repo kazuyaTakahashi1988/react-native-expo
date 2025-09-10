@@ -55,19 +55,20 @@ const Navigation: React.FC = () => {
         {/* --------------------------------------------------
          * BottomTabの各画面追加
          * -------------------------------------------------- */}
+        {/* Home 画面 */}
         <BottomTab.Screen
           name='home'
           options={{
             title: 'Home',
+            headerShown: false,
             tabBarIcon: ({ color }) => <IconHome color={color} />,
             tabBarBadge: undefined,
-            headerShown: false,
           }}
         >
           {() => (
             <NestStack.Navigator>
               {/* --------------------------------------
-               * home配下（およびhomeTab配下）の画面追加
+               * Home配下（およびhomeTab配下）の画面追加
                * -------------------------------------- */}
               <NestStack.Screen
                 name='homeTab'
@@ -77,63 +78,62 @@ const Navigation: React.FC = () => {
               >
                 {() => (
                   <NestTab.Navigator screenOptions={{ swipeEnabled: true }}>
-                    <NestTab.Screen
-                      name='homeChild00'
-                      component={HomeChild00Screen}
-                      options={{ title: 'HomeChild00' }}
-                    />
-                    <NestTab.Screen
-                      name='homeChild01'
-                      component={HomeChild01Screen}
-                      options={{ title: 'HomeChild01' }}
-                    />
-                    <NestTab.Screen
-                      name='homeChild02'
-                      component={HomeChild02Screen}
-                      options={{ title: 'HomeChild02' }}
-                    />
+                    <NestTab.Screen name='homeChild00' options={{ title: 'HomeChild00' }}>
+                      {(props) => <HomeChild00Screen {...props} />}
+                    </NestTab.Screen>
+                    <NestTab.Screen name='homeChild01' options={{ title: 'HomeChild01' }}>
+                      {(props) => <HomeChild01Screen {...props} />}
+                    </NestTab.Screen>
+                    <NestTab.Screen name='homeChild02' options={{ title: 'HomeChild02' }}>
+                      {(props) => <HomeChild02Screen {...props} />}
+                    </NestTab.Screen>
                   </NestTab.Navigator>
                 )}
               </NestStack.Screen>
 
               {/* --------------------------------------
-               * home配下（かつhomeTab外）の画面追加
+               * Home配下（かつhomeTab外）の画面追加
                * -------------------------------------- */}
               <NestStack.Screen
                 name='homeOthers'
-                component={HomeOthersScreen}
                 options={{
                   title: 'HomeOthers',
                   header: (props) => <HeaderSub {...props} />, // 共通ヘッダー（サブ用）
                 }}
-                listeners={({ navigation }) => bottomTabNone(navigation)} // BottomTab非表示処理
-              />
+                listeners={({ navigation }) => bottomTabNone(navigation)} // BottomTab非表示
+              >
+                {(props) => <HomeOthersScreen {...props} />}
+              </NestStack.Screen>
             </NestStack.Navigator>
           )}
         </BottomTab.Screen>
 
+        {/* About 画面 */}
         <BottomTab.Screen
           name='about'
-          component={AboutScreen}
           options={{
             title: 'About',
+            header: (props) => <HeaderSub {...props} isBack={false} />, // 共通ヘッダー（サブ用）
             tabBarIcon: ({ color }) => <IconAbout color={color} />,
             tabBarBadge: 3,
-            header: (props) => <HeaderSub {...props} isBack={false} />, // 共通ヘッダー（サブ用）
           }}
-        />
+        >
+          {(props) => <AboutScreen {...props} />}
+        </BottomTab.Screen>
 
+        {/* Work 画面 */}
         <BottomTab.Screen
           name='work'
-          component={WorkScreen}
           options={{
             title: 'Work',
+            header: (props) => <HeaderSub {...props} isBack={false} />, // 共通ヘッダー（サブ用）
             tabBarIcon: ({ color }) => <IconWork color={color} />,
             tabBarBadge: undefined,
-            header: (props) => <HeaderSub {...props} isBack={false} />, // 共通ヘッダー（サブ用）
             ...tabBarItemLastChild, // :last-childスタイル
           }}
-        />
+        >
+          {(props) => <WorkScreen {...props} />}
+        </BottomTab.Screen>
       </BottomTab.Navigator>
     </NavigationContainer>
   );
