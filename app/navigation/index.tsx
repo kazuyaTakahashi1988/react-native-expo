@@ -15,9 +15,8 @@ import {
 } from '../features/home';
 import { WorkScreen } from '../features/work';
 
-import type { TypeRootList } from '../lib/types';
+import type { TypeNavigation, TypeRootList } from '../lib/types';
 import type { BottomTabNavigationOptions } from '@react-navigation/bottom-tabs';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type React from 'react';
 
 /* --------------------------------------------------
@@ -30,7 +29,7 @@ const Navigation: React.FC = () => {
   const NestStack = createNativeStackNavigator<TypeRootList>();
 
   /* BottomTab非表示処理 */
-  const bottomTabNone = (navigation: NativeStackNavigationProp<TypeRootList>) => {
+  const bottomTabNone = (navigation: TypeNavigation) => {
     return {
       focus: () => {
         navigation.getParent()?.setOptions({
@@ -98,7 +97,7 @@ const Navigation: React.FC = () => {
                 name='homeOthers'
                 options={{
                   title: 'HomeOthers',
-                  header: (props) => <HeaderSub {...props} />, // 共通ヘッダー（サブ用）
+                  header: (props) => <HeaderSub {...props} isGoBack='戻る' />, // 共通ヘッダー（サブ用）
                 }}
                 listeners={({ navigation }) => bottomTabNone(navigation)} // BottomTab非表示
               >
@@ -113,7 +112,7 @@ const Navigation: React.FC = () => {
           name='about'
           options={{
             title: 'About',
-            header: (props) => <HeaderSub {...props} isBack={false} />, // 共通ヘッダー（サブ用）
+            header: (props) => <HeaderSub {...props} />, // 共通ヘッダー（サブ用）
             tabBarIcon: ({ color }) => <IconAbout color={color} />,
             tabBarBadge: 3,
           }}
@@ -126,7 +125,7 @@ const Navigation: React.FC = () => {
           name='work'
           options={{
             title: 'Work',
-            header: (props) => <HeaderSub {...props} isBack={false} />, // 共通ヘッダー（サブ用）
+            header: (props) => <HeaderSub {...props} />, // 共通ヘッダー（サブ用）
             tabBarIcon: ({ color }) => <IconWork color={color} />,
             tabBarBadge: undefined,
             ...tabBarItemLastChild, // :last-childスタイル

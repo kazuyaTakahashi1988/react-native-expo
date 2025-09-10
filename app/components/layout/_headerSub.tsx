@@ -5,13 +5,17 @@ import { IconArrow } from '../svg';
 import type { TypeHeaderSub } from '../../lib/types';
 
 const HeaderSub: React.FC<TypeHeaderSub> = (props) => {
-  const { navigation, isBack = true, route, options } = props;
+  const { navigation, route, options, isGoBack = false } = props;
   const headerTitle = options.title ?? route.name;
+
+  const isHeaderLeft = () => {
+    return isGoBack === true || (typeof isGoBack === 'string' && isGoBack.trim() !== '');
+  };
 
   return (
     <View style={styles.header}>
       <View style={styles.headerInner}>
-        {isBack && (
+        {isHeaderLeft() && (
           <Text
             style={[styles.headerItem, styles.headerLeft]}
             onPress={() => {
@@ -19,6 +23,7 @@ const HeaderSub: React.FC<TypeHeaderSub> = (props) => {
             }}
           >
             <IconArrow />
+            {typeof isGoBack === 'string' && isGoBack}
           </Text>
         )}
         <Text style={styles.headerItem}>{headerTitle}</Text>
@@ -48,6 +53,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   headerLeft: {
+    fontSize: 16,
+    fontWeight: '400',
     left: 0,
     position: 'absolute',
   },
