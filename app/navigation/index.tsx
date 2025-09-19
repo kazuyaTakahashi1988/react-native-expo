@@ -97,7 +97,7 @@ const Navigation: React.FC = () => {
                 name='homeOthers'
                 options={{
                   title: 'HomeOthers',
-                  header: (props) => <HeaderSub {...props} isGoBack='戻る' />, // 共通ヘッダー（サブ用）
+                  header: (props) => <HeaderSub {...props} goBack='戻る' />, // 共通ヘッダー（サブ用）
                 }}
                 listeners={({ navigation }) => bottomTabNone(navigation)} // BottomTab非表示
               >

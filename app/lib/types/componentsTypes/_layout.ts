@@ -4,7 +4,7 @@ import type { NativeStackHeaderProps } from '@react-navigation/native-stack';
 export type TypeHeaderHome = NativeStackHeaderProps;
 
 export type TypeHeaderSub = (NativeStackHeaderProps | BottomTabHeaderProps) & {
-  isGoBack?: string | boolean;
+  goBack?: string | boolean;
 };
 
 export type TypeLayout = {
