@@ -1,8 +1,8 @@
 import { Button, StyleSheet, Text, View } from 'react-native';
 
-import { Layout } from '../../../components/layout';
+import { Layout } from '../../../../components/layout';
 
-import type { TypeHomeChild00Screen } from '../../../lib/types';
+import type { TypeHomeChild00Screen } from '../../../../lib/types';
 
 const HomeChild00Screen: React.FC<TypeHomeChild00Screen> = (props) => {
   const { navigation } = props;
