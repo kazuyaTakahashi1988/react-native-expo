@@ -14,7 +14,11 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.kazuya631130.reactnativeexpo",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -25,6 +29,11 @@
     },
     "web": {
       "favicon": "./app/assets/images/appInfo/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "f13e2846-d9dc-4533-b5a5-e169233cedf0"
+      }
     }
   }
 }
