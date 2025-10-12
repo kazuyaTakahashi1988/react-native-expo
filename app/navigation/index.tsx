@@ -89,20 +89,6 @@ const Navigation: React.FC = () => {
                   </NestTab.Navigator>
                 )}
               </NestStack.Screen>
-
-              {/* --------------------------------------
-               * Home配下（かつhomeTab外）の画面追加
-               * -------------------------------------- */}
-              <NestStack.Screen
-                name='homeOthers'
-                options={{
-                  title: 'HomeOthers',
-                  header: (props) => <HeaderSub {...props} goBack='戻る' />, // 共通ヘッダー（サブ用）
-                }}
-                listeners={({ navigation }) => bottomTabNone(navigation)} // BottomTab非表示
-              >
-                {(props) => <HomeOthersScreen {...props} />}
-              </NestStack.Screen>
             </NestStack.Navigator>
           )}
         </BottomTab.Screen>
@@ -134,6 +120,19 @@ const Navigation: React.FC = () => {
           {(props) => <WorkScreen {...props} />}
         </BottomTab.Screen>
       </BottomTab.Navigator>
+      {/* --------------------------------------
+       * BottomTab外の画面追加
+       * -------------------------------------- */}
+      <NestStack.Screen
+        name='homeOthers'
+        options={{
+          title: 'HomeOthers',
+          header: (props) => <HeaderSub {...props} goBack='戻る' />, // 共通ヘッダー（サブ用）
+        }}
+        listeners={({ navigation }) => bottomTabNone(navigation)} // BottomTab非表示
+      >
+        {(props) => <HomeOthersScreen {...props} />}
+      </NestStack.Screen>
     </NavigationContainer>
   );
 };
