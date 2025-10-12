@@ -4,10 +4,10 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StyleSheet } from 'react-native';
 
 import HomeTabNav from './__homeTabNav';
+import OthersNav from './__othersNav';
 import { HeaderHome, HeaderSub } from '../components/layout';
 import { IconAbout, IconHome, IconWork } from '../components/svg';
 import { AboutScreen } from '../features/about';
-import { HomeOthersScreen } from '../features/home';
 import { WorkScreen } from '../features/work';
 
 import type { TypeRootList } from '../lib/types';
@@ -45,7 +45,7 @@ const Navigation: React.FC = () => {
                   tabBarBadge: undefined,
                 }}
               >
-                {/* Home配下（およびhomeTab）の各画面追加 */}
+                {/* Home配下（およびhomeTab）の各画面 */}
                 {() => <HomeTabNav />}
               </BottomTab.Screen>
 
@@ -79,16 +79,12 @@ const Navigation: React.FC = () => {
           )}
         </RootStack.Screen>
 
-        {/* Home配下（かつBottomTab外）の画面追加 */}
-        <RootStack.Screen
-          name='homeOthers'
-          options={{
-            title: 'HomeOthers',
-            header: (props) => <HeaderSub {...props} goBack='戻る' />, // 共通ヘッダー（サブ用）
-            headerShown: true,
-          }}
-        >
-          {(props) => <HomeOthersScreen {...props} />}
+        {/* --------------------------------------------------
+         * その他の各画面追加
+         * -------------------------------------------------- */}
+        <RootStack.Screen name='others' options={{ headerShown: false }}>
+          {/* その他 各画面 */}
+          {() => <OthersNav />}
         </RootStack.Screen>
       </RootStack.Navigator>
     </NavigationContainer>
