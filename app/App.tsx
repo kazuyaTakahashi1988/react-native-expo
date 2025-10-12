@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { enableScreens } from 'react-native-screens';
 
-import Navigation from './navigation';
+import { Navigation } from './navigation';
 
 import type React from 'react';
 

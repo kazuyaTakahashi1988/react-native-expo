@@ -16,7 +16,7 @@ const HeaderHome: React.FC<TypeHeaderHome> = (props) => {
         <Text
           style={styles.headerItem}
           onPress={() => {
-            navigation.getParent()?.getParent()?.navigate('homeOthers');
+            navigation.getParent()?.navigate('homeOthers');
           }}
         >
           <IconInfo />
