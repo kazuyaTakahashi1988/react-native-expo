@@ -17,7 +17,7 @@ const HeaderHome: React.FC<TypeHeaderHome> = (props) => {
           style={styles.headerItem}
           onPress={() => {
             navigation.navigate('others', {
-              screen: 'homeOthers',
+              screen: 'information',
             });
           }}
         >

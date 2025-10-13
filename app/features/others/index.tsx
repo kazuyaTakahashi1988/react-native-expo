@@ -1,1 +1,1 @@
-export * from './homeOthers';
+export * from './information';

@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { HeaderSub } from '../components/layout';
-import { HomeOthersScreen } from '../features/others';
+import { InformationScreen } from '../features/others';
 
 import type { TypeRootList } from '../lib/types';
 import type React from 'react';
@@ -18,29 +18,29 @@ const NavOthers: React.FC = () => {
    * -------------------------------------- */
   return (
     <RootStack.Navigator>
-      {/* homeOthers 画面 */}
+      {/* information 画面 */}
       <RootStack.Screen
-        name='homeOthers'
+        name='information'
         options={{
-          title: 'HomeOthers',
+          title: 'Information',
           header: (props) => <HeaderSub {...props} goBack='戻る' />, // 共通ヘッダー（サブ用）
           headerShown: true,
         }}
       >
-        {(props) => <HomeOthersScreen {...props} />}
+        {(props) => <InformationScreen {...props} />}
       </RootStack.Screen>
 
-      {/* homeOthers02 画面 */}
-      <RootStack.Screen
-        name='homeOthers02'
+      {/* xxxx 画面 */}
+      {/* <RootStack.Screen
+        name='xxxx'
         options={{
-          title: 'HomeOthers02',
+          title: 'xxxxx',
           header: (props) => <HeaderSub {...props} goBack='戻る' />, // 共通ヘッダー（サブ用）
           headerShown: true,
         }}
       >
-        {(props) => <HomeOthersScreen {...props} />}
-      </RootStack.Screen>
+        {(props) => <XXXX {...props} />}
+      </RootStack.Screen> */}
     </RootStack.Navigator>
   );
 };
