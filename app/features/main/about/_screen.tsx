@@ -1,8 +1,8 @@
 import { Button, StyleSheet, Text, View } from 'react-native';
 
-import { Layout } from '../../components/layout';
+import { Layout } from '../../../components/layout';
 
-import type { TypeAboutScreen } from '../../lib/types';
+import type { TypeAboutScreen } from '../../../lib/types';
 
 const AboutScreen: React.FC<TypeAboutScreen> = (props) => {
   const { navigation } = props;

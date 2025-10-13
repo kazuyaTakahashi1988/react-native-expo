@@ -1,15 +1,21 @@
 import { Button, StyleSheet, Text, View } from 'react-native';
 
-import { Layout } from '../../components/layout';
+import { Layout } from '../../../../../components/layout';
 
-import type { TypeWorkScreen } from '../../lib/types';
+import type { TypeHomeChild01Screen } from '../../../../../lib/types';
 
-const WorkScreen: React.FC<TypeWorkScreen> = (props) => {
+const HomeChild01Screen: React.FC<TypeHomeChild01Screen> = (props) => {
   const { navigation } = props;
   return (
     <View style={styles.container}>
       <Layout>
-        <Text>Work Screen</Text>
+        <Text>HomeChild01 Screen</Text>
+        <Button
+          title='Go to Home'
+          onPress={() => {
+            navigation.navigate('home');
+          }}
+        />
         <Button
           title='Go to About'
           onPress={() => {
@@ -24,10 +30,10 @@ const WorkScreen: React.FC<TypeWorkScreen> = (props) => {
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: '#ccc',
     flex: 1,
     justifyContent: 'center',
   },
 });
 
-export default WorkScreen;
+export default HomeChild01Screen;

@@ -1,15 +1,15 @@
 import { Button, StyleSheet, Text, View } from 'react-native';
 
-import { Layout } from '../../../../components/layout';
+import { Layout } from '../../../../../components/layout';
 
-import type { TypeHomeChild01Screen } from '../../../../lib/types';
+import type { TypeHomeChild00Screen } from '../../../../../lib/types';
 
-const HomeChild02Screen: React.FC<TypeHomeChild01Screen> = (props) => {
+const HomeChild00Screen: React.FC<TypeHomeChild00Screen> = (props) => {
   const { navigation } = props;
   return (
     <View style={styles.container}>
       <Layout>
-        <Text>HomeChild02 Screen</Text>
+        <Text>HomeChild00 Screen</Text>
         <Button
           title='Go to Home'
           onPress={() => {
@@ -36,4 +36,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeChild02Screen;
+export default HomeChild00Screen;

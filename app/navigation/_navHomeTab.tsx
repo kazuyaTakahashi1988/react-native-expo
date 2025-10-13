@@ -1,6 +1,6 @@
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
-import { HomeChild00Screen, HomeChild01Screen, HomeChild02Screen } from '../features/home';
+import { HomeChild00Screen, HomeChild01Screen, HomeChild02Screen } from '../features/main';
 
 import type { TypeRootList } from '../lib/types';
 import type React from 'react';

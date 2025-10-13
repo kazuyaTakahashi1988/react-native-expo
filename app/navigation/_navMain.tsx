@@ -5,8 +5,7 @@ import { StyleSheet } from 'react-native';
 import NavHomeTab from './_navHomeTab';
 import { HeaderHome, HeaderSub } from '../components/layout';
 import { IconAbout, IconHome, IconWork } from '../components/svg';
-import { AboutScreen } from '../features/about';
-import { WorkScreen } from '../features/work';
+import { AboutScreen, WorkScreen } from '../features/main';
 
 import type { TypeRootList } from '../lib/types';
 import type { BottomTabNavigationOptions } from '@react-navigation/bottom-tabs';
