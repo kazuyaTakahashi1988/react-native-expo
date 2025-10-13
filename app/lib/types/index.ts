@@ -1,3 +1,3 @@
-export * from './componentsTypes';
-export * from './featuresTypes';
-export * from './navigationTypes';
+export * from './typeComponents';
+export * from './typeFeatures';
+export * from './typeNavigation';
