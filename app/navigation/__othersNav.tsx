@@ -13,12 +13,11 @@ import type React from 'react';
 const OthersNav: React.FC = () => {
   const RootStack = createNativeStackNavigator<TypeRootList>();
 
+  /* --------------------------------------
+   * その他 各画面
+   * -------------------------------------- */
   return (
     <RootStack.Navigator>
-      {/* --------------------------------------
-       * その他 各画面
-       * -------------------------------------- */}
-
       {/* homeOthers 画面 */}
       <RootStack.Screen
         name='homeOthers'

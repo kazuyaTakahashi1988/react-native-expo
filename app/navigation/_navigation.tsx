@@ -18,11 +18,11 @@ const Navigation: React.FC = () => {
     <NavigationContainer>
       <RootStack.Navigator>
         {/* --------------------------------------------------
-         * BottomTab 各画面追加
+         * bottomTab 各画面追加 （各メイン画面追加）
          * -------------------------------------------------- */}
         <RootStack.Screen name='bottomTab' options={{ headerShown: false }}>
           {
-            /* BottomTab 各画面 */
+            /* bottomTab 各画面 */
             () => <BottomTabNav />
           }
         </RootStack.Screen>

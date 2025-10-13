@@ -1,4 +1,5 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StyleSheet } from 'react-native';
 
 import HomeTabNav from './__homeTabNav';
@@ -12,19 +13,20 @@ import type { BottomTabNavigationOptions } from '@react-navigation/bottom-tabs';
 import type React from 'react';
 
 /* --------------------------------------------------
- * BottomTab 各画面追加
+ * bottomTab 各画面追加
  * ----------------------------------------------- */
 
 const BottomTabNav: React.FC = () => {
   const BottomTab = createBottomTabNavigator<TypeRootList>();
+  const NestStack = createNativeStackNavigator<TypeRootList>();
 
   /* --------------------------------------
-   * BottomTab 各画面
+   * bottomTab 各画面
    * -------------------------------------- */
   return (
     <BottomTab.Navigator
       screenOptions={() => ({
-        ...bottomTabStyles, // BottomTabスタイル
+        ...bottomTabStyles, // bottomTabスタイル
       })}
     >
       {/* Home 画面 */}
@@ -38,8 +40,19 @@ const BottomTabNav: React.FC = () => {
         }}
       >
         {
-          /* Home配下（およびhomeTab） 各画面 */
-          () => <HomeTabNav />
+          /* --------------------------------------
+           * Home配下（およびhomeTab） 各画面追加
+           * -------------------------------------- */
+          () => (
+            <NestStack.Navigator>
+              <NestStack.Screen name='homeTab' options={{ headerShown: false }}>
+                {
+                  /* homeTab 各画面 */
+                  () => <HomeTabNav />
+                }
+              </NestStack.Screen>
+            </NestStack.Navigator>
+          )
         }
       </BottomTab.Screen>
 
@@ -73,7 +86,7 @@ const BottomTabNav: React.FC = () => {
   );
 };
 
-/* BottomTabスタイル */
+/* bottomTabスタイル */
 const bottomTabStyles: BottomTabNavigationOptions = {
   tabBarActiveTintColor: '#0ea5e9', // アクティブカラー
   tabBarInactiveTintColor: '#fff', // 非アクティブカラー
