@@ -7,7 +7,7 @@ import type { TypeRootList } from '../lib/types';
 import type React from 'react';
 
 /* --------------------------------------------------
- * Home（およびhomeTab）配下の各画面追加
+ * その他 各画面追加
  * ----------------------------------------------- */
 
 const OthersNav: React.FC = () => {
@@ -15,6 +15,11 @@ const OthersNav: React.FC = () => {
 
   return (
     <RootStack.Navigator>
+      {/* --------------------------------------
+       * その他 各画面
+       * -------------------------------------- */}
+
+      {/* homeOthers 画面 */}
       <RootStack.Screen
         name='homeOthers'
         options={{
@@ -25,6 +30,8 @@ const OthersNav: React.FC = () => {
       >
         {(props) => <HomeOthersScreen {...props} />}
       </RootStack.Screen>
+
+      {/* homeOthers02 画面 */}
       <RootStack.Screen
         name='homeOthers02'
         options={{
