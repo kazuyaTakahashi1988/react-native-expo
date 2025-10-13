@@ -1,8 +1,8 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import BottomTabNav from './__bottomTabNav';
-import OthersNav from './__othersNav';
+import NavBottomTab from './_navBottomTab';
+import NavOthers from './_navOthers';
 
 import type { TypeRootList } from '../lib/types';
 import type React from 'react';
@@ -23,7 +23,7 @@ const Navigation: React.FC = () => {
         <RootStack.Screen name='bottomTab' options={{ headerShown: false }}>
           {
             /* bottomTab 各画面 */
-            () => <BottomTabNav />
+            () => <NavBottomTab />
           }
         </RootStack.Screen>
 
@@ -33,7 +33,7 @@ const Navigation: React.FC = () => {
         <RootStack.Screen name='others' options={{ headerShown: false }}>
           {
             /* その他 各画面 */
-            () => <OthersNav />
+            () => <NavOthers />
           }
         </RootStack.Screen>
       </RootStack.Navigator>

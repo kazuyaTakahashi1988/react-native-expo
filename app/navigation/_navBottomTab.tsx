@@ -2,7 +2,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StyleSheet } from 'react-native';
 
-import HomeTabNav from './__homeTabNav';
+import NavHomeTab from './_navHomeTab';
 import { HeaderHome, HeaderSub } from '../components/layout';
 import { IconAbout, IconHome, IconWork } from '../components/svg';
 import { AboutScreen } from '../features/about';
@@ -16,7 +16,7 @@ import type React from 'react';
  * bottomTab 各画面追加
  * ----------------------------------------------- */
 
-const BottomTabNav: React.FC = () => {
+const NavBottomTab: React.FC = () => {
   const BottomTab = createBottomTabNavigator<TypeRootList>();
   const NestStack = createNativeStackNavigator<TypeRootList>();
 
@@ -48,7 +48,7 @@ const BottomTabNav: React.FC = () => {
               <NestStack.Screen name='homeTab' options={{ headerShown: false }}>
                 {
                   /* homeTab 各画面 */
-                  () => <HomeTabNav />
+                  () => <NavHomeTab />
                 }
               </NestStack.Screen>
             </NestStack.Navigator>
@@ -111,4 +111,4 @@ const tabBarItemLastChild: BottomTabNavigationOptions = {
   tabBarItemStyle: { borderRightWidth: 0 },
 };
 
-export default BottomTabNav;
+export default NavBottomTab;

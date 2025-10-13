@@ -10,7 +10,7 @@ import type React from 'react';
  * その他 各画面追加
  * ----------------------------------------------- */
 
-const OthersNav: React.FC = () => {
+const NavOthers: React.FC = () => {
   const RootStack = createNativeStackNavigator<TypeRootList>();
 
   /* --------------------------------------
@@ -45,4 +45,4 @@ const OthersNav: React.FC = () => {
   );
 };
 
-export default OthersNav;
+export default NavOthers;

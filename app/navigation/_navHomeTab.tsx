@@ -9,7 +9,7 @@ import type React from 'react';
  * Home配下（およびhomeTab） 各画面追加
  * ----------------------------------------------- */
 
-const HomeTabNav: React.FC = () => {
+const NavHomeTab: React.FC = () => {
   const NestTab = createMaterialTopTabNavigator<TypeRootList>();
 
   /* --------------------------------------
@@ -35,4 +35,4 @@ const HomeTabNav: React.FC = () => {
   );
 };
 
-export default HomeTabNav;
+export default NavHomeTab;
