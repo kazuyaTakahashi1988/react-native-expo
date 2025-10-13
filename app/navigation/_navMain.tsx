@@ -11,7 +11,7 @@ import type { TypeRootList } from '../lib/types';
 import type { BottomTabNavigationOptions } from '@react-navigation/bottom-tabs';
 import type React from 'react';
 
-/* --------------------------------------------------
+/* -----------------------------------------------
  * メイン 各画面追加
  * ----------------------------------------------- */
 
@@ -19,9 +19,9 @@ const NavMain: React.FC = () => {
   const BottomTab = createBottomTabNavigator<TypeRootList>();
   const NestStack = createNativeStackNavigator<TypeRootList>();
 
-  /* --------------------------------------
+  /* ---------------------------------------------
    * メイン 各画面
-   * -------------------------------------- */
+   * --------------------------------------------- */
   return (
     <BottomTab.Navigator
       screenOptions={() => ({
@@ -39,9 +39,9 @@ const NavMain: React.FC = () => {
         }}
       >
         {
-          /* --------------------------------------
+          /* -------------------------------------
            * homeNest（Home配下） 各画面追加
-           * -------------------------------------- */
+           * ------------------------------------- */
           () => (
             <NestStack.Navigator>
               <NestStack.Screen name='homeNest' options={{ headerShown: false }}>

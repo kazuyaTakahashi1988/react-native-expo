@@ -6,16 +6,16 @@ import { InformationScreen } from '../features/others';
 import type { TypeRootList } from '../lib/types';
 import type React from 'react';
 
-/* --------------------------------------------------
+/* -----------------------------------------------
  * その他 各画面追加
  * ----------------------------------------------- */
 
 const NavOthers: React.FC = () => {
   const RootStack = createNativeStackNavigator<TypeRootList>();
 
-  /* --------------------------------------
+  /* ---------------------------------------------
    * その他 各画面
-   * -------------------------------------- */
+   * --------------------------------------------- */
   return (
     <RootStack.Navigator>
       {/* Information 画面 */}

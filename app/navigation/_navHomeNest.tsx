@@ -5,16 +5,16 @@ import { HomeChild00Screen, HomeChild01Screen, HomeChild02Screen } from '../feat
 import type { TypeRootList } from '../lib/types';
 import type React from 'react';
 
-/* --------------------------------------------------
+/* -----------------------------------------------
  * homeNest（Home配下） 各画面追加
  * ----------------------------------------------- */
 
 const NavHomeNest: React.FC = () => {
   const NestTab = createMaterialTopTabNavigator<TypeRootList>();
 
-  /* --------------------------------------
+  /* ---------------------------------------------
    * homeNest（Home配下） 各画面
-   * -------------------------------------- */
+   * --------------------------------------------- */
   return (
     <NestTab.Navigator screenOptions={{ swipeEnabled: true }}>
       {/* homeChild00 画面 */}

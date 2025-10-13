@@ -7,7 +7,7 @@ import NavOthers from './_navOthers';
 import type { TypeRootList } from '../lib/types';
 import type React from 'react';
 
-/* --------------------------------------------------
+/* -----------------------------------------------
  * Navigation & 共通レイアウト 設定
  * ----------------------------------------------- */
 
@@ -17,9 +17,10 @@ const Navigation: React.FC = () => {
   return (
     <NavigationContainer>
       <RootStack.Navigator>
-        {/* --------------------------------------------------
-         * メイン 各画面追加（ Home About Work 他ネスト画面など）
-         * -------------------------------------------------- */}
+        {/* --------------------------------------
+         * メイン 各画面追加
+         *（ Home / About / Work / ネスト画面など）
+         * --------------------------------------- */}
         <RootStack.Screen name='main' options={{ headerShown: false }}>
           {
             /* メイン 各画面 */
@@ -27,9 +28,9 @@ const Navigation: React.FC = () => {
           }
         </RootStack.Screen>
 
-        {/* --------------------------------------------------
+        {/* --------------------------------------
          * その他 各画面追加（Information画面など）
-         * -------------------------------------------------- */}
+         * --------------------------------------- */}
         <RootStack.Screen name='others' options={{ headerShown: false }}>
           {
             /* その他 各画面 */
