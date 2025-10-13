@@ -20,7 +20,7 @@ const AboutScreen: React.FC<TypeAboutScreen> = (props) => {
           title='Go to HomeChild'
           onPress={() => {
             navigation.navigate('home', {
-              screen: 'homeTab',
+              screen: 'homeNest',
               params: {
                 screen: 'homeChild02',
               },

@@ -6,14 +6,14 @@ import type { TypeRootList } from '../lib/types';
 import type React from 'react';
 
 /* --------------------------------------------------
- * Home配下（およびhomeTab） 各画面追加
+ * Home配下（およびhomeNest） 各画面追加
  * ----------------------------------------------- */
 
-const NavHomeTab: React.FC = () => {
+const NavHomeNest: React.FC = () => {
   const NestTab = createMaterialTopTabNavigator<TypeRootList>();
 
   /* --------------------------------------
-   * Home配下（およびhomeTab） 各画面
+   * Home配下（およびhomeNest） 各画面
    * -------------------------------------- */
   return (
     <NestTab.Navigator screenOptions={{ swipeEnabled: true }}>
@@ -35,4 +35,4 @@ const NavHomeTab: React.FC = () => {
   );
 };
 
-export default NavHomeTab;
+export default NavHomeNest;

@@ -24,7 +24,6 @@ const NavOthers: React.FC = () => {
         options={{
           title: 'Information',
           header: (props) => <HeaderSub {...props} goBack='戻る' />, // 共通ヘッダー（サブ用）
-          headerShown: true,
         }}
       >
         {(props) => <InformationScreen {...props} />}
@@ -34,12 +33,11 @@ const NavOthers: React.FC = () => {
       {/* <RootStack.Screen
         name='xxxx'
         options={{
-          title: 'xxxxx',
+          title: 'Xxxx',
           header: (props) => <HeaderSub {...props} goBack='戻る' />, // 共通ヘッダー（サブ用）
-          headerShown: true,
         }}
       >
-        {(props) => <XXXX {...props} />}
+        {(props) => <XxxxScreen {...props} />}
       </RootStack.Screen> */}
     </RootStack.Navigator>
   );

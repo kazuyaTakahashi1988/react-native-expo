@@ -2,7 +2,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StyleSheet } from 'react-native';
 
-import NavHomeTab from './_navHomeTab';
+import NavHomeNest from './_navHomeNest';
 import { HeaderHome, HeaderSub } from '../components/layout';
 import { IconAbout, IconHome, IconWork } from '../components/svg';
 import { AboutScreen, WorkScreen } from '../features/main';
@@ -40,14 +40,14 @@ const NavMain: React.FC = () => {
       >
         {
           /* --------------------------------------
-           * Home配下（およびhomeTab） 各画面追加
+           * Home配下（およびhomeNest） 各画面追加
            * -------------------------------------- */
           () => (
             <NestStack.Navigator>
-              <NestStack.Screen name='homeTab' options={{ headerShown: false }}>
+              <NestStack.Screen name='homeNest' options={{ headerShown: false }}>
                 {
-                  /* homeTab 各画面 */
-                  () => <NavHomeTab />
+                  /* homeNest 各画面 */
+                  () => <NavHomeNest />
                 }
               </NestStack.Screen>
             </NestStack.Navigator>
