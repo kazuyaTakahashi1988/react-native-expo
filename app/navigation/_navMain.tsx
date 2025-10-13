@@ -40,13 +40,13 @@ const NavMain: React.FC = () => {
       >
         {
           /* --------------------------------------
-           * Home配下（およびhomeNest） 各画面追加
+           * homeNest（Home配下） 各画面追加
            * -------------------------------------- */
           () => (
             <NestStack.Navigator>
               <NestStack.Screen name='homeNest' options={{ headerShown: false }}>
                 {
-                  /* homeNest 各画面 */
+                  /* homeNest（Home配下） 各画面 */
                   () => <NavHomeNest />
                 }
               </NestStack.Screen>

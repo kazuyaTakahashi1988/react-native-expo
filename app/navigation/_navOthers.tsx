@@ -18,7 +18,7 @@ const NavOthers: React.FC = () => {
    * -------------------------------------- */
   return (
     <RootStack.Navigator>
-      {/* information 画面 */}
+      {/* Information 画面 */}
       <RootStack.Screen
         name='information'
         options={{
@@ -29,7 +29,7 @@ const NavOthers: React.FC = () => {
         {(props) => <InformationScreen {...props} />}
       </RootStack.Screen>
 
-      {/* xxxx 画面 */}
+      {/* Xxxx 画面 */}
       {/* <RootStack.Screen
         name='xxxx'
         options={{

@@ -18,8 +18,7 @@ const Navigation: React.FC = () => {
     <NavigationContainer>
       <RootStack.Navigator>
         {/* --------------------------------------------------
-         * メイン 各画面追加
-         *（Home / About / Work / 他ネスト画面など）
+         * メイン 各画面追加（ Home About Work 他ネスト画面など）
          * -------------------------------------------------- */}
         <RootStack.Screen name='main' options={{ headerShown: false }}>
           {
