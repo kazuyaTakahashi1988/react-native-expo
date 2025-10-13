@@ -13,15 +13,15 @@ import type { BottomTabNavigationOptions } from '@react-navigation/bottom-tabs';
 import type React from 'react';
 
 /* --------------------------------------------------
- * bottomTab 各画面追加
+ * メイン 各画面追加
  * ----------------------------------------------- */
 
-const NavBottomTab: React.FC = () => {
+const NavMain: React.FC = () => {
   const BottomTab = createBottomTabNavigator<TypeRootList>();
   const NestStack = createNativeStackNavigator<TypeRootList>();
 
   /* --------------------------------------
-   * bottomTab 各画面
+   * メイン 各画面
    * -------------------------------------- */
   return (
     <BottomTab.Navigator
@@ -111,4 +111,4 @@ const tabBarItemLastChild: BottomTabNavigationOptions = {
   tabBarItemStyle: { borderRightWidth: 0 },
 };
 
-export default NavBottomTab;
+export default NavMain;

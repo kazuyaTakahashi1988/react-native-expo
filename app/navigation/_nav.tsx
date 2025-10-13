@@ -1,7 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import NavBottomTab from './_navBottomTab';
+import NavMain from './_navMain';
 import NavOthers from './_navOthers';
 
 import type { TypeRootList } from '../lib/types';
@@ -18,12 +18,12 @@ const Navigation: React.FC = () => {
     <NavigationContainer>
       <RootStack.Navigator>
         {/* --------------------------------------------------
-         * bottomTab 各画面追加 （各メイン画面追加）
+         * メイン 各画面追加
          * -------------------------------------------------- */}
-        <RootStack.Screen name='bottomTab' options={{ headerShown: false }}>
+        <RootStack.Screen name='main' options={{ headerShown: false }}>
           {
-            /* bottomTab 各画面 */
-            () => <NavBottomTab />
+            /* メイン 各画面 */
+            () => <NavMain />
           }
         </RootStack.Screen>
 

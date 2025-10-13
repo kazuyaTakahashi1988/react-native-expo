@@ -13,13 +13,13 @@ const HomeOthersScreen: React.FC<TypeHomeOthersScreen> = (props) => {
         <Button
           title='Go to Home'
           onPress={() => {
-            navigation.navigate('bottomTab', { screen: 'home' });
+            navigation.navigate('main', { screen: 'home' });
           }}
         />
         <Button
           title='Go to About'
           onPress={() => {
-            navigation.navigate('bottomTab', { screen: 'about' });
+            navigation.navigate('main', { screen: 'about' });
           }}
         />
       </Layout>
