@@ -9,29 +9,29 @@ import type React from 'react';
  * homeNest（Home配下） 各画面追加
  * ----------------------------------------------- */
 
-const NavHomeNest: React.FC = () => {
-  const NestTab = createMaterialTopTabNavigator<TypeRootList>();
+const MaterialTopTab = createMaterialTopTabNavigator<TypeRootList>();
 
+const NavHomeNest: React.FC = () => {
   /* ---------------------------------------------
    * homeNest（Home配下） 各画面
    * --------------------------------------------- */
   return (
-    <NestTab.Navigator screenOptions={{ swipeEnabled: true }}>
+    <MaterialTopTab.Navigator screenOptions={{ swipeEnabled: true }}>
       {/* homeChild00 画面 */}
-      <NestTab.Screen name='homeChild00' options={{ title: 'HomeChild00' }}>
+      <MaterialTopTab.Screen name='homeChild00' options={{ title: 'HomeChild00' }}>
         {(props) => <HomeChild00Screen {...props} />}
-      </NestTab.Screen>
+      </MaterialTopTab.Screen>
 
       {/* homeChild01 画面 */}
-      <NestTab.Screen name='homeChild01' options={{ title: 'HomeChild01' }}>
+      <MaterialTopTab.Screen name='homeChild01' options={{ title: 'HomeChild01' }}>
         {(props) => <HomeChild01Screen {...props} />}
-      </NestTab.Screen>
+      </MaterialTopTab.Screen>
 
       {/* homeChild02 画面 */}
-      <NestTab.Screen name='homeChild02' options={{ title: 'HomeChild02' }}>
+      <MaterialTopTab.Screen name='homeChild02' options={{ title: 'HomeChild02' }}>
         {(props) => <HomeChild02Screen {...props} />}
-      </NestTab.Screen>
-    </NestTab.Navigator>
+      </MaterialTopTab.Screen>
+    </MaterialTopTab.Navigator>
   );
 };
 

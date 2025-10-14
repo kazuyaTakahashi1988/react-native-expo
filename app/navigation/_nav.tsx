@@ -11,33 +11,33 @@ import type React from 'react';
  * Navigation & 共通レイアウト 設定
  * ----------------------------------------------- */
 
-const Navigation: React.FC = () => {
-  const RootStack = createNativeStackNavigator<TypeRootList>();
+const NativeStack = createNativeStackNavigator<TypeRootList>();
 
+const Navigation: React.FC = () => {
   return (
     <NavigationContainer>
-      <RootStack.Navigator>
+      <NativeStack.Navigator>
         {/* --------------------------------------
          * メイン 各画面追加
          *（ Home / About / Work / ネスト画面など）
          * --------------------------------------- */}
-        <RootStack.Screen name='main' options={{ headerShown: false }}>
+        <NativeStack.Screen name='main' options={{ headerShown: false }}>
           {
             /* メイン 各画面 */
             () => <NavMain />
           }
-        </RootStack.Screen>
+        </NativeStack.Screen>
 
         {/* --------------------------------------
          * その他 各画面追加（Information画面など）
          * --------------------------------------- */}
-        <RootStack.Screen name='others' options={{ headerShown: false }}>
+        <NativeStack.Screen name='others' options={{ headerShown: false }}>
           {
             /* その他 各画面 */
             () => <NavOthers />
           }
-        </RootStack.Screen>
-      </RootStack.Navigator>
+        </NativeStack.Screen>
+      </NativeStack.Navigator>
     </NavigationContainer>
   );
 };

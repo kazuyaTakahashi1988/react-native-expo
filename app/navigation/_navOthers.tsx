@@ -10,16 +10,16 @@ import type React from 'react';
  * その他 各画面追加
  * ----------------------------------------------- */
 
-const NavOthers: React.FC = () => {
-  const RootStack = createNativeStackNavigator<TypeRootList>();
+const NativeStack = createNativeStackNavigator<TypeRootList>();
 
+const NavOthers: React.FC = () => {
   /* ---------------------------------------------
    * その他 各画面
    * --------------------------------------------- */
   return (
-    <RootStack.Navigator>
+    <NativeStack.Navigator>
       {/* Information 画面 */}
-      <RootStack.Screen
+      <NativeStack.Screen
         name='information'
         options={{
           title: 'Information',
@@ -27,10 +27,10 @@ const NavOthers: React.FC = () => {
         }}
       >
         {(props) => <InformationScreen {...props} />}
-      </RootStack.Screen>
+      </NativeStack.Screen>
 
       {/* Xxxx 画面 */}
-      {/* <RootStack.Screen
+      {/* <NativeStack.Screen
         name='xxxx'
         options={{
           title: 'Xxxx',
@@ -38,8 +38,8 @@ const NavOthers: React.FC = () => {
         }}
       >
         {(props) => <XxxxScreen {...props} />}
-      </RootStack.Screen> */}
-    </RootStack.Navigator>
+      </NativeStack.Screen> */}
+    </NativeStack.Navigator>
   );
 };
 

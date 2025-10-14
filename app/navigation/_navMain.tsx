@@ -15,10 +15,10 @@ import type React from 'react';
  * メイン 各画面追加
  * ----------------------------------------------- */
 
-const NavMain: React.FC = () => {
-  const BottomTab = createBottomTabNavigator<TypeRootList>();
-  const NestStack = createNativeStackNavigator<TypeRootList>();
+const BottomTab = createBottomTabNavigator<TypeRootList>();
+const NativeStack = createNativeStackNavigator<TypeRootList>();
 
+const NavMain: React.FC = () => {
   /* ---------------------------------------------
    * メイン 各画面
    * --------------------------------------------- */
@@ -43,14 +43,14 @@ const NavMain: React.FC = () => {
            * homeNest（Home配下） 各画面追加
            * ------------------------------------- */
           () => (
-            <NestStack.Navigator>
-              <NestStack.Screen name='homeNest' options={{ headerShown: false }}>
+            <NativeStack.Navigator>
+              <NativeStack.Screen name='homeNest' options={{ headerShown: false }}>
                 {
                   /* homeNest（Home配下） 各画面 */
                   () => <NavHomeNest />
                 }
-              </NestStack.Screen>
-            </NestStack.Navigator>
+              </NativeStack.Screen>
+            </NativeStack.Navigator>
           )
         }
       </BottomTab.Screen>
@@ -81,6 +81,20 @@ const NavMain: React.FC = () => {
       >
         {(props) => <WorkScreen {...props} />}
       </BottomTab.Screen>
+
+      {/* Xxxx 画面 */}
+      {/* <BottomTab.Screen
+        name='xxxx'
+        options={{
+          title: 'Xxxx',
+          header: (props) => <HeaderSub {...props} />, // 共通ヘッダー（サブ用）
+          tabBarIcon: ({ color }) => <IconXxxx color={color} />,
+          tabBarBadge: undefined,
+          ...tabBarItemLastChild, // :last-childスタイル
+        }}
+      >
+        {(props) => <XxxxScreen {...props} />}
+      </BottomTab.Screen> */}
     </BottomTab.Navigator>
   );
 };
