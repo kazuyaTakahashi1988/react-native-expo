@@ -2,7 +2,7 @@ import { Button, StyleSheet, Text, View } from 'react-native';
 
 import { Layout } from '../../../components/layout';
 
-import type { TypeWorkScreen } from '../../../lib/types';
+import type { TypeWorkScreen } from './_type';
 
 const WorkScreen: React.FC<TypeWorkScreen> = (props) => {
   const { navigation } = props;

@@ -2,7 +2,7 @@ import { Button, StyleSheet, Text, View } from 'react-native';
 
 import { Layout } from '../../../components/layout';
 
-import type { TypeInformationScreen } from '../../../lib/types';
+import type { TypeInformationScreen } from './_type';
 
 const InformationScreen: React.FC<TypeInformationScreen> = (props) => {
   const { navigation } = props;
