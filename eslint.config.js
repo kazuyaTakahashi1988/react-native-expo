@@ -60,8 +60,6 @@ export default [
       'react/prop-types': 'off',
       /* console.warn, error, info以外に警告。開発中のLog消し忘れ対策 */
       'no-console': ['error', { allow: ['warn', 'error', 'info'] }],
-      /* 特定のモジュールやパスからのインポートを禁止するためのルール */
-      'no-restricted-imports': ['error', { patterns: ['@/????/**'] }],
       /* async 関数なのに await を使ってない場合の警告は"off"、"error"とする */
       'require-await': 'off',
       '@typescript-eslint/require-await': 'error',
@@ -135,6 +133,53 @@ export default [
       ],
       /* 型が"any"や"unknown"の値に対して、プロパティアクセスやメソッド呼び出しを行うと警告 */
       '@typescript-eslint/no-unsafe-member-access': 'error',
+    },
+  },
+  {
+    /* -------------------------------------------------------
+      [ features ] 配下の実装は index.tsx だけしか、
+      [ features ] の外部に import させない設定
+    ---------------------------------------------------------- */
+    files: ['app/**/*.ts', 'app/**/*.tsx', 'index.ts'],
+    ignores: ['app/features/**/*'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              group: [
+                '**/features/**',
+                '!**/features/*',
+                '!**/features/**/index',
+                '!**/features/**/index.*',
+              ],
+              message:
+                '[ features ] 配下の実装は同ディレクトリの index.tsx を経由して import してください。',
+            },
+          ],
+        },
+      ],
+    },
+  },
+  {
+    /* -------------------------------------------------------
+      先頭に _ (ハイフン) が付くファイル（例：_iconXXXX.tsx）は
+      同一ディレクトリでのみ import 可能にさせる設定
+    ---------------------------------------------------------- */
+    files: ['app/**/*.ts', 'app/**/*.tsx'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              group: ['**/_*', '!./_*'],
+              message: '先頭に _ が付くファイルは同一ディレクトリでのみ import 可能です。',
+            },
+          ],
+        },
+      ],
     },
   },
   prettier, // ←prettierはこの位置（最後尾近く）に置いておくこと
