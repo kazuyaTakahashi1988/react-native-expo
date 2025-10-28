@@ -6,6 +6,11 @@ import type { TypeWorkScreen } from './_type';
 
 const WorkScreen: React.FC<TypeWorkScreen> = (props) => {
   const { navigation } = props;
+
+  const goToAbout = () => {
+    navigation.navigate('about');
+  };
+
   return (
     <View style={styles.container}>
       <Layout>
@@ -13,7 +18,7 @@ const WorkScreen: React.FC<TypeWorkScreen> = (props) => {
         <Button
           title='Go to About'
           onPress={() => {
-            navigation.navigate('about');
+            goToAbout();
           }}
         />
       </Layout>

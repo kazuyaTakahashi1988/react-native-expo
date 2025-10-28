@@ -6,6 +6,20 @@ import type { TypeAboutScreen } from './_type';
 
 const AboutScreen: React.FC<TypeAboutScreen> = (props) => {
   const { navigation } = props;
+
+  const goToHome = () => {
+    navigation.navigate('home');
+  };
+
+  const goToHomeChild02 = () => {
+    navigation.navigate('home', {
+      screen: 'homeNest',
+      params: {
+        screen: 'homeChild02',
+      },
+    });
+  };
+
   return (
     <View style={styles.container}>
       <Layout>
@@ -13,18 +27,13 @@ const AboutScreen: React.FC<TypeAboutScreen> = (props) => {
         <Button
           title='Go to Home'
           onPress={() => {
-            navigation.navigate('home');
+            goToHome();
           }}
         />
         <Button
           title='Go to HomeChild'
           onPress={() => {
-            navigation.navigate('home', {
-              screen: 'homeNest',
-              params: {
-                screen: 'homeChild02',
-              },
-            });
+            goToHomeChild02();
           }}
         />
       </Layout>

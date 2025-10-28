@@ -6,6 +6,15 @@ import type { TypeInformationScreen } from './_type';
 
 const InformationScreen: React.FC<TypeInformationScreen> = (props) => {
   const { navigation } = props;
+
+  const goToHome = () => {
+    navigation.navigate('main', { screen: 'home' });
+  };
+
+  const goToAbout = () => {
+    navigation.navigate('main', { screen: 'about' });
+  };
+
   return (
     <View style={styles.container}>
       <Layout>
@@ -13,13 +22,13 @@ const InformationScreen: React.FC<TypeInformationScreen> = (props) => {
         <Button
           title='Go to Home'
           onPress={() => {
-            navigation.navigate('main', { screen: 'home' });
+            goToHome();
           }}
         />
         <Button
           title='Go to About'
           onPress={() => {
-            navigation.navigate('main', { screen: 'about' });
+            goToAbout();
           }}
         />
       </Layout>

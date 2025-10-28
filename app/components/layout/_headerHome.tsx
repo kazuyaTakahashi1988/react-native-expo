@@ -7,6 +7,12 @@ import type { TypeHeaderHome } from '../../lib/types';
 const HeaderHome: React.FC<TypeHeaderHome> = (props) => {
   const { navigation } = props;
 
+  const goToInfo = () => {
+    navigation.navigate('others', {
+      screen: 'information',
+    });
+  };
+
   return (
     <View style={styles.header}>
       <View style={styles.headerInner}>
@@ -16,9 +22,7 @@ const HeaderHome: React.FC<TypeHeaderHome> = (props) => {
         <Text
           style={styles.headerItem}
           onPress={() => {
-            navigation.navigate('others', {
-              screen: 'information',
-            });
+            goToInfo();
           }}
         >
           <IconInfo />
