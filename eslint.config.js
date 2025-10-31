@@ -182,6 +182,26 @@ export default [
       ],
     },
   },
+  {
+    /* -------------------------------------------------------
+      [ features ] 配下にある index.tsx は _screen.tsx しか
+      export できないようにする設定
+    ---------------------------------------------------------- */
+    files: ['app/features/**/index.tsx', 'app/features/**/index.ts'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              group: ['**/_*', '!./_screen', '!./_screen.*'],
+              message: './_screen しか export できません。',
+            },
+          ],
+        },
+      ],
+    },
+  },
   prettier, // ←prettierはこの位置（最後尾近く）に置いておくこと
   {
     ignores: ['node_modules', '.expo', 'ios', 'android'],
