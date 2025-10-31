@@ -11,11 +11,11 @@ const AboutScreen: React.FC<TypeAboutScreen> = (props) => {
     navigation.navigate('home');
   };
 
-  const goToHomeChild02 = () => {
+  const goToChild02 = () => {
     navigation.navigate('home', {
       screen: 'homeNest',
       params: {
-        screen: 'homeChild02',
+        screen: 'child02',
       },
     });
   };
@@ -31,9 +31,9 @@ const AboutScreen: React.FC<TypeAboutScreen> = (props) => {
           }}
         />
         <Button
-          title='Go to HomeChild'
+          title='Go to Child02'
           onPress={() => {
-            goToHomeChild02();
+            goToChild02();
           }}
         />
       </Layout>

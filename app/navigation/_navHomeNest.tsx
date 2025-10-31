@@ -1,8 +1,8 @@
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
-import { HomeChild00Screen } from '../features/main/home/homeNest/homeChild00/';
-import { HomeChild01Screen } from '../features/main/home/homeNest/homeChild01/';
-import { HomeChild02Screen } from '../features/main/home/homeNest/homeChild02/';
+import { Child00Screen } from '../features/main/home/homeNest/child00/';
+import { Child01Screen } from '../features/main/home/homeNest/child01/';
+import { Child02Screen } from '../features/main/home/homeNest/child02/';
 
 import type { TypeRootList } from '../lib/types/typeNavigation';
 import type React from 'react';
@@ -19,24 +19,24 @@ const NavHomeNest: React.FC = () => {
    * --------------------------------------------- */
   return (
     <MaterialTopTab.Navigator screenOptions={{ swipeEnabled: true }}>
-      {/* homeChild00 画面 */}
-      <MaterialTopTab.Screen name='homeChild00' options={{ title: 'HomeChild00' }}>
-        {(props) => <HomeChild00Screen {...props} />}
+      {/* Child00 画面 */}
+      <MaterialTopTab.Screen name='child00' options={{ title: 'Child00' }}>
+        {(props) => <Child00Screen {...props} />}
       </MaterialTopTab.Screen>
 
-      {/* homeChild01 画面 */}
-      <MaterialTopTab.Screen name='homeChild01' options={{ title: 'HomeChild01' }}>
-        {(props) => <HomeChild01Screen {...props} />}
+      {/* Child01 画面 */}
+      <MaterialTopTab.Screen name='child01' options={{ title: 'Child01' }}>
+        {(props) => <Child01Screen {...props} />}
       </MaterialTopTab.Screen>
 
-      {/* homeChild02 画面 */}
-      <MaterialTopTab.Screen name='homeChild02' options={{ title: 'HomeChild02' }}>
-        {(props) => <HomeChild02Screen {...props} />}
+      {/* Child02 画面 */}
+      <MaterialTopTab.Screen name='child02' options={{ title: 'Child02' }}>
+        {(props) => <Child02Screen {...props} />}
       </MaterialTopTab.Screen>
 
-      {/* homeChildxx 画面 */}
-      {/* <MaterialTopTab.Screen name='homeChildxx' options={{ title: 'HomeChildxx' }}>
-        {(props) => <HomeChildxxScreen {...props} />}
+      {/* Childxx 画面 */}
+      {/* <MaterialTopTab.Screen name='childxx' options={{ title: 'Childxx' }}>
+        {(props) => <ChildxxScreen {...props} />}
       </MaterialTopTab.Screen> */}
     </MaterialTopTab.Navigator>
   );
