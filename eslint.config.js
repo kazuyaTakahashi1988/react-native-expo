@@ -135,27 +135,28 @@ export default [
       '@typescript-eslint/no-unsafe-member-access': 'error',
     },
   },
+  /* -----------------------------------------------------------
+    ・features 配下の実装は index.{tsx/ts} しか、features 外に import できない設定
+    ・features 配下にある index.{tsx/ts} は _screen.tsx しか export できない設定
+    ・先頭にハイフンが付くファイル（例：_iconXXXX.tsx）はそのファイルと同階層ディレクトリでしか import できない設定
+    ※ 以下に重複記述があるのは override（上書き設定）を防ぐため
+  -------------------------------------------------------------- */
   {
-    /* -------------------------------------------------------
-      [ features ] 配下の実装は index.tsx だけしか、
-      [ features ] の外部に import させない設定
-    ---------------------------------------------------------- */
     files: ['app/**/*.ts', 'app/**/*.tsx', 'index.ts'],
-    ignores: ['app/features/**/*'],
     rules: {
       'no-restricted-imports': [
         'error',
         {
           patterns: [
             {
-              group: [
-                '**/features/**',
-                '!**/features/*',
-                '!**/features/**/index',
-                '!**/features/**/index.*',
-              ],
+              group: ['**/features/**', '!**/features/**/', '!**/features/**/index.*'],
               message:
-                '[ features ] 配下の実装は同ディレクトリの index.tsx を経由して import してください。',
+                'features 配下の実装は index.{tsx/ts} しか、features 外に import できません。またパスの末尾には [ / ] or [ /index.{tsx/ts} ] を付与してください',
+            },
+            {
+              group: ['**/_*', '!./_*'],
+              message:
+                '先頭にハイフンが付くファイル（例：_iconXXXX.tsx）はそのファイルと同階層ディレクトリでのみ import 可能です。',
             },
           ],
         },
@@ -163,11 +164,7 @@ export default [
     },
   },
   {
-    /* -------------------------------------------------------
-      先頭に _ (ハイフン) が付くファイル（例：_iconXXXX.tsx）は
-      同一ディレクトリでのみ import 可能にさせる設定
-    ---------------------------------------------------------- */
-    files: ['app/**/*.ts', 'app/**/*.tsx'],
+    files: ['app/features/**/*.ts', 'app/features/**/*.tsx'],
     rules: {
       'no-restricted-imports': [
         'error',
@@ -175,7 +172,8 @@ export default [
           patterns: [
             {
               group: ['**/_*', '!./_*'],
-              message: '先頭に _ が付くファイルは同一ディレクトリでのみ import 可能です。',
+              message:
+                '先頭にハイフンが付くファイル（例：_iconXXXX.tsx）はそのファイルと同階層ディレクトリでのみ import 可能です。',
             },
           ],
         },
@@ -183,10 +181,6 @@ export default [
     },
   },
   {
-    /* -------------------------------------------------------
-      [ features ] 配下にある index.tsx は _screen.tsx しか
-      export できないようにする設定
-    ---------------------------------------------------------- */
     files: ['app/features/**/index.tsx', 'app/features/**/index.ts'],
     rules: {
       'no-restricted-imports': [
@@ -194,8 +188,13 @@ export default [
         {
           patterns: [
             {
-              group: ['**/_*', '!./_screen', '!./_screen.*'],
-              message: './_screen しか export できません。',
+              group: ['**/_*', '!./_*'],
+              message:
+                '先頭にハイフンが付くファイル（例：_iconXXXX.tsx）はそのファイルと同階層ディレクトリでのみ import 可能です。',
+            },
+            {
+              group: ['./*', '!./_screen', '!./_screen.*'],
+              message: 'features 配下の index.{tsx/ts} は ./_screen しか export できません。',
             },
           ],
         },
