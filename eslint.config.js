@@ -193,7 +193,7 @@ export default [
                 '先頭にハイフンが付くファイル（例：_iconXXXX.tsx）はそのファイルと同階層ディレクトリでのみ import 可能です。',
             },
             {
-              group: ['./*', '!./_screen', '!./_screen.*'],
+              group: ['./*', '../*', '!./_screen', '!./_screen.*'],
               message: 'features 配下の index.{tsx/ts} は ./_screen しか export できません。',
             },
           ],
