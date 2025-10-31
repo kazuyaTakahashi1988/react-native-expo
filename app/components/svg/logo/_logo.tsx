@@ -1,11 +1,11 @@
 import Svg, { Text } from 'react-native-svg';
 
-import type { TypeSvg } from '../../../lib/types/typeComponents';
+import type { TypeLogo } from '../../../lib/types/typeComponents';
 import type React from 'react';
 
-const Logo: React.FC<TypeSvg> = ({ color = '#000', size = 100 }) => (
-  <Svg width={size} height={size} viewBox='0 0 200 60' fill='none'>
-    <Text fill={color} fontSize='48' fontWeight='bold' transform='translate(0 45)'>
+const Logo: React.FC<TypeLogo> = ({ color = '#000', width = 85, height = 35 }) => (
+  <Svg width={width} height={height} viewBox='0 0 85 35' fill='none'>
+    <Text fill={color} fontSize='30' fontWeight='bold' transform='translate(0 28)'>
       LOGO
     </Text>
   </Svg>

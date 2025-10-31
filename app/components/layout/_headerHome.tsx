@@ -17,11 +17,10 @@ const HeaderHome: React.FC<TypeHeaderHome> = (props) => {
   return (
     <View style={styles.header}>
       <View style={styles.headerInner}>
-        <Text style={styles.headerItem}>
+        <Text>
           <Logo />
         </Text>
         <Text
-          style={styles.headerItem}
           onPress={() => {
             goToInfo();
           }}
@@ -44,10 +43,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     height: 50,
     justifyContent: 'space-between',
+    paddingLeft: 10,
+    paddingRight: 10,
     width: '100%',
-  },
-  headerItem: {
-    padding: 10,
   },
 });
 
