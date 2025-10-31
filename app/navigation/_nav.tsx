@@ -4,7 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import NavMain from './_navMain';
 import NavOthers from './_navOthers';
 
-import type { TypeRootList } from '../lib/types';
+import type { TypeRootList } from '../lib/types/typeNavigation';
 import type React from 'react';
 
 /* -----------------------------------------------

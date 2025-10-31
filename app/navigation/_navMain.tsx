@@ -4,10 +4,11 @@ import { StyleSheet } from 'react-native';
 
 import NavHomeNest from './_navHomeNest';
 import { HeaderHome, HeaderSub } from '../components/layout';
-import { IconAbout, IconHome, IconWork } from '../components/svg';
-import { AboutScreen, WorkScreen } from '../features/main';
+import { IconAbout, IconHome, IconWork } from '../components/svg/icon';
+import { AboutScreen } from '../features/main/about';
+import { WorkScreen } from '../features/main/work';
 
-import type { TypeRootList } from '../lib/types';
+import type { TypeRootList } from '../lib/types/typeNavigation';
 import type { BottomTabNavigationOptions } from '@react-navigation/bottom-tabs';
 import type React from 'react';
 

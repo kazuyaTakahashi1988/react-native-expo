@@ -1,6 +1,6 @@
 import Svg, { Text } from 'react-native-svg';
 
-import type { TypeSvg } from '../../../lib/types';
+import type { TypeSvg } from '../../../lib/types/typeComponents';
 import type React from 'react';
 
 const Logo: React.FC<TypeSvg> = ({ color = '#000', size = 100 }) => (

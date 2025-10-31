@@ -1,9 +1,9 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { HeaderSub } from '../components/layout';
-import { InformationScreen } from '../features/others';
+import { InformationScreen } from '../features/others/information';
 
-import type { TypeRootList } from '../lib/types';
+import type { TypeRootList } from '../lib/types/typeNavigation';
 import type React from 'react';
 
 /* -----------------------------------------------

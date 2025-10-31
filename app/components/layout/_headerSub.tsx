@@ -1,8 +1,8 @@
 import { StyleSheet, Text, View } from 'react-native';
 
-import { IconArrow } from '../svg';
+import { IconArrow } from '../svg/icon';
 
-import type { TypeHeaderSub } from '../../lib/types';
+import type { TypeHeaderSub } from '../../lib/types/typeComponents';
 
 const HeaderSub: React.FC<TypeHeaderSub> = (props) => {
   const { navigation, route, options, goBack = false } = props;
