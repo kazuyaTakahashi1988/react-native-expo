@@ -188,6 +188,11 @@ const Child00Screen: FC = () => {
           rules={{ required: 'セレクトボックス は必須です。' }}
           render={({ field: { onChange, value } }) => (
             <CountryPickerField
+              options={[
+                { label: 'セレクトラベル-A', value: 'SelectValue-A' },
+                { label: 'セレクトラベル-B', value: 'SelectValue-B' },
+                { label: 'セレクトラベル-C', value: 'SelectValue-C' },
+              ]}
               hasError={errors.country != null}
               onChange={onChange}
               value={value}

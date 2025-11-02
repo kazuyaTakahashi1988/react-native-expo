@@ -2,33 +2,25 @@ import { type FC, useCallback, useMemo, useRef, useState } from 'react';
 import { Keyboard, Pressable, StyleSheet, Text, View } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 
-import type { TypeFormValues } from './_type';
+import type { TypeCountryPickerField, TypeFormValues } from './_type';
 import type { ComponentProps } from 'react';
 import type { FieldError, Merge } from 'react-hook-form';
 
 /* -----------------------------------------------
  * セレクトボックス
  * ----------------------------------------------- */
-const COUNTRY_OPTIONS: {
-  label: string;
-  value: string;
-}[] = [
-  { label: 'セレクトラベル-A', value: 'SelectValue-A' },
-  { label: 'セレクトラベル-B', value: 'SelectValue-B' },
-  { label: 'セレクトラベル-C', value: 'SelectValue-C' },
-];
-
-export const CountryPickerField: FC<{
-  hasError: boolean;
-  onChange: (value: string) => void;
-  value: string;
-}> = ({ hasError, onChange, value }) => {
+export const CountryPickerField: FC<TypeCountryPickerField> = ({
+  hasError,
+  onChange,
+  value,
+  options,
+}) => {
   const pickerRef = useRef<RNPickerSelect | null>(null);
   const [isPickerOpen, setIsPickerOpen] = useState(false);
 
   const selectedLabel = useMemo(
-    () => COUNTRY_OPTIONS.find((option) => option.value === value)?.label,
-    [value],
+    () => options.find((option) => option.value === value)?.label,
+    [options, value],
   );
 
   const handleOpenPicker = useCallback(() => {
@@ -68,7 +60,7 @@ export const CountryPickerField: FC<{
           pickerRef.current = ref;
         }}
         doneText='完了'
-        items={COUNTRY_OPTIONS}
+        items={options}
         onClose={() => {
           setIsPickerOpen(false);
         }}
