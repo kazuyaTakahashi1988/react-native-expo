@@ -199,6 +199,10 @@ const Child00Screen: React.FC = () => {
                 { label: 'セレクトラベル-C', value: 'SelectValue-C' },
               ]}
               style={{
+                inputWeb: StyleSheet.flatten([
+                  styles.input,
+                  errors.country ? styles.inputError : null,
+                ]),
                 inputIOS: StyleSheet.flatten([
                   styles.input,
                   errors.country ? styles.inputError : null,
