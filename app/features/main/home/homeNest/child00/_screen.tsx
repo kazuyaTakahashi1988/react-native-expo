@@ -259,7 +259,7 @@ const Child00Screen: React.FC = () => {
       </View>
 
       {/* submit 出力結果表示エリア */}
-      {submittedValues ? <ResultArea {...submittedValues} /> : null}
+      <ResultArea {...submittedValues} />
     </Layout>
   );
 };

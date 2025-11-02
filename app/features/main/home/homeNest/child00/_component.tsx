@@ -6,22 +6,28 @@ import type { FieldError, Merge } from 'react-hook-form';
 /* -----------------------------------------------
  * submit 出力結果表示エリア
  * ----------------------------------------------- */
-export const ResultArea: React.FC<TypeFormValues> = (submittedValues) => {
+export const ResultArea: React.FC<Partial<TypeFormValues>> = (submittedValues) => {
   const { name, email, subscribe, plan, country, note } = submittedValues;
+
+  // 各値が空の場合、マウントせず離脱
+  const isBlank = (v: unknown): boolean =>
+    v == null || (typeof v === 'string' && v.trim() === '') || (Array.isArray(v) && v.length === 0);
+  const hasNoValues = [name, email, subscribe, plan, country, note].some(isBlank);
+  if (hasNoValues) {
+    return null;
+  }
 
   return (
     <View style={resultStyles.result}>
       <Text style={resultStyles.resultTitle}>Submitted values</Text>
       <Text>Name: {name}</Text>
       <Text>Email: {email}</Text>
-      <Text>
-        Subscribe: {'\n'}
-        {subscribe.length > 0
-          ? subscribe.map((item) => {
-              return item + '\n';
-            })
-          : null}
-      </Text>
+      {subscribe && subscribe.length > 0 && (
+        <Text>
+          Subscribe: {'\n'}
+          {subscribe.map((item) => `${item}\n`)}
+        </Text>
+      )}
       <Text>Plan: {plan}</Text>
       <Text>Country: {country}</Text>
       <Text>note: {note}</Text>
