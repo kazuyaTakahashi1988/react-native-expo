@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Button, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
-import RNPickerSelect from 'react-native-picker-select';
+import { Picker } from '@react-native-picker/picker';
 
 import { ErrorText, ResultArea } from './_component';
 import { Layout } from '../../../../../components/layout';
@@ -188,36 +188,22 @@ const Child00Screen: React.FC = () => {
           name='country'
           rules={{ required: 'セレクトボックス は必須です。' }}
           render={({ field: { onChange, value } }) => (
-            <RNPickerSelect
+            <Picker
               onValueChange={(selected) => {
-                onChange(selected ?? '');
+                onChange(selected);
               }}
-              placeholder={{ label: '選択してください', value: '' }}
-              items={[
-                { label: 'セレクトラベル-A', value: 'SelectValue-A' },
-                { label: 'セレクトラベル-B', value: 'SelectValue-B' },
-                { label: 'セレクトラベル-C', value: 'SelectValue-C' },
-              ]}
-              style={{
-                inputWeb: StyleSheet.flatten([
-                  styles.input,
-                  errors.country ? styles.inputError : null,
-                ]),
-                inputIOS: StyleSheet.flatten([
-                  styles.input,
-                  errors.country ? styles.inputError : null,
-                ]),
-                inputAndroid: StyleSheet.flatten([
-                  styles.input,
-                  errors.country ? styles.inputError : null,
-                ]),
-                placeholder: {
-                  color: '#9e9e9e',
-                },
-              }}
-              useNativeAndroidPickerStyle={false}
-              value={value === '' ? null : value}
-            />
+              selectedValue={value}
+              style={StyleSheet.flatten([
+                styles.input,
+                styles.picker,
+                errors.country ? styles.inputError : null,
+              ])}
+            >
+              <Picker.Item color='#9e9e9e' label='選択してください' value='' />
+              <Picker.Item label='セレクトラベル-A' value='SelectValue-A' />
+              <Picker.Item label='セレクトラベル-B' value='SelectValue-B' />
+              <Picker.Item label='セレクトラベル-C' value='SelectValue-C' />
+            </Picker>
           )}
         />
         <ErrorText {...errors.country} />
@@ -289,6 +275,10 @@ const styles = StyleSheet.create({
   },
   inputError: {
     borderColor: '#e53935',
+  },
+  picker: {
+    color: '#000',
+    paddingVertical: 4,
   },
   checkboxGroup: {
     rowGap: 12,
