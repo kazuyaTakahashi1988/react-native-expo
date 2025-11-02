@@ -3,4 +3,6 @@ export type TypeFormValues = {
   name: string;
   subscribe: string[];
   plan: string;
+  country: string;
+  note: string;
 };

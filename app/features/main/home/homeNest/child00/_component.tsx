@@ -7,7 +7,7 @@ import type { FieldError, Merge } from 'react-hook-form';
  * submit 出力結果表示エリア
  * ----------------------------------------------- */
 export const ResultArea: React.FC<TypeFormValues> = (submittedValues) => {
-  const { name, email, subscribe, plan } = submittedValues;
+  const { name, email, subscribe, plan, country, note } = submittedValues;
 
   return (
     <View style={resultStyles.result}>
@@ -23,6 +23,8 @@ export const ResultArea: React.FC<TypeFormValues> = (submittedValues) => {
           : null}
       </Text>
       <Text>Plan: {plan}</Text>
+      <Text>Country: {country}</Text>
+      <Text>note: {note}</Text>
     </View>
   );
 };

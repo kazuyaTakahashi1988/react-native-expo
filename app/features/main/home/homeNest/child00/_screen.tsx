@@ -1,6 +1,7 @@
 import { useCallback, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Button, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import RNPickerSelect from 'react-native-picker-select';
 
 import { ErrorText, ResultArea } from './_component';
 import { Layout } from '../../../../../components/layout';
@@ -22,6 +23,8 @@ const Child00Screen: React.FC = () => {
       name: '',
       subscribe: [],
       plan: '',
+      country: '',
+      note: '',
     },
   });
 
@@ -177,6 +180,74 @@ const Child00Screen: React.FC = () => {
         <ErrorText {...errors.plan} />
       </View>
 
+      {/* Country セレクトボックス */}
+      <View style={styles.fieldGroup}>
+        <Text style={styles.label}>Country</Text>
+        <Controller
+          control={control}
+          name='country'
+          rules={{ required: 'セレクトボックス は必須です。' }}
+          render={({ field: { onChange, value } }) => (
+            <RNPickerSelect
+              onValueChange={(selected) => {
+                onChange(selected ?? '');
+              }}
+              placeholder={{ label: '選択してください', value: '' }}
+              items={[
+                { label: 'セレクトラベル-A', value: 'SelectValue-A' },
+                { label: 'セレクトラベル-B', value: 'SelectValue-B' },
+                { label: 'セレクトラベル-C', value: 'SelectValue-C' },
+              ]}
+              style={{
+                inputIOS: StyleSheet.flatten([
+                  styles.input,
+                  errors.country ? styles.inputError : null,
+                ]),
+                inputAndroid: StyleSheet.flatten([
+                  styles.input,
+                  errors.country ? styles.inputError : null,
+                ]),
+                placeholder: {
+                  color: '#9e9e9e',
+                },
+              }}
+              useNativeAndroidPickerStyle={false}
+              value={value === '' ? null : value}
+            />
+          )}
+        />
+        <ErrorText {...errors.country} />
+      </View>
+
+      {/* Note テキストエリア */}
+      <View style={styles.fieldGroup}>
+        <Text style={styles.label}>Note</Text>
+        <Controller
+          control={control}
+          name='note'
+          rules={{
+            maxLength: {
+              value: 200,
+              message: '200文字以内で入力してください。',
+            },
+            required: 'テキストエリア は必須です。',
+          }}
+          render={({ field: { onBlur, onChange, value } }) => (
+            <TextInput
+              multiline
+              numberOfLines={4}
+              onBlur={onBlur}
+              onChangeText={onChange}
+              placeholder='メモや補足を入力してください'
+              style={[styles.input, styles.textArea, errors.note ? styles.inputError : null]}
+              textAlignVertical='top'
+              value={value}
+            />
+          )}
+        />
+        <ErrorText {...errors.note} />
+      </View>
+
       {/* submit ボタン */}
       <View style={styles.actions}>
         <Button onPress={onSubmit} title={isSubmitting ? 'Submitting…' : 'Submit'} />
@@ -256,6 +327,9 @@ const styles = StyleSheet.create({
     borderRadius: 999,
     height: 10,
     width: 10,
+  },
+  textArea: {
+    height: 120,
   },
   actions: {
     columnGap: 12,
