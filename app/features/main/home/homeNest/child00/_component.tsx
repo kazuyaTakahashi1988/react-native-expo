@@ -2,30 +2,19 @@ import { type FC, useCallback, useMemo, useRef, useState } from 'react';
 import { Keyboard, Pressable, StyleSheet, Text, View } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 
-import type { TypeFormValues } from './_type';
+import type { TypeCountryPickerField, TypeFormValues } from './_type';
 import type { ComponentProps } from 'react';
 import type { FieldError, Merge } from 'react-hook-form';
 
 /* -----------------------------------------------
  * セレクトボックス
  * ----------------------------------------------- */
-type CountryOption = {
-  label: string;
-  value: string;
-};
-
-const DEFAULT_COUNTRY_OPTIONS: CountryOption[] = [
-  { label: 'セレクトラベル-A', value: 'SelectValue-A' },
-  { label: 'セレクトラベル-B', value: 'SelectValue-B' },
-  { label: 'セレクトラベル-C', value: 'SelectValue-C' },
-];
-
-export const CountryPickerField: FC<{
-  hasError: boolean;
-  onChange: (value: string) => void;
-  value: string;
-  options?: CountryOption[];
-}> = ({ hasError, onChange, value, options = DEFAULT_COUNTRY_OPTIONS }) => {
+export const CountryPickerField: FC<TypeCountryPickerField> = ({
+  hasError,
+  onChange,
+  value,
+  options,
+}) => {
   const pickerRef = useRef<RNPickerSelect | null>(null);
   const [isPickerOpen, setIsPickerOpen] = useState(false);
 
