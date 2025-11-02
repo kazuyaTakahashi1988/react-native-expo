@@ -1,14 +1,13 @@
-import { useCallback, useState } from 'react';
+import { type FC, useCallback, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Button, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
-import RNPickerSelect from 'react-native-picker-select';
 
-import { ErrorText, ResultArea } from './_component';
+import { CountryPickerField, ErrorText, ResultArea } from './_component';
 import { Layout } from '../../../../../components/layout';
 
 import type { TypeFormValues } from './_type';
 
-const Child00Screen: React.FC = () => {
+const Child00Screen: FC = () => {
   const [submittedValues, setSubmittedValues] = useState<TypeFormValues | null>(null);
 
   // form設定
@@ -85,7 +84,7 @@ const Child00Screen: React.FC = () => {
           render={({ field: { onBlur, onChange, value } }) => (
             <TextInput
               autoCapitalize='none'
-              keyboardType='email-address'
+              keyboardType='ascii-capable'
               onBlur={onBlur}
               onChangeText={onChange}
               placeholder='jane@example.com'
@@ -188,35 +187,10 @@ const Child00Screen: React.FC = () => {
           name='country'
           rules={{ required: 'セレクトボックス は必須です。' }}
           render={({ field: { onChange, value } }) => (
-            <RNPickerSelect
-              onValueChange={(selected) => {
-                onChange(selected ?? '');
-              }}
-              placeholder={{ label: '選択してください', value: '' }}
-              items={[
-                { label: 'セレクトラベル-A', value: 'SelectValue-A' },
-                { label: 'セレクトラベル-B', value: 'SelectValue-B' },
-                { label: 'セレクトラベル-C', value: 'SelectValue-C' },
-              ]}
-              style={{
-                inputWeb: StyleSheet.flatten([
-                  styles.input,
-                  errors.country ? styles.inputError : null,
-                ]),
-                inputIOS: StyleSheet.flatten([
-                  styles.input,
-                  errors.country ? styles.inputError : null,
-                ]),
-                inputAndroid: StyleSheet.flatten([
-                  styles.input,
-                  errors.country ? styles.inputError : null,
-                ]),
-                placeholder: {
-                  color: '#9e9e9e',
-                },
-              }}
-              useNativeAndroidPickerStyle={false}
-              value={value === '' ? null : value}
+            <CountryPickerField
+              hasError={errors.country != null}
+              onChange={onChange}
+              value={value}
             />
           )}
         />

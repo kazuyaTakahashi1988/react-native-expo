@@ -1,13 +1,16 @@
 import { ScrollView, StyleSheet, View } from 'react-native';
 
 import type { TypeLayout } from '../../lib/types/typeComponents';
+import type { FC } from 'react';
 
-export const Layout: React.FC<TypeLayout> = (props) => {
+export const Layout: FC<TypeLayout> = (props) => {
   const { children } = props;
 
   return (
     <View style={styles.container}>
-      <ScrollView contentContainerStyle={styles.children}>{children}</ScrollView>
+      <ScrollView keyboardShouldPersistTaps='handled' contentContainerStyle={styles.children}>
+        {children}
+      </ScrollView>
     </View>
   );
 };
