@@ -21,7 +21,7 @@ const NavHomeNest: React.FC = () => {
     <MaterialTopTab.Navigator screenOptions={{ swipeEnabled: true }}>
       {/* Child00 画面 */}
       <MaterialTopTab.Screen name='child00' options={{ title: 'Child00' }}>
-        {(props) => <Child00Screen {...props} />}
+        {() => <Child00Screen />}
       </MaterialTopTab.Screen>
 
       {/* Child01 画面 */}

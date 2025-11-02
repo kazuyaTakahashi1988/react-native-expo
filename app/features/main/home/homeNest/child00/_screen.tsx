@@ -1,20 +1,14 @@
 import { useCallback, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Button, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 
+import { ErrorText, ResultArea } from './_component';
 import { Layout } from '../../../../../components/layout';
 
-import type { TypeChild00Screen } from './_type';
+import type { TypeFormValues } from './_type';
 
-type FormValues = {
-  email: string;
-  name: string;
-};
-
-const Child00Screen: React.FC<TypeChild00Screen> = (props) => {
-  // eslint-disable-next-line no-console
-  console.log(props);
-  const [submittedValues, setSubmittedValues] = useState<FormValues | null>(null);
+const Child00Screen: React.FC = () => {
+  const [submittedValues, setSubmittedValues] = useState<TypeFormValues | null>(null);
 
   // form設定
   const {
@@ -22,16 +16,21 @@ const Child00Screen: React.FC<TypeChild00Screen> = (props) => {
     formState: { errors, isSubmitting },
     handleSubmit,
     reset,
-  } = useForm<FormValues>({
+  } = useForm<TypeFormValues>({
     defaultValues: {
       email: '',
       name: '',
+      subscribe: [],
+      plan: '',
     },
   });
 
+  // チェックボックスフィルター処理
+  const checkBoxFilter = <T,>(list: T[], target: T): T[] => list.filter((x) => x !== target);
+
   // submitボタン処理
   const onSubmit = useCallback(() => {
-    void handleSubmit((values: FormValues) => {
+    void handleSubmit((values: TypeFormValues) => {
       setSubmittedValues(values);
     })();
   }, [handleSubmit]);
@@ -64,7 +63,7 @@ const Child00Screen: React.FC<TypeChild00Screen> = (props) => {
             />
           )}
         />
-        {errors.name ? <Text style={styles.errorText}>{errors.name.message}</Text> : null}
+        <ErrorText {...errors.name} />
       </View>
 
       {/* Email インプット項目 */}
@@ -92,7 +91,90 @@ const Child00Screen: React.FC<TypeChild00Screen> = (props) => {
             />
           )}
         />
-        {errors.email ? <Text style={styles.errorText}>{errors.email.message}</Text> : null}
+        <ErrorText {...errors.email} />
+      </View>
+
+      {/* Subscribe チェックボックス */}
+      <View style={styles.fieldGroup}>
+        <Text style={styles.label}>・チェックボックス</Text>
+        <Controller
+          control={control}
+          name='subscribe'
+          rules={{
+            validate: (value) => value.length === 2 || '2つ以上選択してください。',
+            required: 'チェックボックス は必須です。',
+          }}
+          render={({ field: { onChange, value } }) => (
+            <View style={styles.checkboxGroup}>
+              {[
+                { label: 'チェックラベル-A', value: 'CheckValue-A' },
+                { label: 'チェックラベル-B', value: 'CheckValue-B' },
+                { label: 'チェックラベル-C', value: 'CheckValue-C' },
+              ].map((option) => {
+                const selected = value.includes(option.value);
+                return (
+                  <Pressable
+                    key={option.value}
+                    accessibilityRole='checkbox'
+                    accessibilityState={{ checked: selected }}
+                    onPress={() => {
+                      if (selected) {
+                        onChange(checkBoxFilter(value, option.value));
+                        return;
+                      }
+
+                      if (value.length >= 2) {
+                        return;
+                      }
+
+                      onChange([...value, option.value]);
+                    }}
+                    style={styles.checkboxRow}
+                  >
+                    <View style={[styles.checkboxBase, selected ? styles.checkboxChecked : null]} />
+                    <Text>{option.label}</Text>
+                  </Pressable>
+                );
+              })}
+            </View>
+          )}
+        />
+        <ErrorText {...errors.subscribe} />
+      </View>
+
+      {/* Plan ラジオボタン */}
+      <View style={styles.fieldGroup}>
+        <Text style={styles.label}>・ラジオボタン</Text>
+        <Controller
+          control={control}
+          name='plan'
+          rules={{
+            required: 'ラジオボタン は必須です。',
+          }}
+          render={({ field: { value, onChange } }) => (
+            <View style={styles.radioGroup}>
+              {[
+                { label: 'ラジオラベル-A', value: 'RadioValue-A' },
+                { label: 'ラジオラベル-B', value: 'RadioValue-B' },
+                { label: 'ラジオラベル-C', value: 'RadioValue-C' },
+              ].map((option) => (
+                <Pressable
+                  key={option.value}
+                  onPress={() => {
+                    onChange(option.value);
+                  }}
+                  style={styles.radioRow}
+                >
+                  <View style={styles.radioOuter}>
+                    {value === option.value ? <View style={styles.radioInner} /> : null}
+                  </View>
+                  <Text>{option.label}</Text>
+                </Pressable>
+              ))}
+            </View>
+          )}
+        />
+        <ErrorText {...errors.plan} />
       </View>
 
       {/* submit ボタン */}
@@ -102,13 +184,7 @@ const Child00Screen: React.FC<TypeChild00Screen> = (props) => {
       </View>
 
       {/* submit 出力結果表示エリア */}
-      {submittedValues ? (
-        <View style={styles.result}>
-          <Text style={styles.resultTitle}>Submitted values</Text>
-          <Text>Name: {submittedValues.name}</Text>
-          <Text>Email: {submittedValues.email}</Text>
-        </View>
-      ) : null}
+      {submittedValues ? <ResultArea {...submittedValues} /> : null}
     </Layout>
   );
 };
@@ -139,29 +215,53 @@ const styles = StyleSheet.create({
   inputError: {
     borderColor: '#e53935',
   },
-  errorText: {
-    color: '#e53935',
-    fontSize: 12,
-    marginTop: 4,
+  checkboxGroup: {
+    rowGap: 12,
+  },
+  checkboxRow: {
+    alignItems: 'center',
+    columnGap: 12,
+    flexDirection: 'row',
+  },
+  checkboxBase: {
+    borderColor: '#007aff',
+    borderRadius: 4,
+    borderWidth: 2,
+    height: 20,
+    width: 20,
+  },
+  checkboxChecked: {
+    backgroundColor: '#007aff',
+    borderColor: '#007aff',
+  },
+  radioGroup: {
+    rowGap: 12,
+  },
+  radioRow: {
+    alignItems: 'center',
+    columnGap: 12,
+    flexDirection: 'row',
+  },
+  radioOuter: {
+    alignItems: 'center',
+    borderColor: '#007aff',
+    borderRadius: 999,
+    borderWidth: 2,
+    height: 20,
+    justifyContent: 'center',
+    width: 20,
+  },
+  radioInner: {
+    backgroundColor: '#007aff',
+    borderRadius: 999,
+    height: 10,
+    width: 10,
   },
   actions: {
     columnGap: 12,
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 12,
-  },
-  result: {
-    backgroundColor: '#fff',
-    borderColor: '#d6d6d6',
-    borderRadius: 8,
-    borderWidth: 1,
-    marginTop: 24,
-    padding: 16,
-    rowGap: 8,
-  },
-  resultTitle: {
-    fontSize: 16,
-    fontWeight: '600',
   },
 });
 
