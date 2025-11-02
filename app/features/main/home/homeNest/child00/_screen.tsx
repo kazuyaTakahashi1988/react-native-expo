@@ -1,9 +1,9 @@
 import { useCallback, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { Button, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
-import { Picker } from '@react-native-picker/picker';
+import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 
 import { ErrorText, ResultArea } from './_component';
+import { AppButton, Select } from '../../../../../components/form';
 import { Layout } from '../../../../../components/layout';
 
 import type { TypeFormValues } from './_type';
@@ -188,22 +188,19 @@ const Child00Screen: React.FC = () => {
           name='country'
           rules={{ required: 'セレクトボックス は必須です。' }}
           render={({ field: { onChange, value } }) => (
-            <Picker
+            <Select
+              hasError={Boolean(errors.country)}
               onValueChange={(selected) => {
                 onChange(selected);
               }}
-              selectedValue={value}
-              style={StyleSheet.flatten([
-                styles.input,
-                styles.picker,
-                errors.country ? styles.inputError : null,
-              ])}
-            >
-              <Picker.Item color='#9e9e9e' label='選択してください' value='' />
-              <Picker.Item label='セレクトラベル-A' value='SelectValue-A' />
-              <Picker.Item label='セレクトラベル-B' value='SelectValue-B' />
-              <Picker.Item label='セレクトラベル-C' value='SelectValue-C' />
-            </Picker>
+              options={[
+                { label: 'セレクトラベル-A', value: 'SelectValue-A' },
+                { label: 'セレクトラベル-B', value: 'SelectValue-B' },
+                { label: 'セレクトラベル-C', value: 'SelectValue-C' },
+              ]}
+              placeholder='選択してください'
+              value={value}
+            />
           )}
         />
         <ErrorText {...errors.country} />
@@ -240,8 +237,8 @@ const Child00Screen: React.FC = () => {
 
       {/* submit ボタン */}
       <View style={styles.actions}>
-        <Button onPress={onSubmit} title={isSubmitting ? 'Submitting…' : 'Submit'} />
-        <Button color='#444' onPress={onReset} title='Reset' />
+        <AppButton disabled={isSubmitting} label={isSubmitting ? 'Submitting…' : 'Submit'} onPress={onSubmit} style={styles.actionButton} />
+        <AppButton label='Reset' onPress={onReset} style={styles.actionButton} variant='secondary' />
       </View>
 
       {/* submit 出力結果表示エリア */}
@@ -275,10 +272,6 @@ const styles = StyleSheet.create({
   },
   inputError: {
     borderColor: '#e53935',
-  },
-  picker: {
-    color: '#000',
-    paddingVertical: 4,
   },
   checkboxGroup: {
     rowGap: 12,
@@ -330,6 +323,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 12,
+  },
+  actionButton: {
+    flex: 1,
   },
 });
 
