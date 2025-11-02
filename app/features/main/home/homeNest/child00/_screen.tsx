@@ -191,6 +191,11 @@ const Child00Screen: FC = () => {
               hasError={errors.country != null}
               onChange={onChange}
               value={value}
+              options={[
+                { label: 'セレクトラベル-A', value: 'SelectValue-A' },
+                { label: 'セレクトラベル-B', value: 'SelectValue-B' },
+                { label: 'セレクトラベル-C', value: 'SelectValue-C' },
+              ]}
             />
           )}
         />

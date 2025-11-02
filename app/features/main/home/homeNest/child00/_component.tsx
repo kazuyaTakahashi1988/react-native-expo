@@ -9,10 +9,12 @@ import type { FieldError, Merge } from 'react-hook-form';
 /* -----------------------------------------------
  * セレクトボックス
  * ----------------------------------------------- */
-const COUNTRY_OPTIONS: {
+type CountryOption = {
   label: string;
   value: string;
-}[] = [
+};
+
+const DEFAULT_COUNTRY_OPTIONS: CountryOption[] = [
   { label: 'セレクトラベル-A', value: 'SelectValue-A' },
   { label: 'セレクトラベル-B', value: 'SelectValue-B' },
   { label: 'セレクトラベル-C', value: 'SelectValue-C' },
@@ -22,13 +24,14 @@ export const CountryPickerField: FC<{
   hasError: boolean;
   onChange: (value: string) => void;
   value: string;
-}> = ({ hasError, onChange, value }) => {
+  options?: CountryOption[];
+}> = ({ hasError, onChange, value, options = DEFAULT_COUNTRY_OPTIONS }) => {
   const pickerRef = useRef<RNPickerSelect | null>(null);
   const [isPickerOpen, setIsPickerOpen] = useState(false);
 
   const selectedLabel = useMemo(
-    () => COUNTRY_OPTIONS.find((option) => option.value === value)?.label,
-    [value],
+    () => options.find((option) => option.value === value)?.label,
+    [options, value],
   );
 
   const handleOpenPicker = useCallback(() => {
@@ -68,7 +71,7 @@ export const CountryPickerField: FC<{
           pickerRef.current = ref;
         }}
         doneText='完了'
-        items={COUNTRY_OPTIONS}
+        items={options}
         onClose={() => {
           setIsPickerOpen(false);
         }}
