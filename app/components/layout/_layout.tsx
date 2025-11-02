@@ -1,8 +1,7 @@
 import { ScrollView, StyleSheet, View } from 'react-native';
 
-import type { FC } from 'react';
-
 import type { TypeLayout } from '../../lib/types/typeComponents';
+import type { FC } from 'react';
 
 export const Layout: FC<TypeLayout> = (props) => {
   const { children } = props;

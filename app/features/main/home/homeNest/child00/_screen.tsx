@@ -1,92 +1,11 @@
-import { type FC, useCallback, useMemo, useRef, useState } from 'react';
+import { type FC, useCallback, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import {
-  Button,
-  Keyboard,
-  Pressable,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from 'react-native';
-import RNPickerSelect from 'react-native-picker-select';
+import { Button, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 
-import { ErrorText, ResultArea } from './_component';
+import { CountryPickerField, ErrorText, ResultArea } from './_component';
 import { Layout } from '../../../../../components/layout';
 
 import type { TypeFormValues } from './_type';
-
-type SelectOption = {
-  label: string;
-  value: string;
-};
-
-const COUNTRY_OPTIONS: SelectOption[] = [
-  { label: 'セレクトラベル-A', value: 'SelectValue-A' },
-  { label: 'セレクトラベル-B', value: 'SelectValue-B' },
-  { label: 'セレクトラベル-C', value: 'SelectValue-C' },
-];
-
-const CountryPickerField: FC<{
-  hasError: boolean;
-  onChange: (value: string) => void;
-  value: string;
-}> = ({ hasError, onChange, value }) => {
-  const pickerRef = useRef<RNPickerSelect | null>(null);
-  const [isPickerOpen, setIsPickerOpen] = useState(false);
-
-  const selectedLabel = useMemo(
-    () => COUNTRY_OPTIONS.find((option) => option.value === value)?.label,
-    [value],
-  );
-
-  const handleOpenPicker = useCallback(() => {
-    Keyboard.dismiss();
-    setIsPickerOpen(true);
-    pickerRef.current?.togglePicker(true);
-  }, []);
-
-  const handleValueChange = useCallback(
-    (selectedValue: string | null) => {
-      onChange(selectedValue ?? '');
-    },
-    [onChange],
-  );
-
-  return (
-    <View>
-      <Pressable
-        accessibilityRole='button'
-        accessibilityState={{ expanded: isPickerOpen }}
-        onPress={handleOpenPicker}
-        style={[styles.selectTrigger, hasError ? styles.inputError : null]}
-      >
-        <Text style={selectedLabel == null ? styles.selectPlaceholderText : styles.selectValueText}>
-          {selectedLabel ?? '選択してください'}
-        </Text>
-      </Pressable>
-
-      <RNPickerSelect
-        ref={(ref) => {
-          pickerRef.current = ref;
-        }}
-        doneText='完了'
-        items={COUNTRY_OPTIONS}
-        onClose={() => {
-          setIsPickerOpen(false);
-        }}
-        onOpen={() => {
-          setIsPickerOpen(true);
-        }}
-        onValueChange={handleValueChange}
-        placeholder={{ label: '選択してください', value: '' }}
-        style={pickerSelectStyles}
-        useNativeAndroidPickerStyle={false}
-        value={value === '' ? null : value}
-      />
-    </View>
-  );
-};
 
 const Child00Screen: FC = () => {
   const [submittedValues, setSubmittedValues] = useState<TypeFormValues | null>(null);
@@ -268,7 +187,11 @@ const Child00Screen: FC = () => {
           name='country'
           rules={{ required: 'セレクトボックス は必須です。' }}
           render={({ field: { onChange, value } }) => (
-            <CountryPickerField hasError={errors.country != null} onChange={onChange} value={value} />
+            <CountryPickerField
+              hasError={errors.country != null}
+              onChange={onChange}
+              value={value}
+            />
           )}
         />
         <ErrorText {...errors.country} />
@@ -341,25 +264,6 @@ const styles = StyleSheet.create({
   inputError: {
     borderColor: '#e53935',
   },
-  selectTrigger: {
-    alignItems: 'center',
-    backgroundColor: '#fff',
-    borderColor: '#d6d6d6',
-    borderRadius: 8,
-    borderWidth: 1,
-    flexDirection: 'row',
-    minHeight: 44,
-    paddingHorizontal: 12,
-    paddingVertical: 10,
-  },
-  selectValueText: {
-    color: '#212121',
-    fontSize: 14,
-  },
-  selectPlaceholderText: {
-    color: '#9e9e9e',
-    fontSize: 14,
-  },
   checkboxGroup: {
     rowGap: 12,
   },
@@ -410,40 +314,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 12,
-  },
-});
-
-const pickerSelectStyles = StyleSheet.create({
-  inputIOS: {
-    height: 0,
-    opacity: 0,
-    padding: 0,
-  },
-  inputAndroid: {
-    height: 0,
-    opacity: 0,
-    padding: 0,
-  },
-  inputWeb: {
-    display: 'none',
-  },
-  placeholder: {
-    color: '#9e9e9e',
-  },
-  viewContainer: {
-    height: 0,
-    overflow: 'hidden',
-  },
-  modalViewMiddle: {
-    backgroundColor: '#fff',
-  },
-  modalViewBottom: {
-    backgroundColor: '#fff',
-  },
-  done: {
-    color: '#007aff',
-    fontSize: 16,
-    fontWeight: '600',
   },
 });
 
