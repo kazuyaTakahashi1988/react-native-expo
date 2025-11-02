@@ -116,12 +116,8 @@ const pickerSelectStyles: PickerSelectStyles = {
   inputWeb: {
     height: '100%',
     width: '100%',
-    alignItems: 'center',
-    backgroundColor: '#fff',
-    borderColor: '#d6d6d6',
     borderRadius: 8,
-    borderWidth: 1,
-    color: '#9e9e9e',
+    opacity: 0,
   },
   placeholder: {
     color: '#9e9e9e',
