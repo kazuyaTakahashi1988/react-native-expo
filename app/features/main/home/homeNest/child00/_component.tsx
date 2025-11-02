@@ -122,14 +122,24 @@ const pickerSelectStyles: PickerSelectStyles = {
     padding: 0,
   },
   inputWeb: {
-    // display: 'none',
+    height: '100%',
+    width: '100%',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    borderColor: '#d6d6d6',
+    borderRadius: 8,
+    borderWidth: 1,
+    color: '#9e9e9e',
   },
   placeholder: {
     color: '#9e9e9e',
   },
   viewContainer: {
-    height: 0,
-    overflow: 'hidden',
+    height: '100%',
+    width: '100%',
+    position: 'absolute',
+    top: 0,
+    left: 0,
   },
   modalViewMiddle: {
     backgroundColor: '#fff',

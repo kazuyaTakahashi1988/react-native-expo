@@ -84,7 +84,7 @@ const Child00Screen: FC = () => {
           render={({ field: { onBlur, onChange, value } }) => (
             <TextInput
               autoCapitalize='none'
-              keyboardType='email-address'
+              keyboardType='ascii-capable'
               onBlur={onBlur}
               onChangeText={onChange}
               placeholder='jane@example.com'
