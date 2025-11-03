@@ -2,19 +2,17 @@ import { type FC, useCallback, useMemo, useRef, useState } from 'react';
 import { Keyboard, Pressable, StyleSheet, Text, View } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 
-import type { TypeCountryPickerField, TypeFormValues } from './_type';
-import type { ComponentProps } from 'react';
-import type { FieldError, Merge } from 'react-hook-form';
+import type {
+  TypeErrorText,
+  TypePickerField,
+  TypePickerSelectStyles,
+  TypeResultArea,
+} from './_type';
 
 /* -----------------------------------------------
  * セレクトボックス
  * ----------------------------------------------- */
-export const CountryPickerField: FC<TypeCountryPickerField> = ({
-  hasError,
-  onChange,
-  value,
-  options,
-}) => {
+export const PickerField: FC<TypePickerField> = ({ hasError, onChange, value, options }) => {
   const pickerRef = useRef<RNPickerSelect | null>(null);
   const [isPickerOpen, setIsPickerOpen] = useState(false);
 
@@ -101,8 +99,7 @@ const selectStyles = StyleSheet.create({
   },
 });
 
-type PickerSelectStyles = NonNullable<ComponentProps<typeof RNPickerSelect>['style']>;
-const pickerSelectStyles: PickerSelectStyles = {
+const pickerSelectStyles: TypePickerSelectStyles = {
   inputIOS: {
     height: 0,
     opacity: 0,
@@ -145,7 +142,7 @@ const pickerSelectStyles: PickerSelectStyles = {
 /* -----------------------------------------------
  * エラーテキスト
  * ----------------------------------------------- */
-export const ErrorText: React.FC<Merge<FieldError, (FieldError | undefined)[]>> = (errorsType) => {
+export const ErrorText: React.FC<TypeErrorText> = (errorsType) => {
   if (errorsType.message == null) {
     return;
   }
@@ -162,7 +159,7 @@ const errorStyles = StyleSheet.create({
 /* -----------------------------------------------
  * submit 出力結果表示エリア
  * ----------------------------------------------- */
-export const ResultArea: React.FC<Partial<TypeFormValues>> = (submittedValues) => {
+export const ResultArea: React.FC<TypeResultArea> = (submittedValues) => {
   const { name, email, subscribe, plan, country, note } = submittedValues;
 
   // 各値が空の場合、マウントせず離脱

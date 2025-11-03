@@ -2,7 +2,7 @@ import { type FC, useCallback, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Button, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 
-import { CountryPickerField, ErrorText, ResultArea } from './_component';
+import { ErrorText, PickerField, ResultArea } from './_component';
 import { Layout } from '../../../../../components/layout';
 
 import type { TypeFormValues } from './_type';
@@ -103,7 +103,7 @@ const Child00Screen: FC = () => {
           control={control}
           name='subscribe'
           rules={{
-            validate: (value) => value.length === 2 || '2つ以上選択してください。',
+            validate: (value) => value.length >= 2 || '2つ以上選択してください。',
             required: 'チェックボックス は必須です。',
           }}
           render={({ field: { onChange, value } }) => (
@@ -124,11 +124,6 @@ const Child00Screen: FC = () => {
                         onChange(checkBoxFilter(value, option.value));
                         return;
                       }
-
-                      if (value.length >= 2) {
-                        return;
-                      }
-
                       onChange([...value, option.value]);
                     }}
                     style={styles.checkboxRow}
@@ -187,7 +182,7 @@ const Child00Screen: FC = () => {
           name='country'
           rules={{ required: 'セレクトボックス は必須です。' }}
           render={({ field: { onChange, value } }) => (
-            <CountryPickerField
+            <PickerField
               options={[
                 { label: 'セレクトラベル-A', value: 'SelectValue-A' },
                 { label: 'セレクトラベル-B', value: 'SelectValue-B' },

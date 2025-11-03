@@ -1,3 +1,7 @@
+import type { ComponentProps } from 'react';
+import type { FieldError, Merge } from 'react-hook-form';
+import type RNPickerSelect from 'react-native-picker-select';
+
 export type TypeFormValues = {
   email: string;
   name: string;
@@ -7,7 +11,7 @@ export type TypeFormValues = {
   note: string;
 };
 
-export type TypeCountryPickerField = {
+export type TypePickerField = {
   options: {
     label: string;
     value: string;
@@ -16,3 +20,9 @@ export type TypeCountryPickerField = {
   onChange: (value: string) => void;
   value: string;
 };
+
+export type TypePickerSelectStyles = NonNullable<ComponentProps<typeof RNPickerSelect>['style']>;
+
+export type TypeErrorText = Merge<FieldError, (FieldError | undefined)[]>;
+
+export type TypeResultArea = Partial<TypeFormValues>;
