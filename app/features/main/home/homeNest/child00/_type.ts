@@ -2,6 +2,9 @@ import type { ComponentProps } from 'react';
 import type { FieldError, Merge } from 'react-hook-form';
 import type RNPickerSelect from 'react-native-picker-select';
 
+/* -----------------------------------------------
+ * ./_screen.tsx
+ * ----------------------------------------------- */
 export type TypeFormValues = {
   email: string;
   name: string;
@@ -11,6 +14,9 @@ export type TypeFormValues = {
   note: string;
 };
 
+/* -----------------------------------------------
+ * ./_component.tsx
+ * ----------------------------------------------- */
 export type TypePickerField = {
   options: {
     label: string;
