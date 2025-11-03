@@ -1,17 +1,28 @@
+// @ts-check
+
 import js from '@eslint/js';
 import prettier from 'eslint-config-prettier';
 import importPlugin from 'eslint-plugin-import';
 import react from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
-import reactNative from 'eslint-plugin-react-native';
 import sonarjs from 'eslint-plugin-sonarjs';
 import tseslint from 'typescript-eslint';
 
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/** @type {import('eslint').ESLint.Plugin} */
-const reactPlugin = react;
-/** @type {import('eslint').ESLint.Plugin} */
-const reactNativePlugin = reactNative;
+import reactNative from 'eslint-plugin-react-native';
+
+const reactPlugin = /** @type {import('eslint').ESLint.Plugin} */ (react);
+const reactFlatConfigs =
+  /** @type {Record<string, import('eslint').Linter.Config>} */ (
+    reactPlugin.configs?.flat ?? {}
+  );
+
+const reactNativePlugin = /** @type {import('eslint').ESLint.Plugin} */ (reactNative);
+const reactNativeAllConfig = reactNativePlugin.configs?.all;
+const reactNativeRules = /** @type {import('eslint').Linter.RulesRecord} */ (
+  reactNativeAllConfig && !Array.isArray(reactNativeAllConfig)
+    ? reactNativeAllConfig.rules ?? {}
+    : {}
+);
 
 export default [
   js.configs.recommended,
@@ -19,11 +30,11 @@ export default [
   ...tseslint.configs.recommended,
   ...tseslint.configs.recommendedTypeChecked,
   ...tseslint.configs.strictTypeChecked,
-  reactPlugin.configs.flat.recommended,
-  reactPlugin.configs.flat['jsx-runtime'],
+  reactFlatConfigs.recommended,
+  reactFlatConfigs['jsx-runtime'],
   reactHooks.configs['recommended-latest'],
   {
-    files: ['app/**/*.ts', 'app/**/*.tsx', 'index.ts', 'eslint.config.js'],
+    files: ['app/**/*.ts', 'app/**/*.tsx', 'index.ts', 'eslint.config.js', 'types/**/*.d.ts'],
     languageOptions: {
       parser: tseslint.parser,
       parserOptions: {
@@ -49,7 +60,7 @@ export default [
       },
     },
     rules: {
-      ...reactNativePlugin.configs.all.rules,
+      ...reactNativeRules,
       /* 色コードを直接書くことを禁止するルールを"off" */
       'react-native/no-color-literals': 'off',
       /* StyleSheet.create内スタイルのプロパティをソート */

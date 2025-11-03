@@ -15,6 +15,10 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-native",
+    "typeRoots": ["./node_modules/@types", "./types"],
+    "paths": {
+      "eslint-plugin-react-native": ["./types/eslint-plugin-react-native"]
+    },
 
     /* Linting */
     "strict": true,
@@ -22,6 +26,12 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["app/**/*.ts", "app/**/*.tsx", "index.ts", "eslint.config.js"],
+  "include": [
+    "app/**/*.ts",
+    "app/**/*.tsx",
+    "index.ts",
+    "eslint.config.js",
+    "types/**/*.d.ts"
+  ],
   "exclude": ["node_modules", ".expo", "ios", "android"]
 }
