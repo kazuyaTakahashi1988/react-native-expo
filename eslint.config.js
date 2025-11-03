@@ -7,7 +7,6 @@ import reactNative from 'eslint-plugin-react-native';
 import sonarjs from 'eslint-plugin-sonarjs';
 import tseslint from 'typescript-eslint';
 
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /** @type {import('eslint').ESLint.Plugin} */
 const reactPlugin = react;
 /** @type {import('eslint').ESLint.Plugin} */
@@ -23,7 +22,7 @@ export default [
   reactPlugin.configs.flat['jsx-runtime'],
   reactHooks.configs['recommended-latest'],
   {
-    files: ['app/**/*.ts', 'app/**/*.tsx', 'index.ts', 'eslint.config.js'],
+    files: ['app/**/*.ts', 'app/**/*.tsx', 'index.ts'],
     languageOptions: {
       parser: tseslint.parser,
       parserOptions: {
@@ -203,6 +202,6 @@ export default [
   },
   prettier, // ←prettierはこの位置（最後尾近く）に置いておくこと
   {
-    ignores: ['node_modules', '.expo', 'ios', 'android'],
+    ignores: ['node_modules', '.expo', 'ios', 'android', 'eslint.config.js'],
   },
 ];
