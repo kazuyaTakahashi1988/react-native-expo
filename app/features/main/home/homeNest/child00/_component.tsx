@@ -2,12 +2,7 @@ import { type FC, useCallback, useMemo, useRef, useState } from 'react';
 import { Keyboard, Pressable, StyleSheet, Text, View } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 
-import type {
-  TypeErrorText,
-  TypePickerField,
-  TypePickerSelectStyles,
-  TypeResultArea,
-} from './_type';
+import type { TypePickerField, TypePickerSelectStyles, TypeResultArea } from './_type';
 
 /* -----------------------------------------------
  * セレクトボックス
@@ -138,23 +133,6 @@ const pickerSelectStyles: TypePickerSelectStyles = {
     fontWeight: '600',
   },
 };
-
-/* -----------------------------------------------
- * エラーテキスト
- * ----------------------------------------------- */
-export const ErrorText: React.FC<TypeErrorText> = (errorsType) => {
-  if (errorsType.message == null) {
-    return;
-  }
-  return <Text style={errorStyles.text}>{errorsType.message}</Text>;
-};
-const errorStyles = StyleSheet.create({
-  text: {
-    color: '#e53935',
-    fontSize: 12,
-    marginTop: 4,
-  },
-});
 
 /* -----------------------------------------------
  * submit 出力結果表示エリア
