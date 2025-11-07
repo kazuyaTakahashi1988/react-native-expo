@@ -77,7 +77,7 @@ const Child00Screen: React.FC = () => {
         }}
       />
 
-      {/* Subscribe チェックボックス */}
+      {/* Subscribe チェックボックス項目 */}
       <View style={styles.fieldGroup}>
         <Text style={styles.label}>・チェックボックス</Text>
         <Controller
@@ -120,7 +120,7 @@ const Child00Screen: React.FC = () => {
         <ErrorText {...errors.subscribe} />
       </View>
 
-      {/* Plan ラジオボタン */}
+      {/* Plan ラジオボタン項目 */}
       <View style={styles.fieldGroup}>
         <Text style={styles.label}>・ラジオボタン</Text>
         <Controller
@@ -155,7 +155,7 @@ const Child00Screen: React.FC = () => {
         <ErrorText {...errors.plan} />
       </View>
 
-      {/* Country セレクトボックス */}
+      {/* Country セレクトボックス項目 */}
       <View style={styles.fieldGroup}>
         <Text style={styles.label}>Country</Text>
         <Controller
@@ -178,7 +178,7 @@ const Child00Screen: React.FC = () => {
         <ErrorText {...errors.country} />
       </View>
 
-      {/* Note テキストエリア */}
+      {/* Note テキストエリア項目 */}
       <Input
         control={control}
         errorText={errors.note}

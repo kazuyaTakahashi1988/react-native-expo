@@ -9,12 +9,16 @@ import type {
 import type { StyleProp, TextInputProps, TextStyle, ViewStyle } from 'react-native';
 
 /* -----------------------------------------------
+ * type チェックボックス項目
+ * ----------------------------------------------- */
+
+/* -----------------------------------------------
  * type エラーテキスト
  * ----------------------------------------------- */
 export type TypeErrorText = Merge<FieldError, (FieldError | undefined)[]>;
 
 /* -----------------------------------------------
- * type インプット
+ * type インプット項目
  * ----------------------------------------------- */
 export type TypeInputProps<TFieldValues extends FieldValues> = {
   label: string;
@@ -25,3 +29,15 @@ export type TypeInputProps<TFieldValues extends FieldValues> = {
   containerStyle?: StyleProp<ViewStyle>;
   style?: StyleProp<TextStyle>;
 } & Omit<TextInputProps, 'onBlur' | 'onChangeText' | 'value' | 'style'>;
+
+/* -----------------------------------------------
+ * type ラヂオボックス項目
+ * ----------------------------------------------- */
+
+/* -----------------------------------------------
+ * type セレクトボックス項目
+ * ----------------------------------------------- */
+
+/* -----------------------------------------------
+ * type テキストエリア項目
+ * ----------------------------------------------- */

@@ -2,6 +2,10 @@ import { StyleSheet, Text } from 'react-native';
 
 import type { TypeErrorText } from '../../lib/types/typeComponents';
 
+/* -----------------------------------------------
+ * エラーテキスト
+ * ----------------------------------------------- */
+
 const ErrorText: React.FC<TypeErrorText> = (errorsType) => {
   if (errorsType.message == null) {
     return;
