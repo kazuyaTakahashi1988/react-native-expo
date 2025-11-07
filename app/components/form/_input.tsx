@@ -6,7 +6,7 @@ import { ErrorText } from '.';
 import type { TypeInputProps } from '../../lib/types/typeComponents';
 
 /* -----------------------------------------------
- * テキストインプット
+ * インプット項目
  * ----------------------------------------------- */
 
 const Input = <TFieldValues extends FieldValues>({
