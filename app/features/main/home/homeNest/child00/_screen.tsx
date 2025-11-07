@@ -1,13 +1,14 @@
-import { type FC, useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Button, Pressable, StyleSheet, Text, View } from 'react-native';
 
-import { ErrorText, Input, PickerField, ResultArea } from './_component';
+import { PickerField, ResultArea } from './_component';
+import { ErrorText, Input } from '../../../../../components/form';
 import { Layout } from '../../../../../components/layout';
 
 import type { TypeFormValues } from './_type';
 
-const Child00Screen: FC = () => {
+const Child00Screen: React.FC = () => {
   const [submittedValues, setSubmittedValues] = useState<TypeFormValues | null>(null);
 
   // form設定
