@@ -1,6 +1,14 @@
 import type { ComponentProps } from 'react';
-import type { FieldError, Merge } from 'react-hook-form';
+import type {
+  Control,
+  FieldError,
+  FieldValues,
+  Merge,
+  Path,
+  RegisterOptions,
+} from 'react-hook-form';
 import type RNPickerSelect from 'react-native-picker-select';
+import type { StyleProp, TextInputProps, TextStyle, ViewStyle } from 'react-native';
 
 /* -----------------------------------------------
  * ./_screen.tsx
@@ -32,3 +40,13 @@ export type TypePickerSelectStyles = NonNullable<ComponentProps<typeof RNPickerS
 export type TypeErrorText = Merge<FieldError, (FieldError | undefined)[]>;
 
 export type TypeResultArea = Partial<TypeFormValues>;
+
+export type TypeInputProps<TFieldValues extends FieldValues> = {
+  label: string;
+  control: Control<TFieldValues>;
+  name: Path<TFieldValues>;
+  rules?: RegisterOptions<TFieldValues, Path<TFieldValues>>;
+  errorText?: TypeErrorText | FieldError;
+  containerStyle?: StyleProp<ViewStyle>;
+  style?: StyleProp<TextStyle>;
+} & Omit<TextInputProps, 'onBlur' | 'onChangeText' | 'value' | 'style'>;

@@ -1,8 +1,8 @@
 import { type FC, useCallback, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { Button, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Button, Pressable, StyleSheet, Text, View } from 'react-native';
 
-import { ErrorText, PickerField, ResultArea } from './_component';
+import { ErrorText, Input, PickerField, ResultArea } from './_component';
 import { Layout } from '../../../../../components/layout';
 
 import type { TypeFormValues } from './_type';
@@ -48,53 +48,33 @@ const Child00Screen: FC = () => {
       <Text style={styles.title}>react-hook-form example</Text>
 
       {/* Name インプット項目 */}
-      <View style={styles.fieldGroup}>
-        <Text style={styles.label}>Name</Text>
-        <Controller
-          control={control}
-          name='name'
-          rules={{ required: 'Name は必須です。' }}
-          render={({ field: { onBlur, onChange, value } }) => (
-            <TextInput
-              autoCapitalize='words'
-              onBlur={onBlur}
-              onChangeText={onChange}
-              placeholder='Jane Doe'
-              style={[styles.input, errors.name ? styles.inputError : null]}
-              value={value}
-            />
-          )}
-        />
-        <ErrorText {...errors.name} />
-      </View>
+      <Input
+        autoCapitalize='words'
+        control={control}
+        errorText={errors.name}
+        label='Name'
+        name='name'
+        placeholder='Jane Doe'
+        rules={{ required: 'Name は必須です。' }}
+      />
 
       {/* Email インプット項目 */}
-      <View style={styles.fieldGroup}>
-        <Text style={styles.label}>Email</Text>
-        <Controller
-          control={control}
-          name='email'
-          rules={{
-            pattern: {
-              message: 'Emailアドレスを入力してください.',
-              value: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/,
-            },
-            required: 'Email は必須です。',
-          }}
-          render={({ field: { onBlur, onChange, value } }) => (
-            <TextInput
-              autoCapitalize='none'
-              keyboardType='ascii-capable'
-              onBlur={onBlur}
-              onChangeText={onChange}
-              placeholder='jane@example.com'
-              style={[styles.input, errors.email ? styles.inputError : null]}
-              value={value}
-            />
-          )}
-        />
-        <ErrorText {...errors.email} />
-      </View>
+      <Input
+        autoCapitalize='none'
+        control={control}
+        errorText={errors.email}
+        keyboardType='ascii-capable'
+        label='Email'
+        name='email'
+        placeholder='jane@example.com'
+        rules={{
+          pattern: {
+            message: 'Emailアドレスを入力してください.',
+            value: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/,
+          },
+          required: 'Email は必須です。',
+        }}
+      />
 
       {/* Subscribe チェックボックス */}
       <View style={styles.fieldGroup}>
@@ -198,33 +178,24 @@ const Child00Screen: FC = () => {
       </View>
 
       {/* Note テキストエリア */}
-      <View style={styles.fieldGroup}>
-        <Text style={styles.label}>Note</Text>
-        <Controller
-          control={control}
-          name='note'
-          rules={{
-            maxLength: {
-              value: 200,
-              message: '200文字以内で入力してください。',
-            },
-            required: 'テキストエリア は必須です。',
-          }}
-          render={({ field: { onBlur, onChange, value } }) => (
-            <TextInput
-              multiline
-              numberOfLines={4}
-              onBlur={onBlur}
-              onChangeText={onChange}
-              placeholder='メモや補足を入力してください'
-              style={[styles.input, styles.textArea, errors.note ? styles.inputError : null]}
-              textAlignVertical='top'
-              value={value}
-            />
-          )}
-        />
-        <ErrorText {...errors.note} />
-      </View>
+      <Input
+        control={control}
+        errorText={errors.note}
+        label='Note'
+        multiline
+        name='note'
+        numberOfLines={4}
+        placeholder='メモや補足を入力してください'
+        rules={{
+          maxLength: {
+            value: 200,
+            message: '200文字以内で入力してください。',
+          },
+          required: 'テキストエリア は必須です。',
+        }}
+        style={styles.textArea}
+        textAlignVertical='top'
+      />
 
       {/* submit ボタン */}
       <View style={styles.actions}>
@@ -252,17 +223,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '500',
     marginBottom: 8,
-  },
-  input: {
-    backgroundColor: '#fff',
-    borderColor: '#d6d6d6',
-    borderRadius: 8,
-    borderWidth: 1,
-    paddingHorizontal: 12,
-    paddingVertical: 10,
-  },
-  inputError: {
-    borderColor: '#e53935',
   },
   checkboxGroup: {
     rowGap: 12,
