@@ -3,9 +3,9 @@ import { type FieldValues, useController } from 'react-hook-form';
 import { Keyboard, Pressable, StyleSheet, Text, View } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 
-import { ErrorText } from '.';
+import ErrorText from './_errorText';
 
-import type { TypeSelectBoxOption, TypeSelectBoxProps } from '../../lib/types/typeComponents';
+import type { TypeSelectBox, TypeSelectBoxOption } from '../../lib/types/typeComponents';
 import type { StyleProp, TextStyle, ViewStyle } from 'react-native';
 
 /* -----------------------------------------------
@@ -132,7 +132,10 @@ const buildTriggerTextStyles = (
   return styles;
 };
 
-const getDisplayLabel = (selectedOption: TypeSelectBoxOption | undefined, placeholder: string): string => {
+const getDisplayLabel = (
+  selectedOption: TypeSelectBoxOption | undefined,
+  placeholder: string,
+): string => {
   if (selectedOption == null) {
     return placeholder;
   }
@@ -161,7 +164,7 @@ const SelectBox = <TFieldValues extends FieldValues>({
   rules,
   triggerStyle,
   valueTextStyle,
-}: TypeSelectBoxProps<TFieldValues>) => {
+}: TypeSelectBox<TFieldValues>) => {
   const pickerRef = useRef<RNPickerSelect | null>(null);
 
   const {
@@ -176,7 +179,11 @@ const SelectBox = <TFieldValues extends FieldValues>({
   const displayLabel = getDisplayLabel(selectedOption, placeholder);
 
   const triggerStyles = buildTriggerStyles(triggerStyle, hasError);
-  const triggerTextStyles = buildTriggerTextStyles(isPlaceholder, placeholderTextStyle, valueTextStyle);
+  const triggerTextStyles = buildTriggerTextStyles(
+    isPlaceholder,
+    placeholderTextStyle,
+    valueTextStyle,
+  );
 
   const openPicker = () => {
     Keyboard.dismiss();

@@ -18,7 +18,7 @@ export type TypeCheckBoxOption = {
   key?: string | number;
 };
 
-export type TypeCheckBoxProps<TFieldValues extends FieldValues> = {
+export type TypeCheckBox<TFieldValues extends FieldValues> = {
   label: string;
   control: Control<TFieldValues>;
   name: Path<TFieldValues>;
@@ -39,7 +39,7 @@ export type TypeErrorText = Merge<FieldError, (FieldError | undefined)[]>;
 /* -----------------------------------------------
  * type インプット項目
  * ----------------------------------------------- */
-export type TypeInputProps<TFieldValues extends FieldValues> = {
+export type TypeInput<TFieldValues extends FieldValues> = {
   label: string;
   control: Control<TFieldValues>;
   name: Path<TFieldValues>;
@@ -52,7 +52,7 @@ export type TypeInputProps<TFieldValues extends FieldValues> = {
 /* -----------------------------------------------
  * type ラヂオボックス項目
  * ----------------------------------------------- */
-export type TypeRadioBoxProps<TFieldValues extends FieldValues> = {
+export type TypeRadioBox<TFieldValues extends FieldValues> = {
   label: string;
   control: Control<TFieldValues>;
   name: Path<TFieldValues>;
@@ -72,7 +72,7 @@ export type TypeSelectBoxOption = Omit<Item, 'value'> & {
   value: string;
 };
 
-export type TypeSelectBoxProps<TFieldValues extends FieldValues> = {
+export type TypeSelectBox<TFieldValues extends FieldValues> = {
   label: string;
   control: Control<TFieldValues>;
   name: Path<TFieldValues>;
@@ -92,4 +92,4 @@ export type TypeSelectBoxProps<TFieldValues extends FieldValues> = {
 /* -----------------------------------------------
  * type テキストエリア項目
  * ----------------------------------------------- */
-export type TypeTextAreaProps<TFieldValues extends FieldValues> = TypeInputProps<TFieldValues>;
+export type TypeTextArea<TFieldValues extends FieldValues> = TypeInput<TFieldValues>;

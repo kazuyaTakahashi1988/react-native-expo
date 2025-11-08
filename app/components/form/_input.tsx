@@ -1,9 +1,9 @@
 import { type FieldValues, useController } from 'react-hook-form';
 import { StyleSheet, Text, TextInput, View } from 'react-native';
 
-import { ErrorText } from '.';
+import ErrorText from './_errorText';
 
-import type { TypeInputProps } from '../../lib/types/typeComponents';
+import type { TypeInput } from '../../lib/types/typeComponents';
 
 /* -----------------------------------------------
  * インプット項目
@@ -18,7 +18,7 @@ const Input = <TFieldValues extends FieldValues>({
   rules,
   style,
   ...textInputProps
-}: TypeInputProps<TFieldValues>) => {
+}: TypeInput<TFieldValues>) => {
   const {
     field: { onBlur, onChange, value },
   } = useController({ control, name, rules });

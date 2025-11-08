@@ -1,9 +1,9 @@
 import { type FieldValues, useController } from 'react-hook-form';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
-import { ErrorText } from '.';
+import ErrorText from './_errorText';
 
-import type { TypeCheckBoxProps } from '../../lib/types/typeComponents';
+import type { TypeCheckBox } from '../../lib/types/typeComponents';
 
 /* -----------------------------------------------
  * チェックボックス項目
@@ -20,7 +20,7 @@ const CheckBox = <TFieldValues extends FieldValues>({
   optionRowStyle,
   options,
   rules,
-}: TypeCheckBoxProps<TFieldValues>) => {
+}: TypeCheckBox<TFieldValues>) => {
   const {
     field: { value, onChange },
   } = useController({ control, name, rules });

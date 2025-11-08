@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 
 import Input from './_input';
 
-import type { TypeTextAreaProps } from '../../lib/types/typeComponents';
+import type { TypeTextArea } from '../../lib/types/typeComponents';
 
 /* -----------------------------------------------
  * テキストエリア項目
@@ -14,7 +14,7 @@ const TextArea = <TFieldValues extends FieldValues>({
   style,
   textAlignVertical = 'top',
   ...props
-}: TypeTextAreaProps<TFieldValues>) => (
+}: TypeTextArea<TFieldValues>) => (
   <Input
     {...props}
     multiline
