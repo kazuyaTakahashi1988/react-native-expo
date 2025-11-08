@@ -11,7 +11,7 @@ import {
 
 import ErrorText from './_errorText';
 
-import type { TypeCustomRadioBox } from '../../lib/types/typeComponents';
+import type { TypeRadioBoxCustom } from '../../lib/types/typeComponents';
 
 const TRACK_WIDTH = 48;
 const TRACK_HEIGHT = 28;
@@ -42,10 +42,10 @@ const ToggleOption = ({
   activeColor: string;
   inactiveColor: string;
   knobColor: string;
-  optionRowStyle: TypeCustomRadioBox<FieldValues>['optionRowStyle'];
-  optionLabelStyle: TypeCustomRadioBox<FieldValues>['optionLabelStyle'];
-  trackStyle: TypeCustomRadioBox<FieldValues>['trackStyle'];
-  knobStyle: TypeCustomRadioBox<FieldValues>['knobStyle'];
+  optionRowStyle: TypeRadioBoxCustom<FieldValues>['optionRowStyle'];
+  optionLabelStyle: TypeRadioBoxCustom<FieldValues>['optionLabelStyle'];
+  trackStyle: TypeRadioBoxCustom<FieldValues>['trackStyle'];
+  knobStyle: TypeRadioBoxCustom<FieldValues>['knobStyle'];
 }) => {
   const animation = useRef(new Animated.Value(isSelected ? 1 : 0)).current;
 
@@ -104,7 +104,7 @@ const ToggleOption = ({
  * カスタムラヂオボックス
  * ----------------------------------------------- */
 
-const CustomRadioBox = <TFieldValues extends FieldValues>({
+const RadioBoxCustom = <TFieldValues extends FieldValues>({
   activeColor: activeColorProp,
   containerStyle,
   control,
@@ -121,7 +121,7 @@ const CustomRadioBox = <TFieldValues extends FieldValues>({
   rules,
   trackStyle,
   knobStyle,
-}: TypeCustomRadioBox<TFieldValues>) => {
+}: TypeRadioBoxCustom<TFieldValues>) => {
   const {
     field: { value, onChange },
   } = useController({ control, name, rules });
@@ -206,4 +206,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CustomRadioBox;
+export default RadioBoxCustom;

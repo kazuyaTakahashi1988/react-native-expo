@@ -34,7 +34,7 @@ export type TypeCheckBox<TFieldValues extends FieldValues> = {
 /* -----------------------------------------------
  * type カスタムトグル項目共通
  * ----------------------------------------------- */
-type TypeCustomToggleBase<TFieldValues extends FieldValues> = {
+type TypeToggleCustomBase<TFieldValues extends FieldValues> = {
   label: string;
   control: Control<TFieldValues>;
   name: Path<TFieldValues>;
@@ -53,8 +53,8 @@ type TypeCustomToggleBase<TFieldValues extends FieldValues> = {
   knobColor?: string;
 };
 
-export type TypeCustomCheckBox<TFieldValues extends FieldValues> =
-  TypeCustomToggleBase<TFieldValues>;
+export type TypeCheckBoxCustom<TFieldValues extends FieldValues> =
+  TypeToggleCustomBase<TFieldValues>;
 
 /* -----------------------------------------------
  * type エラーテキスト
@@ -90,8 +90,8 @@ export type TypeRadioBox<TFieldValues extends FieldValues> = {
   optionRowStyle?: StyleProp<ViewStyle>;
 };
 
-export type TypeCustomRadioBox<TFieldValues extends FieldValues> =
-  TypeCustomToggleBase<TFieldValues>;
+export type TypeRadioBoxCustom<TFieldValues extends FieldValues> =
+  TypeToggleCustomBase<TFieldValues>;
 
 /* -----------------------------------------------
  * type セレクトボックス項目

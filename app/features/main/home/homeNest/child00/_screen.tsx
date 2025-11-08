@@ -5,10 +5,10 @@ import { Button, StyleSheet, Text, View } from 'react-native';
 import { ResultArea } from './_component';
 import {
   CheckBox,
-  CustomCheckBox,
-  CustomRadioBox,
+  CheckBoxCustom,
   Input,
   RadioBox,
+  RadioBoxCustom,
   SelectBox,
   TextArea,
 } from '../../../../../components/form';
@@ -122,7 +122,7 @@ const Child00Screen: React.FC = () => {
       />
 
       {/* Custom Subscribe カスタムチェックボックス */}
-      <CustomCheckBox
+      <CheckBoxCustom
         activeColor='#22c55e'
         control={control}
         errorText={errors.customSubscribe}
@@ -141,7 +141,7 @@ const Child00Screen: React.FC = () => {
       />
 
       {/* Custom Plan カスタムラヂオボタン項目 */}
-      <CustomRadioBox
+      <RadioBoxCustom
         activeColor='#6366f1'
         control={control}
         errorText={errors.customPlan}

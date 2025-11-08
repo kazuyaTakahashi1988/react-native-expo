@@ -11,7 +11,7 @@ import {
 
 import ErrorText from './_errorText';
 
-import type { TypeCustomCheckBox } from '../../lib/types/typeComponents';
+import type { TypeCheckBoxCustom } from '../../lib/types/typeComponents';
 
 const TRACK_WIDTH = 48;
 const TRACK_HEIGHT = 28;
@@ -42,10 +42,10 @@ const ToggleOption = ({
   activeColor: string;
   inactiveColor: string;
   knobColor: string;
-  optionRowStyle: TypeCustomCheckBox<FieldValues>['optionRowStyle'];
-  optionLabelStyle: TypeCustomCheckBox<FieldValues>['optionLabelStyle'];
-  trackStyle: TypeCustomCheckBox<FieldValues>['trackStyle'];
-  knobStyle: TypeCustomCheckBox<FieldValues>['knobStyle'];
+  optionRowStyle: TypeCheckBoxCustom<FieldValues>['optionRowStyle'];
+  optionLabelStyle: TypeCheckBoxCustom<FieldValues>['optionLabelStyle'];
+  trackStyle: TypeCheckBoxCustom<FieldValues>['trackStyle'];
+  knobStyle: TypeCheckBoxCustom<FieldValues>['knobStyle'];
 }) => {
   const animation = useRef(new Animated.Value(isSelected ? 1 : 0)).current;
 
@@ -104,7 +104,7 @@ const ToggleOption = ({
  * カスタムチェックボックス
  * ----------------------------------------------- */
 
-const CustomCheckBox = <TFieldValues extends FieldValues>({
+const CheckBoxCustom = <TFieldValues extends FieldValues>({
   activeColor: activeColorProp,
   containerStyle,
   control,
@@ -121,7 +121,7 @@ const CustomCheckBox = <TFieldValues extends FieldValues>({
   rules,
   trackStyle,
   knobStyle,
-}: TypeCustomCheckBox<TFieldValues>) => {
+}: TypeCheckBoxCustom<TFieldValues>) => {
   const {
     field: { value, onChange },
   } = useController({ control, name, rules });
@@ -217,4 +217,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CustomCheckBox;
+export default CheckBoxCustom;
