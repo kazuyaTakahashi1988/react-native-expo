@@ -118,7 +118,6 @@ const Child00Screen: React.FC = () => {
           { label: 'チェックカスタム-C', value: 'CheckCustom-C' },
         ]}
         rules={{
-          validate: (value) => value.length >= 1 || '少なくとも 1 つ選択してください。',
           required: 'チェックボックスカスタム は必須です。',
         }}
       />
