@@ -3,22 +3,10 @@ import { StyleSheet, Text, View } from 'react-native';
 
 import type { TypeResultArea } from './_type';
 
-const renderList = (label: string, items?: string[]) => {
-  if (!Array.isArray(items) || items.length === 0) {
-    return null;
-  }
-
-  return (
-    <Text>
-      {label}: {'\n'}
-      {items.map((item) => `${item}\n`)}
-    </Text>
-  );
-};
-
 /* -----------------------------------------------
  * submit 出力結果表示エリア
  * ----------------------------------------------- */
+
 export const ResultArea: FC<TypeResultArea> = (submittedValues) => {
   const { name, email, subscribe, plan, country, note, subscribeCustom, planCustom } =
     submittedValues;
@@ -45,8 +33,14 @@ export const ResultArea: FC<TypeResultArea> = (submittedValues) => {
       <Text style={resultStyles.resultTitle}>Submitted values</Text>
       <Text>Name: {name}</Text>
       <Text>Email: {email}</Text>
-      {renderList('Subscribe', Array.isArray(subscribe) ? subscribe : undefined)}
-      {renderList('Subscribe Custom', Array.isArray(subscribeCustom) ? subscribeCustom : undefined)}
+      <Text>
+        Subscribe: {'\n'}
+        {subscribe && subscribe.map((item) => `${item}\n`)}
+      </Text>
+      <Text>
+        Subscribe Custom: {'\n'}
+        {subscribeCustom && subscribeCustom.map((item) => `${item}\n`)}
+      </Text>
       <Text>Plan: {plan}</Text>
       <Text>Plan Custom: {planCustom}</Text>
       <Text>Country: {country}</Text>
