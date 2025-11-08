@@ -6,39 +6,23 @@ import type {
   Path,
   RegisterOptions,
 } from 'react-hook-form';
-import type { StyleProp, TextInputProps, TextStyle, ViewStyle } from 'react-native';
+import type { PressableProps, StyleProp, TextInputProps, TextStyle, ViewStyle } from 'react-native';
 import type { Item, PickerStyle } from 'react-native-picker-select';
 
 /* -----------------------------------------------
- * type チェックボックス項目
+ * type チェック・ラヂオボックス項目 共通
  * ----------------------------------------------- */
-export type TypeCheckBoxOption = {
+export type TypeBoxOption = {
   label: string;
   value: string;
   key?: string | number;
 };
 
-export type TypeCheckBox<TFieldValues extends FieldValues> = {
-  label: string;
-  control: Control<TFieldValues>;
-  name: Path<TFieldValues>;
-  options: TypeCheckBoxOption[];
-  rules?: RegisterOptions<TFieldValues, Path<TFieldValues>>;
-  errorText?: TypeErrorText | FieldError;
-  containerStyle?: StyleProp<ViewStyle>;
-  labelStyle?: StyleProp<TextStyle>;
-  optionListStyle?: StyleProp<ViewStyle>;
-  optionRowStyle?: StyleProp<ViewStyle>;
-};
-
-/* -----------------------------------------------
- * type カスタムトグル項目共通
- * ----------------------------------------------- */
 type TypeToggleCustomBase<TFieldValues extends FieldValues> = {
   label: string;
   control: Control<TFieldValues>;
   name: Path<TFieldValues>;
-  options: TypeCheckBoxOption[];
+  options: TypeBoxOption[];
   rules?: RegisterOptions<TFieldValues, Path<TFieldValues>>;
   errorText?: TypeErrorText | FieldError;
   containerStyle?: StyleProp<ViewStyle>;
@@ -53,8 +37,42 @@ type TypeToggleCustomBase<TFieldValues extends FieldValues> = {
   knobColor?: string;
 };
 
+/* -----------------------------------------------
+ * type チェックボックス項目
+ * ----------------------------------------------- */
+export type TypeCheckBox<TFieldValues extends FieldValues> = {
+  label: string;
+  control: Control<TFieldValues>;
+  name: Path<TFieldValues>;
+  options: TypeBoxOption[];
+  rules?: RegisterOptions<TFieldValues, Path<TFieldValues>>;
+  errorText?: TypeErrorText | FieldError;
+  containerStyle?: StyleProp<ViewStyle>;
+  labelStyle?: StyleProp<TextStyle>;
+  optionListStyle?: StyleProp<ViewStyle>;
+  optionRowStyle?: StyleProp<ViewStyle>;
+};
+
+/* -----------------------------------------------
+ * type チェックボックスカスタム項目
+ * ----------------------------------------------- */
 export type TypeCheckBoxCustom<TFieldValues extends FieldValues> =
   TypeToggleCustomBase<TFieldValues>;
+
+export type TypeToggleCheckOption = {
+  label: string;
+  isSelected: boolean;
+  onPress: () => void;
+  accessibilityState: PressableProps['accessibilityState'];
+  hasError: boolean;
+  activeColor: string;
+  inactiveColor: string;
+  knobColor: string;
+  optionRowStyle: TypeCheckBoxCustom<FieldValues>['optionRowStyle'];
+  optionLabelStyle: TypeCheckBoxCustom<FieldValues>['optionLabelStyle'];
+  trackStyle: TypeCheckBoxCustom<FieldValues>['trackStyle'];
+  knobStyle: TypeCheckBoxCustom<FieldValues>['knobStyle'];
+};
 
 /* -----------------------------------------------
  * type エラーテキスト
@@ -81,7 +99,7 @@ export type TypeRadioBox<TFieldValues extends FieldValues> = {
   label: string;
   control: Control<TFieldValues>;
   name: Path<TFieldValues>;
-  options: TypeCheckBoxOption[];
+  options: TypeBoxOption[];
   rules?: RegisterOptions<TFieldValues, Path<TFieldValues>>;
   errorText?: TypeErrorText | FieldError;
   containerStyle?: StyleProp<ViewStyle>;
@@ -90,8 +108,26 @@ export type TypeRadioBox<TFieldValues extends FieldValues> = {
   optionRowStyle?: StyleProp<ViewStyle>;
 };
 
+/* -----------------------------------------------
+ * type ラヂオボックスカスタム項目
+ * ----------------------------------------------- */
 export type TypeRadioBoxCustom<TFieldValues extends FieldValues> =
   TypeToggleCustomBase<TFieldValues>;
+
+export type TypeToggleRadioOption = {
+  label: string;
+  isSelected: boolean;
+  onPress: () => void;
+  accessibilityState: PressableProps['accessibilityState'];
+  hasError: boolean;
+  activeColor: string;
+  inactiveColor: string;
+  knobColor: string;
+  optionRowStyle: TypeRadioBoxCustom<FieldValues>['optionRowStyle'];
+  optionLabelStyle: TypeRadioBoxCustom<FieldValues>['optionLabelStyle'];
+  trackStyle: TypeRadioBoxCustom<FieldValues>['trackStyle'];
+  knobStyle: TypeRadioBoxCustom<FieldValues>['knobStyle'];
+};
 
 /* -----------------------------------------------
  * type セレクトボックス項目

@@ -4,9 +4,8 @@ import { Animated, Pressable, StyleSheet, Text, View } from 'react-native';
 
 import ErrorText from './_errorText';
 
-import type { TypeRadioBoxCustom } from '../../lib/types/typeComponents';
+import type { TypeRadioBoxCustom, TypeToggleRadioOption } from '../../lib/types/typeComponents';
 import type { FieldValues } from 'react-hook-form';
-import type { PressableProps } from 'react-native';
 
 /* -----------------------------------------------
  * ラヂオボックスカスタム項目
@@ -19,7 +18,7 @@ const KNOB_MARGIN = (TRACK_HEIGHT - KNOB_SIZE) / 2;
 
 const ERROR_COLOR = '#e53935';
 
-const ToggleOption = ({
+const ToggleRadioOption = ({
   label,
   isSelected,
   onPress,
@@ -32,20 +31,7 @@ const ToggleOption = ({
   optionLabelStyle,
   trackStyle,
   knobStyle,
-}: {
-  label: string;
-  isSelected: boolean;
-  onPress: () => void;
-  accessibilityState: PressableProps['accessibilityState'];
-  hasError: boolean;
-  activeColor: string;
-  inactiveColor: string;
-  knobColor: string;
-  optionRowStyle: TypeRadioBoxCustom<FieldValues>['optionRowStyle'];
-  optionLabelStyle: TypeRadioBoxCustom<FieldValues>['optionLabelStyle'];
-  trackStyle: TypeRadioBoxCustom<FieldValues>['trackStyle'];
-  knobStyle: TypeRadioBoxCustom<FieldValues>['knobStyle'];
-}) => {
+}: TypeToggleRadioOption) => {
   const animation = useRef(new Animated.Value(isSelected ? 1 : 0)).current;
 
   useEffect(() => {
@@ -134,7 +120,7 @@ const RadioBoxCustom = <TFieldValues extends FieldValues>({
         {options.map((option) => {
           const isSelected = selectedValue === option.value;
           return (
-            <ToggleOption
+            <ToggleRadioOption
               key={option.key ?? option.value}
               label={option.label}
               isSelected={isSelected}

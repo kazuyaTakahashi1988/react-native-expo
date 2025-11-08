@@ -4,9 +4,8 @@ import { Animated, Pressable, StyleSheet, Text, View } from 'react-native';
 
 import ErrorText from './_errorText';
 
-import type { TypeCheckBoxCustom } from '../../lib/types/typeComponents';
+import type { TypeCheckBoxCustom, TypeToggleCheckOption } from '../../lib/types/typeComponents';
 import type { FieldValues } from 'react-hook-form';
-import type { PressableProps } from 'react-native';
 
 /* -----------------------------------------------
  * チェックボックスカスタム項目
@@ -19,7 +18,7 @@ const KNOB_MARGIN = (TRACK_HEIGHT - KNOB_SIZE) / 2;
 
 const ERROR_COLOR = '#e53935';
 
-const ToggleOption = ({
+const ToggleCheckOption = ({
   label,
   isSelected,
   onPress,
@@ -32,20 +31,7 @@ const ToggleOption = ({
   optionLabelStyle,
   trackStyle,
   knobStyle,
-}: {
-  label: string;
-  isSelected: boolean;
-  onPress: () => void;
-  accessibilityState: PressableProps['accessibilityState'];
-  hasError: boolean;
-  activeColor: string;
-  inactiveColor: string;
-  knobColor: string;
-  optionRowStyle: TypeCheckBoxCustom<FieldValues>['optionRowStyle'];
-  optionLabelStyle: TypeCheckBoxCustom<FieldValues>['optionLabelStyle'];
-  trackStyle: TypeCheckBoxCustom<FieldValues>['trackStyle'];
-  knobStyle: TypeCheckBoxCustom<FieldValues>['knobStyle'];
-}) => {
+}: TypeToggleCheckOption) => {
   const animation = useRef(new Animated.Value(isSelected ? 1 : 0)).current;
 
   useEffect(() => {
@@ -142,7 +128,7 @@ const CheckBoxCustom = <TFieldValues extends FieldValues>({
         {options.map((option) => {
           const isSelected = selectedValues.includes(option.value);
           return (
-            <ToggleOption
+            <ToggleCheckOption
               key={option.key ?? option.value}
               label={option.label}
               isSelected={isSelected}
