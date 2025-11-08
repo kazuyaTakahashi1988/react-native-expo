@@ -1,17 +1,14 @@
 import { useEffect, useMemo, useRef } from 'react';
 import { type FieldValues, useController } from 'react-hook-form';
-import {
-  Animated,
-  Pressable,
-  type PressableProps,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import { Animated, Pressable, type PressableProps, StyleSheet, Text, View } from 'react-native';
 
 import ErrorText from './_errorText';
 
 import type { TypeRadioBoxCustom } from '../../lib/types/typeComponents';
+
+/* -----------------------------------------------
+ * ラヂオボックスカスタム項目
+ * ----------------------------------------------- */
 
 const TRACK_WIDTH = 48;
 const TRACK_HEIGHT = 28;
@@ -91,18 +88,12 @@ const ToggleOption = ({
       style={[styles.optionRow, optionRowStyle]}
     >
       <Animated.View style={[styles.track, trackAnimatedStyle, trackStyle]}>
-        <Animated.View
-          style={[styles.knob, knobAnimatedStyle, knobStyle]}
-        />
+        <Animated.View style={[styles.knob, knobAnimatedStyle, knobStyle]} />
       </Animated.View>
       <Text style={[styles.optionLabel, optionLabelStyle]}>{label}</Text>
     </Pressable>
   );
 };
-
-/* -----------------------------------------------
- * カスタムラヂオボックス
- * ----------------------------------------------- */
 
 const RadioBoxCustom = <TFieldValues extends FieldValues>({
   activeColor: activeColorProp,

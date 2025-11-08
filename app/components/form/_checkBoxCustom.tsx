@@ -1,17 +1,14 @@
 import { useEffect, useMemo, useRef } from 'react';
 import { type FieldValues, useController } from 'react-hook-form';
-import {
-  Animated,
-  Pressable,
-  type PressableProps,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import { Animated, Pressable, type PressableProps, StyleSheet, Text, View } from 'react-native';
 
 import ErrorText from './_errorText';
 
 import type { TypeCheckBoxCustom } from '../../lib/types/typeComponents';
+
+/* -----------------------------------------------
+ * チェックボックスカスタム項目
+ * ----------------------------------------------- */
 
 const TRACK_WIDTH = 48;
 const TRACK_HEIGHT = 28;
@@ -91,18 +88,12 @@ const ToggleOption = ({
       style={[styles.optionRow, optionRowStyle]}
     >
       <Animated.View style={[styles.track, trackAnimatedStyle, trackStyle]}>
-        <Animated.View
-          style={[styles.knob, knobAnimatedStyle, knobStyle]}
-        />
+        <Animated.View style={[styles.knob, knobAnimatedStyle, knobStyle]} />
       </Animated.View>
       <Text style={[styles.optionLabel, optionLabelStyle]}>{label}</Text>
     </Pressable>
   );
 };
-
-/* -----------------------------------------------
- * カスタムチェックボックス
- * ----------------------------------------------- */
 
 const CheckBoxCustom = <TFieldValues extends FieldValues>({
   activeColor: activeColorProp,
@@ -126,10 +117,7 @@ const CheckBoxCustom = <TFieldValues extends FieldValues>({
     field: { value, onChange },
   } = useController({ control, name, rules });
 
-  const selectedValues = useMemo(
-    () => (Array.isArray(value) ? (value as string[]) : []),
-    [value],
-  );
+  const selectedValues = useMemo(() => (Array.isArray(value) ? (value as string[]) : []), [value]);
 
   const hasError = errorText?.message != null;
 

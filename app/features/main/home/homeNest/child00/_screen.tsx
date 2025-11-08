@@ -105,12 +105,12 @@ const Child00Screen: React.FC = () => {
         }}
       />
 
-      {/* Subscribe Custom チェックカスタム項目 */}
+      {/* Subscribe Custom チェックボックスカスタム項目 */}
       <CheckBoxCustom
         activeColor='#22c55e'
         control={control}
         errorText={errors.subscribeCustom}
-        label='Subscribe Custom チェックカスタム項目'
+        label='Subscribe Custom チェックボックスカスタム項目'
         name='subscribeCustom'
         options={[
           { label: 'チェックカスタム-A', value: 'CheckCustom-A' },
@@ -119,15 +119,15 @@ const Child00Screen: React.FC = () => {
         ]}
         rules={{
           validate: (value) => value.length >= 1 || '少なくとも 1 つ選択してください。',
-          required: 'チェックカスタム は必須です。',
+          required: 'チェックボックスカスタム は必須です。',
         }}
       />
 
-      {/* Plan ラヂオボタン項目 */}
+      {/* Plan ラヂオボックス項目 */}
       <RadioBox
         control={control}
         errorText={errors.plan}
-        label='Plan ラヂオボタン項目'
+        label='Plan ラヂオボックス項目'
         name='plan'
         options={[
           { label: 'ラジオラベル-A', value: 'RadioValue-A' },
@@ -135,24 +135,24 @@ const Child00Screen: React.FC = () => {
           { label: 'ラジオラベル-C', value: 'RadioValue-C' },
         ]}
         rules={{
-          required: 'ラジオボタン は必須です。',
+          required: 'ラヂオボックス は必須です。',
         }}
       />
 
-      {/* Plan Custom ラヂオカスタム項目 */}
+      {/* Plan Custom ラヂオボックスカスタム項目 */}
       <RadioBoxCustom
         activeColor='#6366f1'
         control={control}
         errorText={errors.planCustom}
-        label='Plan Custom ラヂオカスタム項目'
+        label='Plan Custom ラヂオボックスカスタム項目'
         name='planCustom'
         options={[
-          { label: 'ラジオカスタム-A', value: 'RadioCustom-A' },
-          { label: 'ラジオカスタム-B', value: 'RadioCustom-B' },
-          { label: 'ラジオカスタム-C', value: 'RadioCustom-C' },
+          { label: 'ラヂオカスタム-A', value: 'RadioCustom-A' },
+          { label: 'ラヂオカスタム-B', value: 'RadioCustom-B' },
+          { label: 'ラヂオカスタム-C', value: 'RadioCustom-C' },
         ]}
         rules={{
-          required: 'ラヂオカスタム は必須です。',
+          required: 'ラヂオボックスカスタム は必須です。',
         }}
       />
 
