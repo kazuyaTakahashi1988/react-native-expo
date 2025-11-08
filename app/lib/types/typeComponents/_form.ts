@@ -32,6 +32,31 @@ export type TypeCheckBox<TFieldValues extends FieldValues> = {
 };
 
 /* -----------------------------------------------
+ * type カスタムトグル項目共通
+ * ----------------------------------------------- */
+type TypeCustomToggleBase<TFieldValues extends FieldValues> = {
+  label: string;
+  control: Control<TFieldValues>;
+  name: Path<TFieldValues>;
+  options: TypeCheckBoxOption[];
+  rules?: RegisterOptions<TFieldValues, Path<TFieldValues>>;
+  errorText?: TypeErrorText | FieldError;
+  containerStyle?: StyleProp<ViewStyle>;
+  labelStyle?: StyleProp<TextStyle>;
+  optionListStyle?: StyleProp<ViewStyle>;
+  optionRowStyle?: StyleProp<ViewStyle>;
+  optionLabelStyle?: StyleProp<TextStyle>;
+  trackStyle?: StyleProp<ViewStyle>;
+  knobStyle?: StyleProp<ViewStyle>;
+  activeColor?: string;
+  inactiveColor?: string;
+  knobColor?: string;
+};
+
+export type TypeCustomCheckBox<TFieldValues extends FieldValues> =
+  TypeCustomToggleBase<TFieldValues>;
+
+/* -----------------------------------------------
  * type エラーテキスト
  * ----------------------------------------------- */
 export type TypeErrorText = Merge<FieldError, (FieldError | undefined)[]>;
@@ -64,6 +89,9 @@ export type TypeRadioBox<TFieldValues extends FieldValues> = {
   optionListStyle?: StyleProp<ViewStyle>;
   optionRowStyle?: StyleProp<ViewStyle>;
 };
+
+export type TypeCustomRadioBox<TFieldValues extends FieldValues> =
+  TypeCustomToggleBase<TFieldValues>;
 
 /* -----------------------------------------------
  * type セレクトボックス項目
