@@ -3,7 +3,13 @@ import { useForm } from 'react-hook-form';
 import { Button, StyleSheet, Text, View } from 'react-native';
 
 import { ResultArea } from './_component';
-import { CheckBox, Input, RadioBox, SelectBox, TextArea } from '../../../../../components/form';
+import {
+  CustomCheckBox,
+  CustomRadioBox,
+  Input,
+  SelectBox,
+  TextArea,
+} from '../../../../../components/form';
 import { Layout } from '../../../../../components/layout';
 
 import type { TypeFormValues } from './_type';
@@ -78,34 +84,44 @@ const Child00Screen: React.FC = () => {
         }}
       />
 
-      {/* Subscribe チェックボックス項目 */}
-      <CheckBox
+      {/* Subscribe カスタムチェックボックス項目 */}
+      <CustomCheckBox
         control={control}
         errorText={errors.subscribe}
-        label='Subscribe チェックボックス項目'
+        label='Subscribe カスタムチェックボックス項目'
         name='subscribe'
         options={[
           { label: 'チェックラベル-A', value: 'CheckValue-A' },
           { label: 'チェックラベル-B', value: 'CheckValue-B' },
-          { label: 'チェックラベル-C', value: 'CheckValue-C' },
+          {
+            disabled: true,
+            label: 'チェックラベル-C（disabled）',
+            value: 'CheckValue-C',
+          },
         ]}
+        required
         rules={{
           validate: (value) => value.length >= 2 || '2つ以上選択してください。',
           required: 'チェックボックス は必須です。',
         }}
       />
 
-      {/* Plan ラヂオボタン項目 */}
-      <RadioBox
+      {/* Plan カスタムラヂオボックス項目 */}
+      <CustomRadioBox
         control={control}
         errorText={errors.plan}
-        label='Plan ラヂオボタン項目'
+        label='Plan カスタムラヂオボックス項目'
         name='plan'
         options={[
           { label: 'ラジオラベル-A', value: 'RadioValue-A' },
           { label: 'ラジオラベル-B', value: 'RadioValue-B' },
-          { label: 'ラジオラベル-C', value: 'RadioValue-C' },
+          {
+            disabled: true,
+            label: 'ラジオラベル-C（disabled）',
+            value: 'RadioValue-C',
+          },
         ]}
+        required
         rules={{
           required: 'ラジオボタン は必須です。',
         }}

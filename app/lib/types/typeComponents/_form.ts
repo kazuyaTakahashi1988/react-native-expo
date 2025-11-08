@@ -66,6 +66,35 @@ export type TypeRadioBox<TFieldValues extends FieldValues> = {
 };
 
 /* -----------------------------------------------
+ * type カスタムチェック/ラヂオボックス共通
+ * ----------------------------------------------- */
+export type TypeCustomToggleOption = TypeCheckBoxOption & {
+  disabled?: boolean;
+};
+
+/* -----------------------------------------------
+ * type カスタムチェックボックス項目
+ * ----------------------------------------------- */
+export type TypeCustomCheckBox<TFieldValues extends FieldValues> = Omit<
+  TypeCheckBox<TFieldValues>,
+  'options'
+> & {
+  options: TypeCustomToggleOption[];
+  required?: boolean;
+};
+
+/* -----------------------------------------------
+ * type カスタムラヂオボックス項目
+ * ----------------------------------------------- */
+export type TypeCustomRadioBox<TFieldValues extends FieldValues> = Omit<
+  TypeRadioBox<TFieldValues>,
+  'options'
+> & {
+  options: TypeCustomToggleOption[];
+  required?: boolean;
+};
+
+/* -----------------------------------------------
  * type セレクトボックス項目
  * ----------------------------------------------- */
 export type TypeSelectBoxOption = Omit<Item, 'value'> & {
