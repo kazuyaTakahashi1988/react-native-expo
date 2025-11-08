@@ -3,7 +3,15 @@ import { useForm } from 'react-hook-form';
 import { Button, StyleSheet, Text, View } from 'react-native';
 
 import { ResultArea } from './_component';
-import { CheckBox, Input, RadioBox, SelectBox, TextArea } from '../../../../../components/form';
+import {
+  CheckBox,
+  CustomCheckBox,
+  CustomRadioBox,
+  Input,
+  RadioBox,
+  SelectBox,
+  TextArea,
+} from '../../../../../components/form';
 import { Layout } from '../../../../../components/layout';
 
 import type { TypeFormValues } from './_type';
@@ -29,6 +37,8 @@ const Child00Screen: React.FC = () => {
       plan: '',
       country: '',
       note: '',
+      customSubscribe: [],
+      customPlan: '',
     },
   });
 
@@ -111,6 +121,42 @@ const Child00Screen: React.FC = () => {
         }}
       />
 
+      {/* Custom Subscribe カスタムチェックボックス */}
+      <CustomCheckBox
+        activeColor='#22c55e'
+        control={control}
+        errorText={errors.customSubscribe}
+        label='Custom Subscribe カスタムチェックボックス'
+        name='customSubscribe'
+        options={[
+          { label: 'カスタムチェック-A', value: 'CustomCheck-A' },
+          { label: 'カスタムチェック-B', value: 'CustomCheck-B' },
+          { label: 'カスタムチェック-C', value: 'CustomCheck-C' },
+        ]}
+        rules={{
+          validate: (value) => value.length >= 1 || '少なくとも 1 つ選択してください。',
+          required: 'カスタムチェックボックス は必須です。',
+        }}
+        trackStyle={styles.customToggleTrack}
+      />
+
+      {/* Custom Plan カスタムラヂオボタン項目 */}
+      <CustomRadioBox
+        activeColor='#6366f1'
+        control={control}
+        errorText={errors.customPlan}
+        label='Custom Plan カスタムラヂオボタン項目'
+        name='customPlan'
+        options={[
+          { label: 'カスタムラジオ-A', value: 'CustomRadio-A' },
+          { label: 'カスタムラジオ-B', value: 'CustomRadio-B' },
+          { label: 'カスタムラジオ-C', value: 'CustomRadio-C' },
+        ]}
+        rules={{
+          required: 'カスタムラジオボタン は必須です。',
+        }}
+      />
+
       {/* Country セレクトボックス項目 */}
       <SelectBox
         control={control}
@@ -165,6 +211,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 12,
+  },
+  customToggleTrack: {
+    borderWidth: 0,
   },
 });
 

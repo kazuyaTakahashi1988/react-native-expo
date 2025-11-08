@@ -3,17 +3,48 @@ import { StyleSheet, Text, View } from 'react-native';
 
 import type { TypeResultArea } from './_type';
 
+const renderList = (label: string, items?: string[]) => {
+  if (!Array.isArray(items) || items.length === 0) {
+    return null;
+  }
+
+  return (
+    <Text>
+      {label}: {'\n'}
+      {items.map((item) => `${item}\n`)}
+    </Text>
+  );
+};
+
 /* -----------------------------------------------
  * submit 出力結果表示エリア
  * ----------------------------------------------- */
 export const ResultArea: FC<TypeResultArea> = (submittedValues) => {
-  const { name, email, subscribe, plan, country, note } = submittedValues;
+  const {
+    name,
+    email,
+    subscribe,
+    plan,
+    country,
+    note,
+    customSubscribe,
+    customPlan,
+  } = submittedValues;
 
   // 各値が空の場合、マウントせず離脱
   const isBlank = (v: unknown): boolean =>
     v == null || (typeof v === 'string' && v.trim() === '') || (Array.isArray(v) && v.length === 0);
-  const hasNoValues = [name, email, subscribe, plan, country, note].some(isBlank);
-  if (hasNoValues) {
+  const hasMissingValues = [
+    name,
+    email,
+    subscribe,
+    plan,
+    country,
+    note,
+    customSubscribe,
+    customPlan,
+  ].some(isBlank);
+  if (hasMissingValues) {
     return null;
   }
 
@@ -22,13 +53,10 @@ export const ResultArea: FC<TypeResultArea> = (submittedValues) => {
       <Text style={resultStyles.resultTitle}>Submitted values</Text>
       <Text>Name: {name}</Text>
       <Text>Email: {email}</Text>
-      {subscribe && subscribe.length > 0 && (
-        <Text>
-          Subscribe: {'\n'}
-          {subscribe.map((item) => `${item}\n`)}
-        </Text>
-      )}
+      {renderList('Subscribe', Array.isArray(subscribe) ? subscribe : undefined)}
       <Text>Plan: {plan}</Text>
+      {renderList('Custom Subscribe', Array.isArray(customSubscribe) ? customSubscribe : undefined)}
+      <Text>Custom Plan: {customPlan}</Text>
       <Text>Country: {country}</Text>
       <Text>note: {note}</Text>
     </View>

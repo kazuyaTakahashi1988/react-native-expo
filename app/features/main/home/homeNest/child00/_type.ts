@@ -8,6 +8,8 @@ export type TypeFormValues = {
   plan: string;
   country: string;
   note: string;
+  customSubscribe: string[];
+  customPlan: string;
 };
 
 /* -----------------------------------------------
