@@ -1,12 +1,16 @@
 import { useCallback, useState } from 'react';
-import { Controller, useForm } from 'react-hook-form';
-import { Button, Pressable, StyleSheet, Text, View } from 'react-native';
+import { useForm } from 'react-hook-form';
+import { Button, StyleSheet, Text, View } from 'react-native';
 
-import { PickerField, ResultArea } from './_component';
-import { ErrorText, Input } from '../../../../../components/form';
+import { ResultArea } from './_component';
+import { CheckBox, Input, RadioBox, SelectBox, TextArea } from '../../../../../components/form';
 import { Layout } from '../../../../../components/layout';
 
 import type { TypeFormValues } from './_type';
+
+/* -----------------------------------------------
+ * Child00 画面
+ * ----------------------------------------------- */
 
 const Child00Screen: React.FC = () => {
   const [submittedValues, setSubmittedValues] = useState<TypeFormValues | null>(null);
@@ -27,9 +31,6 @@ const Child00Screen: React.FC = () => {
       note: '',
     },
   });
-
-  // チェックボックスフィルター処理
-  const checkBoxFilter = <T,>(list: T[], target: T): T[] => list.filter((x) => x !== target);
 
   // submitボタン処理
   const onSubmit = useCallback(() => {
@@ -53,7 +54,7 @@ const Child00Screen: React.FC = () => {
         autoCapitalize='words'
         control={control}
         errorText={errors.name}
-        label='Name'
+        label='Name インプット項目'
         name='name'
         placeholder='Jane Doe'
         rules={{ required: 'Name は必須です。' }}
@@ -65,7 +66,7 @@ const Child00Screen: React.FC = () => {
         control={control}
         errorText={errors.email}
         keyboardType='ascii-capable'
-        label='Email'
+        label='Email インプット項目'
         name='email'
         placeholder='jane@example.com'
         rules={{
@@ -78,114 +79,58 @@ const Child00Screen: React.FC = () => {
       />
 
       {/* Subscribe チェックボックス項目 */}
-      <View style={styles.fieldGroup}>
-        <Text style={styles.label}>・チェックボックス</Text>
-        <Controller
-          control={control}
-          name='subscribe'
-          rules={{
-            validate: (value) => value.length >= 2 || '2つ以上選択してください。',
-            required: 'チェックボックス は必須です。',
-          }}
-          render={({ field: { onChange, value } }) => (
-            <View style={styles.checkboxGroup}>
-              {[
-                { label: 'チェックラベル-A', value: 'CheckValue-A' },
-                { label: 'チェックラベル-B', value: 'CheckValue-B' },
-                { label: 'チェックラベル-C', value: 'CheckValue-C' },
-              ].map((option) => {
-                const selected = value.includes(option.value);
-                return (
-                  <Pressable
-                    key={option.value}
-                    accessibilityRole='checkbox'
-                    accessibilityState={{ checked: selected }}
-                    onPress={() => {
-                      if (selected) {
-                        onChange(checkBoxFilter(value, option.value));
-                        return;
-                      }
-                      onChange([...value, option.value]);
-                    }}
-                    style={styles.checkboxRow}
-                  >
-                    <View style={[styles.checkboxBase, selected ? styles.checkboxChecked : null]} />
-                    <Text>{option.label}</Text>
-                  </Pressable>
-                );
-              })}
-            </View>
-          )}
-        />
-        <ErrorText {...errors.subscribe} />
-      </View>
+      <CheckBox
+        control={control}
+        errorText={errors.subscribe}
+        label='Subscribe チェックボックス項目'
+        name='subscribe'
+        options={[
+          { label: 'チェックラベル-A', value: 'CheckValue-A' },
+          { label: 'チェックラベル-B', value: 'CheckValue-B' },
+          { label: 'チェックラベル-C', value: 'CheckValue-C' },
+        ]}
+        rules={{
+          validate: (value) => value.length >= 2 || '2つ以上選択してください。',
+          required: 'チェックボックス は必須です。',
+        }}
+      />
 
-      {/* Plan ラジオボタン項目 */}
-      <View style={styles.fieldGroup}>
-        <Text style={styles.label}>・ラジオボタン</Text>
-        <Controller
-          control={control}
-          name='plan'
-          rules={{
-            required: 'ラジオボタン は必須です。',
-          }}
-          render={({ field: { value, onChange } }) => (
-            <View style={styles.radioGroup}>
-              {[
-                { label: 'ラジオラベル-A', value: 'RadioValue-A' },
-                { label: 'ラジオラベル-B', value: 'RadioValue-B' },
-                { label: 'ラジオラベル-C', value: 'RadioValue-C' },
-              ].map((option) => (
-                <Pressable
-                  key={option.value}
-                  onPress={() => {
-                    onChange(option.value);
-                  }}
-                  style={styles.radioRow}
-                >
-                  <View style={styles.radioOuter}>
-                    {value === option.value ? <View style={styles.radioInner} /> : null}
-                  </View>
-                  <Text>{option.label}</Text>
-                </Pressable>
-              ))}
-            </View>
-          )}
-        />
-        <ErrorText {...errors.plan} />
-      </View>
+      {/* Plan ラヂオボタン項目 */}
+      <RadioBox
+        control={control}
+        errorText={errors.plan}
+        label='Plan ラヂオボタン項目'
+        name='plan'
+        options={[
+          { label: 'ラジオラベル-A', value: 'RadioValue-A' },
+          { label: 'ラジオラベル-B', value: 'RadioValue-B' },
+          { label: 'ラジオラベル-C', value: 'RadioValue-C' },
+        ]}
+        rules={{
+          required: 'ラジオボタン は必須です。',
+        }}
+      />
 
       {/* Country セレクトボックス項目 */}
-      <View style={styles.fieldGroup}>
-        <Text style={styles.label}>Country</Text>
-        <Controller
-          control={control}
-          name='country'
-          rules={{ required: 'セレクトボックス は必須です。' }}
-          render={({ field: { onChange, value } }) => (
-            <PickerField
-              options={[
-                { label: 'セレクトラベル-A', value: 'SelectValue-A' },
-                { label: 'セレクトラベル-B', value: 'SelectValue-B' },
-                { label: 'セレクトラベル-C', value: 'SelectValue-C' },
-              ]}
-              hasError={errors.country != null}
-              onChange={onChange}
-              value={value}
-            />
-          )}
-        />
-        <ErrorText {...errors.country} />
-      </View>
+      <SelectBox
+        control={control}
+        errorText={errors.country}
+        label='Country セレクトボックス項目'
+        name='country'
+        options={[
+          { label: 'セレクトラベル-A', value: 'SelectValue-A' },
+          { label: 'セレクトラベル-B', value: 'SelectValue-B' },
+          { label: 'セレクトラベル-C', value: 'SelectValue-C' },
+        ]}
+        rules={{ required: 'セレクトボックス は必須です。' }}
+      />
 
       {/* Note テキストエリア項目 */}
-      <Input
+      <TextArea
         control={control}
         errorText={errors.note}
-        label='Note'
-        multiline
+        label='Note テキストエリア項目'
         name='note'
-        numberOfLines={4}
         placeholder='メモや補足を入力してください'
         rules={{
           maxLength: {
@@ -194,8 +139,6 @@ const Child00Screen: React.FC = () => {
           },
           required: 'テキストエリア は必須です。',
         }}
-        style={styles.textArea}
-        textAlignVertical='top'
       />
 
       {/* submit ボタン */}
@@ -216,59 +159,6 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     marginBottom: 24,
     textAlign: 'center',
-  },
-  fieldGroup: {
-    marginBottom: 16,
-  },
-  label: {
-    fontSize: 14,
-    fontWeight: '500',
-    marginBottom: 8,
-  },
-  checkboxGroup: {
-    rowGap: 12,
-  },
-  checkboxRow: {
-    alignItems: 'center',
-    columnGap: 12,
-    flexDirection: 'row',
-  },
-  checkboxBase: {
-    borderColor: '#007aff',
-    borderRadius: 4,
-    borderWidth: 2,
-    height: 20,
-    width: 20,
-  },
-  checkboxChecked: {
-    backgroundColor: '#007aff',
-    borderColor: '#007aff',
-  },
-  radioGroup: {
-    rowGap: 12,
-  },
-  radioRow: {
-    alignItems: 'center',
-    columnGap: 12,
-    flexDirection: 'row',
-  },
-  radioOuter: {
-    alignItems: 'center',
-    borderColor: '#007aff',
-    borderRadius: 999,
-    borderWidth: 2,
-    height: 20,
-    justifyContent: 'center',
-    width: 20,
-  },
-  radioInner: {
-    backgroundColor: '#007aff',
-    borderRadius: 999,
-    height: 10,
-    width: 10,
-  },
-  textArea: {
-    height: 120,
   },
   actions: {
     columnGap: 12,
