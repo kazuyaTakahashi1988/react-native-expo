@@ -20,16 +20,8 @@ const renderList = (label: string, items?: string[]) => {
  * submit 出力結果表示エリア
  * ----------------------------------------------- */
 export const ResultArea: FC<TypeResultArea> = (submittedValues) => {
-  const {
-    name,
-    email,
-    subscribe,
-    plan,
-    country,
-    note,
-    customSubscribe,
-    customPlan,
-  } = submittedValues;
+  const { name, email, subscribe, plan, country, note, subscribeCustom, planCustom } =
+    submittedValues;
 
   // 各値が空の場合、マウントせず離脱
   const isBlank = (v: unknown): boolean =>
@@ -41,8 +33,8 @@ export const ResultArea: FC<TypeResultArea> = (submittedValues) => {
     plan,
     country,
     note,
-    customSubscribe,
-    customPlan,
+    subscribeCustom,
+    planCustom,
   ].some(isBlank);
   if (hasMissingValues) {
     return null;
@@ -55,8 +47,8 @@ export const ResultArea: FC<TypeResultArea> = (submittedValues) => {
       <Text>Email: {email}</Text>
       {renderList('Subscribe', Array.isArray(subscribe) ? subscribe : undefined)}
       <Text>Plan: {plan}</Text>
-      {renderList('Custom Subscribe', Array.isArray(customSubscribe) ? customSubscribe : undefined)}
-      <Text>Custom Plan: {customPlan}</Text>
+      {renderList('Custom Subscribe', Array.isArray(subscribeCustom) ? subscribeCustom : undefined)}
+      <Text>Custom Plan: {planCustom}</Text>
       <Text>Country: {country}</Text>
       <Text>note: {note}</Text>
     </View>

@@ -5,11 +5,11 @@ export type TypeFormValues = {
   email: string;
   name: string;
   subscribe: string[];
+  subscribeCustom: string[];
   plan: string;
+  planCustom: string;
   country: string;
   note: string;
-  customSubscribe: string[];
-  customPlan: string;
 };
 
 /* -----------------------------------------------

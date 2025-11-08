@@ -34,11 +34,11 @@ const Child00Screen: React.FC = () => {
       email: '',
       name: '',
       subscribe: [],
+      subscribeCustom: [],
       plan: '',
+      planCustom: '',
       country: '',
       note: '',
-      customSubscribe: [],
-      customPlan: '',
     },
   });
 
@@ -105,6 +105,24 @@ const Child00Screen: React.FC = () => {
         }}
       />
 
+      {/* Subscribe Custom チェックカスタム項目 */}
+      <CheckBoxCustom
+        activeColor='#22c55e'
+        control={control}
+        errorText={errors.subscribeCustom}
+        label='Subscribe Custom チェックカスタム項目'
+        name='subscribeCustom'
+        options={[
+          { label: 'チェックカスタム-A', value: 'CheckCustom-A' },
+          { label: 'チェックカスタム-B', value: 'CheckCustom-B' },
+          { label: 'チェックカスタム-C', value: 'CheckCustom-C' },
+        ]}
+        rules={{
+          validate: (value) => value.length >= 1 || '少なくとも 1 つ選択してください。',
+          required: 'チェックカスタム は必須です。',
+        }}
+      />
+
       {/* Plan ラヂオボタン項目 */}
       <RadioBox
         control={control}
@@ -121,39 +139,20 @@ const Child00Screen: React.FC = () => {
         }}
       />
 
-      {/* Custom Subscribe カスタムチェックボックス */}
-      <CheckBoxCustom
-        activeColor='#22c55e'
-        control={control}
-        errorText={errors.customSubscribe}
-        label='Custom Subscribe カスタムチェックボックス'
-        name='customSubscribe'
-        options={[
-          { label: 'カスタムチェック-A', value: 'CustomCheck-A' },
-          { label: 'カスタムチェック-B', value: 'CustomCheck-B' },
-          { label: 'カスタムチェック-C', value: 'CustomCheck-C' },
-        ]}
-        rules={{
-          validate: (value) => value.length >= 1 || '少なくとも 1 つ選択してください。',
-          required: 'カスタムチェックボックス は必須です。',
-        }}
-        trackStyle={styles.customToggleTrack}
-      />
-
-      {/* Custom Plan カスタムラヂオボタン項目 */}
+      {/* Plan Custom ラヂオカスタム項目 */}
       <RadioBoxCustom
         activeColor='#6366f1'
         control={control}
-        errorText={errors.customPlan}
-        label='Custom Plan カスタムラヂオボタン項目'
-        name='customPlan'
+        errorText={errors.planCustom}
+        label='Plan Custom ラヂオカスタム項目'
+        name='planCustom'
         options={[
-          { label: 'カスタムラジオ-A', value: 'CustomRadio-A' },
-          { label: 'カスタムラジオ-B', value: 'CustomRadio-B' },
-          { label: 'カスタムラジオ-C', value: 'CustomRadio-C' },
+          { label: 'ラジオカスタム-A', value: 'RadioCustom-A' },
+          { label: 'ラジオカスタム-B', value: 'RadioCustom-B' },
+          { label: 'ラジオカスタム-C', value: 'RadioCustom-C' },
         ]}
         rules={{
-          required: 'カスタムラジオボタン は必須です。',
+          required: 'ラヂオカスタム は必須です。',
         }}
       />
 
@@ -211,9 +210,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 12,
-  },
-  customToggleTrack: {
-    borderWidth: 0,
   },
 });
 
