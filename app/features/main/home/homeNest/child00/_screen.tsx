@@ -3,7 +3,15 @@ import { useForm } from 'react-hook-form';
 import { Button, StyleSheet, Text, View } from 'react-native';
 
 import { ResultArea } from './_component';
-import { CheckBox, Input, RadioBox, SelectBox, TextArea } from '../../../../../components/form';
+import {
+  CheckBox,
+  CheckBoxCustom,
+  Input,
+  RadioBox,
+  RadioBoxCustom,
+  SelectBox,
+  TextArea,
+} from '../../../../../components/form';
 import { Layout } from '../../../../../components/layout';
 
 import type { TypeFormValues } from './_type';
@@ -26,7 +34,9 @@ const Child00Screen: React.FC = () => {
       email: '',
       name: '',
       subscribe: [],
+      subscribeCustom: [],
       plan: '',
+      planCustom: '',
       country: '',
       note: '',
     },
@@ -95,6 +105,24 @@ const Child00Screen: React.FC = () => {
         }}
       />
 
+      {/* Subscribe Custom チェックカスタム項目 */}
+      <CheckBoxCustom
+        activeColor='#22c55e'
+        control={control}
+        errorText={errors.subscribeCustom}
+        label='Subscribe Custom チェックカスタム項目'
+        name='subscribeCustom'
+        options={[
+          { label: 'チェックカスタム-A', value: 'CheckCustom-A' },
+          { label: 'チェックカスタム-B', value: 'CheckCustom-B' },
+          { label: 'チェックカスタム-C', value: 'CheckCustom-C' },
+        ]}
+        rules={{
+          validate: (value) => value.length >= 1 || '少なくとも 1 つ選択してください。',
+          required: 'チェックカスタム は必須です。',
+        }}
+      />
+
       {/* Plan ラヂオボタン項目 */}
       <RadioBox
         control={control}
@@ -108,6 +136,23 @@ const Child00Screen: React.FC = () => {
         ]}
         rules={{
           required: 'ラジオボタン は必須です。',
+        }}
+      />
+
+      {/* Plan Custom ラヂオカスタム項目 */}
+      <RadioBoxCustom
+        activeColor='#6366f1'
+        control={control}
+        errorText={errors.planCustom}
+        label='Plan Custom ラヂオカスタム項目'
+        name='planCustom'
+        options={[
+          { label: 'ラジオカスタム-A', value: 'RadioCustom-A' },
+          { label: 'ラジオカスタム-B', value: 'RadioCustom-B' },
+          { label: 'ラジオカスタム-C', value: 'RadioCustom-C' },
+        ]}
+        rules={{
+          required: 'ラヂオカスタム は必須です。',
         }}
       />
 
