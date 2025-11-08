@@ -14,6 +14,77 @@ import type { StyleProp, TextStyle, ViewStyle } from 'react-native';
  * セレクトボックス項目
  * ----------------------------------------------- */
 
+const SelectBox = <TFieldValues extends FieldValues>({
+  containerStyle,
+  control,
+  doneText = '完了',
+  errorText,
+  label,
+  labelStyle,
+  name,
+  options,
+  pickerSelectStyles,
+  placeholder = '選択してください',
+  placeholderTextStyle,
+  rules,
+  triggerStyle,
+  valueTextStyle,
+}: TypeSelectBox<TFieldValues>) => {
+  const pickerRef = useRef<RNPickerSelect | null>(null);
+
+  const {
+    field: { value, onChange },
+  } = useController({ control, name, rules });
+
+  const selectedValue = ensureString(value);
+  const hasError = errorText?.message != null;
+
+  const selectedOption = options.find((option) => option.value === selectedValue);
+  const isPlaceholder = selectedOption == null;
+  const displayLabel = getDisplayLabel(selectedOption, placeholder);
+
+  const triggerStyles = buildTriggerStyles(triggerStyle, hasError);
+  const triggerTextStyles = buildTriggerTextStyles(
+    isPlaceholder,
+    placeholderTextStyle,
+    valueTextStyle,
+  );
+
+  const openPicker = () => {
+    Keyboard.dismiss();
+    pickerRef.current?.togglePicker(true);
+  };
+
+  const handleValueChange = (selected: string | null) => {
+    onChange(selected ?? '');
+  };
+
+  return (
+    <View style={[defaultPickerStyles.container, containerStyle]}>
+      <Text style={[defaultPickerStyles.label, labelStyle]}>{label}</Text>
+
+      <Pressable accessibilityRole='button' onPress={openPicker} style={triggerStyles}>
+        <Text style={triggerTextStyles}>{displayLabel}</Text>
+      </Pressable>
+
+      <RNPickerSelect
+        ref={(ref) => {
+          pickerRef.current = ref;
+        }}
+        doneText={doneText}
+        items={options}
+        onValueChange={handleValueChange}
+        placeholder={{ label: placeholder, value: '' }}
+        style={pickerSelectStyles ?? basePickerSelectStyles}
+        useNativeAndroidPickerStyle={false}
+        value={toPickerValue(selectedValue)}
+      />
+
+      <ErrorText {...errorText} />
+    </View>
+  );
+};
+
 const defaultPickerStyles = StyleSheet.create({
   selectTrigger: {
     alignItems: 'center',
@@ -149,77 +220,6 @@ const toPickerValue = (value: string): string | null => {
     return null;
   }
   return value;
-};
-
-const SelectBox = <TFieldValues extends FieldValues>({
-  containerStyle,
-  control,
-  doneText = '完了',
-  errorText,
-  label,
-  labelStyle,
-  name,
-  options,
-  pickerSelectStyles,
-  placeholder = '選択してください',
-  placeholderTextStyle,
-  rules,
-  triggerStyle,
-  valueTextStyle,
-}: TypeSelectBox<TFieldValues>) => {
-  const pickerRef = useRef<RNPickerSelect | null>(null);
-
-  const {
-    field: { value, onChange },
-  } = useController({ control, name, rules });
-
-  const selectedValue = ensureString(value);
-  const hasError = errorText?.message != null;
-
-  const selectedOption = options.find((option) => option.value === selectedValue);
-  const isPlaceholder = selectedOption == null;
-  const displayLabel = getDisplayLabel(selectedOption, placeholder);
-
-  const triggerStyles = buildTriggerStyles(triggerStyle, hasError);
-  const triggerTextStyles = buildTriggerTextStyles(
-    isPlaceholder,
-    placeholderTextStyle,
-    valueTextStyle,
-  );
-
-  const openPicker = () => {
-    Keyboard.dismiss();
-    pickerRef.current?.togglePicker(true);
-  };
-
-  const handleValueChange = (selected: string | null) => {
-    onChange(selected ?? '');
-  };
-
-  return (
-    <View style={[defaultPickerStyles.container, containerStyle]}>
-      <Text style={[defaultPickerStyles.label, labelStyle]}>{label}</Text>
-
-      <Pressable accessibilityRole='button' onPress={openPicker} style={triggerStyles}>
-        <Text style={triggerTextStyles}>{displayLabel}</Text>
-      </Pressable>
-
-      <RNPickerSelect
-        ref={(ref) => {
-          pickerRef.current = ref;
-        }}
-        doneText={doneText}
-        items={options}
-        onValueChange={handleValueChange}
-        placeholder={{ label: placeholder, value: '' }}
-        style={pickerSelectStyles ?? basePickerSelectStyles}
-        useNativeAndroidPickerStyle={false}
-        value={toPickerValue(selectedValue)}
-      />
-
-      <ErrorText {...errorText} />
-    </View>
-  );
 };
 
 export default SelectBox;
