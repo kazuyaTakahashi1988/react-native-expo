@@ -1,9 +1,10 @@
-import { type FieldValues, useController } from 'react-hook-form';
+import { useController } from 'react-hook-form';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import ErrorText from './_errorText';
 
 import type { TypeRadioBox } from '../../lib/types/typeComponents';
+import type { FieldValues } from 'react-hook-form';
 
 /* -----------------------------------------------
  * ラヂオボックス項目

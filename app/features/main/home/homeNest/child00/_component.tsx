@@ -46,9 +46,9 @@ export const ResultArea: FC<TypeResultArea> = (submittedValues) => {
       <Text>Name: {name}</Text>
       <Text>Email: {email}</Text>
       {renderList('Subscribe', Array.isArray(subscribe) ? subscribe : undefined)}
+      {renderList('Subscribe Custom', Array.isArray(subscribeCustom) ? subscribeCustom : undefined)}
       <Text>Plan: {plan}</Text>
-      {renderList('Custom Subscribe', Array.isArray(subscribeCustom) ? subscribeCustom : undefined)}
-      <Text>Custom Plan: {planCustom}</Text>
+      <Text>Plan Custom: {planCustom}</Text>
       <Text>Country: {country}</Text>
       <Text>note: {note}</Text>
     </View>

@@ -1,11 +1,13 @@
-import { type ComponentProps, useRef } from 'react';
-import { type FieldValues, useController } from 'react-hook-form';
+import { useRef } from 'react';
+import { useController } from 'react-hook-form';
 import { Keyboard, Pressable, StyleSheet, Text, View } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 
 import ErrorText from './_errorText';
 
 import type { TypeSelectBox, TypeSelectBoxOption } from '../../lib/types/typeComponents';
+import type { ComponentProps } from 'react';
+import type { FieldValues } from 'react-hook-form';
 import type { StyleProp, TextStyle, ViewStyle } from 'react-native';
 
 /* -----------------------------------------------

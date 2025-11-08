@@ -1,10 +1,11 @@
 import { useEffect, useMemo, useRef } from 'react';
-import { type FieldValues, useController } from 'react-hook-form';
+import { useController } from 'react-hook-form';
 import { Animated, Pressable, type PressableProps, StyleSheet, Text, View } from 'react-native';
 
 import ErrorText from './_errorText';
 
 import type { TypeRadioBoxCustom } from '../../lib/types/typeComponents';
+import type { FieldValues } from 'react-hook-form';
 
 /* -----------------------------------------------
  * ラヂオボックスカスタム項目

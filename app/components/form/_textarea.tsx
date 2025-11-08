@@ -1,9 +1,9 @@
-import { type FieldValues } from 'react-hook-form';
 import { StyleSheet } from 'react-native';
 
 import Input from './_input';
 
 import type { TypeTextArea } from '../../lib/types/typeComponents';
+import type { FieldValues } from 'react-hook-form';
 
 /* -----------------------------------------------
  * テキストエリア項目
