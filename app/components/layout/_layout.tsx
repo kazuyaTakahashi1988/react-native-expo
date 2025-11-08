@@ -8,7 +8,7 @@ export const Layout: FC<TypeLayout> = (props) => {
 
   return (
     <View style={styles.container}>
-      <ScrollView keyboardShouldPersistTaps='handled' contentContainerStyle={styles.children}>
+      <ScrollView contentContainerStyle={styles.children} keyboardShouldPersistTaps='handled'>
         {children}
       </ScrollView>
     </View>

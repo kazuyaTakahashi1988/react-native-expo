@@ -17,10 +17,10 @@ const HeaderSub: React.FC<TypeHeaderSub> = (props) => {
       <View style={styles.headerInner}>
         {isGoBack() && (
           <Text
-            style={[styles.headerItem, styles.headerLeft]}
             onPress={() => {
               navigation.goBack();
             }}
+            style={[styles.headerItem, styles.headerLeft]}
           >
             <IconArrow />
             {typeof goBack === 'string' && goBack}

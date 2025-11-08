@@ -34,9 +34,9 @@ const Input = <TFieldValues extends FieldValues>({
         {...textInputProps}
         onBlur={onBlur}
         onChangeText={onChange}
+        placeholderTextColor='#9e9e9e'
         style={[inputStyles.input, hasError ? inputStyles.inputError : null, style]}
         value={inputValue}
-        placeholderTextColor='#9e9e9e'
       />
       <ErrorText {...errorText} />
     </View>

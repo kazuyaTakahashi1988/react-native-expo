@@ -68,13 +68,13 @@ const SelectBox = <TFieldValues extends FieldValues>({
       </Pressable>
 
       <RNPickerSelect
-        ref={(ref) => {
-          pickerRef.current = ref;
-        }}
         doneText={doneText}
         items={options}
         onValueChange={handleValueChange}
         placeholder={{ label: placeholder, value: '' }}
+        ref={(ref) => {
+          pickerRef.current = ref;
+        }}
         style={pickerSelectStyles ?? basePickerSelectStyles}
         useNativeAndroidPickerStyle={false}
         value={toPickerValue(selectedValue)}

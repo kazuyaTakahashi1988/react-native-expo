@@ -45,9 +45,9 @@ const CheckBox = <TFieldValues extends FieldValues>({
           const isSelected = selectedValues.includes(option.value);
           return (
             <Pressable
-              key={option.key ?? option.value}
               accessibilityRole='checkbox'
               accessibilityState={{ checked: isSelected }}
+              key={option.key ?? option.value}
               onPress={() => {
                 handleToggle(option.value);
               }}

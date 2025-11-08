@@ -112,6 +112,19 @@ export default [
         },
       ],
 
+      /* propsのメンバーをアルファベット順に */
+      'react/jsx-sort-props': [
+        'error',
+        {
+          ignoreCase: true,
+          callbacksLast: false,
+          shorthandFirst: false,
+          multiline: 'ignore',
+          noSortAlphabetically: false,
+          reservedFirst: false,
+        },
+      ],
+
       /* -------------------------------------------------------
         認知的複雑度（sonarjs / total-functions / ESLintコア
       ---------------------------------------------------------- */

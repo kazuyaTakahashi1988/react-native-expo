@@ -20,16 +20,16 @@ const Child02Screen: React.FC<TypeChild02Screen> = (props) => {
       <Layout>
         <Text>Child02 Screen</Text>
         <Button
-          title='Go to Home'
           onPress={() => {
             goToHome();
           }}
+          title='Go to Home'
         />
         <Button
-          title='Go to About'
           onPress={() => {
             goToAbout();
           }}
+          title='Go to About'
         />
       </Layout>
     </View>

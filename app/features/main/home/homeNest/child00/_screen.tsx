@@ -31,8 +31,8 @@ const Child00Screen: React.FC = () => {
     reset,
   } = useForm<TypeFormValues>({
     defaultValues: {
-      email: '',
       name: '',
+      email: '',
       subscribe: [],
       subscribeCustom: [],
       plan: '',

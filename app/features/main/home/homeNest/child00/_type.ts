@@ -2,8 +2,8 @@
  * ./_screen.tsx
  * ----------------------------------------------- */
 export type TypeFormValues = {
-  email: string;
   name: string;
+  email: string;
   subscribe: string[];
   subscribeCustom: string[];
   plan: string;

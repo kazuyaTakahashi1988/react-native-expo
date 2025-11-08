@@ -37,9 +37,9 @@ const RadioBox = <TFieldValues extends FieldValues>({
           const isSelected = selectedValue === option.value;
           return (
             <Pressable
-              key={option.key ?? option.value}
               accessibilityRole='radio'
               accessibilityState={{ selected: isSelected }}
+              key={option.key ?? option.value}
               onPress={() => {
                 onChange(option.value);
               }}

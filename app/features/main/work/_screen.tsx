@@ -16,10 +16,10 @@ const WorkScreen: React.FC<TypeWorkScreen> = (props) => {
       <Layout>
         <Text>Work Screen</Text>
         <Button
-          title='Go to About'
           onPress={() => {
             goToAbout();
           }}
+          title='Go to About'
         />
       </Layout>
     </View>

@@ -25,16 +25,16 @@ const AboutScreen: React.FC<TypeAboutScreen> = (props) => {
       <Layout>
         <Text>About Screen</Text>
         <Button
-          title='Go to Home'
           onPress={() => {
             goToHome();
           }}
+          title='Go to Home'
         />
         <Button
-          title='Go to Child02'
           onPress={() => {
             goToChild02();
           }}
+          title='Go to Child02'
         />
       </Layout>
     </View>

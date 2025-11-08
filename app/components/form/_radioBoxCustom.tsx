@@ -70,9 +70,9 @@ const ToggleRadioOption = ({
 
   return (
     <Pressable
-      onPress={onPress}
       accessibilityRole='radio'
       accessibilityState={accessibilityState}
+      onPress={onPress}
       style={[styles.optionRow, optionRowStyle]}
     >
       <Animated.View style={[styles.track, trackAnimatedStyle, trackStyle]}>
@@ -121,21 +121,21 @@ const RadioBoxCustom = <TFieldValues extends FieldValues>({
           const isSelected = selectedValue === option.value;
           return (
             <ToggleRadioOption
-              key={option.key ?? option.value}
-              label={option.label}
+              accessibilityState={{ selected: isSelected }}
+              activeColor={activeColor}
+              hasError={hasError}
+              inactiveColor={inactiveColor}
               isSelected={isSelected}
+              key={option.key ?? option.value}
+              knobColor={knobColor}
+              knobStyle={knobStyle}
+              label={option.label}
               onPress={() => {
                 onChange(option.value);
               }}
-              accessibilityState={{ selected: isSelected }}
-              hasError={hasError}
-              activeColor={activeColor}
-              inactiveColor={inactiveColor}
-              knobColor={knobColor}
-              optionRowStyle={optionRowStyle}
               optionLabelStyle={optionLabelStyle}
+              optionRowStyle={optionRowStyle}
               trackStyle={trackStyle}
-              knobStyle={knobStyle}
             />
           );
         })}

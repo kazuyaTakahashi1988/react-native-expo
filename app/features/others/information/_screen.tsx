@@ -20,16 +20,16 @@ const InformationScreen: React.FC<TypeInformationScreen> = (props) => {
       <Layout>
         <Text>Information Screen</Text>
         <Button
-          title='Go to Home'
           onPress={() => {
             goToHome();
           }}
+          title='Go to Home'
         />
         <Button
-          title='Go to About'
           onPress={() => {
             goToAbout();
           }}
+          title='Go to About'
         />
       </Layout>
     </View>

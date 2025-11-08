@@ -70,9 +70,9 @@ const ToggleCheckOption = ({
 
   return (
     <Pressable
-      onPress={onPress}
       accessibilityRole='checkbox'
       accessibilityState={accessibilityState}
+      onPress={onPress}
       style={[styles.optionRow, optionRowStyle]}
     >
       <Animated.View style={[styles.track, trackAnimatedStyle, trackStyle]}>
@@ -129,21 +129,21 @@ const CheckBoxCustom = <TFieldValues extends FieldValues>({
           const isSelected = selectedValues.includes(option.value);
           return (
             <ToggleCheckOption
-              key={option.key ?? option.value}
-              label={option.label}
+              accessibilityState={{ checked: isSelected }}
+              activeColor={activeColor}
+              hasError={hasError}
+              inactiveColor={inactiveColor}
               isSelected={isSelected}
+              key={option.key ?? option.value}
+              knobColor={knobColor}
+              knobStyle={knobStyle}
+              label={option.label}
               onPress={() => {
                 handleToggle(option.value);
               }}
-              accessibilityState={{ checked: isSelected }}
-              hasError={hasError}
-              activeColor={activeColor}
-              inactiveColor={inactiveColor}
-              knobColor={knobColor}
-              optionRowStyle={optionRowStyle}
               optionLabelStyle={optionLabelStyle}
+              optionRowStyle={optionRowStyle}
               trackStyle={trackStyle}
-              knobStyle={knobStyle}
             />
           );
         })}
