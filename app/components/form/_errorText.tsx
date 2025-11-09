@@ -8,7 +8,7 @@ import type { TypeErrorText } from '../../lib/types/typeComponents';
 
 const ErrorText: React.FC<TypeErrorText> = (errorsType) => {
   if (errorsType.message == null) {
-    return;
+    return null;
   }
   return <Text style={errorStyles.text}>{errorsType.message}</Text>;
 };

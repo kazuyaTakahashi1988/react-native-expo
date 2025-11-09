@@ -129,9 +129,9 @@ const Child00Screen: React.FC = () => {
         label='Plan ラヂオボックス項目'
         name='plan'
         options={[
-          { label: 'ラジオラベル-A', value: 'RadioValue-A' },
-          { label: 'ラジオラベル-B', value: 'RadioValue-B' },
-          { label: 'ラジオラベル-C', value: 'RadioValue-C' },
+          { label: 'ラヂオラベル-A', value: 'RadioValue-A' },
+          { label: 'ラヂオラベル-B', value: 'RadioValue-B' },
+          { label: 'ラヂオラベル-C', value: 'RadioValue-C' },
         ]}
         rules={{
           required: 'ラヂオボックス は必須です。',
