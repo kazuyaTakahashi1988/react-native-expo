@@ -35,6 +35,7 @@ type TypeToggleCustomBase<TFieldValues extends FieldValues> = {
   activeColor?: string;
   inactiveColor?: string;
   knobColor?: string;
+  disabled?: boolean;
 };
 
 /* -----------------------------------------------
@@ -51,6 +52,7 @@ export type TypeCheckBox<TFieldValues extends FieldValues> = {
   labelStyle?: StyleProp<TextStyle>;
   optionListStyle?: StyleProp<ViewStyle>;
   optionRowStyle?: StyleProp<ViewStyle>;
+  disabled?: boolean;
 };
 
 /* -----------------------------------------------
@@ -62,7 +64,7 @@ export type TypeCheckBoxCustom<TFieldValues extends FieldValues> =
 export type TypeToggleCheckOption = {
   label: string;
   isSelected: boolean;
-  onPress: () => void;
+  onPress: (value: string) => void;
   accessibilityState: PressableProps['accessibilityState'];
   hasError: boolean;
   activeColor: string;
@@ -72,6 +74,8 @@ export type TypeToggleCheckOption = {
   optionLabelStyle: TypeCheckBoxCustom<FieldValues>['optionLabelStyle'];
   trackStyle: TypeCheckBoxCustom<FieldValues>['trackStyle'];
   knobStyle: TypeCheckBoxCustom<FieldValues>['knobStyle'];
+  disabled: boolean;
+  value: string;
 };
 
 /* -----------------------------------------------
@@ -90,6 +94,7 @@ export type TypeInput<TFieldValues extends FieldValues> = {
   errorText?: TypeErrorText | FieldError;
   containerStyle?: StyleProp<ViewStyle>;
   style?: StyleProp<TextStyle>;
+  disabled?: boolean;
 } & Omit<TextInputProps, 'onBlur' | 'onChangeText' | 'value' | 'style'>;
 
 /* -----------------------------------------------
@@ -106,6 +111,7 @@ export type TypeRadioBox<TFieldValues extends FieldValues> = {
   labelStyle?: StyleProp<TextStyle>;
   optionListStyle?: StyleProp<ViewStyle>;
   optionRowStyle?: StyleProp<ViewStyle>;
+  disabled?: boolean;
 };
 
 /* -----------------------------------------------
@@ -117,7 +123,7 @@ export type TypeRadioBoxCustom<TFieldValues extends FieldValues> =
 export type TypeToggleRadioOption = {
   label: string;
   isSelected: boolean;
-  onPress: () => void;
+  onPress: (value: string) => void;
   accessibilityState: PressableProps['accessibilityState'];
   hasError: boolean;
   activeColor: string;
@@ -127,6 +133,8 @@ export type TypeToggleRadioOption = {
   optionLabelStyle: TypeRadioBoxCustom<FieldValues>['optionLabelStyle'];
   trackStyle: TypeRadioBoxCustom<FieldValues>['trackStyle'];
   knobStyle: TypeRadioBoxCustom<FieldValues>['knobStyle'];
+  disabled: boolean;
+  value: string;
 };
 
 /* -----------------------------------------------
@@ -151,6 +159,7 @@ export type TypeSelectBox<TFieldValues extends FieldValues> = {
   valueTextStyle?: StyleProp<TextStyle>;
   placeholderTextStyle?: StyleProp<TextStyle>;
   pickerSelectStyles?: PickerStyle;
+  disabled?: boolean;
 };
 
 /* -----------------------------------------------

@@ -5,6 +5,7 @@ import ErrorText from './_errorText';
 
 import type { TypeRadioBox } from '../../lib/types/typeComponents';
 import type { FieldValues } from 'react-hook-form';
+import type { StyleProp, TextStyle, ViewStyle } from 'react-native';
 
 /* -----------------------------------------------
  * ラヂオボックス項目
@@ -21,40 +22,41 @@ const RadioBox = <TFieldValues extends FieldValues>({
   optionRowStyle,
   options,
   rules,
+  disabled = false,
 }: TypeRadioBox<TFieldValues>) => {
   const {
     field: { value, onChange },
   } = useController({ control, name, rules });
 
-  const selectedValue = typeof value === 'string' ? value : '';
+  const selectedValue = getSelectedValue(value);
   const hasError = errorText?.message != null;
+  const labelStyles = buildLabelStyles(labelStyle, disabled);
+  const optionListStyles = buildOptionListStyles(optionListStyle);
+  const optionRowStyles = buildOptionRowStyles(optionRowStyle, disabled);
+  const optionTextStyles = getOptionTextStyles(disabled);
 
   return (
     <View style={[styles.container, containerStyle]}>
-      <Text style={[styles.label, labelStyle]}>{label}</Text>
-      <View style={[styles.radioGroup, optionListStyle]}>
+      <Text style={labelStyles}>{label}</Text>
+      <View style={optionListStyles}>
         {options.map((option) => {
           const isSelected = selectedValue === option.value;
+          const radioOuterStyles = buildRadioOuterStyles(isSelected, hasError, disabled);
           return (
             <Pressable
               accessibilityRole='radio'
               accessibilityState={{ selected: isSelected }}
+              disabled={disabled}
               key={option.key ?? option.value}
               onPress={() => {
                 onChange(option.value);
               }}
-              style={[styles.radioRow, optionRowStyle]}
+              style={optionRowStyles}
             >
-              <View
-                style={[
-                  styles.radioOuter,
-                  isSelected ? styles.radioOuterSelected : null,
-                  hasError ? styles.radioOuterError : null,
-                ]}
-              >
-                {isSelected ? <View style={styles.radioInner} /> : null}
+              <View style={radioOuterStyles}>
+                {isSelected ? <View style={buildRadioInnerStyles(disabled)} /> : null}
               </View>
-              <Text>{option.label}</Text>
+              <Text style={optionTextStyles}>{option.label}</Text>
             </Pressable>
           );
         })}
@@ -102,6 +104,117 @@ const styles = StyleSheet.create({
   radioOuterError: {
     borderColor: '#e53935',
   },
+  radioOuterDisabled: {
+    backgroundColor: '#ccc',
+    borderColor: '#ccc',
+  },
+  radioInnerDisabled: {
+    backgroundColor: '#ccc',
+  },
+  disabledLabel: {
+    color: '#ccc',
+  },
+  disabledRow: {
+    opacity: 0.8,
+  },
+  disabledOptionText: {
+    color: '#ccc',
+  },
 });
+
+const getSelectedValue = (rawValue: unknown): string => {
+  if (typeof rawValue === 'string') {
+    return rawValue;
+  }
+  return '';
+};
+
+const buildLabelStyles = (
+  customLabelStyle: StyleProp<TextStyle> | undefined,
+  disabled: boolean,
+): StyleProp<TextStyle>[] => {
+  const stylesList: StyleProp<TextStyle>[] = [styles.label];
+
+  if (customLabelStyle != null) {
+    stylesList.push(customLabelStyle);
+  }
+
+  if (disabled) {
+    stylesList.push(styles.disabledLabel);
+  }
+
+  return stylesList;
+};
+
+const buildOptionListStyles = (
+  optionListStyle: StyleProp<ViewStyle> | undefined,
+): StyleProp<ViewStyle>[] => {
+  const stylesList: StyleProp<ViewStyle>[] = [styles.radioGroup];
+
+  if (optionListStyle != null) {
+    stylesList.push(optionListStyle);
+  }
+
+  return stylesList;
+};
+
+const buildOptionRowStyles = (
+  optionRowStyle: StyleProp<ViewStyle> | undefined,
+  disabled: boolean,
+): StyleProp<ViewStyle>[] => {
+  const stylesList: StyleProp<ViewStyle>[] = [styles.radioRow];
+
+  if (optionRowStyle != null) {
+    stylesList.push(optionRowStyle);
+  }
+
+  if (disabled) {
+    stylesList.push(styles.disabledRow);
+  }
+
+  return stylesList;
+};
+
+const buildRadioOuterStyles = (
+  isSelected: boolean,
+  hasError: boolean,
+  disabled: boolean,
+): StyleProp<ViewStyle>[] => {
+  const stylesList: StyleProp<ViewStyle>[] = [styles.radioOuter];
+
+  if (isSelected) {
+    stylesList.push(styles.radioOuterSelected);
+  }
+
+  if (hasError) {
+    stylesList.push(styles.radioOuterError);
+  }
+
+  if (disabled) {
+    stylesList.push(styles.radioOuterDisabled);
+  }
+
+  return stylesList;
+};
+
+const buildRadioInnerStyles = (disabled: boolean): StyleProp<ViewStyle>[] => {
+  const stylesList: StyleProp<ViewStyle>[] = [styles.radioInner];
+
+  if (disabled) {
+    stylesList.push(styles.radioInnerDisabled);
+  }
+
+  return stylesList;
+};
+
+const getOptionTextStyles = (disabled: boolean): StyleProp<TextStyle>[] => {
+  const stylesList: StyleProp<TextStyle>[] = [];
+
+  if (disabled) {
+    stylesList.push(styles.disabledOptionText);
+  }
+
+  return stylesList;
+};
 
 export default RadioBox;

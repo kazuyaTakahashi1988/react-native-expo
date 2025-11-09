@@ -5,6 +5,7 @@ import ErrorText from './_errorText';
 
 import type { TypeInput } from '../../lib/types/typeComponents';
 import type { FieldValues } from 'react-hook-form';
+import type { StyleProp, TextStyle } from 'react-native';
 
 /* -----------------------------------------------
  * インプット項目
@@ -18,24 +19,29 @@ const Input = <TFieldValues extends FieldValues>({
   name,
   rules,
   style,
+  disabled = false,
   ...textInputProps
 }: TypeInput<TFieldValues>) => {
   const {
     field: { onBlur, onChange, value },
   } = useController({ control, name, rules });
 
-  const inputValue = typeof value === 'string' ? value : '';
+  const inputValue = normalizeInputValue(value);
   const hasError = errorText?.message != null;
+  const placeholderColor = getPlaceholderColor(disabled);
+  const labelStyles = buildLabelStyles(disabled);
+  const inputStylesList = buildInputStyles(hasError, disabled, style);
 
   return (
     <View style={[inputStyles.container, containerStyle]}>
-      <Text style={inputStyles.label}>{label}</Text>
+      <Text style={labelStyles}>{label}</Text>
       <TextInput
         {...textInputProps}
+        editable={!disabled}
         onBlur={onBlur}
         onChangeText={onChange}
-        placeholderTextColor='#9e9e9e'
-        style={[inputStyles.input, hasError ? inputStyles.inputError : null, style]}
+        placeholderTextColor={placeholderColor}
+        style={inputStylesList}
         value={inputValue}
       />
       <ErrorText {...errorText} />
@@ -63,6 +69,60 @@ const inputStyles = StyleSheet.create({
   inputError: {
     borderColor: '#e53935',
   },
+  inputDisabled: {
+    backgroundColor: '#ccc',
+    borderColor: '#ccc',
+    color: '#ccc',
+  },
+  disabledLabel: {
+    color: '#ccc',
+  },
 });
+
+const buildLabelStyles = (disabled: boolean): StyleProp<TextStyle>[] => {
+  const styles: StyleProp<TextStyle>[] = [inputStyles.label];
+
+  if (disabled) {
+    styles.push(inputStyles.disabledLabel);
+  }
+
+  return styles;
+};
+
+const buildInputStyles = (
+  hasError: boolean,
+  disabled: boolean,
+  customStyle: StyleProp<TextStyle> | undefined,
+): StyleProp<TextStyle>[] => {
+  const styles: StyleProp<TextStyle>[] = [inputStyles.input];
+
+  if (hasError) {
+    styles.push(inputStyles.inputError);
+  }
+
+  if (customStyle != null) {
+    styles.push(customStyle);
+  }
+
+  if (disabled) {
+    styles.push(inputStyles.inputDisabled);
+  }
+
+  return styles;
+};
+
+const getPlaceholderColor = (disabled: boolean): string => {
+  if (disabled) {
+    return '#ccc';
+  }
+  return '#9e9e9e';
+};
+
+const normalizeInputValue = (rawValue: unknown): string => {
+  if (typeof rawValue === 'string') {
+    return rawValue;
+  }
+  return '';
+};
 
 export default Input;

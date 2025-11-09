@@ -5,6 +5,7 @@ import ErrorText from './_errorText';
 
 import type { TypeCheckBox } from '../../lib/types/typeComponents';
 import type { FieldValues } from 'react-hook-form';
+import type { StyleProp, TextStyle, ViewStyle } from 'react-native';
 
 /* -----------------------------------------------
  * チェックボックス項目
@@ -21,46 +22,46 @@ const CheckBox = <TFieldValues extends FieldValues>({
   optionRowStyle,
   options,
   rules,
+  disabled = false,
 }: TypeCheckBox<TFieldValues>) => {
   const {
     field: { value, onChange },
   } = useController({ control, name, rules });
 
-  const selectedValues = Array.isArray(value) ? (value as string[]) : [];
+  const selectedValues = getSelectedValues(value);
   const hasError = errorText?.message != null;
+  const labelStyles = buildLabelStyles(labelStyle, disabled);
+  const optionListStyles = buildOptionListStyles(optionListStyle);
+  const optionTextStyles = getOptionTextStyles(disabled);
 
   const handleToggle = (optionValue: string) => {
-    if (selectedValues.includes(optionValue)) {
-      onChange(selectedValues.filter((selected) => selected !== optionValue));
+    if (disabled) {
       return;
     }
-    onChange([...selectedValues, optionValue]);
+    onChange(toggleCheckboxValues(selectedValues, optionValue));
   };
 
   return (
     <View style={[styles.container, containerStyle]}>
-      <Text style={[styles.label, labelStyle]}>{label}</Text>
-      <View style={[styles.checkboxGroup, optionListStyle]}>
+      <Text style={labelStyles}>{label}</Text>
+      <View style={optionListStyles}>
         {options.map((option) => {
           const isSelected = selectedValues.includes(option.value);
+          const checkboxBaseStyles = buildCheckboxBaseStyles(isSelected, hasError, disabled);
+          const optionRowStyles = buildOptionRowStyles(optionRowStyle, disabled);
           return (
             <Pressable
               accessibilityRole='checkbox'
               accessibilityState={{ checked: isSelected }}
+              disabled={disabled}
               key={option.key ?? option.value}
               onPress={() => {
                 handleToggle(option.value);
               }}
-              style={[styles.checkboxRow, optionRowStyle]}
+              style={optionRowStyles}
             >
-              <View
-                style={[
-                  styles.checkboxBase,
-                  isSelected ? styles.checkboxChecked : null,
-                  hasError ? styles.checkboxError : null,
-                ]}
-              />
-              <Text>{option.label}</Text>
+              <View style={checkboxBaseStyles} />
+              <Text style={optionTextStyles}>{option.label}</Text>
             </Pressable>
           );
         })}
@@ -101,6 +102,111 @@ const styles = StyleSheet.create({
   checkboxError: {
     borderColor: '#e53935',
   },
+  checkboxDisabled: {
+    backgroundColor: '#ccc',
+    borderColor: '#ccc',
+  },
+  disabledLabel: {
+    color: '#ccc',
+  },
+  disabledRow: {
+    opacity: 0.8,
+  },
+  disabledOptionText: {
+    color: '#ccc',
+  },
 });
+
+const getSelectedValues = (rawValue: unknown): string[] => {
+  if (Array.isArray(rawValue)) {
+    return rawValue as string[];
+  }
+  return [];
+};
+
+const toggleCheckboxValues = (selectedValues: string[], optionValue: string): string[] => {
+  if (selectedValues.includes(optionValue)) {
+    return selectedValues.filter((selected) => selected !== optionValue);
+  }
+  return [...selectedValues, optionValue];
+};
+
+const buildLabelStyles = (
+  customLabelStyle: StyleProp<TextStyle> | undefined,
+  disabled: boolean,
+): StyleProp<TextStyle>[] => {
+  const stylesList: StyleProp<TextStyle>[] = [styles.label];
+
+  if (customLabelStyle != null) {
+    stylesList.push(customLabelStyle);
+  }
+
+  if (disabled) {
+    stylesList.push(styles.disabledLabel);
+  }
+
+  return stylesList;
+};
+
+const buildOptionListStyles = (
+  optionListStyle: StyleProp<ViewStyle> | undefined,
+): StyleProp<ViewStyle>[] => {
+  const stylesList: StyleProp<ViewStyle>[] = [styles.checkboxGroup];
+
+  if (optionListStyle != null) {
+    stylesList.push(optionListStyle);
+  }
+
+  return stylesList;
+};
+
+const buildOptionRowStyles = (
+  optionRowStyle: StyleProp<ViewStyle> | undefined,
+  disabled: boolean,
+): StyleProp<ViewStyle>[] => {
+  const stylesList: StyleProp<ViewStyle>[] = [styles.checkboxRow];
+
+  if (optionRowStyle != null) {
+    stylesList.push(optionRowStyle);
+  }
+
+  if (disabled) {
+    stylesList.push(styles.disabledRow);
+  }
+
+  return stylesList;
+};
+
+const buildCheckboxBaseStyles = (
+  isSelected: boolean,
+  hasError: boolean,
+  disabled: boolean,
+): StyleProp<ViewStyle>[] => {
+  const stylesList: StyleProp<ViewStyle>[] = [styles.checkboxBase];
+
+  if (isSelected) {
+    stylesList.push(styles.checkboxChecked);
+  }
+
+  if (hasError) {
+    stylesList.push(styles.checkboxError);
+  }
+
+  if (disabled) {
+    stylesList.push(styles.checkboxDisabled);
+  }
+
+  return stylesList;
+};
+
+const getOptionTextStyles = (disabled: boolean): StyleProp<TextStyle>[] => {
+  const stylesList: StyleProp<TextStyle>[] = [];
+
+  if (disabled) {
+    stylesList.push(styles.disabledOptionText);
+  }
+
+  return stylesList;
+};
 
 export default CheckBox;
