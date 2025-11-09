@@ -17,7 +17,8 @@ import type { StyleProp, TextStyle, ViewStyle } from 'react-native';
 const SelectBox = <TFieldValues extends FieldValues>({
   containerStyle,
   control,
-  doneText = '完了',
+  disabled = false,
+  doneText,
   errorText,
   label,
   labelStyle,
@@ -43,11 +44,12 @@ const SelectBox = <TFieldValues extends FieldValues>({
   const isPlaceholder = selectedOption == null;
   const displayLabel = getDisplayLabel(selectedOption, placeholder);
 
-  const triggerStyles = buildTriggerStyles(triggerStyle, hasError);
+  const triggerStyles = buildTriggerStyles(triggerStyle, hasError, disabled);
   const triggerTextStyles = buildTriggerTextStyles(
     isPlaceholder,
     placeholderTextStyle,
     valueTextStyle,
+    disabled,
   );
 
   const openPicker = () => {
@@ -68,6 +70,7 @@ const SelectBox = <TFieldValues extends FieldValues>({
       </Pressable>
 
       <RNPickerSelect
+        disabled={disabled}
         doneText={doneText}
         items={options}
         onValueChange={handleValueChange}
@@ -97,9 +100,15 @@ const defaultPickerStyles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 10,
   },
+  selectTriggerDisabled: {
+    backgroundColor: '#9e9e9e',
+  },
   selectValueText: {
     color: '#212121',
     fontSize: 14,
+  },
+  selectValueTextDisabled: {
+    color: '#fff',
   },
   selectPlaceholderText: {
     color: '#9e9e9e',
@@ -168,8 +177,12 @@ const ensureString = (rawValue: unknown): string => {
 const buildTriggerStyles = (
   triggerStyle: StyleProp<ViewStyle> | undefined,
   hasError: boolean,
+  disabled: boolean,
 ): StyleProp<ViewStyle>[] => {
-  const styles: StyleProp<ViewStyle>[] = [defaultPickerStyles.selectTrigger];
+  const styles: StyleProp<ViewStyle>[] = [
+    defaultPickerStyles.selectTrigger,
+    disabled ? defaultPickerStyles.selectTriggerDisabled : null,
+  ];
 
   if (triggerStyle != null) {
     styles.push(triggerStyle);
@@ -186,6 +199,7 @@ const buildTriggerTextStyles = (
   isPlaceholder: boolean,
   placeholderTextStyle: StyleProp<TextStyle> | undefined,
   valueTextStyle: StyleProp<TextStyle> | undefined,
+  disabled: boolean,
 ): StyleProp<TextStyle>[] => {
   const styles: StyleProp<TextStyle>[] = [];
 
@@ -200,6 +214,9 @@ const buildTriggerTextStyles = (
   styles.push(defaultPickerStyles.selectValueText);
   if (valueTextStyle != null) {
     styles.push(valueTextStyle);
+  }
+  if (disabled) {
+    styles.push(defaultPickerStyles.selectValueTextDisabled);
   }
 
   return styles;

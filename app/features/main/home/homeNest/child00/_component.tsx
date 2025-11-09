@@ -1,4 +1,3 @@
-import { type FC } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 import type { TypeResultArea } from './_type';
@@ -7,7 +6,7 @@ import type { TypeResultArea } from './_type';
  * submit 出力結果表示エリア
  * ----------------------------------------------- */
 
-export const ResultArea: FC<TypeResultArea> = (submittedValues) => {
+export const ResultArea: React.FC<TypeResultArea> = (submittedValues) => {
   const { name, email, subscribe, plan, country, note, subscribeCustom, planCustom } =
     submittedValues;
 

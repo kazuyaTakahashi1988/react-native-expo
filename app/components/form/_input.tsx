@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { useController } from 'react-hook-form';
 import { StyleSheet, Text, TextInput, View } from 'react-native';
 
@@ -13,6 +14,7 @@ import type { FieldValues } from 'react-hook-form';
 const Input = <TFieldValues extends FieldValues>({
   containerStyle,
   control,
+  disabled = false,
   errorText,
   label,
   name,
@@ -26,16 +28,21 @@ const Input = <TFieldValues extends FieldValues>({
 
   const inputValue = typeof value === 'string' ? value : '';
   const hasError = errorText?.message != null;
+  const trackAnimatedStyle = useMemo(
+    () => [hasError ? inputStyles.inputError : null, disabled ? inputStyles.inputDisabled : null],
+    [disabled, hasError],
+  );
 
   return (
     <View style={[inputStyles.container, containerStyle]}>
       <Text style={inputStyles.label}>{label}</Text>
       <TextInput
         {...textInputProps}
+        editable={!disabled}
         onBlur={onBlur}
         onChangeText={onChange}
-        placeholderTextColor='#9e9e9e'
-        style={[inputStyles.input, hasError ? inputStyles.inputError : null, style]}
+        placeholderTextColor={'#9e9e9e'}
+        style={[inputStyles.input, trackAnimatedStyle, style]}
         value={inputValue}
       />
       <ErrorText {...errorText} />
@@ -62,6 +69,10 @@ const inputStyles = StyleSheet.create({
   },
   inputError: {
     borderColor: '#e53935',
+  },
+  inputDisabled: {
+    backgroundColor: '#9e9e9e',
+    color: '#fff',
   },
 });
 

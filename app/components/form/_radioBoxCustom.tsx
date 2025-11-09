@@ -20,6 +20,7 @@ const ERROR_COLOR = '#e53935';
 
 const ToggleRadioOption = ({
   label,
+  disabled = false,
   isSelected,
   onPress,
   accessibilityState,
@@ -44,7 +45,7 @@ const ToggleRadioOption = ({
 
   const backgroundColor = animation.interpolate({
     inputRange: [0, 1],
-    outputRange: [inactiveColor, activeColor],
+    outputRange: !disabled ? [inactiveColor, activeColor] : ['#9e9e9e', '#9e9e9e'],
   });
 
   const translateX = animation.interpolate({
@@ -72,13 +73,18 @@ const ToggleRadioOption = ({
     <Pressable
       accessibilityRole='radio'
       accessibilityState={accessibilityState}
+      disabled={disabled}
       onPress={onPress}
       style={[styles.optionRow, optionRowStyle]}
     >
       <Animated.View style={[styles.track, trackAnimatedStyle, trackStyle]}>
         <Animated.View style={[styles.knob, knobAnimatedStyle, knobStyle]} />
       </Animated.View>
-      <Text style={[styles.optionLabel, optionLabelStyle]}>{label}</Text>
+      <Text
+        style={[styles.optionLabel, optionLabelStyle, disabled ? styles.optionLabelDisabled : null]}
+      >
+        {label}
+      </Text>
     </Pressable>
   );
 };
@@ -87,6 +93,7 @@ const RadioBoxCustom = <TFieldValues extends FieldValues>({
   activeColor: activeColorProp,
   containerStyle,
   control,
+  disabled,
   errorText,
   inactiveColor: inactiveColorProp,
   knobColor: knobColorProp,
@@ -119,10 +126,12 @@ const RadioBoxCustom = <TFieldValues extends FieldValues>({
       <View style={[styles.optionList, optionListStyle]}>
         {options.map((option) => {
           const isSelected = selectedValue === option.value;
+          const isDisabled = option.disabled === true || disabled;
           return (
             <ToggleRadioOption
               accessibilityState={{ selected: isSelected }}
               activeColor={activeColor}
+              disabled={isDisabled}
               hasError={hasError}
               inactiveColor={inactiveColor}
               isSelected={isSelected}
@@ -182,6 +191,9 @@ const styles = StyleSheet.create({
   },
   optionLabel: {
     fontSize: 14,
+  },
+  optionLabelDisabled: {
+    color: '#9e9e9e',
   },
 });
 

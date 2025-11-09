@@ -13,6 +13,7 @@ import type { FieldValues } from 'react-hook-form';
 const RadioBox = <TFieldValues extends FieldValues>({
   containerStyle,
   control,
+  disabled = false,
   errorText,
   label,
   labelStyle,
@@ -29,16 +30,32 @@ const RadioBox = <TFieldValues extends FieldValues>({
   const selectedValue = typeof value === 'string' ? value : '';
   const hasError = errorText?.message != null;
 
+  const optionLabelStyle = (disabled?: boolean) => {
+    return disabled === true ? styles.radioBoxTextDisabled : null;
+  };
+
+  const optionRadioOuterStyle = (disabled?: boolean) => {
+    return disabled === true ? styles.radioBoxDisabled : null;
+  };
+
+  const optionRadioInnerStyle = (disabled?: boolean) => {
+    return disabled === true ? styles.radioInnerDisabled : styles.radioInner;
+  };
+
   return (
     <View style={[styles.container, containerStyle]}>
       <Text style={[styles.label, labelStyle]}>{label}</Text>
       <View style={[styles.radioGroup, optionListStyle]}>
         {options.map((option) => {
           const isSelected = selectedValue === option.value;
+          const isDisabled = () => {
+            return option.disabled === true || disabled;
+          };
           return (
             <Pressable
               accessibilityRole='radio'
               accessibilityState={{ selected: isSelected }}
+              disabled={isDisabled()}
               key={option.key ?? option.value}
               onPress={() => {
                 onChange(option.value);
@@ -50,11 +67,12 @@ const RadioBox = <TFieldValues extends FieldValues>({
                   styles.radioOuter,
                   isSelected ? styles.radioOuterSelected : null,
                   hasError ? styles.radioOuterError : null,
+                  optionRadioOuterStyle(isDisabled()),
                 ]}
               >
-                {isSelected ? <View style={styles.radioInner} /> : null}
+                {isSelected ? <View style={optionRadioInnerStyle(isDisabled())} /> : null}
               </View>
-              <Text>{option.label}</Text>
+              <Text style={optionLabelStyle(isDisabled())}>{option.label}</Text>
             </Pressable>
           );
         })}
@@ -90,6 +108,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: 20,
   },
+  radioBoxTextDisabled: {
+    color: '#9e9e9e',
+  },
   radioOuterSelected: {
     borderColor: '#007aff',
   },
@@ -99,8 +120,18 @@ const styles = StyleSheet.create({
     height: 10,
     width: 10,
   },
+  radioInnerDisabled: {
+    backgroundColor: '#fff',
+    borderRadius: 999,
+    height: 10,
+    width: 10,
+  },
   radioOuterError: {
     borderColor: '#e53935',
+  },
+  radioBoxDisabled: {
+    backgroundColor: '#9e9e9e',
+    borderColor: '#9e9e9e',
   },
 });
 

@@ -117,9 +117,7 @@ const Child00Screen: React.FC = () => {
           { label: 'チェックカスタム-B', value: 'CheckCustom-B' },
           { label: 'チェックカスタム-C', value: 'CheckCustom-C' },
         ]}
-        rules={{
-          required: 'チェックボックスカスタム は必須です。',
-        }}
+        rules={{ required: 'チェックボックスカスタム は必須です。' }}
       />
 
       {/* Plan ラヂオボックス項目 */}
@@ -133,9 +131,7 @@ const Child00Screen: React.FC = () => {
           { label: 'ラヂオラベル-B', value: 'RadioValue-B' },
           { label: 'ラヂオラベル-C', value: 'RadioValue-C' },
         ]}
-        rules={{
-          required: 'ラヂオボックス は必須です。',
-        }}
+        rules={{ required: 'ラヂオボックス は必須です。' }}
       />
 
       {/* Plan Custom ラヂオボックスカスタム項目 */}
@@ -150,9 +146,7 @@ const Child00Screen: React.FC = () => {
           { label: 'ラヂオカスタム-B', value: 'RadioCustom-B' },
           { label: 'ラヂオカスタム-C', value: 'RadioCustom-C' },
         ]}
-        rules={{
-          required: 'ラヂオボックスカスタム は必須です。',
-        }}
+        rules={{ required: 'ラヂオボックスカスタム は必須です。' }}
       />
 
       {/* Country セレクトボックス項目 */}

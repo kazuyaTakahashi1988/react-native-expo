@@ -13,6 +13,7 @@ import type { Item, PickerStyle } from 'react-native-picker-select';
  * type チェック・ラヂオボックス項目 共通
  * ----------------------------------------------- */
 export type TypeBoxOption = {
+  disabled?: boolean;
   label: string;
   value: string;
   key?: string | number;
@@ -21,6 +22,7 @@ export type TypeBoxOption = {
 type TypeToggleCustomBase<TFieldValues extends FieldValues> = {
   label: string;
   control: Control<TFieldValues>;
+  disabled?: boolean;
   name: Path<TFieldValues>;
   options: TypeBoxOption[];
   rules?: RegisterOptions<TFieldValues, Path<TFieldValues>>;
@@ -43,6 +45,7 @@ type TypeToggleCustomBase<TFieldValues extends FieldValues> = {
 export type TypeCheckBox<TFieldValues extends FieldValues> = {
   label: string;
   control: Control<TFieldValues>;
+  disabled?: boolean;
   name: Path<TFieldValues>;
   options: TypeBoxOption[];
   rules?: RegisterOptions<TFieldValues, Path<TFieldValues>>;
@@ -61,6 +64,7 @@ export type TypeCheckBoxCustom<TFieldValues extends FieldValues> =
 
 export type TypeToggleCheckOption = {
   label: string;
+  disabled?: boolean;
   isSelected: boolean;
   onPress: () => void;
   accessibilityState: PressableProps['accessibilityState'];
@@ -85,6 +89,7 @@ export type TypeErrorText = Merge<FieldError, (FieldError | undefined)[]>;
 export type TypeInput<TFieldValues extends FieldValues> = {
   label: string;
   control: Control<TFieldValues>;
+  disabled?: boolean;
   name: Path<TFieldValues>;
   rules?: RegisterOptions<TFieldValues, Path<TFieldValues>>;
   errorText?: TypeErrorText | FieldError;
@@ -98,6 +103,7 @@ export type TypeInput<TFieldValues extends FieldValues> = {
 export type TypeRadioBox<TFieldValues extends FieldValues> = {
   label: string;
   control: Control<TFieldValues>;
+  disabled?: boolean;
   name: Path<TFieldValues>;
   options: TypeBoxOption[];
   rules?: RegisterOptions<TFieldValues, Path<TFieldValues>>;
@@ -116,6 +122,7 @@ export type TypeRadioBoxCustom<TFieldValues extends FieldValues> =
 
 export type TypeToggleRadioOption = {
   label: string;
+  disabled?: boolean;
   isSelected: boolean;
   onPress: () => void;
   accessibilityState: PressableProps['accessibilityState'];
@@ -139,6 +146,7 @@ export type TypeSelectBoxOption = Omit<Item, 'value'> & {
 export type TypeSelectBox<TFieldValues extends FieldValues> = {
   label: string;
   control: Control<TFieldValues>;
+  disabled?: boolean;
   name: Path<TFieldValues>;
   options: TypeSelectBoxOption[];
   rules?: RegisterOptions<TFieldValues, Path<TFieldValues>>;

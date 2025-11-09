@@ -13,6 +13,7 @@ import type { FieldValues } from 'react-hook-form';
 const CheckBox = <TFieldValues extends FieldValues>({
   containerStyle,
   control,
+  disabled = false,
   errorText,
   label,
   labelStyle,
@@ -37,30 +38,39 @@ const CheckBox = <TFieldValues extends FieldValues>({
     onChange([...selectedValues, optionValue]);
   };
 
+  const optionLabelStyle = (disabled?: boolean) => {
+    return disabled === true ? styles.checkBoxTextDisabled : null;
+  };
+
   return (
     <View style={[styles.container, containerStyle]}>
       <Text style={[styles.label, labelStyle]}>{label}</Text>
-      <View style={[styles.checkboxGroup, optionListStyle]}>
+      <View style={[styles.checkBoxGroup, optionListStyle]}>
         {options.map((option) => {
           const isSelected = selectedValues.includes(option.value);
+          const isDisabled = () => {
+            return option.disabled === true || disabled;
+          };
           return (
             <Pressable
               accessibilityRole='checkbox'
               accessibilityState={{ checked: isSelected }}
+              disabled={isDisabled()}
               key={option.key ?? option.value}
               onPress={() => {
                 handleToggle(option.value);
               }}
-              style={[styles.checkboxRow, optionRowStyle]}
+              style={[styles.checkBoxRow, optionRowStyle]}
             >
               <View
                 style={[
-                  styles.checkboxBase,
-                  isSelected ? styles.checkboxChecked : null,
-                  hasError ? styles.checkboxError : null,
+                  styles.checkBoxBase,
+                  isSelected ? styles.checkBoxChecked : null,
+                  hasError ? styles.checkBoxError : null,
+                  isDisabled() ? styles.checkBoxDisabled : null,
                 ]}
               />
-              <Text>{option.label}</Text>
+              <Text style={optionLabelStyle(isDisabled())}>{option.label}</Text>
             </Pressable>
           );
         })}
@@ -79,27 +89,34 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     marginBottom: 8,
   },
-  checkboxGroup: {
+  checkBoxGroup: {
     rowGap: 12,
   },
-  checkboxRow: {
+  checkBoxRow: {
     alignItems: 'center',
     columnGap: 12,
     flexDirection: 'row',
   },
-  checkboxBase: {
+  checkBoxBase: {
     borderColor: '#007aff',
     borderRadius: 4,
     borderWidth: 2,
     height: 20,
     width: 20,
   },
-  checkboxChecked: {
+  checkBoxTextDisabled: {
+    color: '#9e9e9e',
+  },
+  checkBoxChecked: {
     backgroundColor: '#007aff',
     borderColor: '#007aff',
   },
-  checkboxError: {
+  checkBoxError: {
     borderColor: '#e53935',
+  },
+  checkBoxDisabled: {
+    backgroundColor: '#9e9e9e',
+    borderColor: '#9e9e9e',
   },
 });
 
