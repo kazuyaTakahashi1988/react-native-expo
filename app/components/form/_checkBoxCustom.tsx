@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef } from 'react';
-import { useController } from 'react-hook-form';
+import { Controller } from 'react-hook-form';
 import { Animated, Pressable, StyleSheet, Text, View } from 'react-native';
 
 import ErrorText from './_errorText';
@@ -108,57 +108,64 @@ const CheckBoxCustom = <TFieldValues extends FieldValues>({
   trackStyle,
   knobStyle,
 }: TypeCheckBoxCustom<TFieldValues>) => {
-  const {
-    field: { value, onChange },
-  } = useController({ control, name, rules });
-
-  const selectedValues = useMemo(() => (Array.isArray(value) ? (value as string[]) : []), [value]);
-
   const hasError = errorText?.message != null;
 
   const activeColor = activeColorProp ?? '#007aff';
   const inactiveColor = inactiveColorProp ?? '#d1d5db';
   const knobColor = knobColorProp ?? '#ffffff';
 
-  const handleToggle = (optionValue: string) => {
-    if (selectedValues.includes(optionValue)) {
-      onChange(selectedValues.filter((selected) => selected !== optionValue));
-      return;
-    }
-    onChange([...selectedValues, optionValue]);
-  };
-
   return (
-    <View style={[styles.container, containerStyle]}>
-      <Label {...{ label, rules }} />
-      <View style={[styles.optionList, optionListStyle]}>
-        {options.map((option) => {
-          const isSelected = selectedValues.includes(option.value);
-          const isDisabled = () => option.disabled === true || disabled;
-          return (
-            <ToggleCheckOption
-              accessibilityState={{ checked: isSelected }}
-              activeColor={activeColor}
-              disabled={isDisabled()}
-              hasError={hasError}
-              inactiveColor={inactiveColor}
-              isSelected={isSelected}
-              key={option.key ?? option.value}
-              knobColor={knobColor}
-              knobStyle={knobStyle}
-              label={option.label}
-              onPress={() => {
-                handleToggle(option.value);
-              }}
-              optionLabelStyle={optionLabelStyle}
-              optionRowStyle={optionRowStyle}
-              trackStyle={trackStyle}
-            />
-          );
-        })}
-      </View>
-      <ErrorText {...errorText} />
-    </View>
+    <Controller
+      control={control}
+      name={name}
+      render={({
+        field: { value, onChange },
+      }) => {
+        const selectedValues = Array.isArray(value) ? (value as string[]) : [];
+
+        const handleToggle = (optionValue: string) => {
+          if (selectedValues.includes(optionValue)) {
+            onChange(selectedValues.filter((selected) => selected !== optionValue));
+            return;
+          }
+          onChange([...selectedValues, optionValue]);
+        };
+
+        return (
+          <View style={[styles.container, containerStyle]}>
+            <Label {...{ label, rules }} />
+            <View style={[styles.optionList, optionListStyle]}>
+              {options.map((option) => {
+                const isSelected = selectedValues.includes(option.value);
+                const isDisabled = () => option.disabled === true || disabled;
+                return (
+                  <ToggleCheckOption
+                    accessibilityState={{ checked: isSelected }}
+                    activeColor={activeColor}
+                    disabled={isDisabled()}
+                    hasError={hasError}
+                    inactiveColor={inactiveColor}
+                    isSelected={isSelected}
+                    key={option.key ?? option.value}
+                    knobColor={knobColor}
+                    knobStyle={knobStyle}
+                    label={option.label}
+                    onPress={() => {
+                      handleToggle(option.value);
+                    }}
+                    optionLabelStyle={optionLabelStyle}
+                    optionRowStyle={optionRowStyle}
+                    trackStyle={trackStyle}
+                  />
+                );
+              })}
+            </View>
+            <ErrorText {...errorText} />
+          </View>
+        );
+      }}
+      rules={rules}
+    />
   );
 };
 

@@ -1,4 +1,4 @@
-import { useController } from 'react-hook-form';
+import { Controller } from 'react-hook-form';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import ErrorText from './_errorText';
@@ -23,58 +23,66 @@ const CheckBox = <TFieldValues extends FieldValues>({
   options,
   rules,
 }: TypeCheckBox<TFieldValues>) => {
-  const {
-    field: { value, onChange },
-  } = useController({ control, name, rules });
-
-  const selectedValues = Array.isArray(value) ? (value as string[]) : [];
   const hasError = errorText?.message != null;
-
-  const handleToggle = (optionValue: string) => {
-    if (selectedValues.includes(optionValue)) {
-      onChange(selectedValues.filter((selected) => selected !== optionValue));
-      return;
-    }
-    onChange([...selectedValues, optionValue]);
-  };
 
   const optionLabelStyle = (disabled?: boolean) => {
     return disabled === true ? styles.checkBoxTextDisabled : null;
   };
 
   return (
-    <View style={[styles.container, containerStyle]}>
-      <Label {...{ label, rules }} />
-      <View style={[styles.checkBoxGroup, optionListStyle]}>
-        {options.map((option) => {
-          const isSelected = selectedValues.includes(option.value);
-          const isDisabled = () => option.disabled === true || disabled;
-          return (
-            <Pressable
-              accessibilityRole='checkbox'
-              accessibilityState={{ checked: isSelected }}
-              disabled={isDisabled()}
-              key={option.key ?? option.value}
-              onPress={() => {
-                handleToggle(option.value);
-              }}
-              style={[styles.checkBoxRow, optionRowStyle]}
-            >
-              <View
-                style={[
-                  styles.checkBoxBase,
-                  isSelected ? styles.checkBoxChecked : null,
-                  hasError ? styles.checkBoxError : null,
-                  isDisabled() ? styles.checkBoxDisabled : null,
-                ]}
-              />
-              <Text style={optionLabelStyle(isDisabled())}>{option.label}</Text>
-            </Pressable>
-          );
-        })}
-      </View>
-      <ErrorText {...errorText} />
-    </View>
+    <Controller
+      control={control}
+      name={name}
+      render={({
+        field: { value, onChange },
+      }) => {
+        const selectedValues = Array.isArray(value) ? (value as string[]) : [];
+
+        const handleToggle = (optionValue: string) => {
+          if (selectedValues.includes(optionValue)) {
+            onChange(selectedValues.filter((selected) => selected !== optionValue));
+            return;
+          }
+          onChange([...selectedValues, optionValue]);
+        };
+
+        return (
+          <View style={[styles.container, containerStyle]}>
+            <Label {...{ label, rules }} />
+            <View style={[styles.checkBoxGroup, optionListStyle]}>
+              {options.map((option) => {
+                const isSelected = selectedValues.includes(option.value);
+                const isDisabled = () => option.disabled === true || disabled;
+                return (
+                  <Pressable
+                    accessibilityRole='checkbox'
+                    accessibilityState={{ checked: isSelected }}
+                    disabled={isDisabled()}
+                    key={option.key ?? option.value}
+                    onPress={() => {
+                      handleToggle(option.value);
+                    }}
+                    style={[styles.checkBoxRow, optionRowStyle]}
+                  >
+                    <View
+                      style={[
+                        styles.checkBoxBase,
+                        isSelected ? styles.checkBoxChecked : null,
+                        hasError ? styles.checkBoxError : null,
+                        isDisabled() ? styles.checkBoxDisabled : null,
+                      ]}
+                    />
+                    <Text style={optionLabelStyle(isDisabled())}>{option.label}</Text>
+                  </Pressable>
+                );
+              })}
+            </View>
+            <ErrorText {...errorText} />
+          </View>
+        );
+      }}
+      rules={rules}
+    />
   );
 };
 

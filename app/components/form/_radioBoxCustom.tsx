@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef } from 'react';
-import { useController } from 'react-hook-form';
+import { Controller } from 'react-hook-form';
 import { Animated, Pressable, StyleSheet, Text, View } from 'react-native';
 
 import ErrorText from './_errorText';
@@ -108,12 +108,6 @@ const RadioBoxCustom = <TFieldValues extends FieldValues>({
   trackStyle,
   knobStyle,
 }: TypeRadioBoxCustom<TFieldValues>) => {
-  const {
-    field: { value, onChange },
-  } = useController({ control, name, rules });
-
-  const selectedValue = useMemo(() => (typeof value === 'string' ? value : ''), [value]);
-
   const hasError = errorText?.message != null;
 
   const activeColor = activeColorProp ?? '#007aff';
@@ -121,36 +115,49 @@ const RadioBoxCustom = <TFieldValues extends FieldValues>({
   const knobColor = knobColorProp ?? '#ffffff';
 
   return (
-    <View style={[styles.container, containerStyle]}>
-      <Label {...{ label, rules }} />
-      <View style={[styles.optionList, optionListStyle]}>
-        {options.map((option) => {
-          const isSelected = selectedValue === option.value;
-          const isDisabled = () => option.disabled === true || disabled;
-          return (
-            <ToggleRadioOption
-              accessibilityState={{ selected: isSelected }}
-              activeColor={activeColor}
-              disabled={isDisabled()}
-              hasError={hasError}
-              inactiveColor={inactiveColor}
-              isSelected={isSelected}
-              key={option.key ?? option.value}
-              knobColor={knobColor}
-              knobStyle={knobStyle}
-              label={option.label}
-              onPress={() => {
-                onChange(option.value);
-              }}
-              optionLabelStyle={optionLabelStyle}
-              optionRowStyle={optionRowStyle}
-              trackStyle={trackStyle}
-            />
-          );
-        })}
-      </View>
-      <ErrorText {...errorText} />
-    </View>
+    <Controller
+      control={control}
+      name={name}
+      render={({
+        field: { value, onChange },
+      }) => {
+        const selectedValue = typeof value === 'string' ? value : '';
+
+        return (
+          <View style={[styles.container, containerStyle]}>
+            <Label {...{ label, rules }} />
+            <View style={[styles.optionList, optionListStyle]}>
+              {options.map((option) => {
+                const isSelected = selectedValue === option.value;
+                const isDisabled = () => option.disabled === true || disabled;
+                return (
+                  <ToggleRadioOption
+                    accessibilityState={{ selected: isSelected }}
+                    activeColor={activeColor}
+                    disabled={isDisabled()}
+                    hasError={hasError}
+                    inactiveColor={inactiveColor}
+                    isSelected={isSelected}
+                    key={option.key ?? option.value}
+                    knobColor={knobColor}
+                    knobStyle={knobStyle}
+                    label={option.label}
+                    onPress={() => {
+                      onChange(option.value);
+                    }}
+                    optionLabelStyle={optionLabelStyle}
+                    optionRowStyle={optionRowStyle}
+                    trackStyle={trackStyle}
+                  />
+                );
+              })}
+            </View>
+            <ErrorText {...errorText} />
+          </View>
+        );
+      }}
+      rules={rules}
+    />
   );
 };
 

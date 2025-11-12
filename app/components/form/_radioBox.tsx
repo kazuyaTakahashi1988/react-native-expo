@@ -1,4 +1,4 @@
-import { useController } from 'react-hook-form';
+import { Controller } from 'react-hook-form';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import ErrorText from './_errorText';
@@ -23,11 +23,6 @@ const RadioBox = <TFieldValues extends FieldValues>({
   options,
   rules,
 }: TypeRadioBox<TFieldValues>) => {
-  const {
-    field: { value, onChange },
-  } = useController({ control, name, rules });
-
-  const selectedValue = typeof value === 'string' ? value : '';
   const hasError = errorText?.message != null;
 
   const optionLabelStyle = (disabled?: boolean) => {
@@ -43,40 +38,53 @@ const RadioBox = <TFieldValues extends FieldValues>({
   };
 
   return (
-    <View style={[styles.container, containerStyle]}>
-      <Label {...{ label, rules }} />
-      <View style={[styles.radioGroup, optionListStyle]}>
-        {options.map((option) => {
-          const isSelected = selectedValue === option.value;
-          const isDisabled = () => option.disabled === true || disabled;
-          return (
-            <Pressable
-              accessibilityRole='radio'
-              accessibilityState={{ selected: isSelected }}
-              disabled={isDisabled()}
-              key={option.key ?? option.value}
-              onPress={() => {
-                onChange(option.value);
-              }}
-              style={[styles.radioRow, optionRowStyle]}
-            >
-              <View
-                style={[
-                  styles.radioOuter,
-                  isSelected ? styles.radioOuterSelected : null,
-                  hasError ? styles.radioOuterError : null,
-                  optionRadioOuterStyle(isDisabled()),
-                ]}
-              >
-                {isSelected ? <View style={optionRadioInnerStyle(isDisabled())} /> : null}
-              </View>
-              <Text style={optionLabelStyle(isDisabled())}>{option.label}</Text>
-            </Pressable>
-          );
-        })}
-      </View>
-      <ErrorText {...errorText} />
-    </View>
+    <Controller
+      control={control}
+      name={name}
+      render={({
+        field: { value, onChange },
+      }) => {
+        const selectedValue = typeof value === 'string' ? value : '';
+
+        return (
+          <View style={[styles.container, containerStyle]}>
+            <Label {...{ label, rules }} />
+            <View style={[styles.radioGroup, optionListStyle]}>
+              {options.map((option) => {
+                const isSelected = selectedValue === option.value;
+                const isDisabled = () => option.disabled === true || disabled;
+                return (
+                  <Pressable
+                    accessibilityRole='radio'
+                    accessibilityState={{ selected: isSelected }}
+                    disabled={isDisabled()}
+                    key={option.key ?? option.value}
+                    onPress={() => {
+                      onChange(option.value);
+                    }}
+                    style={[styles.radioRow, optionRowStyle]}
+                  >
+                    <View
+                      style={[
+                        styles.radioOuter,
+                        isSelected ? styles.radioOuterSelected : null,
+                        hasError ? styles.radioOuterError : null,
+                        optionRadioOuterStyle(isDisabled()),
+                      ]}
+                    >
+                      {isSelected ? <View style={optionRadioInnerStyle(isDisabled())} /> : null}
+                    </View>
+                    <Text style={optionLabelStyle(isDisabled())}>{option.label}</Text>
+                  </Pressable>
+                );
+              })}
+            </View>
+            <ErrorText {...errorText} />
+          </View>
+        );
+      }}
+      rules={rules}
+    />
   );
 };
 

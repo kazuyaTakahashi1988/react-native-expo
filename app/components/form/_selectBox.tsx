@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { useController } from 'react-hook-form';
+import { Controller } from 'react-hook-form';
 import { Keyboard, Pressable, StyleSheet, Text, View } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 
@@ -32,59 +32,66 @@ const SelectBox = <TFieldValues extends FieldValues>({
   valueTextStyle,
 }: TypeSelectBox<TFieldValues>) => {
   const pickerRef = useRef<RNPickerSelect | null>(null);
-
-  const {
-    field: { value, onChange },
-  } = useController({ control, name, rules });
-
-  const selectedValue = ensureString(value);
   const hasError = errorText?.message != null;
-
-  const selectedOption = options.find((option) => option.value === selectedValue);
-  const isPlaceholder = selectedOption == null;
-  const displayLabel = getDisplayLabel(selectedOption, placeholder);
-
-  const triggerStyles = buildTriggerStyles(triggerStyle, hasError, disabled);
-  const triggerTextStyles = buildTriggerTextStyles(
-    isPlaceholder,
-    placeholderTextStyle,
-    valueTextStyle,
-    disabled,
-  );
 
   const openPicker = () => {
     Keyboard.dismiss();
     pickerRef.current?.togglePicker(true);
   };
 
-  const handleValueChange = (selected: string | null) => {
-    onChange(selected ?? '');
-  };
-
   return (
-    <View style={[styles.container, containerStyle]}>
-      <Label {...{ label, rules }} />
+    <Controller
+      control={control}
+      name={name}
+      render={({
+        field: { value, onChange },
+      }) => {
+        const selectedValue = ensureString(value);
 
-      <Pressable accessibilityRole='button' onPress={openPicker} style={triggerStyles}>
-        <Text style={triggerTextStyles}>{displayLabel}</Text>
-      </Pressable>
+        const selectedOption = options.find((option) => option.value === selectedValue);
+        const isPlaceholder = selectedOption == null;
+        const displayLabel = getDisplayLabel(selectedOption, placeholder);
 
-      <RNPickerSelect
-        disabled={disabled}
-        doneText={doneText}
-        items={options}
-        onValueChange={handleValueChange}
-        placeholder={{ label: placeholder, value: '' }}
-        ref={(ref) => {
-          pickerRef.current = ref;
-        }}
-        style={pickerSelectStyles ?? baseSelectStyles}
-        useNativeAndroidPickerStyle={false}
-        value={toPickerValue(selectedValue)}
-      />
+        const triggerStyles = buildTriggerStyles(triggerStyle, hasError, disabled);
+        const triggerTextStyles = buildTriggerTextStyles(
+          isPlaceholder,
+          placeholderTextStyle,
+          valueTextStyle,
+          disabled,
+        );
 
-      <ErrorText {...errorText} />
-    </View>
+        const handleValueChange = (selected: string | null) => {
+          onChange(selected ?? '');
+        };
+
+        return (
+          <View style={[styles.container, containerStyle]}>
+            <Label {...{ label, rules }} />
+
+            <Pressable accessibilityRole='button' onPress={openPicker} style={triggerStyles}>
+              <Text style={triggerTextStyles}>{displayLabel}</Text>
+            </Pressable>
+
+            <RNPickerSelect
+              disabled={disabled}
+              doneText={doneText}
+              items={options}
+              onValueChange={handleValueChange}
+              placeholder={{ label: placeholder, value: '' }}
+              ref={(ref) => {
+                pickerRef.current = ref;
+              }}
+              style={pickerSelectStyles ?? baseSelectStyles}
+              useNativeAndroidPickerStyle={false}
+              value={toPickerValue(selectedValue)}
+            />
+
+            <ErrorText {...errorText} />
+          </View>
+        );
+      }}
+      rules={rules}
+    />
   );
 };
 

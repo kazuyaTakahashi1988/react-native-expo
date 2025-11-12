@@ -1,5 +1,4 @@
-import { useMemo } from 'react';
-import { useController } from 'react-hook-form';
+import { Controller } from 'react-hook-form';
 import { StyleSheet, TextInput, View } from 'react-native';
 
 import ErrorText from './_errorText';
@@ -23,31 +22,39 @@ const Input = <TFieldValues extends FieldValues>({
   style,
   ...textInputProps
 }: TypeInput<TFieldValues>) => {
-  const {
-    field: { onBlur, onChange, value },
-  } = useController({ control, name, rules });
-
-  const inputValue = typeof value === 'string' ? value : '';
   const hasError = errorText?.message != null;
-  const trackAnimatedStyle = useMemo(
-    () => [hasError ? styles.inputError : null, disabled ? styles.inputDisabled : null],
-    [disabled, hasError],
-  );
 
   return (
-    <View style={[styles.container, containerStyle]}>
-      <Label {...{ label, rules }} />
-      <TextInput
-        {...textInputProps}
-        editable={!disabled}
-        onBlur={onBlur}
-        onChangeText={onChange}
-        placeholderTextColor={'#9e9e9e'}
-        style={[styles.input, trackAnimatedStyle, style]}
-        value={inputValue}
-      />
-      <ErrorText {...errorText} />
-    </View>
+    <Controller
+      control={control}
+      name={name}
+      render={({
+        field: { onBlur, onChange, value },
+      }) => {
+        const inputValue = typeof value === 'string' ? value : '';
+        const trackAnimatedStyle = [
+          hasError ? styles.inputError : null,
+          disabled ? styles.inputDisabled : null,
+        ];
+
+        return (
+          <View style={[styles.container, containerStyle]}>
+            <Label {...{ label, rules }} />
+            <TextInput
+              {...textInputProps}
+              editable={!disabled}
+              onBlur={onBlur}
+              onChangeText={onChange}
+              placeholderTextColor={'#9e9e9e'}
+              style={[styles.input, trackAnimatedStyle, style]}
+              value={inputValue}
+            />
+            <ErrorText {...errorText} />
+          </View>
+        );
+      }}
+      rules={rules}
+    />
   );
 };
 
