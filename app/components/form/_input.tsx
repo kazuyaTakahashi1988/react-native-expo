@@ -1,8 +1,9 @@
 import { useMemo } from 'react';
 import { useController } from 'react-hook-form';
-import { StyleSheet, Text, TextInput, View } from 'react-native';
+import { StyleSheet, TextInput, View } from 'react-native';
 
 import ErrorText from './_errorText';
+import Label from './_label';
 
 import type { TypeInput } from '../../lib/types/typeComponents';
 import type { FieldValues } from 'react-hook-form';
@@ -29,20 +30,20 @@ const Input = <TFieldValues extends FieldValues>({
   const inputValue = typeof value === 'string' ? value : '';
   const hasError = errorText?.message != null;
   const trackAnimatedStyle = useMemo(
-    () => [hasError ? inputStyles.inputError : null, disabled ? inputStyles.inputDisabled : null],
+    () => [hasError ? styles.inputError : null, disabled ? styles.inputDisabled : null],
     [disabled, hasError],
   );
 
   return (
-    <View style={[inputStyles.container, containerStyle]}>
-      <Text style={inputStyles.label}>{label}</Text>
+    <View style={[styles.container, containerStyle]}>
+      <Label {...{ label, rules }} />
       <TextInput
         {...textInputProps}
         editable={!disabled}
         onBlur={onBlur}
         onChangeText={onChange}
         placeholderTextColor={'#9e9e9e'}
-        style={[inputStyles.input, trackAnimatedStyle, style]}
+        style={[styles.input, trackAnimatedStyle, style]}
         value={inputValue}
       />
       <ErrorText {...errorText} />
@@ -50,14 +51,9 @@ const Input = <TFieldValues extends FieldValues>({
   );
 };
 
-const inputStyles = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     marginBottom: 16,
-  },
-  label: {
-    fontSize: 14,
-    fontWeight: '500',
-    marginBottom: 8,
   },
   input: {
     backgroundColor: '#fff',

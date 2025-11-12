@@ -14,13 +14,13 @@ import type { Item, PickerStyle } from 'react-native-picker-select';
  * ----------------------------------------------- */
 export type TypeBoxOption = {
   disabled?: boolean;
-  label: string;
+  label?: string;
   value: string;
   key?: string | number;
 };
 
 type TypeToggleCustomBase<TFieldValues extends FieldValues> = {
-  label: string;
+  label?: string;
   control: Control<TFieldValues>;
   disabled?: boolean;
   name: Path<TFieldValues>;
@@ -28,7 +28,6 @@ type TypeToggleCustomBase<TFieldValues extends FieldValues> = {
   rules?: RegisterOptions<TFieldValues, Path<TFieldValues>>;
   errorText?: TypeErrorText | FieldError;
   containerStyle?: StyleProp<ViewStyle>;
-  labelStyle?: StyleProp<TextStyle>;
   optionListStyle?: StyleProp<ViewStyle>;
   optionRowStyle?: StyleProp<ViewStyle>;
   optionLabelStyle?: StyleProp<TextStyle>;
@@ -43,7 +42,7 @@ type TypeToggleCustomBase<TFieldValues extends FieldValues> = {
  * type チェックボックス項目
  * ----------------------------------------------- */
 export type TypeCheckBox<TFieldValues extends FieldValues> = {
-  label: string;
+  label?: string;
   control: Control<TFieldValues>;
   disabled?: boolean;
   name: Path<TFieldValues>;
@@ -51,7 +50,6 @@ export type TypeCheckBox<TFieldValues extends FieldValues> = {
   rules?: RegisterOptions<TFieldValues, Path<TFieldValues>>;
   errorText?: TypeErrorText | FieldError;
   containerStyle?: StyleProp<ViewStyle>;
-  labelStyle?: StyleProp<TextStyle>;
   optionListStyle?: StyleProp<ViewStyle>;
   optionRowStyle?: StyleProp<ViewStyle>;
 };
@@ -63,7 +61,7 @@ export type TypeCheckBoxCustom<TFieldValues extends FieldValues> =
   TypeToggleCustomBase<TFieldValues>;
 
 export type TypeToggleCheckOption = {
-  label: string;
+  label?: string;
   disabled?: boolean;
   isSelected: boolean;
   onPress: () => void;
@@ -87,7 +85,7 @@ export type TypeErrorText = Merge<FieldError, (FieldError | undefined)[]>;
  * type インプット項目
  * ----------------------------------------------- */
 export type TypeInput<TFieldValues extends FieldValues> = {
-  label: string;
+  label?: string;
   control: Control<TFieldValues>;
   disabled?: boolean;
   name: Path<TFieldValues>;
@@ -98,10 +96,18 @@ export type TypeInput<TFieldValues extends FieldValues> = {
 } & Omit<TextInputProps, 'onBlur' | 'onChangeText' | 'value' | 'style'>;
 
 /* -----------------------------------------------
+ * type ラベル
+ * ----------------------------------------------- */
+export type TypeLabel<TFieldValues extends FieldValues> = {
+  label?: string;
+  rules?: RegisterOptions<TFieldValues, Path<TFieldValues>>;
+};
+
+/* -----------------------------------------------
  * type ラヂオボックス項目
  * ----------------------------------------------- */
 export type TypeRadioBox<TFieldValues extends FieldValues> = {
-  label: string;
+  label?: string;
   control: Control<TFieldValues>;
   disabled?: boolean;
   name: Path<TFieldValues>;
@@ -109,7 +115,6 @@ export type TypeRadioBox<TFieldValues extends FieldValues> = {
   rules?: RegisterOptions<TFieldValues, Path<TFieldValues>>;
   errorText?: TypeErrorText | FieldError;
   containerStyle?: StyleProp<ViewStyle>;
-  labelStyle?: StyleProp<TextStyle>;
   optionListStyle?: StyleProp<ViewStyle>;
   optionRowStyle?: StyleProp<ViewStyle>;
 };
@@ -121,7 +126,7 @@ export type TypeRadioBoxCustom<TFieldValues extends FieldValues> =
   TypeToggleCustomBase<TFieldValues>;
 
 export type TypeToggleRadioOption = {
-  label: string;
+  label?: string;
   disabled?: boolean;
   isSelected: boolean;
   onPress: () => void;
@@ -144,7 +149,7 @@ export type TypeSelectBoxOption = Omit<Item, 'value'> & {
 };
 
 export type TypeSelectBox<TFieldValues extends FieldValues> = {
-  label: string;
+  label?: string;
   control: Control<TFieldValues>;
   disabled?: boolean;
   name: Path<TFieldValues>;

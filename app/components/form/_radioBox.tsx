@@ -2,6 +2,7 @@ import { useController } from 'react-hook-form';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import ErrorText from './_errorText';
+import Label from './_label';
 
 import type { TypeRadioBox } from '../../lib/types/typeComponents';
 import type { FieldValues } from 'react-hook-form';
@@ -16,7 +17,6 @@ const RadioBox = <TFieldValues extends FieldValues>({
   disabled = false,
   errorText,
   label,
-  labelStyle,
   name,
   optionListStyle,
   optionRowStyle,
@@ -44,7 +44,7 @@ const RadioBox = <TFieldValues extends FieldValues>({
 
   return (
     <View style={[styles.container, containerStyle]}>
-      <Text style={[styles.label, labelStyle]}>{label}</Text>
+      <Label {...{ label, rules }} />
       <View style={[styles.radioGroup, optionListStyle]}>
         {options.map((option) => {
           const isSelected = selectedValue === option.value;
@@ -85,11 +85,6 @@ const RadioBox = <TFieldValues extends FieldValues>({
 const styles = StyleSheet.create({
   container: {
     marginBottom: 16,
-  },
-  label: {
-    fontSize: 14,
-    fontWeight: '500',
-    marginBottom: 8,
   },
   radioGroup: {
     rowGap: 12,

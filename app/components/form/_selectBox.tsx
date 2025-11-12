@@ -4,6 +4,7 @@ import { Keyboard, Pressable, StyleSheet, Text, View } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 
 import ErrorText from './_errorText';
+import Label from './_label';
 
 import type { TypeSelectBox, TypeSelectBoxOption } from '../../lib/types/typeComponents';
 import type { ComponentProps } from 'react';
@@ -21,7 +22,6 @@ const SelectBox = <TFieldValues extends FieldValues>({
   doneText,
   errorText,
   label,
-  labelStyle,
   name,
   options,
   pickerSelectStyles,
@@ -62,8 +62,8 @@ const SelectBox = <TFieldValues extends FieldValues>({
   };
 
   return (
-    <View style={[defaultPickerStyles.container, containerStyle]}>
-      <Text style={[defaultPickerStyles.label, labelStyle]}>{label}</Text>
+    <View style={[styles.container, containerStyle]}>
+      <Label {...{ label, rules }} />
 
       <Pressable accessibilityRole='button' onPress={openPicker} style={triggerStyles}>
         <Text style={triggerTextStyles}>{displayLabel}</Text>
@@ -78,7 +78,7 @@ const SelectBox = <TFieldValues extends FieldValues>({
         ref={(ref) => {
           pickerRef.current = ref;
         }}
-        style={pickerSelectStyles ?? basePickerSelectStyles}
+        style={pickerSelectStyles ?? baseSelectStyles}
         useNativeAndroidPickerStyle={false}
         value={toPickerValue(selectedValue)}
       />
@@ -88,7 +88,7 @@ const SelectBox = <TFieldValues extends FieldValues>({
   );
 };
 
-const defaultPickerStyles = StyleSheet.create({
+const styles = StyleSheet.create({
   selectTrigger: {
     alignItems: 'center',
     backgroundColor: '#fff',
@@ -114,11 +114,6 @@ const defaultPickerStyles = StyleSheet.create({
     color: '#9e9e9e',
     fontSize: 14,
   },
-  label: {
-    fontSize: 14,
-    fontWeight: '500',
-    marginBottom: 8,
-  },
   container: {
     marginBottom: 16,
   },
@@ -127,7 +122,7 @@ const defaultPickerStyles = StyleSheet.create({
   },
 });
 
-const basePickerSelectStyles = {
+const baseSelectStyles = {
   inputIOS: {
     height: 0,
     opacity: 0,
@@ -179,20 +174,20 @@ const buildTriggerStyles = (
   hasError: boolean,
   disabled: boolean,
 ): StyleProp<ViewStyle>[] => {
-  const styles: StyleProp<ViewStyle>[] = [
-    defaultPickerStyles.selectTrigger,
-    disabled ? defaultPickerStyles.selectTriggerDisabled : null,
+  const buildStyles: StyleProp<ViewStyle>[] = [
+    styles.selectTrigger,
+    disabled ? styles.selectTriggerDisabled : null,
   ];
 
   if (triggerStyle != null) {
-    styles.push(triggerStyle);
+    buildStyles.push(triggerStyle);
   }
 
   if (hasError) {
-    styles.push(defaultPickerStyles.inputError);
+    buildStyles.push(styles.inputError);
   }
 
-  return styles;
+  return buildStyles;
 };
 
 const buildTriggerTextStyles = (
@@ -201,25 +196,25 @@ const buildTriggerTextStyles = (
   valueTextStyle: StyleProp<TextStyle> | undefined,
   disabled: boolean,
 ): StyleProp<TextStyle>[] => {
-  const styles: StyleProp<TextStyle>[] = [];
+  const buildStyles: StyleProp<TextStyle>[] = [];
 
   if (isPlaceholder) {
-    styles.push(defaultPickerStyles.selectPlaceholderText);
+    buildStyles.push(styles.selectPlaceholderText);
     if (placeholderTextStyle != null) {
-      styles.push(placeholderTextStyle);
+      buildStyles.push(placeholderTextStyle);
     }
-    return styles;
+    return buildStyles;
   }
 
-  styles.push(defaultPickerStyles.selectValueText);
+  buildStyles.push(styles.selectValueText);
   if (valueTextStyle != null) {
-    styles.push(valueTextStyle);
+    buildStyles.push(valueTextStyle);
   }
   if (disabled) {
-    styles.push(defaultPickerStyles.selectValueTextDisabled);
+    buildStyles.push(styles.selectValueTextDisabled);
   }
 
-  return styles;
+  return buildStyles;
 };
 
 const getDisplayLabel = (

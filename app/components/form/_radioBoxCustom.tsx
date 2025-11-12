@@ -3,6 +3,7 @@ import { useController } from 'react-hook-form';
 import { Animated, Pressable, StyleSheet, Text, View } from 'react-native';
 
 import ErrorText from './_errorText';
+import Label from './_label';
 
 import type { TypeRadioBoxCustom, TypeToggleRadioOption } from '../../lib/types/typeComponents';
 import type { FieldValues } from 'react-hook-form';
@@ -98,7 +99,6 @@ const RadioBoxCustom = <TFieldValues extends FieldValues>({
   inactiveColor: inactiveColorProp,
   knobColor: knobColorProp,
   label,
-  labelStyle,
   name,
   optionListStyle,
   optionRowStyle,
@@ -122,7 +122,7 @@ const RadioBoxCustom = <TFieldValues extends FieldValues>({
 
   return (
     <View style={[styles.container, containerStyle]}>
-      <Text style={[styles.label, labelStyle]}>{label}</Text>
+      <Label {...{ label, rules }} />
       <View style={[styles.optionList, optionListStyle]}>
         {options.map((option) => {
           const isSelected = selectedValue === option.value;
@@ -157,11 +157,6 @@ const RadioBoxCustom = <TFieldValues extends FieldValues>({
 const styles = StyleSheet.create({
   container: {
     marginBottom: 16,
-  },
-  label: {
-    fontSize: 14,
-    fontWeight: '500',
-    marginBottom: 8,
   },
   optionList: {
     rowGap: 12,
