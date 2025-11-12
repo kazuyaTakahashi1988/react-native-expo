@@ -40,3 +40,6 @@ yarn-error.*
 
 # .husky
 .husky/
+
+# yarn berry artifacts
+.yarn/

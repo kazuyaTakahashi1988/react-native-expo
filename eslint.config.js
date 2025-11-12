@@ -22,7 +22,7 @@ export default [
   reactPlugin.configs.flat['jsx-runtime'],
   reactHooks.configs['recommended-latest'],
   {
-    files: ['app/**/*.ts', 'app/**/*.tsx', 'index.ts'],
+    files: ['app/**/*.ts', 'app/**/*.tsx', 'index.ts', 'storybook/**/*.ts', 'storybook/**/*.tsx'],
     languageOptions: {
       parser: tseslint.parser,
       parserOptions: {

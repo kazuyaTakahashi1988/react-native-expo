@@ -9,6 +9,7 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
+    "storybook": "EXPO_PUBLIC_STORYBOOK_ENABLED=true expo start",
     "lint": "eslint . --max-warnings=0 && tsc --noEmit",
     "lint:fix": "eslint --fix --max-warnings=0 ./app",
     "format": "prettier --write ./app",
@@ -37,6 +38,9 @@
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
+    "@storybook/addon-ondevice-actions": "^7.6.20",
+    "@storybook/addon-ondevice-controls": "^7.6.20",
+    "@storybook/react-native": "^7.6.20",
     "@eslint/js": "^9.32.0",
     "@types/react": "~19.1.10",
     "eslint": "^9.32.0",

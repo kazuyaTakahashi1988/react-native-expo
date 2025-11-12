@@ -14,6 +14,15 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
+    "paths": {
+      "@storybook/react-native": ["./app/types/@storybook/react-native"],
+      "@storybook/addon-ondevice-actions": [
+        "./app/types/@storybook/addon-ondevice-actions"
+      ],
+      "@storybook/addon-ondevice-controls": [
+        "./app/types/@storybook/addon-ondevice-controls"
+      ]
+    },
     "jsx": "react-native",
 
     /* Linting */
@@ -22,6 +31,13 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["app/**/*.ts", "app/**/*.tsx", "index.ts"],
+  "include": [
+    "app/**/*.ts",
+    "app/**/*.tsx",
+    "app/**/*.d.ts",
+    "index.ts",
+    "storybook/**/*.ts",
+    "storybook/**/*.tsx"
+  ],
   "exclude": ["node_modules", ".expo", "ios", "android", "eslint.config.js"]
 }
