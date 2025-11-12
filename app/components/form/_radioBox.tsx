@@ -48,9 +48,7 @@ const RadioBox = <TFieldValues extends FieldValues>({
       <View style={[styles.radioGroup, optionListStyle]}>
         {options.map((option) => {
           const isSelected = selectedValue === option.value;
-          const isDisabled = () => {
-            return option.disabled === true || disabled;
-          };
+          const isDisabled = () => option.disabled === true || disabled;
           return (
             <Pressable
               accessibilityRole='radio'

@@ -48,9 +48,7 @@ const CheckBox = <TFieldValues extends FieldValues>({
       <View style={[styles.checkBoxGroup, optionListStyle]}>
         {options.map((option) => {
           const isSelected = selectedValues.includes(option.value);
-          const isDisabled = () => {
-            return option.disabled === true || disabled;
-          };
+          const isDisabled = () => option.disabled === true || disabled;
           return (
             <Pressable
               accessibilityRole='checkbox'

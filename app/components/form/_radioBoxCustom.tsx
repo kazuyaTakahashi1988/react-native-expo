@@ -126,12 +126,12 @@ const RadioBoxCustom = <TFieldValues extends FieldValues>({
       <View style={[styles.optionList, optionListStyle]}>
         {options.map((option) => {
           const isSelected = selectedValue === option.value;
-          const isDisabled = option.disabled === true || disabled;
+          const isDisabled = () => option.disabled === true || disabled;
           return (
             <ToggleRadioOption
               accessibilityState={{ selected: isSelected }}
               activeColor={activeColor}
-              disabled={isDisabled}
+              disabled={isDisabled()}
               hasError={hasError}
               inactiveColor={inactiveColor}
               isSelected={isSelected}

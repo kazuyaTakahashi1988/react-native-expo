@@ -134,12 +134,12 @@ const CheckBoxCustom = <TFieldValues extends FieldValues>({
       <View style={[styles.optionList, optionListStyle]}>
         {options.map((option) => {
           const isSelected = selectedValues.includes(option.value);
-          const isDisabled = option.disabled === true || disabled;
+          const isDisabled = () => option.disabled === true || disabled;
           return (
             <ToggleCheckOption
               accessibilityState={{ checked: isSelected }}
               activeColor={activeColor}
-              disabled={isDisabled}
+              disabled={isDisabled()}
               hasError={hasError}
               inactiveColor={inactiveColor}
               isSelected={isSelected}
