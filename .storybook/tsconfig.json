@@ -1,0 +1,10 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "types": ["node"],
+    "moduleResolution": "bundler"
+  },
+  "include": ["../app/**/*.stories.ts", "../app/**/*.stories.tsx", "./main.ts", "./preview.ts"],
+  "exclude": []
+}

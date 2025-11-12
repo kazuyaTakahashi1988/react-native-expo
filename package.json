@@ -12,7 +12,9 @@
     "lint": "eslint . --max-warnings=0 && tsc --noEmit",
     "lint:fix": "eslint --fix --max-warnings=0 ./app",
     "format": "prettier --write ./app",
-    "fix": "yarn format && yarn lint:fix"
+    "fix": "yarn format && yarn lint:fix",
+    "storybook": "storybook dev -p 6006 --ci",
+    "build-storybook": "storybook build"
   },
   "dependencies": {
     "@expo/metro-runtime": "~6.1.2",
@@ -54,7 +56,15 @@
     "react-native-web": "^0.21.0",
     "tsc-files": "^1.1.4",
     "typescript": "~5.8.2",
-    "typescript-eslint": "^8.38.0"
+    "typescript-eslint": "^8.38.0",
+    "@storybook/addon-essentials": "8.4.7",
+    "@storybook/addon-interactions": "8.4.7",
+    "@storybook/addon-links": "8.4.7",
+    "@storybook/addon-onboarding": "8.4.7",
+    "@storybook/cli": "8.4.7",
+    "@storybook/react-webpack5": "8.4.7",
+    "@storybook/testing-library": "0.2.2",
+    "babel-loader": "9.2.1"
   },
   "private": true,
   "lint-staged": {
