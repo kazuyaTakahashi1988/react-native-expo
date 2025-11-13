@@ -1,6 +1,13 @@
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useController } from 'react-hook-form';
-import { Animated, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
+import Animated, {
+  interpolate,
+  interpolateColor,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
 
 import ErrorText from './_errorText';
 import Label from './_label';
@@ -34,40 +41,35 @@ const ToggleCheckOption = ({
   trackStyle,
   knobStyle,
 }: TypeToggleCheckOption) => {
-  const animation = useRef(new Animated.Value(isSelected ? 1 : 0)).current;
+  const animation = useSharedValue(isSelected ? 1 : 0);
 
   useEffect(() => {
-    Animated.timing(animation, {
-      toValue: isSelected ? 1 : 0,
-      duration: 200,
-      useNativeDriver: false,
-    }).start();
+    animation.value = withTiming(isSelected ? 1 : 0, { duration: 200 });
   }, [animation, isSelected]);
 
-  const backgroundColor = animation.interpolate({
-    inputRange: [0, 1],
-    outputRange: !disabled ? [inactiveColor, activeColor] : ['#9e9e9e', '#9e9e9e'],
-  });
-
-  const translateX = animation.interpolate({
-    inputRange: [0, 1],
-    outputRange: [KNOB_MARGIN, TRACK_WIDTH - KNOB_SIZE - KNOB_MARGIN],
-  });
-
-  const trackAnimatedStyle = useMemo(
+  const trackAnimatedStyle = useAnimatedStyle(
     () => ({
-      backgroundColor,
+      backgroundColor: disabled
+        ? '#9e9e9e'
+        : interpolateColor(animation.value, [0, 1], [inactiveColor, activeColor]),
       borderColor: hasError ? ERROR_COLOR : 'transparent',
     }),
-    [backgroundColor, hasError],
+    [activeColor, disabled, hasError, inactiveColor],
   );
 
-  const knobAnimatedStyle = useMemo(
+  const knobAnimatedStyle = useAnimatedStyle(
     () => ({
       backgroundColor: knobColor,
-      transform: [{ translateX }],
+      transform: [
+        {
+          translateX: interpolate(animation.value, [0, 1], [
+            KNOB_MARGIN,
+            TRACK_WIDTH - KNOB_SIZE - KNOB_MARGIN,
+          ]),
+        },
+      ],
     }),
-    [knobColor, translateX],
+    [knobColor],
   );
 
   return (
