@@ -1,3 +1,7 @@
+/* -----------------------------------------------
+ * [ app/components/svg ] 用 type
+ * ----------------------------------------------- */
+
 export type TypeIcon = {
   color?: string;
   size?: number;

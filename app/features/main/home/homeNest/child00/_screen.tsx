@@ -23,7 +23,9 @@ import type { TypeFormValues } from './_type';
 const Child00Screen: React.FC = () => {
   const [submittedValues, setSubmittedValues] = useState<TypeFormValues | null>(null);
 
-  // form設定
+  /*
+   * form設定
+   */
   const {
     control,
     formState: { errors, isSubmitting },
@@ -42,14 +44,18 @@ const Child00Screen: React.FC = () => {
     },
   });
 
-  // submitボタン処理
+  /*
+   * submitボタン処理
+   */
   const onSubmit = useCallback(() => {
     void handleSubmit((values: TypeFormValues) => {
       setSubmittedValues(values);
     })();
   }, [handleSubmit]);
 
-  // resetボタン処理
+  /*
+   * resetボタン処理
+   */
   const onReset = () => {
     reset();
     setSubmittedValues(null);

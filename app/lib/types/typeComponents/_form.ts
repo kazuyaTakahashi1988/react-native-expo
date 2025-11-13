@@ -10,8 +10,12 @@ import type { PressableProps, StyleProp, TextInputProps, TextStyle, ViewStyle } 
 import type { Item, PickerStyle } from 'react-native-picker-select';
 
 /* -----------------------------------------------
- * type チェック・ラヂオボックス項目 共通
+ * [ app/components/form ] 用 type
  * ----------------------------------------------- */
+
+/*
+ * type チェック・ラヂオボックス項目 共通
+ */
 export type TypeBoxOption = {
   disabled?: boolean;
   label?: string;
@@ -38,9 +42,9 @@ type TypeToggleCustomBase<TFieldValues extends FieldValues> = {
   knobColor?: string;
 };
 
-/* -----------------------------------------------
+/*
  * type チェックボックス項目
- * ----------------------------------------------- */
+ */
 export type TypeCheckBox<TFieldValues extends FieldValues> = {
   label?: string;
   control: Control<TFieldValues>;
@@ -54,9 +58,9 @@ export type TypeCheckBox<TFieldValues extends FieldValues> = {
   optionRowStyle?: StyleProp<ViewStyle>;
 };
 
-/* -----------------------------------------------
+/*
  * type チェックボックスカスタム項目
- * ----------------------------------------------- */
+ */
 export type TypeCheckBoxCustom<TFieldValues extends FieldValues> =
   TypeToggleCustomBase<TFieldValues>;
 
@@ -76,14 +80,14 @@ export type TypeToggleCheckOption = {
   knobStyle: TypeCheckBoxCustom<FieldValues>['knobStyle'];
 };
 
-/* -----------------------------------------------
+/*
  * type エラーテキスト
- * ----------------------------------------------- */
+ */
 export type TypeErrorText = Merge<FieldError, (FieldError | undefined)[]>;
 
-/* -----------------------------------------------
+/*
  * type インプット項目
- * ----------------------------------------------- */
+ */
 export type TypeInput<TFieldValues extends FieldValues> = {
   label?: string;
   control: Control<TFieldValues>;
@@ -95,17 +99,17 @@ export type TypeInput<TFieldValues extends FieldValues> = {
   style?: StyleProp<TextStyle>;
 } & Omit<TextInputProps, 'onBlur' | 'onChangeText' | 'value' | 'style'>;
 
-/* -----------------------------------------------
+/*
  * type ラベル
- * ----------------------------------------------- */
+ */
 export type TypeLabel<TFieldValues extends FieldValues> = {
   label?: string;
   rules?: RegisterOptions<TFieldValues, Path<TFieldValues>>;
 };
 
-/* -----------------------------------------------
+/*
  * type ラヂオボックス項目
- * ----------------------------------------------- */
+ */
 export type TypeRadioBox<TFieldValues extends FieldValues> = {
   label?: string;
   control: Control<TFieldValues>;
@@ -119,9 +123,9 @@ export type TypeRadioBox<TFieldValues extends FieldValues> = {
   optionRowStyle?: StyleProp<ViewStyle>;
 };
 
-/* -----------------------------------------------
+/*
  * type ラヂオボックスカスタム項目
- * ----------------------------------------------- */
+ */
 export type TypeRadioBoxCustom<TFieldValues extends FieldValues> =
   TypeToggleCustomBase<TFieldValues>;
 
@@ -141,9 +145,9 @@ export type TypeToggleRadioOption = {
   knobStyle: TypeRadioBoxCustom<FieldValues>['knobStyle'];
 };
 
-/* -----------------------------------------------
+/*
  * type セレクトボックス項目
- * ----------------------------------------------- */
+ */
 export type TypeSelectBoxOption = Omit<Item, 'value'> & {
   value: string;
 };
@@ -166,7 +170,7 @@ export type TypeSelectBox<TFieldValues extends FieldValues> = {
   pickerSelectStyles?: PickerStyle;
 };
 
-/* -----------------------------------------------
+/*
  * type テキストエリア項目
- * ----------------------------------------------- */
+ */
 export type TypeTextArea<TFieldValues extends FieldValues> = TypeInput<TFieldValues>;
