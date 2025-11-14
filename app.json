@@ -34,6 +34,7 @@
       "eas": {
         "projectId": "f13e2846-d9dc-4533-b5a5-e169233cedf0"
       }
-    }
+    },
+    "plugins": ["react-native-reanimated"]
   }
 }
