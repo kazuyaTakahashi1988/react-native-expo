@@ -1,6 +1,14 @@
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useController } from 'react-hook-form';
-import { Animated, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
+import Animated, {
+  interpolate,
+  interpolateColor,
+  type SharedValue,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
 
 import ErrorText from './_errorText';
 import Label from './_label';
@@ -18,6 +26,8 @@ const KNOB_SIZE = 22;
 const KNOB_MARGIN = (TRACK_HEIGHT - KNOB_SIZE) / 2;
 
 const ERROR_COLOR = '#e53935';
+const DISABLED_COLOR = '#9e9e9e';
+const KNOB_MAX_TRANSLATE = TRACK_WIDTH - KNOB_SIZE - KNOB_MARGIN;
 
 const ToggleRadioOption = ({
   label,
@@ -34,40 +44,30 @@ const ToggleRadioOption = ({
   trackStyle,
   knobStyle,
 }: TypeToggleRadioOption) => {
-  const animation = useRef(new Animated.Value(isSelected ? 1 : 0)).current;
+  const progress: SharedValue<number> = useSharedValue<number>(isSelected ? 1 : 0);
 
   useEffect(() => {
-    Animated.timing(animation, {
-      toValue: isSelected ? 1 : 0,
-      duration: 200,
-      useNativeDriver: false,
-    }).start();
-  }, [animation, isSelected]);
+    progress.value = withTiming(isSelected ? 1 : 0, { duration: 200 });
+  }, [isSelected, progress]);
 
-  const backgroundColor = animation.interpolate({
-    inputRange: [0, 1],
-    outputRange: !disabled ? [inactiveColor, activeColor] : ['#9e9e9e', '#9e9e9e'],
-  });
-
-  const translateX = animation.interpolate({
-    inputRange: [0, 1],
-    outputRange: [KNOB_MARGIN, TRACK_WIDTH - KNOB_SIZE - KNOB_MARGIN],
-  });
-
-  const trackAnimatedStyle = useMemo(
-    () => ({
-      backgroundColor,
-      borderColor: hasError ? ERROR_COLOR : 'transparent',
+  const trackAnimatedStyle = useAnimatedStyle(
+    (): { backgroundColor: string } => ({
+      backgroundColor: disabled
+        ? DISABLED_COLOR
+        : String(interpolateColor(progress.value, [0, 1], [inactiveColor, activeColor])),
     }),
-    [backgroundColor, hasError],
+    [activeColor, disabled, inactiveColor],
   );
 
-  const knobAnimatedStyle = useMemo(
-    () => ({
-      backgroundColor: knobColor,
-      transform: [{ translateX }],
+  const knobAnimatedStyle = useAnimatedStyle(
+    (): { transform: { translateX: number }[] } => ({
+      transform: [
+        {
+          translateX: interpolate(progress.value, [0, 1], [KNOB_MARGIN, KNOB_MAX_TRANSLATE]),
+        },
+      ],
     }),
-    [knobColor, translateX],
+    [],
   );
 
   return (
@@ -78,8 +78,17 @@ const ToggleRadioOption = ({
       onPress={onPress}
       style={[styles.optionRow, optionRowStyle]}
     >
-      <Animated.View style={[styles.track, trackAnimatedStyle, trackStyle]}>
-        <Animated.View style={[styles.knob, knobAnimatedStyle, knobStyle]} />
+      <Animated.View
+        style={[
+          styles.track,
+          hasError ? styles.trackError : styles.trackDefault,
+          trackAnimatedStyle,
+          trackStyle,
+        ]}
+      >
+        <Animated.View
+          style={[styles.knob, { backgroundColor: knobColor }, knobAnimatedStyle, knobStyle]}
+        />
       </Animated.View>
       <Text
         style={[styles.optionLabel, optionLabelStyle, disabled ? styles.optionLabelDisabled : null]}
@@ -173,6 +182,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: KNOB_MARGIN,
     width: TRACK_WIDTH,
+  },
+  trackDefault: {
+    borderColor: 'transparent',
+  },
+  trackError: {
+    borderColor: ERROR_COLOR,
   },
   knob: {
     borderRadius: KNOB_SIZE / 2,

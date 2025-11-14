@@ -13,6 +13,9 @@ const reactPlugin = react;
 const reactNativePlugin = reactNative;
 
 export default [
+  {
+    ignores: ['babel.config.*'],
+  },
   js.configs.recommended,
   sonarjs.configs.recommended,
   ...tseslint.configs.recommended,
