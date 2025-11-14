@@ -23,6 +23,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["app/**/*.ts", "app/**/*.tsx", "app/**/*.d.ts", "index.ts"],
+  "include": ["app/**/*.ts", "app/**/*.tsx", "index.ts"],
   "exclude": ["node_modules", ".expo", "ios", "android", "eslint.config.js"]
 }
