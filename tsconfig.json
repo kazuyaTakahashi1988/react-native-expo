@@ -15,6 +15,11 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-native",
+    "typeRoots": [
+      "./app/types",
+      "./app/lib/types/declaration",
+      "./node_modules/@types"
+    ],
 
     /* Linting */
     "strict": true,
@@ -22,6 +27,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["app/**/*.ts", "app/**/*.tsx", "index.ts"],
+  "include": ["app/**/*.ts", "app/**/*.tsx", "app/**/*.d.ts", "index.ts"],
   "exclude": ["node_modules", ".expo", "ios", "android", "eslint.config.js"]
 }
