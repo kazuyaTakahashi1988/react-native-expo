@@ -15,6 +15,7 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-native",
+    "typeRoots": ["./app/types", "./node_modules/@types"],
 
     /* Linting */
     "strict": true,
