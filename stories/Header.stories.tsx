@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react-native-web-vite';
-
 import { Header } from './Header';
+
+import type { Meta, StoryObj } from '@storybook/react-native-web-vite';
 
 const meta = {
   title: 'Example/Header',

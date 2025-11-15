@@ -21,17 +21,17 @@ export const Header = ({ user, onLogin, onLogout, onCreateAccount }: HeaderProps
             <Text>Welcome, </Text>
             <Text style={styles.userName}>{user.name}!</Text>
 
-            <Button style={styles.button} size="small" onPress={onLogout} label="Log out" />
+            <Button label='Log out' onPress={onLogout} size='small' style={styles.button} />
           </>
         ) : (
           <>
-            <Button style={styles.button} size="small" onPress={onLogin} label="Log in" />
+            <Button label='Log in' onPress={onLogin} size='small' style={styles.button} />
             <Button
-              style={styles.button}
-              primary
-              size="small"
+              label='Sign up'
               onPress={onCreateAccount}
-              label="Sign up"
+              primary
+              size='small'
+              style={styles.button}
             />
           </>
         )}
@@ -42,32 +42,32 @@ export const Header = ({ user, onLogin, onLogout, onCreateAccount }: HeaderProps
 
 const styles = StyleSheet.create({
   wrapper: {
-    borderBottomWidth: 1,
     borderBottomColor: 'rgba(0, 0, 0, 0.1)',
-    paddingVertical: 15,
-    paddingHorizontal: 20,
+    borderBottomWidth: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
+    paddingHorizontal: 20,
+    paddingVertical: 15,
   },
   h1: {
-    fontWeight: '900',
+    alignSelf: 'flex-start',
+    color: 'black',
     fontSize: 20,
-    marginTop: 6,
+    fontWeight: '900',
     marginBottom: 6,
     marginLeft: 10,
-    color: 'black',
-    alignSelf: 'flex-start',
+    marginTop: 6,
   },
   logoContainer: {
-    flexDirection: 'row',
     alignItems: 'center',
+    flexDirection: 'row',
   },
   button: {
     marginLeft: 10,
   },
   buttonContainer: {
-    flexDirection: 'row',
     alignItems: 'center',
+    flexDirection: 'row',
   },
   userName: {
     fontWeight: '700',

@@ -1,15 +1,16 @@
-import type { Meta, StoryObj } from '@storybook/react-native-web-vite';
-
 import { View } from 'react-native';
 import { fn } from 'storybook/test';
 
 import { Button } from './Button';
+
+import type { Meta, StoryObj } from '@storybook/react-native-web-vite';
 
 const meta = {
   title: 'Example/Button',
   component: Button,
   decorators: [
     (Story) => (
+      // eslint-disable-next-line react-native/no-inline-styles
       <View style={{ flex: 1, alignItems: 'flex-start' }}>
         <Story />
       </View>
