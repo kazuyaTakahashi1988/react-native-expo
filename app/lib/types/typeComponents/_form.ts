@@ -90,9 +90,9 @@ export type TypeErrorText = Merge<FieldError, (FieldError | undefined)[]>;
  */
 export type TypeInput<TFieldValues extends FieldValues> = {
   label?: string;
-  control: Control<TFieldValues>;
+  control?: Control<TFieldValues>;
   disabled?: boolean;
-  name: Path<TFieldValues>;
+  name?: Path<TFieldValues>;
   rules?: RegisterOptions<TFieldValues, Path<TFieldValues>>;
   errorText?: TypeErrorText | FieldError;
   containerStyle?: StyleProp<ViewStyle>;
