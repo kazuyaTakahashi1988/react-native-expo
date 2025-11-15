@@ -196,7 +196,7 @@ const styles = StyleSheet.create({
     columnGap: 12,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 12,
+    marginBottom: 24,
   },
   container: {
     marginBottom: 24,
