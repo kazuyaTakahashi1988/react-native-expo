@@ -7,31 +7,12 @@ import type { TypeResultArea } from './_type';
  * ----------------------------------------------- */
 
 export const ResultArea: React.FC<TypeResultArea> = (submittedValues) => {
-  const { name, email, subscribe, plan, country, note, subscribeCustom, planCustom } =
-    submittedValues;
-
-  // 各値が空の場合、マウントせず離脱
-  const isBlank = (v: unknown): boolean =>
-    v == null || (typeof v === 'string' && v.trim() === '') || (Array.isArray(v) && v.length === 0);
-  const hasMissingValues = [
-    name,
-    email,
-    subscribe,
-    plan,
-    country,
-    note,
-    subscribeCustom,
-    planCustom,
-  ].some(isBlank);
-  if (hasMissingValues) {
-    return null;
-  }
+  const { name, subscribe, plan, country, note, subscribeCustom, planCustom } = submittedValues;
 
   return (
     <View style={resultStyles.result}>
       <Text style={resultStyles.resultTitle}>Submitted values</Text>
       <Text>Name: {name}</Text>
-      <Text>Email: {email}</Text>
       <Text>
         Subscribe: {'\n'}
         {subscribe && subscribe.map((item) => `${item}\n`)}

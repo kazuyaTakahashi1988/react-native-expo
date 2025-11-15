@@ -36,6 +36,6 @@ export const Default: Story = {
 export const Required: Story = {
   args: {
     label: 'ラベルテキスト - Required',
-    rules: {},
+    rules: { required: true },
   },
 };

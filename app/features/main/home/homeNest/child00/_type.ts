@@ -3,7 +3,6 @@
  * ----------------------------------------------- */
 export type TypeFormValues = {
   name: string;
-  email: string;
   subscribe: string[];
   subscribeCustom: string[];
   plan: string;
