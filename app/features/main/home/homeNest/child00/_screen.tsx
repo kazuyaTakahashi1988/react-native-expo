@@ -67,6 +67,7 @@ const Child00Screen: React.FC = () => {
       {/* Name インプット項目 */}
       <Input
         autoCapitalize='words'
+        containerStyle={styles.container}
         control={control}
         errorText={errors.name}
         label='Name インプット項目'
@@ -77,6 +78,7 @@ const Child00Screen: React.FC = () => {
 
       {/* Subscribe チェックボックス項目 */}
       <CheckBox
+        containerStyle={styles.container}
         control={control}
         errorText={errors.subscribe}
         label='Subscribe チェックボックス項目'
@@ -95,6 +97,7 @@ const Child00Screen: React.FC = () => {
       {/* Subscribe Custom チェックボックスカスタム項目 */}
       <CheckBoxCustom
         activeColor='#22c55e'
+        containerStyle={styles.container}
         control={control}
         errorText={errors.subscribeCustom}
         label='Subscribe Custom チェックボックスカスタム項目'
@@ -109,6 +112,7 @@ const Child00Screen: React.FC = () => {
 
       {/* Plan ラヂオボックス項目 */}
       <RadioBox
+        containerStyle={styles.container}
         control={control}
         errorText={errors.plan}
         label='Plan ラヂオボックス項目'
@@ -124,6 +128,7 @@ const Child00Screen: React.FC = () => {
       {/* Plan Custom ラヂオボックスカスタム項目 */}
       <RadioBoxCustom
         activeColor='#6366f1'
+        containerStyle={styles.container}
         control={control}
         errorText={errors.planCustom}
         label='Plan Custom ラヂオボックスカスタム項目'
@@ -138,6 +143,7 @@ const Child00Screen: React.FC = () => {
 
       {/* Country セレクトボックス項目 */}
       <SelectBox
+        containerStyle={styles.container}
         control={control}
         errorText={errors.country}
         label='Country セレクトボックス項目'
@@ -152,6 +158,7 @@ const Child00Screen: React.FC = () => {
 
       {/* Note テキストエリア項目 */}
       <TextArea
+        containerStyle={styles.container}
         control={control}
         errorText={errors.note}
         label='Note テキストエリア項目'
@@ -189,7 +196,10 @@ const styles = StyleSheet.create({
     columnGap: 12,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 12,
+    marginBottom: 24,
+  },
+  container: {
+    marginBottom: 24,
   },
 });
 

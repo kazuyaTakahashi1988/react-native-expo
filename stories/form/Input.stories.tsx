@@ -32,12 +32,15 @@ const meta = {
   ],
   tags: ['autodocs'],
   argTypes: {
-    containerStyle: { control: false },
-    style: { control: false },
-    errorText: { control: false },
-    disabled: { control: 'boolean' },
-    label: { control: 'text' },
-    placeholder: { control: 'text' },
+    containerStyle: {
+      control: { type: 'object' },
+      description:
+        'Input を包むコンテナ（View）スタイル \n\n 例 ：\n { "padding": 20, "backgroundColor": "red" }',
+    },
+    style: {
+      control: { type: 'object' },
+      description: 'TextInput 自体のスタイル \n\n 例 ：\n { "padding": 20, "borderRadius": 50 }',
+    },
   },
 } satisfies Meta<typeof InputStoryComponent>;
 
@@ -101,15 +104,11 @@ export const LabelAndPlaceholder: Story = {
   },
 };
 
-export const RequiredAndError: Story = {
+export const Required: Story = {
   args: {
     label: 'ラベル テキスト',
-    errorText: {
-      type: 'dummyName',
-      message: '必須項目です。',
-    },
     placeholder: 'プレイスホルダー テキスト',
-    rules: { required: '必須項目です。' },
+    rules: { required: '必須項目です' },
   },
   parameters: {
     docs: {
@@ -119,14 +118,42 @@ export const RequiredAndError: Story = {
           autoCapitalize='words'
           control={control}
           errorText={errors.dummyName}
-          // errorText={{
-          //  type: 'dummyName',
-          //  message: '必須項目です。',
-          // }}
           label='ラベル テキスト'
           name='dummyName'
           placeholder='プレイスホルダー テキスト'
-          rules={{ required: '必須項目です。' }}
+          rules={{ required: '必須項目です' }}
+        />
+        `,
+      },
+    },
+  },
+};
+
+export const ErrorOccurred: Story = {
+  args: {
+    label: 'ラベル テキスト',
+    errorText: {
+      type: 'dummyName',
+      message: '必須項目です',
+    },
+    placeholder: 'プレイスホルダー テキスト',
+    rules: { required: '必須項目です' },
+  },
+  parameters: {
+    docs: {
+      source: {
+        code: `
+        <Input
+          autoCapitalize='words'
+          control={control}
+          errorText={{
+           type: 'dummyName',
+           message: '必須項目です',
+          }}
+          label='ラベル テキスト'
+          name='dummyName'
+          placeholder='プレイスホルダー テキスト'
+          rules={{ required: '必須項目です' }}
         />
         `,
       },
@@ -136,7 +163,6 @@ export const RequiredAndError: Story = {
 
 export const Disabled: Story = {
   args: {
-    label: 'ラベル テキスト',
     disabled: true,
   },
   parameters: {
@@ -146,88 +172,7 @@ export const Disabled: Story = {
         <Input
           control={control}
           disabled
-          label='ラベル テキスト'
           name='dummyName'
-        />
-        `,
-      },
-    },
-  },
-};
-
-export const ForEmailInput: Story = {
-  args: {
-    autoCapitalize: 'none',
-    label: 'メール入力 項目',
-    placeholder: 'dummy@example.com',
-    keyboardType: 'ascii-capable',
-    rules: {
-      pattern: {
-        message: 'Emailアドレスを入力してください.',
-        value: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$/,
-      },
-      required: '必須項目です。',
-    },
-  },
-  parameters: {
-    docs: {
-      source: {
-        code: `
-        <Input
-          autoCapitalize='none'
-          control={control}
-          errorText={errors.dummyName}
-          keyboardType='ascii-capable'
-          label='メール入力 項目'
-          name='dummyName'
-          placeholder='dummy@example.com'
-          rules={{
-            pattern: {
-              message: 'Emailアドレスを入力してください.',
-              value: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$/,
-            },
-            required: '必須項目です。',
-          }}
-        />
-        `,
-      },
-    },
-  },
-};
-
-export const ForPasswordInput: Story = {
-  args: {
-    autoCapitalize: 'none',
-    label: 'パスワード入力 項目',
-    placeholder: 'パスワード は6文字以上で入力してください。',
-    rules: {
-      minLength: {
-        message: 'Password は6文字以上で入力してください。',
-        value: 6,
-      },
-      required: '必須項目です。',
-    },
-    secureTextEntry: true,
-  },
-  parameters: {
-    docs: {
-      source: {
-        code: `
-        <Input
-          autoCapitalize='none'
-          control={control}
-          errorText={errors.dummyName}
-          label='パスワード入力 項目'
-          name='dummyName'
-          placeholder='6文字以上のパスワードを入力してください'
-          rules={{
-            minLength: {
-              message: 'Password は6文字以上で入力してください。',
-              value: 6,
-            },
-            required: '必須項目です。',
-          }}
-          secureTextEntry
         />
         `,
       },

@@ -138,7 +138,7 @@ const CheckBoxCustom = <TFieldValues extends FieldValues>({
   };
 
   return (
-    <View style={[styles.container, containerStyle]}>
+    <View style={containerStyle}>
       <Label {...{ label, rules }} />
       <View style={[styles.optionList, optionListStyle]}>
         {options.map((option) => {
@@ -172,9 +172,6 @@ const CheckBoxCustom = <TFieldValues extends FieldValues>({
 };
 
 const styles = StyleSheet.create({
-  container: {
-    marginBottom: 16,
-  },
   optionList: {
     rowGap: 12,
   },

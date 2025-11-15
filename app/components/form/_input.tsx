@@ -35,7 +35,7 @@ const Input = <TFieldValues extends FieldValues>({
   );
 
   return (
-    <View style={[styles.container, containerStyle]}>
+    <View style={containerStyle}>
       <Label {...{ label, rules }} />
       <TextInput
         {...textInputProps}
@@ -52,9 +52,6 @@ const Input = <TFieldValues extends FieldValues>({
 };
 
 const styles = StyleSheet.create({
-  container: {
-    marginBottom: 16,
-  },
   input: {
     backgroundColor: '#fff',
     borderColor: '#d6d6d6',

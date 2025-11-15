@@ -62,7 +62,7 @@ const SelectBox = <TFieldValues extends FieldValues>({
   };
 
   return (
-    <View style={[styles.container, containerStyle]}>
+    <View style={containerStyle}>
       <Label {...{ label, rules }} />
 
       <Pressable accessibilityRole='button' onPress={openPicker} style={triggerStyles}>
@@ -113,9 +113,6 @@ const styles = StyleSheet.create({
   selectPlaceholderText: {
     color: '#9e9e9e',
     fontSize: 14,
-  },
-  container: {
-    marginBottom: 16,
   },
   inputError: {
     borderColor: '#e53935',

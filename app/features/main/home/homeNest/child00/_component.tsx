@@ -35,7 +35,6 @@ const resultStyles = StyleSheet.create({
     borderColor: '#d6d6d6',
     borderRadius: 8,
     borderWidth: 1,
-    marginTop: 24,
     padding: 16,
     rowGap: 8,
   },
