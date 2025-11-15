@@ -13,3 +13,14 @@ $ yarn web
 Open <a href="http://localhost:8081" target="_blank">http://localhost:8081</a> in your browser<br>
 <br>
 
+
+---
+
+## Storybook
+
+```
+yarn install
+yarn storybook
+```
+
+Then open http://localhost:6006 to browse the stories in your browser.
