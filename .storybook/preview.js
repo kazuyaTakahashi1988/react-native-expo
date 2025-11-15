@@ -1,9 +1,8 @@
 import React from 'react';
-import type { Decorator, Preview } from '@storybook/react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { View } from 'react-native';
 
-const withSafeArea: Decorator = (Story) => (
+const withSafeArea = (Story) => (
   <SafeAreaProvider>
     <View style={{ padding: 16 }}>
       <Story />
@@ -11,7 +10,7 @@ const withSafeArea: Decorator = (Story) => (
   </SafeAreaProvider>
 );
 
-const preview: Preview = {
+const preview = {
   parameters: {
     layout: 'fullscreen',
     controls: {

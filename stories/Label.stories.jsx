@@ -1,10 +1,9 @@
-import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
 import { View } from 'react-native';
 
 import Label from '../app/components/form/_label';
 
-const meta: Meta<typeof Label> = {
+const meta = {
   title: 'Form/Label',
   component: Label,
   parameters: {
@@ -24,11 +23,9 @@ const meta: Meta<typeof Label> = {
 
 export default meta;
 
-type Story = StoryObj<typeof Label>;
+export const Default = {};
 
-export const Default: Story = {};
-
-export const Required: Story = {
+export const Required = {
   args: {
     label: 'メールアドレス',
     rules: { required: true },

@@ -2,7 +2,7 @@ import type { StorybookConfig } from '@storybook/react-webpack5';
 import path from 'path';
 
 const config: StorybookConfig = {
-  stories: ['../stories/**/*.mdx', '../stories/**/*.stories.@(ts|tsx)'],
+  stories: ['../stories/**/*.stories.@(js|jsx|ts|tsx)'],
   addons: ['@storybook/addon-links', '@storybook/addon-essentials'],
   framework: {
     name: '@storybook/react-webpack5',
@@ -24,7 +24,7 @@ const config: StorybookConfig = {
       '@': path.resolve(__dirname, '../app'),
     };
 
-    config.resolve.extensions = [...(config.resolve.extensions ?? []), '.ts', '.tsx'];
+    config.resolve.extensions = [...(config.resolve.extensions ?? []), '.ts', '.tsx', '.js', '.jsx'];
 
     config.module?.rules?.push({
       test: /\.(png|jpg|jpeg|gif|bmp|ttf|otf)$/,

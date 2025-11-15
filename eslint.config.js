@@ -218,6 +218,6 @@ export default [
   },
   prettier, // ←prettierはこの位置（最後尾近く）に置いておくこと
   {
-    ignores: ['node_modules', '.expo', 'ios', 'android', 'eslint.config.js'],
+    ignores: ['node_modules', '.expo', 'ios', 'android', 'eslint.config.js', '.storybook/**/*.{js,ts}'],
   },
 ];
