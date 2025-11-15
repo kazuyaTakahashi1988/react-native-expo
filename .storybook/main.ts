@@ -1,3 +1,5 @@
+import { resolve } from 'node:path';
+
 import { mergeConfig } from 'vite';
 
 import type { TransformOptions } from '@babel/core';
@@ -24,7 +26,10 @@ const config: StorybookConfig = {
     mergeConfig(config, {
       resolve: {
         alias: {
-          'react-native-reanimated': 'react-native-reanimated/mock',
+          'react-native-reanimated': resolve(
+            __dirname,
+            '../node_modules/react-native-reanimated/mock.js',
+          ),
         },
       },
     }),
