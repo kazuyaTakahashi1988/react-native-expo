@@ -67,6 +67,7 @@ const Child00Screen: React.FC = () => {
       {/* Name インプット項目 */}
       <Input
         autoCapitalize='words'
+        containerStyle={styles.container}
         control={control}
         errorText={errors.name}
         label='Name インプット項目'
@@ -190,6 +191,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 12,
+  },
+  container: {
+    marginBottom: 16,
   },
 });
 
