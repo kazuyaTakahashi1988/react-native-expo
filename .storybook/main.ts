@@ -1,9 +1,12 @@
-import { resolve } from 'node:path';
+import { dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 import { mergeConfig } from 'vite';
 
 import type { TransformOptions } from '@babel/core';
 import type { StorybookConfig } from '@storybook/react-native-web-vite';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const config: StorybookConfig = {
   stories: ['../stories/**/*.mdx', '../stories/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
