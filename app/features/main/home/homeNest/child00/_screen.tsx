@@ -34,7 +34,6 @@ const Child00Screen: React.FC = () => {
   } = useForm<TypeFormValues>({
     defaultValues: {
       name: '',
-      email: '',
       subscribe: [],
       subscribeCustom: [],
       plan: '',
@@ -74,24 +73,6 @@ const Child00Screen: React.FC = () => {
         name='name'
         placeholder='Jane Doe'
         rules={{ required: 'Name は必須です。' }}
-      />
-
-      {/* Email インプット項目 */}
-      <Input
-        autoCapitalize='none'
-        control={control}
-        errorText={errors.email}
-        keyboardType='ascii-capable'
-        label='Email インプット項目'
-        name='email'
-        placeholder='jane@example.com'
-        rules={{
-          pattern: {
-            message: 'Emailアドレスを入力してください.',
-            value: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/,
-          },
-          required: 'Email は必須です。',
-        }}
       />
 
       {/* Subscribe チェックボックス項目 */}

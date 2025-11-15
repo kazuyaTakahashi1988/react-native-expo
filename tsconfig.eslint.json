@@ -1,4 +1,14 @@
 {
   "extends": "./tsconfig.json",
-  "include": ["app/**/*.ts", "app/**/*.tsx", "index.ts"]
+  "include": [
+    "app/**/*.ts",
+    "app/**/*.tsx",
+    "index.ts",
+    ".storybook/**/*.ts",
+    ".storybook/**/*.tsx",
+    "stories/**/*.ts",
+    "stories/**/*.tsx",
+    "vitest.config.ts",
+    "vitest.shims.d.ts"
+  ]
 }
