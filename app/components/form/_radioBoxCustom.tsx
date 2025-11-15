@@ -130,7 +130,7 @@ const RadioBoxCustom = <TFieldValues extends FieldValues>({
   const knobColor = knobColorProp ?? '#ffffff';
 
   return (
-    <View style={[styles.container, containerStyle]}>
+    <View style={containerStyle}>
       <Label {...{ label, rules }} />
       <View style={[styles.optionList, optionListStyle]}>
         {options.map((option) => {
@@ -164,9 +164,6 @@ const RadioBoxCustom = <TFieldValues extends FieldValues>({
 };
 
 const styles = StyleSheet.create({
-  container: {
-    marginBottom: 16,
-  },
   optionList: {
     rowGap: 12,
   },
