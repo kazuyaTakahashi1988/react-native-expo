@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useController } from 'react-hook-form';
 import { StyleSheet, TextInput, View } from 'react-native';
 
@@ -11,23 +11,86 @@ import type { FieldValues } from 'react-hook-form';
 /* -----------------------------------------------
  * インプット項目
  * ----------------------------------------------- */
+const Input = <TFieldValues extends FieldValues>(props: TypeInput<TFieldValues>) => {
+  if (props.control != null && props.name != null) {
+    return <ControlledInput {...(props as ControlledInputProps<TFieldValues>)} />;
+  }
 
-const Input = <TFieldValues extends FieldValues>({
-  containerStyle,
+  return <UncontrolledInput {...props} />;
+};
+
+const ControlledInput = <TFieldValues extends FieldValues>({
   control,
-  disabled = false,
-  errorText,
-  label,
   name,
   rules,
-  style,
-  ...textInputProps
-}: TypeInput<TFieldValues>) => {
+  ...restProps
+}: ControlledInputProps<TFieldValues>) => {
   const {
     field: { onBlur, onChange, value },
   } = useController({ control, name, rules });
 
   const inputValue = typeof value === 'string' ? value : '';
+
+  return (
+    <InputBase
+      {...restProps}
+      onBlur={onBlur}
+      onChangeText={onChange}
+      rules={rules}
+      value={inputValue}
+    />
+  );
+};
+
+const UncontrolledInput = <TFieldValues extends FieldValues>(props: TypeInput<TFieldValues>) => {
+  const sanitizedProps = props as Omit<TypeInput<TFieldValues>, 'control' | 'name'>;
+  const {
+    containerStyle,
+    disabled = false,
+    errorText,
+    label,
+    rules,
+    style,
+    ...textInputProps
+  } = sanitizedProps;
+
+  const initialValue =
+    typeof textInputProps.defaultValue === 'string' ? textInputProps.defaultValue : '';
+  const [value, setValue] = useState(initialValue);
+
+  useEffect(() => {
+    if (typeof textInputProps.defaultValue === 'string') {
+      setValue(textInputProps.defaultValue);
+    }
+  }, [textInputProps.defaultValue]);
+
+  return (
+    <InputBase
+      containerStyle={containerStyle}
+      disabled={disabled}
+      errorText={errorText}
+      label={label}
+      onChangeText={setValue}
+      rules={rules}
+      style={style}
+      value={value}
+      {...textInputProps}
+    />
+  );
+};
+
+const InputBase = <TFieldValues extends FieldValues>({
+  containerStyle,
+  disabled = false,
+  errorText,
+  label,
+  rules,
+  style,
+  value,
+  onBlur,
+  onChangeText,
+  ...textInputProps
+}: InputBaseProps<TFieldValues>) => {
   const hasError = errorText?.message != null;
   const trackAnimatedStyle = useMemo(
     () => [hasError ? styles.inputError : null, disabled ? styles.inputDisabled : null],
@@ -41,14 +104,26 @@ const Input = <TFieldValues extends FieldValues>({
         {...textInputProps}
         editable={!disabled}
         onBlur={onBlur}
-        onChangeText={onChange}
+        onChangeText={onChangeText}
         placeholderTextColor={'#9e9e9e'}
         style={[styles.input, trackAnimatedStyle, style]}
-        value={inputValue}
+        value={value}
       />
       <ErrorText {...errorText} />
     </View>
   );
+};
+
+type ControlledInputProps<TFieldValues extends FieldValues> = TypeInput<TFieldValues> &
+  Required<Pick<TypeInput<TFieldValues>, 'control' | 'name'>>;
+
+type InputBaseProps<TFieldValues extends FieldValues> = Omit<
+  TypeInput<TFieldValues>,
+  'control' | 'name'
+> & {
+  value: string;
+  onBlur?: () => void;
+  onChangeText: (text: string) => void;
 };
 
 const styles = StyleSheet.create({
