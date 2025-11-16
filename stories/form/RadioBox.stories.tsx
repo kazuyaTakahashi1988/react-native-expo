@@ -1,6 +1,7 @@
 import { useForm } from 'react-hook-form';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 
+import { styles } from '../../.storybook/styles';
 import RadioBox from '../../app/components/form/_radioBox';
 
 import type { TypeRadioBox } from '../../app/lib/types/typeComponents';
@@ -61,15 +62,6 @@ const meta = {
     },
   },
 } satisfies Meta<typeof RadioBoxStoryComponent>;
-
-const styles = StyleSheet.create({
-  container: {
-    alignItems: 'stretch',
-    backgroundColor: '#f5f5f5',
-    flex: 1,
-    padding: 16,
-  },
-});
 
 export default meta;
 

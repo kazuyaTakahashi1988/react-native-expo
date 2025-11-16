@@ -1,6 +1,7 @@
 import { useForm } from 'react-hook-form';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 
+import { styles } from '../../.storybook/styles';
 import Input from '../../app/components/form/_input';
 
 import type { TypeInput } from '../../app/lib/types/typeComponents';
@@ -47,15 +48,6 @@ const meta = {
     },
   },
 } satisfies Meta<typeof InputStoryComponent>;
-
-const styles = StyleSheet.create({
-  container: {
-    alignItems: 'stretch',
-    backgroundColor: '#f5f5f5',
-    flex: 1,
-    padding: 16,
-  },
-});
 
 export default meta;
 

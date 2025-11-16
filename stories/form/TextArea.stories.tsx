@@ -1,6 +1,7 @@
 import { useForm } from 'react-hook-form';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 
+import { styles } from '../../.storybook/styles';
 import TextArea from '../../app/components/form/_textarea';
 
 import type { TypeTextArea } from '../../app/lib/types/typeComponents';
@@ -32,58 +33,128 @@ const meta = {
   ],
   tags: ['autodocs'],
   argTypes: {
-    containerStyle: { control: { type: 'object' } },
-    style: { control: { type: 'object' } },
+    containerStyle: {
+      control: { type: 'object' },
+      description:
+        'TextArea を包むコンテナ（View）スタイル \n\n 例 ：\n { "padding": 20, "backgroundColor": "red" }',
+    },
+    style: {
+      control: { type: 'object' },
+      description: 'TextInput 自体のスタイル \n\n 例 ：\n { "padding": 20, "borderRadius": 50 }',
+    },
+    disabled: {
+      control: { type: 'boolean' },
+      description: '活性・非活性の制御',
+    },
   },
 } satisfies Meta<typeof TextAreaStoryComponent>;
-
-const styles = StyleSheet.create({
-  container: {
-    alignItems: 'stretch',
-    backgroundColor: '#f5f5f5',
-    flex: 1,
-    padding: 16,
-  },
-});
 
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  args: {
-    label: 'お問い合わせ内容',
+  args: {},
+  parameters: {
+    docs: {
+      source: {
+        code: `
+        type FormValues = { description: string };
+
+        const { control, formState: { errors } } = useForm<FormValues>({
+          defaultValues: {
+            description: '',
+          },
+        });
+
+        <TextArea control={control} name='description' />
+        `,
+      },
+    },
   },
 };
 
 export const LabelAndPlaceholder: Story = {
   args: {
-    label: 'お問い合わせ内容',
+    label: 'ご相談の内容',
     placeholder: 'ご要望やご質問をご記入ください',
+  },
+  parameters: {
+    docs: {
+      source: {
+        code: `
+        <TextArea
+          control={control}
+          label='ご相談の内容'
+          name='description'
+          placeholder='ご要望やご質問をご記入ください'
+        />
+        `,
+      },
+    },
   },
 };
 
 export const Required: Story = {
   args: {
-    label: 'お問い合わせ内容',
+    label: 'ご相談の内容',
     placeholder: 'ご要望やご質問をご記入ください',
     rules: { required: '必須項目です' },
+  },
+  parameters: {
+    docs: {
+      source: {
+        code: `
+        <TextArea
+          control={control}
+          errorText={errors.description?.message}
+          label='ご相談の内容'
+          name='description'
+          placeholder='ご要望やご質問をご記入ください'
+          rules={{ required: '必須項目です' }}
+        />
+        `,
+      },
+    },
   },
 };
 
 export const ErrorOccurred: Story = {
   args: {
-    label: 'お問い合わせ内容',
+    label: 'ご相談の内容',
     placeholder: 'ご要望やご質問をご記入ください',
     rules: { required: '必須項目です' },
     errorText: '必須項目です',
+  },
+  parameters: {
+    docs: {
+      source: {
+        code: `
+        <TextArea
+          control={control}
+          errorText='必須項目です'
+          label='ご相談の内容'
+          name='description'
+          placeholder='ご要望やご質問をご記入ください'
+          rules={{ required: '必須項目です' }}
+        />
+        `,
+      },
+    },
   },
 };
 
 export const Disabled: Story = {
   args: {
     disabled: true,
-    label: '入力不可',
-    placeholder: '入力できません',
+  },
+  parameters: {
+    docs: {
+      source: {
+        code: `
+        <TextArea control={control} disabled name='description' />
+        `,
+      },
+    },
   },
 };
