@@ -12,19 +12,31 @@ export const ResultArea: React.FC<TypeResultArea> = (submittedValues) => {
   return (
     <View style={resultStyles.result}>
       <Text style={resultStyles.resultTitle}>Submitted values</Text>
-      <Text>dummyName: {dummyName}</Text>
       <Text>
-        genres: {'\n'}
-        {genres && genres.map((item) => `${item}\n`)}
+        ラベル テキスト: {'\n'}[ {dummyName} ]
       </Text>
       <Text>
-        inquiry: {'\n'}
-        {inquiry && inquiry.map((item) => `${item}\n`)}
+        よく視聴するジャンル:
+        {'\n'}[ {genres && genres.map((item) => `\n・${item}`)}
+        {genres && '\n'} ]
       </Text>
-      <Text>payment: {payment}</Text>
-      <Text>theme: {theme}</Text>
-      <Text>address: {address}</Text>
-      <Text>description: {description}</Text>
+      <Text>
+        お問い合わせ方法:
+        {'\n'}[ {inquiry && inquiry.map((item) => `\n・${item}`)}
+        {inquiry && '\n'} ]
+      </Text>
+      <Text>
+        お支払い方法: {'\n'}[ {payment} ]
+      </Text>
+      <Text>
+        テーマ色の選択: {'\n'}[ {theme} ]
+      </Text>
+      <Text>
+        都道府県: {'\n'}[ {address} ]
+      </Text>
+      <Text>
+        ご相談の内容: {'\n'}[ {description} ]
+      </Text>
     </View>
   );
 };

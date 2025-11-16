@@ -150,9 +150,9 @@ const Child00Screen: React.FC = () => {
         label='都道府県'
         name='address'
         options={[
-          { label: 'セレクトラベル-A', value: 'SelectValue-A' },
-          { label: 'セレクトラベル-B', value: 'SelectValue-B' },
-          { label: 'セレクトラベル-C', value: 'SelectValue-C' },
+          { label: '東京都', value: 'tokyo' },
+          { label: '大阪府', value: 'osaka' },
+          { label: '愛知県', value: 'aichi' },
         ]}
         placeholder='お住まいの地域を選択'
         rules={{ required: '必須項目です' }}
