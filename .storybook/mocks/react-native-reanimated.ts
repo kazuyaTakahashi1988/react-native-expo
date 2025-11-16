@@ -72,7 +72,7 @@ class SharedValueImpl<T> {
     if (this.animationHandle == null) {
       return;
     }
-    cancelFrame(this.animationHandle);
+    cancelFrame(Number(this.animationHandle));
     this.animationHandle = undefined;
   }
 
@@ -92,7 +92,7 @@ class SharedValueImpl<T> {
       const elapsed = time - startTime;
       const progress = duration === 0 ? 1 : clamp(elapsed / duration, 0, 1);
       const eased = clamp(easing(progress), 0, 1);
-      const nextValue = lerp(eased, fromValue, animation.toValue);
+      const nextValue = lerp(eased, fromValue, Number(animation.toValue));
       this.internalValue = nextValue as unknown as T;
       this.emit();
       if (progress < 1) {
@@ -122,7 +122,7 @@ const requestFrame: (callback: FrameRequestCallback) => FrameHandle =
         }, 16);
       };
 
-const cancelFrame: (handle: FrameHandle) => void =
+const cancelFrame: (handle: number) => void =
   typeof globalThis.cancelAnimationFrame === 'function'
     ? globalThis.cancelAnimationFrame.bind(globalThis)
     : (handle: FrameHandle) => {
@@ -155,9 +155,7 @@ const hexToRgb = (hex: string) => {
 };
 
 const rgbToHex = (r: number, g: number, b: number) =>
-  `#${[r, g, b]
-    .map((component) => component.toString(16).padStart(2, '0'))
-    .join('')}`;
+  `#${[r, g, b].map((component) => component.toString(16).padStart(2, '0')).join('')}`;
 
 export type SharedValue<T> = { value: T };
 
@@ -218,14 +216,18 @@ export const useAnimatedStyle = <T>(factory: () => T, deps?: DependencyList): T 
   return collection.computed;
 };
 
-export const withTiming = <T>(toValue: T, config: WithTimingConfig = {}, callback?: (finished: boolean) => void): T =>
+export const withTiming = <T>(
+  toValue: T,
+  config: WithTimingConfig = {},
+  callback?: (finished: boolean) => void,
+): T =>
   ({
     __mockAnimationType: 'timing',
     toValue,
     duration: config.duration ?? 300,
     easing: config.easing,
     callback,
-  } as TimingAnimation<T> as unknown as T);
+  }) as TimingAnimation<T> as unknown as T;
 
 export const interpolate = (
   value: number,
