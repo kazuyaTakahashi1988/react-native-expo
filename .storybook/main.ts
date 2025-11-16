@@ -33,7 +33,7 @@ const config: StorybookConfig = {
             find: /^react-native-reanimated$/,
             replacement: resolve(
               __dirname,
-              '../node_modules/react-native-reanimated/mock.js',
+              '../node_modules/react-native-reanimated/lib/module/mock.js',
             ),
           },
         ],
