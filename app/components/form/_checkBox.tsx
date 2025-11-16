@@ -28,7 +28,7 @@ const CheckBox = <TFieldValues extends FieldValues>({
   } = useController({ control, name, rules });
 
   const selectedValues = Array.isArray(value) ? (value as string[]) : [];
-  const hasError = errorText?.message != null;
+  const hasError = Boolean(errorText);
 
   const handleToggle = (optionValue: string) => {
     if (selectedValues.includes(optionValue)) {
@@ -73,7 +73,7 @@ const CheckBox = <TFieldValues extends FieldValues>({
           );
         })}
       </View>
-      <ErrorText {...errorText} />
+      <ErrorText errorText={errorText} />
     </View>
   );
 };

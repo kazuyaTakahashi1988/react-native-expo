@@ -123,7 +123,7 @@ const RadioBoxCustom = <TFieldValues extends FieldValues>({
 
   const selectedValue = useMemo(() => (typeof value === 'string' ? value : ''), [value]);
 
-  const hasError = errorText?.message != null;
+  const hasError = Boolean(errorText);
 
   const activeColor = activeColorProp ?? '#007aff';
   const inactiveColor = inactiveColorProp ?? '#d1d5db';
@@ -158,7 +158,7 @@ const RadioBoxCustom = <TFieldValues extends FieldValues>({
           );
         })}
       </View>
-      <ErrorText {...errorText} />
+      <ErrorText errorText={errorText} />
     </View>
   );
 };

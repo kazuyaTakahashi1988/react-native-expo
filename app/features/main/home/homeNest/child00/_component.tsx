@@ -7,24 +7,24 @@ import type { TypeResultArea } from './_type';
  * ----------------------------------------------- */
 
 export const ResultArea: React.FC<TypeResultArea> = (submittedValues) => {
-  const { name, subscribe, plan, country, note, subscribeCustom, planCustom } = submittedValues;
+  const { dummyName, genres, inquiry, payment, theme, address, description } = submittedValues;
 
   return (
     <View style={resultStyles.result}>
       <Text style={resultStyles.resultTitle}>Submitted values</Text>
-      <Text>Name: {name}</Text>
+      <Text>dummyName: {dummyName}</Text>
       <Text>
-        Subscribe: {'\n'}
-        {subscribe && subscribe.map((item) => `${item}\n`)}
+        genres: {'\n'}
+        {genres && genres.map((item) => `${item}\n`)}
       </Text>
       <Text>
-        Subscribe Custom: {'\n'}
-        {subscribeCustom && subscribeCustom.map((item) => `${item}\n`)}
+        inquiry: {'\n'}
+        {inquiry && inquiry.map((item) => `${item}\n`)}
       </Text>
-      <Text>Plan: {plan}</Text>
-      <Text>Plan Custom: {planCustom}</Text>
-      <Text>Country: {country}</Text>
-      <Text>note: {note}</Text>
+      <Text>payment: {payment}</Text>
+      <Text>theme: {theme}</Text>
+      <Text>address: {address}</Text>
+      <Text>description: {description}</Text>
     </View>
   );
 };

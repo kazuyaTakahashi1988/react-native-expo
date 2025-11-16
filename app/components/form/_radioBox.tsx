@@ -28,7 +28,7 @@ const RadioBox = <TFieldValues extends FieldValues>({
   } = useController({ control, name, rules });
 
   const selectedValue = typeof value === 'string' ? value : '';
-  const hasError = errorText?.message != null;
+  const hasError = Boolean(errorText);
 
   const optionLabelStyle = (disabled?: boolean) => {
     return disabled === true ? styles.radioBoxTextDisabled : null;
@@ -75,7 +75,7 @@ const RadioBox = <TFieldValues extends FieldValues>({
           );
         })}
       </View>
-      <ErrorText {...errorText} />
+      <ErrorText errorText={errorText} />
     </View>
   );
 };

@@ -20,6 +20,7 @@ import type { TypeFormValues } from './_type';
  * Child00 画面
  * ----------------------------------------------- */
 
+// eslint-disable-next-line complexity
 const Child00Screen: React.FC = () => {
   const [submittedValues, setSubmittedValues] = useState<TypeFormValues | null>(null);
 
@@ -33,13 +34,13 @@ const Child00Screen: React.FC = () => {
     reset,
   } = useForm<TypeFormValues>({
     defaultValues: {
-      name: '',
-      subscribe: [],
-      subscribeCustom: [],
-      plan: '',
-      planCustom: '',
-      country: '',
-      note: '',
+      dummyName: '',
+      genres: [],
+      inquiry: [],
+      payment: '',
+      theme: '',
+      address: '',
+      description: '',
     },
   });
 
@@ -64,112 +65,113 @@ const Child00Screen: React.FC = () => {
     <Layout>
       <Text style={styles.title}>react-hook-form example</Text>
 
-      {/* Name インプット項目 */}
+      {/* インプット項目 */}
       <Input
         autoCapitalize='words'
         containerStyle={styles.container}
         control={control}
-        errorText={errors.name}
-        label='Name インプット項目'
-        name='name'
-        placeholder='Jane Doe'
-        rules={{ required: 'Name は必須です。' }}
+        errorText={errors.dummyName?.message}
+        label='ラベル テキスト'
+        name='dummyName'
+        placeholder='プレイスホルダー テキスト'
+        rules={{ required: '必須項目です' }}
       />
 
-      {/* Subscribe チェックボックス項目 */}
+      {/* チェックボックス項目 */}
       <CheckBox
         containerStyle={styles.container}
         control={control}
-        errorText={errors.subscribe}
-        label='Subscribe チェックボックス項目'
-        name='subscribe'
+        errorText={errors.genres?.message}
+        label='よく視聴するジャンル'
+        name='genres'
         options={[
-          { label: 'チェックラベル-A', value: 'CheckValue-A' },
-          { label: 'チェックラベル-B', value: 'CheckValue-B' },
-          { label: 'チェックラベル-C', value: 'CheckValue-C' },
+          { label: 'アクション', value: 'action' },
+          { label: 'コメディ', value: 'comedy' },
+          { label: 'ドラマ', value: 'drama' },
         ]}
         rules={{
           validate: (value) => value.length >= 2 || '2つ以上選択してください。',
-          required: 'チェックボックス は必須です。',
+          required: '必須項目です',
         }}
       />
 
-      {/* Subscribe Custom チェックボックスカスタム項目 */}
+      {/* チェックボックスカスタム項目 */}
       <CheckBoxCustom
         activeColor='#22c55e'
         containerStyle={styles.container}
         control={control}
-        errorText={errors.subscribeCustom}
-        label='Subscribe Custom チェックボックスカスタム項目'
-        name='subscribeCustom'
+        errorText={errors.inquiry?.message}
+        label='お問い合わせ方法'
+        name='inquiry'
         options={[
-          { label: 'チェックカスタム-A', value: 'CheckCustom-A' },
-          { label: 'チェックカスタム-B', value: 'CheckCustom-B' },
-          { label: 'チェックカスタム-C', value: 'CheckCustom-C' },
+          { label: 'メール', value: 'email' },
+          { label: 'SMS', value: 'sms' },
+          { label: 'アプリ通知', value: 'push' },
         ]}
-        rules={{ required: 'チェックボックスカスタム は必須です。' }}
+        rules={{ required: '必須項目です' }}
       />
 
-      {/* Plan ラヂオボックス項目 */}
+      {/* ラヂオボックス項目 */}
       <RadioBox
         containerStyle={styles.container}
         control={control}
-        errorText={errors.plan}
-        label='Plan ラヂオボックス項目'
-        name='plan'
+        errorText={errors.payment?.message}
+        label='お支払い方法'
+        name='payment'
         options={[
-          { label: 'ラヂオラベル-A', value: 'RadioValue-A' },
-          { label: 'ラヂオラベル-B', value: 'RadioValue-B' },
-          { label: 'ラヂオラベル-C', value: 'RadioValue-C' },
+          { label: 'クレジットカード', value: 'card' },
+          { label: '銀行振込', value: 'bank' },
+          { label: '電子マネー', value: 'wallet' },
         ]}
-        rules={{ required: 'ラヂオボックス は必須です。' }}
+        rules={{ required: '必須項目です' }}
       />
 
-      {/* Plan Custom ラヂオボックスカスタム項目 */}
+      {/* ラヂオボックスカスタム項目 */}
       <RadioBoxCustom
         activeColor='#6366f1'
         containerStyle={styles.container}
         control={control}
-        errorText={errors.planCustom}
-        label='Plan Custom ラヂオボックスカスタム項目'
-        name='planCustom'
+        errorText={errors.theme?.message}
+        label='テーマ色の選択'
+        name='theme'
         options={[
-          { label: 'ラヂオカスタム-A', value: 'RadioCustom-A' },
-          { label: 'ラヂオカスタム-B', value: 'RadioCustom-B' },
-          { label: 'ラヂオカスタム-C', value: 'RadioCustom-C' },
+          { label: 'シアン', value: 'cyan' },
+          { label: 'マゼンタ', value: 'magenta' },
+          { label: 'イエロー', value: 'yellow' },
         ]}
-        rules={{ required: 'ラヂオボックスカスタム は必須です。' }}
+        rules={{ required: '必須項目です' }}
       />
 
-      {/* Country セレクトボックス項目 */}
+      {/* セレクトボックス項目 */}
       <SelectBox
         containerStyle={styles.container}
         control={control}
-        errorText={errors.country}
-        label='Country セレクトボックス項目'
-        name='country'
+        errorText={errors.address?.message}
+        label='都道府県'
+        name='address'
         options={[
           { label: 'セレクトラベル-A', value: 'SelectValue-A' },
           { label: 'セレクトラベル-B', value: 'SelectValue-B' },
           { label: 'セレクトラベル-C', value: 'SelectValue-C' },
         ]}
-        rules={{ required: 'セレクトボックス は必須です。' }}
+        placeholder='お住まいの地域を選択'
+        rules={{ required: '必須項目です' }}
       />
 
-      {/* Note テキストエリア項目 */}
+      {/* テキストエリア項目 */}
       <TextArea
         containerStyle={styles.container}
         control={control}
-        errorText={errors.note}
-        label='Note テキストエリア項目'
-        name='note'
-        placeholder='メモや補足を入力してください'
+        errorText={errors.description?.message}
+        label='ご相談の内容'
+        name='description'
+        placeholder='ご要望やご質問をご記入ください'
         rules={{
           maxLength: {
             value: 200,
             message: '200文字以内で入力してください。',
           },
-          required: 'テキストエリア は必須です。',
+          required: '必須項目です',
         }}
       />
 

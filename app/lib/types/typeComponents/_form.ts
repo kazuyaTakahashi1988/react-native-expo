@@ -1,11 +1,4 @@
-import type {
-  Control,
-  FieldError,
-  FieldValues,
-  Merge,
-  Path,
-  RegisterOptions,
-} from 'react-hook-form';
+import type { Control, FieldValues, Path, RegisterOptions } from 'react-hook-form';
 import type { PressableProps, StyleProp, TextInputProps, TextStyle, ViewStyle } from 'react-native';
 import type { Item, PickerStyle } from 'react-native-picker-select';
 
@@ -30,7 +23,7 @@ type TypeToggleCustomBase<TFieldValues extends FieldValues> = {
   name: Path<TFieldValues>;
   options: TypeBoxOption[];
   rules?: RegisterOptions<TFieldValues, Path<TFieldValues>>;
-  errorText?: TypeErrorText | FieldError;
+  errorText?: TypeErrorText;
   containerStyle?: StyleProp<ViewStyle>;
   optionListStyle?: StyleProp<ViewStyle>;
   optionRowStyle?: StyleProp<ViewStyle>;
@@ -52,7 +45,7 @@ export type TypeCheckBox<TFieldValues extends FieldValues> = {
   name: Path<TFieldValues>;
   options: TypeBoxOption[];
   rules?: RegisterOptions<TFieldValues, Path<TFieldValues>>;
-  errorText?: TypeErrorText | FieldError;
+  errorText?: TypeErrorText;
   containerStyle?: StyleProp<ViewStyle>;
   optionListStyle?: StyleProp<ViewStyle>;
   optionRowStyle?: StyleProp<ViewStyle>;
@@ -83,7 +76,7 @@ export type TypeToggleCheckOption = {
 /*
  * type エラーテキスト
  */
-export type TypeErrorText = Merge<FieldError, (FieldError | undefined)[]>;
+export type TypeErrorText = string | undefined;
 
 /*
  * type インプット項目
@@ -94,7 +87,7 @@ export type TypeInput<TFieldValues extends FieldValues> = {
   disabled?: boolean;
   name: Path<TFieldValues>;
   rules?: RegisterOptions<TFieldValues, Path<TFieldValues>>;
-  errorText?: TypeErrorText | FieldError;
+  errorText?: TypeErrorText;
   containerStyle?: StyleProp<ViewStyle>;
   style?: StyleProp<TextStyle>;
 } & Omit<TextInputProps, 'onBlur' | 'onChangeText' | 'value' | 'style'>;
@@ -117,7 +110,7 @@ export type TypeRadioBox<TFieldValues extends FieldValues> = {
   name: Path<TFieldValues>;
   options: TypeBoxOption[];
   rules?: RegisterOptions<TFieldValues, Path<TFieldValues>>;
-  errorText?: TypeErrorText | FieldError;
+  errorText?: TypeErrorText;
   containerStyle?: StyleProp<ViewStyle>;
   optionListStyle?: StyleProp<ViewStyle>;
   optionRowStyle?: StyleProp<ViewStyle>;
@@ -159,7 +152,7 @@ export type TypeSelectBox<TFieldValues extends FieldValues> = {
   name: Path<TFieldValues>;
   options: TypeSelectBoxOption[];
   rules?: RegisterOptions<TFieldValues, Path<TFieldValues>>;
-  errorText?: TypeErrorText | FieldError;
+  errorText?: TypeErrorText;
   placeholder?: string;
   doneText?: string;
   containerStyle?: StyleProp<ViewStyle>;

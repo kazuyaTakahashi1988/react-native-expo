@@ -1,6 +1,6 @@
 import { View } from 'react-native';
-import { StyleSheet } from 'react-native';
 
+import { styles } from '../../.storybook/styles.ts';
 import Label from '../../app/components/form/_label.tsx';
 
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite';
@@ -18,10 +18,6 @@ const meta = {
   tags: ['autodocs'],
   args: {},
 } satisfies Meta<typeof Label>;
-
-const styles = StyleSheet.create({
-  container: { alignItems: 'flex-start', flex: 1 },
-});
 
 export default meta;
 

@@ -6,11 +6,11 @@ import type { TypeErrorText } from '../../lib/types/typeComponents';
  * エラーテキスト
  * ----------------------------------------------- */
 
-const ErrorText: React.FC<TypeErrorText> = (errorsType) => {
-  if (errorsType.message == null) {
+const ErrorText: React.FC<{ errorText?: TypeErrorText }> = ({ errorText }) => {
+  if (errorText == null) {
     return null;
   }
-  return <Text style={errorStyles.text}>{errorsType.message}</Text>;
+  return <Text style={errorStyles.text}>{errorText}</Text>;
 };
 const errorStyles = StyleSheet.create({
   text: {

@@ -2,28 +2,28 @@ import { useForm } from 'react-hook-form';
 import { View } from 'react-native';
 
 import { styles } from '../../.storybook/styles';
-import Input from '../../app/components/form/_input';
+import TextArea from '../../app/components/form/_textarea';
 
-import type { TypeInput } from '../../app/lib/types/typeComponents';
+import type { TypeTextArea } from '../../app/lib/types/typeComponents';
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite';
 
-type FormValues = { dummyName: string };
+type FormValues = { description: string };
 
-type InputStoryProps = Omit<TypeInput<FormValues>, 'control' | 'name'>;
+type TextAreaStoryProps = Omit<TypeTextArea<FormValues>, 'control' | 'name'>;
 
-const InputStoryComponent = (props: InputStoryProps) => {
+const TextAreaStoryComponent = (props: TextAreaStoryProps) => {
   const { control } = useForm<FormValues>({
     defaultValues: {
-      dummyName: '',
+      description: '',
     },
   });
 
-  return <Input<FormValues> {...props} control={control} name='dummyName' />;
+  return <TextArea<FormValues> {...props} control={control} name='description' />;
 };
 
 const meta = {
-  title: 'Form/Input',
-  component: InputStoryComponent,
+  title: 'Form/TextArea',
+  component: TextAreaStoryComponent,
   decorators: [
     (Story) => (
       <View style={styles.container}>
@@ -36,7 +36,7 @@ const meta = {
     containerStyle: {
       control: { type: 'object' },
       description:
-        'Input を包むコンテナ（View）スタイル \n\n 例 ：\n { "padding": 20, "backgroundColor": "red" }',
+        'TextArea を包むコンテナ（View）スタイル \n\n 例 ：\n { "padding": 20, "backgroundColor": "red" }',
     },
     style: {
       control: { type: 'object' },
@@ -47,7 +47,7 @@ const meta = {
       description: '活性・非活性の制御',
     },
   },
-} satisfies Meta<typeof InputStoryComponent>;
+} satisfies Meta<typeof TextAreaStoryComponent>;
 
 export default meta;
 
@@ -59,19 +59,15 @@ export const Default: Story = {
     docs: {
       source: {
         code: `
-        type FormValues = { dummyName: string };
+        type FormValues = { description: string };
 
         const { control, formState: { errors } } = useForm<FormValues>({
           defaultValues: {
-            dummyName: '',
+            description: '',
           },
         });
 
-        <Input
-          autoCapitalize='words'
-          control={control}
-          name='dummyName'
-        />
+        <TextArea control={control} name='description' />
         `,
       },
     },
@@ -80,19 +76,18 @@ export const Default: Story = {
 
 export const LabelAndPlaceholder: Story = {
   args: {
-    label: 'ラベル テキスト',
-    placeholder: 'プレイスホルダー テキスト',
+    label: 'ご相談の内容',
+    placeholder: 'ご要望やご質問をご記入ください',
   },
   parameters: {
     docs: {
       source: {
         code: `
-        <Input
-          autoCapitalize='words'
+        <TextArea
           control={control}
-          label='ラベル テキスト'
-          name='dummyName'
-          placeholder='プレイスホルダー テキスト'
+          label='ご相談の内容'
+          name='description'
+          placeholder='ご要望やご質問をご記入ください'
         />
         `,
       },
@@ -102,21 +97,20 @@ export const LabelAndPlaceholder: Story = {
 
 export const Required: Story = {
   args: {
-    label: 'ラベル テキスト',
-    placeholder: 'プレイスホルダー テキスト',
+    label: 'ご相談の内容',
+    placeholder: 'ご要望やご質問をご記入ください',
     rules: { required: '必須項目です' },
   },
   parameters: {
     docs: {
       source: {
         code: `
-        <Input
-          autoCapitalize='words'
+        <TextArea
           control={control}
-          errorText={errors.dummyName?.message}
-          label='ラベル テキスト'
-          name='dummyName'
-          placeholder='プレイスホルダー テキスト'
+          errorText={errors.description?.message}
+          label='ご相談の内容'
+          name='description'
+          placeholder='ご要望やご質問をご記入ください'
           rules={{ required: '必須項目です' }}
         />
         `,
@@ -127,22 +121,21 @@ export const Required: Story = {
 
 export const ErrorOccurred: Story = {
   args: {
-    label: 'ラベル テキスト',
-    errorText: '必須項目です',
-    placeholder: 'プレイスホルダー テキスト',
+    label: 'ご相談の内容',
+    placeholder: 'ご要望やご質問をご記入ください',
     rules: { required: '必須項目です' },
+    errorText: '必須項目です',
   },
   parameters: {
     docs: {
       source: {
         code: `
-        <Input
-          autoCapitalize='words'
+        <TextArea
           control={control}
           errorText='必須項目です'
-          label='ラベル テキスト'
-          name='dummyName'
-          placeholder='プレイスホルダー テキスト'
+          label='ご相談の内容'
+          name='description'
+          placeholder='ご要望やご質問をご記入ください'
           rules={{ required: '必須項目です' }}
         />
         `,
@@ -159,11 +152,7 @@ export const Disabled: Story = {
     docs: {
       source: {
         code: `
-        <Input
-          control={control}
-          disabled
-          name='dummyName'
-        />
+        <TextArea control={control} disabled name='description' />
         `,
       },
     },
