@@ -79,7 +79,7 @@ export const Default: Story = {
         code: `
         type FormValues = { genres: string[] };
 
-        const { control } = useForm<FormValues>({
+        const { control, formState: { errors } } = useForm<FormValues>({
           defaultValues: {
             genres: [],
           },

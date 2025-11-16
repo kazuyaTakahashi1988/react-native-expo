@@ -65,7 +65,7 @@ export const Default: Story = {
         code: `
         type FormValues = { dummyName: string };
 
-        const { control } = useForm<FormValues>({
+        const { control, formState: { errors } } = useForm<FormValues>({
           defaultValues: {
             dummyName: '',
           },
