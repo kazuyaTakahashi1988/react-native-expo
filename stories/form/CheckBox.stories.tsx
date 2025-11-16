@@ -6,7 +6,7 @@ import CheckBox from '../../app/components/form/_checkBox';
 import type { TypeCheckBox } from '../../app/lib/types/typeComponents';
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite';
 
-type FormValues = { favoriteGenres: string[] };
+type FormValues = { genres: string[] };
 
 type CheckBoxStoryProps = Omit<TypeCheckBox<FormValues>, 'control' | 'name' | 'options'> & {
   options?: TypeCheckBox<FormValues>['options'];
@@ -21,18 +21,11 @@ const defaultOptions: TypeCheckBox<FormValues>['options'] = [
 const CheckBoxStoryComponent = ({ options = defaultOptions, ...props }: CheckBoxStoryProps) => {
   const { control } = useForm<FormValues>({
     defaultValues: {
-      favoriteGenres: [],
+      genres: [],
     },
   });
 
-  return (
-    <CheckBox<FormValues>
-      {...props}
-      control={control}
-      name='favoriteGenres'
-      options={options}
-    />
-  );
+  return <CheckBox<FormValues> {...props} control={control} name='genres' options={options} />;
 };
 
 const meta = {
@@ -47,9 +40,21 @@ const meta = {
   ],
   tags: ['autodocs'],
   argTypes: {
-    containerStyle: { control: { type: 'object' } },
-    optionListStyle: { control: { type: 'object' } },
-    optionRowStyle: { control: { type: 'object' } },
+    containerStyle: {
+      control: { type: 'object' },
+      description:
+        'CheckBox を包むコンテナ（View）スタイル \n\n 例 ：\n { "padding": 20, "backgroundColor": "red" }',
+    },
+    optionListStyle: {
+      control: { type: 'object' },
+      description:
+        'オプション のスタイル \n\n 例 ：\n { "padding": 20, "backgroundColor": "yellow" }',
+    },
+    optionRowStyle: {
+      control: { type: 'object' },
+      description:
+        'オプション各行 のスタイル \n\n 例 ：\n { "padding": 20, "backgroundColor": "white" }',
+    },
   },
 } satisfies Meta<typeof CheckBoxStoryComponent>;
 
@@ -67,29 +72,133 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
+  args: {},
+  parameters: {
+    docs: {
+      source: {
+        code: `
+        type FormValues = { genres: string[] };
+
+        const { control } = useForm<FormValues>({
+          defaultValues: {
+            genres: [],
+          },
+        });
+
+        <CheckBox
+          control={control}
+          name='genres'
+          options={[
+            { label: 'アクション', value: 'action' },
+            { label: 'コメディ', value: 'comedy' },
+            { label: 'ドラマ', value: 'drama' },
+          ]}
+        />
+        `,
+      },
+    },
+  },
+};
+
+export const Label: Story = {
   args: {
     label: 'よく視聴するジャンル',
+  },
+  parameters: {
+    docs: {
+      source: {
+        code: `
+        <CheckBox
+          control={control}
+          label='よく視聴するジャンル'
+          name='genres'
+          options={[
+            { label: 'アクション', value: 'action' },
+            { label: 'コメディ', value: 'comedy' },
+            { label: 'ドラマ', value: 'drama' },
+          ]}
+        />
+        `,
+      },
+    },
   },
 };
 
 export const Required: Story = {
   args: {
-    label: '必須項目',
-    rules: { required: '1つ以上選択してください' },
+    label: 'よく視聴するジャンル',
+    rules: { required: '必須項目です' },
+  },
+  parameters: {
+    docs: {
+      source: {
+        code: `
+        <CheckBox
+          control={control}
+          errorText={errors.genres?.message}
+          label='よく視聴するジャンル'
+          name='genres'
+          options={[
+            { label: 'アクション', value: 'action' },
+            { label: 'コメディ', value: 'comedy' },
+            { label: 'ドラマ', value: 'drama' },
+          ]}
+          rules={{ required: '必須項目です' }}
+        />
+        `,
+      },
+    },
   },
 };
 
 export const ErrorOccurred: Story = {
   args: {
-    label: 'エラーあり',
-    rules: { required: '1つ以上選択してください' },
-    errorText: '1つ以上選択してください',
+    label: 'よく視聴するジャンル',
+    rules: { required: '必須項目です' },
+    errorText: '必須項目です',
+  },
+  parameters: {
+    docs: {
+      source: {
+        code: `
+        <CheckBox
+          control={control}
+          errorText='必須項目です'
+          label='よく視聴するジャンル'
+          name='genres'
+          options={[
+            { label: 'アクション', value: 'action' },
+            { label: 'コメディ', value: 'comedy' },
+            { label: 'ドラマ', value: 'drama' },
+          ]}
+          rules={{ required: '必須項目です' }}
+        />
+        `,
+      },
+    },
   },
 };
 
 export const Disabled: Story = {
   args: {
     disabled: true,
-    label: '選択不可',
+  },
+  parameters: {
+    docs: {
+      source: {
+        code: `
+        <CheckBox
+          control={control}
+          disabled
+          name='genres'
+          options={[
+            { label: 'アクション', value: 'action' },
+            { label: 'コメディ', value: 'comedy' },
+            { label: 'ドラマ', value: 'drama' },
+          ]}
+        />
+        `,
+      },
+    },
   },
 };
