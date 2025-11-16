@@ -117,7 +117,7 @@ export const Required: Story = {
         <Input
           autoCapitalize='words'
           control={control}
-          errorText={errors.dummyName}
+          errorText={errors.dummyName?.message}
           label='ラベル テキスト'
           name='dummyName'
           placeholder='プレイスホルダー テキスト'
@@ -132,10 +132,7 @@ export const Required: Story = {
 export const ErrorOccurred: Story = {
   args: {
     label: 'ラベル テキスト',
-    errorText: {
-      type: 'dummyName',
-      message: '必須項目です',
-    },
+    errorText: '必須項目です',
     placeholder: 'プレイスホルダー テキスト',
     rules: { required: '必須項目です' },
   },
@@ -146,10 +143,7 @@ export const ErrorOccurred: Story = {
         <Input
           autoCapitalize='words'
           control={control}
-          errorText={{
-           type: 'dummyName',
-           message: '必須項目です',
-          }}
+          errorText='必須項目です'
           label='ラベル テキスト'
           name='dummyName'
           placeholder='プレイスホルダー テキスト'

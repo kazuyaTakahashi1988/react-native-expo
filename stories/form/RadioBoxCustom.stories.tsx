@@ -100,10 +100,7 @@ export const ErrorOccurred: Story = {
   args: {
     label: 'エラーあり',
     rules: { required: 'テーマを選択してください' },
-    errorText: {
-      type: 'themeMode',
-      message: 'テーマを選択してください',
-    },
+    errorText: 'テーマを選択してください',
   },
 };
 

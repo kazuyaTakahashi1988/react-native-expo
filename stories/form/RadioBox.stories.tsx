@@ -83,10 +83,7 @@ export const ErrorOccurred: Story = {
   args: {
     label: 'エラーあり',
     rules: { required: 'いずれかを選択してください' },
-    errorText: {
-      type: 'paymentMethod',
-      message: 'いずれかを選択してください',
-    },
+    errorText: 'いずれかを選択してください',
   },
 };
 

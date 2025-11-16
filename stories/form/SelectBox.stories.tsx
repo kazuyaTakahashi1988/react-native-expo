@@ -94,10 +94,7 @@ export const ErrorOccurred: Story = {
   args: {
     label: 'エラーあり',
     rules: { required: '選択してください' },
-    errorText: {
-      type: 'prefecture',
-      message: '選択してください',
-    },
+    errorText: '選択してください',
   },
 };
 

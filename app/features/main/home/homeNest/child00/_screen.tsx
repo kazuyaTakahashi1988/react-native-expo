@@ -20,6 +20,7 @@ import type { TypeFormValues } from './_type';
  * Child00 画面
  * ----------------------------------------------- */
 
+// eslint-disable-next-line complexity
 const Child00Screen: React.FC = () => {
   const [submittedValues, setSubmittedValues] = useState<TypeFormValues | null>(null);
 
@@ -69,7 +70,7 @@ const Child00Screen: React.FC = () => {
         autoCapitalize='words'
         containerStyle={styles.container}
         control={control}
-        errorText={errors.name}
+        errorText={errors.name?.message}
         label='Name インプット項目'
         name='name'
         placeholder='Jane Doe'
@@ -80,7 +81,7 @@ const Child00Screen: React.FC = () => {
       <CheckBox
         containerStyle={styles.container}
         control={control}
-        errorText={errors.subscribe}
+        errorText={errors.subscribe?.message}
         label='Subscribe チェックボックス項目'
         name='subscribe'
         options={[
@@ -99,7 +100,7 @@ const Child00Screen: React.FC = () => {
         activeColor='#22c55e'
         containerStyle={styles.container}
         control={control}
-        errorText={errors.subscribeCustom}
+        errorText={errors.subscribeCustom?.message}
         label='Subscribe Custom チェックボックスカスタム項目'
         name='subscribeCustom'
         options={[
@@ -114,7 +115,7 @@ const Child00Screen: React.FC = () => {
       <RadioBox
         containerStyle={styles.container}
         control={control}
-        errorText={errors.plan}
+        errorText={errors.plan?.message}
         label='Plan ラヂオボックス項目'
         name='plan'
         options={[
@@ -130,7 +131,7 @@ const Child00Screen: React.FC = () => {
         activeColor='#6366f1'
         containerStyle={styles.container}
         control={control}
-        errorText={errors.planCustom}
+        errorText={errors.planCustom?.message}
         label='Plan Custom ラヂオボックスカスタム項目'
         name='planCustom'
         options={[
@@ -145,7 +146,7 @@ const Child00Screen: React.FC = () => {
       <SelectBox
         containerStyle={styles.container}
         control={control}
-        errorText={errors.country}
+        errorText={errors.country?.message}
         label='Country セレクトボックス項目'
         name='country'
         options={[
@@ -160,7 +161,7 @@ const Child00Screen: React.FC = () => {
       <TextArea
         containerStyle={styles.container}
         control={control}
-        errorText={errors.note}
+        errorText={errors.note?.message}
         label='Note テキストエリア項目'
         name='note'
         placeholder='メモや補足を入力してください'

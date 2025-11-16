@@ -28,7 +28,7 @@ const Input = <TFieldValues extends FieldValues>({
   } = useController({ control, name, rules });
 
   const inputValue = typeof value === 'string' ? value : '';
-  const hasError = errorText?.message != null;
+  const hasError = Boolean(errorText);
   const trackAnimatedStyle = useMemo(
     () => [hasError ? styles.inputError : null, disabled ? styles.inputDisabled : null],
     [disabled, hasError],
@@ -46,7 +46,7 @@ const Input = <TFieldValues extends FieldValues>({
         style={[styles.input, trackAnimatedStyle, style]}
         value={inputValue}
       />
-      <ErrorText {...errorText} />
+      <ErrorText errorText={errorText} />
     </View>
   );
 };

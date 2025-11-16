@@ -123,7 +123,7 @@ const CheckBoxCustom = <TFieldValues extends FieldValues>({
 
   const selectedValues = useMemo(() => (Array.isArray(value) ? (value as string[]) : []), [value]);
 
-  const hasError = errorText?.message != null;
+  const hasError = Boolean(errorText);
 
   const activeColor = activeColorProp ?? '#007aff';
   const inactiveColor = inactiveColorProp ?? '#d1d5db';
@@ -166,7 +166,7 @@ const CheckBoxCustom = <TFieldValues extends FieldValues>({
           );
         })}
       </View>
-      <ErrorText {...errorText} />
+      <ErrorText errorText={errorText} />
     </View>
   );
 };

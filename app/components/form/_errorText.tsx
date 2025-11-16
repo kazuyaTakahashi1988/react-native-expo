@@ -2,15 +2,19 @@ import { StyleSheet, Text } from 'react-native';
 
 import type { TypeErrorText } from '../../lib/types/typeComponents';
 
+type ErrorTextProps = {
+  errorText?: TypeErrorText;
+};
+
 /* -----------------------------------------------
  * エラーテキスト
  * ----------------------------------------------- */
 
-const ErrorText: React.FC<TypeErrorText> = (errorsType) => {
-  if (errorsType.message == null) {
+const ErrorText: React.FC<ErrorTextProps> = ({ errorText }) => {
+  if (errorText == null) {
     return null;
   }
-  return <Text style={errorStyles.text}>{errorsType.message}</Text>;
+  return <Text style={errorStyles.text}>{errorText}</Text>;
 };
 const errorStyles = StyleSheet.create({
   text: {

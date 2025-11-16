@@ -76,10 +76,7 @@ export const ErrorOccurred: Story = {
     label: 'お問い合わせ内容',
     placeholder: 'ご要望やご質問をご記入ください',
     rules: { required: '必須項目です' },
-    errorText: {
-      type: 'description',
-      message: '必須項目です',
-    },
+    errorText: '必須項目です',
   },
 };
 

@@ -101,10 +101,7 @@ export const ErrorOccurred: Story = {
   args: {
     label: 'エラーあり',
     rules: { required: '1つ以上選択してください' },
-    errorText: {
-      type: 'notificationChannels',
-      message: '1つ以上選択してください',
-    },
+    errorText: '1つ以上選択してください',
   },
 };
 

@@ -38,7 +38,7 @@ const SelectBox = <TFieldValues extends FieldValues>({
   } = useController({ control, name, rules });
 
   const selectedValue = ensureString(value);
-  const hasError = errorText?.message != null;
+  const hasError = Boolean(errorText);
 
   const selectedOption = options.find((option) => option.value === selectedValue);
   const isPlaceholder = selectedOption == null;
@@ -83,7 +83,7 @@ const SelectBox = <TFieldValues extends FieldValues>({
         value={toPickerValue(selectedValue)}
       />
 
-      <ErrorText {...errorText} />
+      <ErrorText errorText={errorText} />
     </View>
   );
 };
