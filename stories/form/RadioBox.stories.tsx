@@ -55,6 +55,10 @@ const meta = {
       description:
         'オプション各行 のスタイル \n\n 例 ：\n { "padding": 20, "backgroundColor": "white" }',
     },
+    disabled: {
+      control: { type: 'boolean' },
+      description: '活性・非活性の制御',
+    },
   },
 } satisfies Meta<typeof RadioBoxStoryComponent>;
 

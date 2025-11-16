@@ -41,6 +41,10 @@ const meta = {
       control: { type: 'object' },
       description: 'TextInput 自体のスタイル \n\n 例 ：\n { "padding": 20, "borderRadius": 50 }',
     },
+    disabled: {
+      control: { type: 'boolean' },
+      description: '活性・非活性の制御',
+    },
   },
 } satisfies Meta<typeof InputStoryComponent>;
 
