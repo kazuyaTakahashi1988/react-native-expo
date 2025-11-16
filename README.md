@@ -24,3 +24,15 @@ $ yarn storybook
 
 Open <a href="http://localhost:6006" target="_blank">http://localhost:6006</a> in your browser<br>
 <br>
+
+# ③ EAS Build する場合
+
+以下、要必要<br>
+・ローカルに eas-cli インストール済み<br>
+・Expoアカウント取得済み（かつ eas login コマンドでログイン済み）<br>
+・Apple ID（←有償のApple Developer Programと紐付いたもの）取得済み<br>
+<br>
+
+```
+$ eas build --platform ios --profile development
+```
