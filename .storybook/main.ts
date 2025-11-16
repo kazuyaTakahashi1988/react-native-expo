@@ -31,10 +31,7 @@ const config: StorybookConfig = {
         alias: [
           {
             find: /^react-native-reanimated$/,
-            replacement: resolve(
-              __dirname,
-              '../node_modules/react-native-reanimated/lib/module/mock.js',
-            ),
+            replacement: resolve(__dirname, './mocks/react-native-reanimated.ts'),
           },
         ],
       },
