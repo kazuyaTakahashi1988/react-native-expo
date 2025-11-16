@@ -28,12 +28,15 @@ const config: StorybookConfig = {
   viteFinal: (config) =>
     mergeConfig(config, {
       resolve: {
-        alias: {
-          'react-native-reanimated': resolve(
-            __dirname,
-            '../node_modules/react-native-reanimated/mock.js',
-          ),
-        },
+        alias: [
+          {
+            find: /^react-native-reanimated$/,
+            replacement: resolve(
+              __dirname,
+              '../node_modules/react-native-reanimated/mock.js',
+            ),
+          },
+        ],
       },
     }),
 };
