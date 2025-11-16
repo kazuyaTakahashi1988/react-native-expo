@@ -13,3 +13,14 @@ $ yarn web
 Open <a href="http://localhost:8081" target="_blank">http://localhost:8081</a> in your browser<br>
 <br>
 
+# ② storybook を利用する場合
+
+```
+$ yarn install // ←上述①の手順を終えてるなら必要なし
+$ yarn storybook
+```
+
+↓↓↓↓<br>
+
+Open <a href="http://localhost:6006" target="_blank">http://localhost:6006</a> in your browser<br>
+<br>
