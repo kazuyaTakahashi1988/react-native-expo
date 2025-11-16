@@ -6,7 +6,7 @@ import RadioBoxCustom from '../../app/components/form/_radioBoxCustom';
 import type { TypeRadioBoxCustom } from '../../app/lib/types/typeComponents';
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite';
 
-type FormValues = { themeMode: string };
+type FormValues = { theme: string };
 
 type RadioBoxCustomStoryProps = Omit<
   TypeRadioBoxCustom<FormValues>,
@@ -16,8 +16,9 @@ type RadioBoxCustomStoryProps = Omit<
 };
 
 const defaultOptions: TypeRadioBoxCustom<FormValues>['options'] = [
-  { label: 'ライト', value: 'light' },
-  { label: 'ダーク', value: 'dark' },
+  { label: 'シアン', value: 'cyan' },
+  { label: 'マゼンタ', value: 'magenta' },
+  { label: 'イエロー', value: 'yellow' },
 ];
 
 const RadioBoxCustomStoryComponent = ({
@@ -26,18 +27,11 @@ const RadioBoxCustomStoryComponent = ({
 }: RadioBoxCustomStoryProps) => {
   const { control } = useForm<FormValues>({
     defaultValues: {
-      themeMode: '',
+      theme: '',
     },
   });
 
-  return (
-    <RadioBoxCustom<FormValues>
-      {...props}
-      control={control}
-      name='themeMode'
-      options={options}
-    />
-  );
+  return <RadioBoxCustom<FormValues> {...props} control={control} name='theme' options={options} />;
 };
 
 const meta = {
@@ -52,12 +46,21 @@ const meta = {
   ],
   tags: ['autodocs'],
   argTypes: {
-    containerStyle: { control: { type: 'object' } },
-    optionListStyle: { control: { type: 'object' } },
-    optionRowStyle: { control: { type: 'object' } },
-    optionLabelStyle: { control: { type: 'object' } },
-    trackStyle: { control: { type: 'object' } },
-    knobStyle: { control: { type: 'object' } },
+    containerStyle: {
+      control: { type: 'object' },
+      description:
+        'RadioBoxCustom を包むコンテナ（View）スタイル \n\n 例 ：\n { "padding": 20, "backgroundColor": "red" }',
+    },
+    optionListStyle: {
+      control: { type: 'object' },
+      description:
+        'オプション のスタイル \n\n 例 ：\n { "padding": 20, "backgroundColor": "yellow" }',
+    },
+    optionRowStyle: {
+      control: { type: 'object' },
+      description:
+        'オプション各行 のスタイル \n\n 例 ：\n { "padding": 20, "backgroundColor": "white" }',
+    },
   },
 } satisfies Meta<typeof RadioBoxCustomStoryComponent>;
 
@@ -75,8 +78,134 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
+  args: {},
+  parameters: {
+    docs: {
+      source: {
+        code: `
+        type FormValues = { theme: string };
+
+        const { control, formState: { errors } } = useForm<FormValues>({
+          defaultValues: {
+            theme: '',
+          },
+        });
+        
+        <RadioBoxCustom
+          control={control}
+          name='theme'
+          options={[
+            { label: 'シアン', value: 'cyan' },
+            { label: 'マゼンタ', value: 'magenta' },
+            { label: 'イエロー', value: 'yellow' },
+          ]}
+        />
+        `,
+      },
+    },
+  },
+};
+
+export const Label: Story = {
   args: {
-    label: 'テーマ設定',
+    label: 'テーマ色の選択',
+  },
+  parameters: {
+    docs: {
+      source: {
+        code: `
+        <RadioBoxCustom
+          control={control}
+          label='テーマ色の選択'
+          name='theme'
+          options={[
+            { label: 'シアン', value: 'cyan' },
+            { label: 'マゼンタ', value: 'magenta' },
+            { label: 'イエロー', value: 'yellow' },
+          ]}
+        />
+        `,
+      },
+    },
+  },
+};
+
+export const Required: Story = {
+  args: {
+    label: 'テーマ色の選択',
+    rules: { required: '必須項目です' },
+  },
+  parameters: {
+    docs: {
+      source: {
+        code: `
+        <RadioBoxCustom
+          control={control}
+          errorText={errors.theme?.message}
+          label='テーマ色の選択'
+          name='theme'
+          options={[
+            { label: 'シアン', value: 'cyan' },
+            { label: 'マゼンタ', value: 'magenta' },
+            { label: 'イエロー', value: 'yellow' },
+          ]}
+          rules={{ required: '必須項目です' }}
+        />
+        `,
+      },
+    },
+  },
+};
+
+export const ErrorOccurred: Story = {
+  args: {
+    label: 'テーマ色の選択',
+    rules: { required: '必須項目です' },
+    errorText: '必須項目です',
+  },
+  parameters: {
+    docs: {
+      source: {
+        code: `
+        <RadioBoxCustom
+          control={control}
+          errorText='必須項目です'
+          label='テーマ色の選択'
+          name='theme'
+          options={[
+            { label: 'シアン', value: 'cyan' },
+            { label: 'マゼンタ', value: 'magenta' },
+            { label: 'イエロー', value: 'yellow' },
+          ]}
+          rules={{ required: '必須項目です' }}
+        />
+        `,
+      },
+    },
+  },
+};
+
+export const Disabled: Story = {
+  args: {
+    disabled: true,
+  },
+  parameters: {
+    docs: {
+      source: {
+        code: `
+        <RadioBoxCustom
+          control={control}
+          disabled
+          name='theme'
+          options={[
+            { label: 'シアン', value: 'cyan' },
+            { label: 'マゼンタ', value: 'magenta' },
+            { label: 'イエロー', value: 'yellow' },
+          ]}
+        />
+        `,
+      },
+    },
   },
 };
 
@@ -87,26 +216,25 @@ export const CustomColors: Story = {
     inactiveColor: '#fed7aa',
     knobColor: '#7c2d12',
   },
-};
-
-export const Required: Story = {
-  args: {
-    label: '必須項目',
-    rules: { required: 'テーマを選択してください' },
-  },
-};
-
-export const ErrorOccurred: Story = {
-  args: {
-    label: 'エラーあり',
-    rules: { required: 'テーマを選択してください' },
-    errorText: 'テーマを選択してください',
-  },
-};
-
-export const Disabled: Story = {
-  args: {
-    disabled: true,
-    label: '選択不可',
+  parameters: {
+    docs: {
+      source: {
+        code: `
+        <RadioBoxCustom
+          activeColor='#f97316'
+          control={control}
+          inactiveColor='#fed7aa'
+          knobColor='#7c2d12'
+          label='カスタムカラー'
+          name='theme'
+          options={[
+            { label: 'シアン', value: 'cyan' },
+            { label: 'マゼンタ', value: 'magenta' },
+            { label: 'イエロー', value: 'yellow' },
+          ]}
+        />
+        `,
+      },
+    },
   },
 };

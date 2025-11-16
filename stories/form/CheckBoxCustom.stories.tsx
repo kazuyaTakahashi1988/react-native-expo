@@ -6,7 +6,7 @@ import CheckBoxCustom from '../../app/components/form/_checkBoxCustom';
 import type { TypeCheckBoxCustom } from '../../app/lib/types/typeComponents';
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite';
 
-type FormValues = { inquiryWay: string[] };
+type FormValues = { inquiry: string[] };
 
 type CheckBoxCustomStoryProps = Omit<
   TypeCheckBoxCustom<FormValues>,
@@ -27,12 +27,12 @@ const CheckBoxCustomStoryComponent = ({
 }: CheckBoxCustomStoryProps) => {
   const { control } = useForm<FormValues>({
     defaultValues: {
-      inquiryWay: [],
+      inquiry: [],
     },
   });
 
   return (
-    <CheckBoxCustom<FormValues> {...props} control={control} name='inquiryWay' options={options} />
+    <CheckBoxCustom<FormValues> {...props} control={control} name='inquiry' options={options} />
   );
 };
 
@@ -85,17 +85,17 @@ export const Default: Story = {
     docs: {
       source: {
         code: `
-        type FormValues = { inquiryWay: string[] };
+        type FormValues = { inquiry: string[] };
 
         const { control, formState: { errors } } = useForm<FormValues>({
           defaultValues: {
-            inquiryWay: [],
+            inquiry: [],
           },
         });
 
         <CheckBoxCustom
           control={control}
-          name='inquiryWay'
+          name='inquiry'
           options={[
             { label: 'メール', value: 'email' },
             { label: 'SMS', value: 'sms' },
@@ -119,7 +119,7 @@ export const Label: Story = {
         <CheckBoxCustom
           control={control}
           label='お問い合わせ方法'
-          name='inquiryWay'
+          name='inquiry'
           options={[
             { label: 'メール', value: 'email' },
             { label: 'SMS', value: 'sms' },
@@ -143,9 +143,9 @@ export const Required: Story = {
         code: `
         <CheckBoxCustom
           control={control}
-          errorText={errors.inquiryWay?.message}
+          errorText={errors.inquiry?.message}
           label='お問い合わせ方法'
-          name='inquiryWay'
+          name='inquiry'
           options={[
             { label: 'メール', value: 'email' },
             { label: 'SMS', value: 'sms' },
@@ -173,7 +173,7 @@ export const ErrorOccurred: Story = {
           control={control}
           errorText='必須項目です'
           label='お問い合わせ方法'
-          name='inquiryWay'
+          name='inquiry'
           options={[
             { label: 'メール', value: 'email' },
             { label: 'SMS', value: 'sms' },
@@ -198,7 +198,7 @@ export const Disabled: Story = {
         <CheckBoxCustom
           control={control}
           disabled
-          name='inquiryWay'
+          name='inquiry'
           options={[
             { label: 'メール', value: 'email' },
             { label: 'SMS', value: 'sms' },
@@ -228,7 +228,7 @@ export const CustomColors: Story = {
           inactiveColor='#cbd5f5'
           knobColor='#042f2e'
           label='カスタムカラー'
-          name='inquiryWay'
+          name='inquiry'
           options={[
             { label: 'メール', value: 'email' },
             { label: 'SMS', value: 'sms' },
