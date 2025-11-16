@@ -20,7 +20,6 @@ import type { TypeFormValues } from './_type';
  * Child00 画面
  * ----------------------------------------------- */
 
-// eslint-disable-next-line complexity
 const Child00Screen: React.FC = () => {
   const [submittedValues, setSubmittedValues] = useState<TypeFormValues | null>(null);
 
@@ -43,6 +42,14 @@ const Child00Screen: React.FC = () => {
       description: '',
     },
   });
+
+  /*
+   * エラーテキスト取得処理
+   */
+  const getErrorText = useCallback(
+    (field: keyof TypeFormValues) => errors[field]?.message,
+    [errors],
+  );
 
   /*
    * submitボタン処理
@@ -70,7 +77,7 @@ const Child00Screen: React.FC = () => {
         autoCapitalize='words'
         containerStyle={styles.container}
         control={control}
-        errorText={errors.dummyName?.message}
+        errorText={getErrorText('dummyName')}
         label='ラベル テキスト'
         name='dummyName'
         placeholder='プレイスホルダー テキスト'
@@ -81,7 +88,7 @@ const Child00Screen: React.FC = () => {
       <CheckBox
         containerStyle={styles.container}
         control={control}
-        errorText={errors.genres?.message}
+        errorText={getErrorText('genres')}
         label='よく視聴するジャンル'
         name='genres'
         options={[
@@ -100,7 +107,7 @@ const Child00Screen: React.FC = () => {
         activeColor='#22c55e'
         containerStyle={styles.container}
         control={control}
-        errorText={errors.inquiry?.message}
+        errorText={getErrorText('inquiry')}
         label='お問い合わせ方法'
         name='inquiry'
         options={[
@@ -115,7 +122,7 @@ const Child00Screen: React.FC = () => {
       <RadioBox
         containerStyle={styles.container}
         control={control}
-        errorText={errors.payment?.message}
+        errorText={getErrorText('payment')}
         label='お支払い方法'
         name='payment'
         options={[
@@ -131,7 +138,7 @@ const Child00Screen: React.FC = () => {
         activeColor='#6366f1'
         containerStyle={styles.container}
         control={control}
-        errorText={errors.theme?.message}
+        errorText={getErrorText('theme')}
         label='テーマ色の選択'
         name='theme'
         options={[
@@ -146,7 +153,7 @@ const Child00Screen: React.FC = () => {
       <SelectBox
         containerStyle={styles.container}
         control={control}
-        errorText={errors.address?.message}
+        errorText={getErrorText('address')}
         label='都道府県'
         name='address'
         options={[
@@ -162,7 +169,7 @@ const Child00Screen: React.FC = () => {
       <TextArea
         containerStyle={styles.container}
         control={control}
-        errorText={errors.description?.message}
+        errorText={getErrorText('description')}
         label='ご相談の内容'
         name='description'
         placeholder='ご要望やご質問をご記入ください'

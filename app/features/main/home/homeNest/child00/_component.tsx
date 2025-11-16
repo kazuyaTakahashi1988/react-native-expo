@@ -12,29 +12,29 @@ export const ResultArea: React.FC<TypeResultArea> = (submittedValues) => {
   return (
     <View style={resultStyles.result}>
       <Text style={resultStyles.resultTitle}>Submitted values</Text>
-      <Text>
+      <Text style={resultStyles.resultRow}>
         ラベル テキスト: {'\n'}[ {dummyName} ]
       </Text>
-      <Text>
+      <Text style={resultStyles.resultRow}>
         よく視聴するジャンル:
         {'\n'}[ {genres && genres.map((item) => `\n・${item}`)}
         {genres && '\n'} ]
       </Text>
-      <Text>
+      <Text style={resultStyles.resultRow}>
         お問い合わせ方法:
         {'\n'}[ {inquiry && inquiry.map((item) => `\n・${item}`)}
         {inquiry && '\n'} ]
       </Text>
-      <Text>
+      <Text style={resultStyles.resultRow}>
         お支払い方法: {'\n'}[ {payment} ]
       </Text>
-      <Text>
+      <Text style={resultStyles.resultRow}>
         テーマ色の選択: {'\n'}[ {theme} ]
       </Text>
-      <Text>
+      <Text style={resultStyles.resultRow}>
         都道府県: {'\n'}[ {address} ]
       </Text>
-      <Text>
+      <Text style={resultStyles.resultRow}>
         ご相談の内容: {'\n'}[ {description} ]
       </Text>
     </View>
@@ -53,5 +53,12 @@ const resultStyles = StyleSheet.create({
   resultTitle: {
     fontSize: 16,
     fontWeight: '600',
+    marginBottom: 16,
+  },
+  resultRow: {
+    borderBottomColor: '#d6d6d6',
+    borderBottomWidth: 1,
+    marginBottom: 16,
+    paddingBottom: 16,
   },
 });
