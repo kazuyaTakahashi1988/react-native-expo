@@ -1,8 +1,8 @@
-import { useController } from 'react-hook-form';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import ErrorText from './_errorText';
 import Label from './_label';
+import { useRHFController } from '../../services/reactHookFormHelper';
 
 import type { TypeCheckBox } from '../../lib/types/typeComponents';
 import type { FieldValues } from 'react-hook-form';
@@ -23,24 +23,9 @@ const CheckBox = <TFieldValues extends FieldValues>({
   options,
   rules,
 }: TypeCheckBox<TFieldValues>) => {
-  const {
-    field: { value, onChange },
-  } = useController({ control, name, rules });
-
-  const selectedValues = Array.isArray(value) ? (value as string[]) : [];
+  const { controller, isActive } = useRHFController({ control, name, rules });
+  const selectedValues = getSelectedValues(controller.field.value, isActive);
   const hasError = Boolean(errorText);
-
-  const handleToggle = (optionValue: string) => {
-    if (selectedValues.includes(optionValue)) {
-      onChange(selectedValues.filter((selected) => selected !== optionValue));
-      return;
-    }
-    onChange([...selectedValues, optionValue]);
-  };
-
-  const optionLabelStyle = (disabled?: boolean) => {
-    return disabled === true ? styles.checkBoxTextDisabled : null;
-  };
 
   return (
     <View style={containerStyle}>
@@ -48,15 +33,20 @@ const CheckBox = <TFieldValues extends FieldValues>({
       <View style={[styles.checkBoxGroup, optionListStyle]}>
         {options.map((option) => {
           const isSelected = selectedValues.includes(option.value);
-          const isDisabled = () => option.disabled === true || disabled;
+          const isDisabled = getIsOptionDisabled(option.disabled, disabled, isActive);
           return (
             <Pressable
               accessibilityRole='checkbox'
               accessibilityState={{ checked: isSelected }}
-              disabled={isDisabled()}
+              disabled={isDisabled}
               key={option.key ?? option.value}
               onPress={() => {
-                handleToggle(option.value);
+                handleToggleOption(
+                  option.value,
+                  selectedValues,
+                  controller.field.onChange,
+                  isActive,
+                );
               }}
               style={[styles.checkBoxRow, optionRowStyle]}
             >
@@ -65,10 +55,10 @@ const CheckBox = <TFieldValues extends FieldValues>({
                   styles.checkBoxBase,
                   isSelected ? styles.checkBoxChecked : null,
                   hasError ? styles.checkBoxError : null,
-                  isDisabled() ? styles.checkBoxDisabled : null,
+                  isDisabled ? styles.checkBoxDisabled : null,
                 ]}
               />
-              <Text style={optionLabelStyle(isDisabled())}>{option.label}</Text>
+              <Text style={getOptionLabelStyle(isDisabled)}>{option.label}</Text>
             </Pressable>
           );
         })}
@@ -76,6 +66,49 @@ const CheckBox = <TFieldValues extends FieldValues>({
       <ErrorText errorText={errorText} />
     </View>
   );
+};
+
+const getSelectedValues = (value: unknown, isActive: boolean): string[] => {
+  if (!isActive || !Array.isArray(value)) {
+    return [];
+  }
+  return value as string[];
+};
+
+const getIsOptionDisabled = (
+  optionDisabled: boolean | undefined,
+  disabled: boolean,
+  isActive: boolean,
+): boolean => {
+  if (!isActive) {
+    return true;
+  }
+
+  return optionDisabled === true || disabled;
+};
+
+const handleToggleOption = (
+  optionValue: string,
+  selectedValues: string[],
+  onChange: (value: string[]) => void,
+  isActive: boolean,
+) => {
+  if (!isActive) {
+    return;
+  }
+
+  if (selectedValues.includes(optionValue)) {
+    onChange(selectedValues.filter((selected) => selected !== optionValue));
+    return;
+  }
+  onChange([...selectedValues, optionValue]);
+};
+
+const getOptionLabelStyle = (disabled: boolean) => {
+  if (!disabled) {
+    return null;
+  }
+  return styles.checkBoxTextDisabled;
 };
 
 const styles = StyleSheet.create({

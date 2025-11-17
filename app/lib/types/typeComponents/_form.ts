@@ -18,9 +18,9 @@ export type TypeBoxOption = {
 
 type TypeToggleCustomBase<TFieldValues extends FieldValues> = {
   label?: string;
-  control: Control<TFieldValues>;
+  control?: Control<TFieldValues>;
   disabled?: boolean;
-  name: Path<TFieldValues>;
+  name?: Path<TFieldValues>;
   options: TypeBoxOption[];
   rules?: RegisterOptions<TFieldValues, Path<TFieldValues>>;
   errorText?: TypeErrorText;
@@ -40,9 +40,9 @@ type TypeToggleCustomBase<TFieldValues extends FieldValues> = {
  */
 export type TypeCheckBox<TFieldValues extends FieldValues> = {
   label?: string;
-  control: Control<TFieldValues>;
+  control?: Control<TFieldValues>;
   disabled?: boolean;
-  name: Path<TFieldValues>;
+  name?: Path<TFieldValues>;
   options: TypeBoxOption[];
   rules?: RegisterOptions<TFieldValues, Path<TFieldValues>>;
   errorText?: TypeErrorText;
@@ -83,9 +83,9 @@ export type TypeErrorText = string | undefined;
  */
 export type TypeInput<TFieldValues extends FieldValues> = {
   label?: string;
-  control: Control<TFieldValues>;
+  control?: Control<TFieldValues>;
   disabled?: boolean;
-  name: Path<TFieldValues>;
+  name?: Path<TFieldValues>;
   rules?: RegisterOptions<TFieldValues, Path<TFieldValues>>;
   errorText?: TypeErrorText;
   containerStyle?: StyleProp<ViewStyle>;
@@ -105,9 +105,9 @@ export type TypeLabel<TFieldValues extends FieldValues> = {
  */
 export type TypeRadioBox<TFieldValues extends FieldValues> = {
   label?: string;
-  control: Control<TFieldValues>;
+  control?: Control<TFieldValues>;
   disabled?: boolean;
-  name: Path<TFieldValues>;
+  name?: Path<TFieldValues>;
   options: TypeBoxOption[];
   rules?: RegisterOptions<TFieldValues, Path<TFieldValues>>;
   errorText?: TypeErrorText;
@@ -147,9 +147,9 @@ export type TypeSelectBoxOption = Omit<Item, 'value'> & {
 
 export type TypeSelectBox<TFieldValues extends FieldValues> = {
   label?: string;
-  control: Control<TFieldValues>;
+  control?: Control<TFieldValues>;
   disabled?: boolean;
-  name: Path<TFieldValues>;
+  name?: Path<TFieldValues>;
   options: TypeSelectBoxOption[];
   rules?: RegisterOptions<TFieldValues, Path<TFieldValues>>;
   errorText?: TypeErrorText;

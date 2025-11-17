@@ -1,12 +1,13 @@
 import { useMemo } from 'react';
-import { useController } from 'react-hook-form';
 import { StyleSheet, TextInput, View } from 'react-native';
 
 import ErrorText from './_errorText';
 import Label from './_label';
+import { useRHFController } from '../../services/reactHookFormHelper';
 
 import type { TypeInput } from '../../lib/types/typeComponents';
-import type { FieldValues } from 'react-hook-form';
+import type { FieldValues, UseControllerReturn } from 'react-hook-form';
+import type { StyleProp, TextStyle } from 'react-native';
 
 /* -----------------------------------------------
  * インプット項目
@@ -23,16 +24,15 @@ const Input = <TFieldValues extends FieldValues>({
   style,
   ...textInputProps
 }: TypeInput<TFieldValues>) => {
-  const {
-    field: { onBlur, onChange, value },
-  } = useController({ control, name, rules });
+  const { controller, isActive } = useRHFController({ control, name, rules });
 
-  const inputValue = typeof value === 'string' ? value : '';
   const hasError = Boolean(errorText);
   const trackAnimatedStyle = useMemo(
-    () => [hasError ? styles.inputError : null, disabled ? styles.inputDisabled : null],
+    () => buildInputStateStyles(hasError, disabled),
     [disabled, hasError],
   );
+
+  const controllerProps = buildControllerProps(controller, isActive);
 
   return (
     <View style={containerStyle}>
@@ -40,15 +40,44 @@ const Input = <TFieldValues extends FieldValues>({
       <TextInput
         {...textInputProps}
         editable={!disabled}
-        onBlur={onBlur}
-        onChangeText={onChange}
         placeholderTextColor={'#9e9e9e'}
-        style={[styles.input, trackAnimatedStyle, style]}
-        value={inputValue}
+        style={[styles.input, ...trackAnimatedStyle, style]}
+        {...(controllerProps ?? {})}
       />
       <ErrorText errorText={errorText} />
     </View>
   );
+};
+
+const buildInputStateStyles = (hasError: boolean, disabled: boolean): StyleProp<TextStyle>[] => {
+  const computed: StyleProp<TextStyle>[] = [];
+
+  if (hasError) {
+    computed.push(styles.inputError);
+  }
+  if (disabled) {
+    computed.push(styles.inputDisabled);
+  }
+
+  return computed;
+};
+
+const buildControllerProps = <TFieldValues extends FieldValues>(
+  controller: UseControllerReturn<TFieldValues>,
+  isActive: boolean,
+) => {
+  if (!isActive) {
+    return null;
+  }
+
+  const controllerValue = controller.field.value;
+  const value = typeof controllerValue === 'string' ? controllerValue : '';
+
+  return {
+    onBlur: controller.field.onBlur,
+    onChangeText: controller.field.onChange,
+    value,
+  } as const;
 };
 
 const styles = StyleSheet.create({

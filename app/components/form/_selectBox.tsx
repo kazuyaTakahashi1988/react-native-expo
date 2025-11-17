@@ -1,10 +1,10 @@
 import { useRef } from 'react';
-import { useController } from 'react-hook-form';
 import { Keyboard, Pressable, StyleSheet, Text, View } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 
 import ErrorText from './_errorText';
 import Label from './_label';
+import { useRHFController } from '../../services/reactHookFormHelper';
 
 import type { TypeSelectBox, TypeSelectBoxOption } from '../../lib/types/typeComponents';
 import type { ComponentProps } from 'react';
@@ -32,24 +32,22 @@ const SelectBox = <TFieldValues extends FieldValues>({
   valueTextStyle,
 }: TypeSelectBox<TFieldValues>) => {
   const pickerRef = useRef<RNPickerSelect | null>(null);
+  const { controller, isActive } = useRHFController({ control, name, rules });
 
-  const {
-    field: { value, onChange },
-  } = useController({ control, name, rules });
-
-  const selectedValue = ensureString(value);
+  const selectedValue = getSelectedValue(controller.field.value, isActive);
   const hasError = Boolean(errorText);
+  const isDisabled = isSelectDisabled(disabled, isActive);
 
   const selectedOption = options.find((option) => option.value === selectedValue);
   const isPlaceholder = selectedOption == null;
   const displayLabel = getDisplayLabel(selectedOption, placeholder);
 
-  const triggerStyles = buildTriggerStyles(triggerStyle, hasError, disabled);
+  const triggerStyles = buildTriggerStyles(triggerStyle, hasError, isDisabled);
   const triggerTextStyles = buildTriggerTextStyles(
     isPlaceholder,
     placeholderTextStyle,
     valueTextStyle,
-    disabled,
+    isDisabled,
   );
 
   const openPicker = () => {
@@ -57,20 +55,25 @@ const SelectBox = <TFieldValues extends FieldValues>({
     pickerRef.current?.togglePicker(true);
   };
 
-  const handleValueChange = (selected: string | null) => {
-    onChange(selected ?? '');
-  };
+  const handleValueChange = buildValueChangeHandler(
+    isActive ? controller.field.onChange : undefined,
+  );
 
   return (
     <View style={containerStyle}>
       <Label {...{ label, rules }} />
 
-      <Pressable accessibilityRole='button' onPress={openPicker} style={triggerStyles}>
+      <Pressable
+        accessibilityRole='button'
+        disabled={isDisabled}
+        onPress={openPicker}
+        style={triggerStyles}
+      >
         <Text style={triggerTextStyles}>{displayLabel}</Text>
       </Pressable>
 
       <RNPickerSelect
-        disabled={disabled}
+        disabled={isDisabled}
         doneText={doneText}
         items={options}
         onValueChange={handleValueChange}
@@ -158,6 +161,28 @@ const baseSelectStyles = {
     fontWeight: '600',
   },
 } satisfies NonNullable<ComponentProps<typeof RNPickerSelect>['style']>;
+
+const buildValueChangeHandler = (
+  onChange: ((value: string) => void) | undefined,
+): ((selected: string | null) => void) => {
+  if (!onChange) {
+    return () => undefined;
+  }
+  return (selected: string | null) => {
+    onChange(selected ?? '');
+  };
+};
+
+const getSelectedValue = (rawValue: unknown, isActive: boolean): string => {
+  if (!isActive) {
+    return '';
+  }
+  return ensureString(rawValue);
+};
+
+const isSelectDisabled = (disabled: boolean, isActive: boolean): boolean => {
+  return disabled || !isActive;
+};
 
 const ensureString = (rawValue: unknown): string => {
   if (typeof rawValue === 'string') {
