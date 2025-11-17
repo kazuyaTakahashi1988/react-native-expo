@@ -32,24 +32,23 @@ const SelectBox = <TFieldValues extends FieldValues>({
   valueTextStyle,
 }: TypeSelectBox<TFieldValues>) => {
   const pickerRef = useRef<RNPickerSelect | null>(null);
+  const shouldUseController = Boolean(control && name);
+  const controller = shouldUseController ? useController({ control, name, rules }) : null;
 
-  const {
-    field: { value, onChange },
-  } = useController({ control, name, rules });
-
-  const selectedValue = ensureString(value);
+  const selectedValue = ensureString(controller?.field.value);
   const hasError = Boolean(errorText);
+  const isDisabled = disabled || !shouldUseController;
 
   const selectedOption = options.find((option) => option.value === selectedValue);
   const isPlaceholder = selectedOption == null;
   const displayLabel = getDisplayLabel(selectedOption, placeholder);
 
-  const triggerStyles = buildTriggerStyles(triggerStyle, hasError, disabled);
+  const triggerStyles = buildTriggerStyles(triggerStyle, hasError, isDisabled);
   const triggerTextStyles = buildTriggerTextStyles(
     isPlaceholder,
     placeholderTextStyle,
     valueTextStyle,
-    disabled,
+    isDisabled,
   );
 
   const openPicker = () => {
@@ -58,19 +57,22 @@ const SelectBox = <TFieldValues extends FieldValues>({
   };
 
   const handleValueChange = (selected: string | null) => {
-    onChange(selected ?? '');
+    if (!shouldUseController || controller == null) {
+      return;
+    }
+    controller.field.onChange(selected ?? '');
   };
 
   return (
     <View style={containerStyle}>
       <Label {...{ label, rules }} />
 
-      <Pressable accessibilityRole='button' onPress={openPicker} style={triggerStyles}>
+      <Pressable accessibilityRole='button' disabled={isDisabled} onPress={openPicker} style={triggerStyles}>
         <Text style={triggerTextStyles}>{displayLabel}</Text>
       </Pressable>
 
       <RNPickerSelect
-        disabled={disabled}
+        disabled={isDisabled}
         doneText={doneText}
         items={options}
         onValueChange={handleValueChange}

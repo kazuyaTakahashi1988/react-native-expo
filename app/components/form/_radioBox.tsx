@@ -23,11 +23,10 @@ const RadioBox = <TFieldValues extends FieldValues>({
   options,
   rules,
 }: TypeRadioBox<TFieldValues>) => {
-  const {
-    field: { value, onChange },
-  } = useController({ control, name, rules });
+  const shouldUseController = Boolean(control && name);
+  const controller = shouldUseController ? useController({ control, name, rules }) : null;
 
-  const selectedValue = typeof value === 'string' ? value : '';
+  const selectedValue = typeof controller?.field.value === 'string' ? controller.field.value : '';
   const hasError = Boolean(errorText);
 
   const optionLabelStyle = (disabled?: boolean) => {
@@ -48,7 +47,7 @@ const RadioBox = <TFieldValues extends FieldValues>({
       <View style={[styles.radioGroup, optionListStyle]}>
         {options.map((option) => {
           const isSelected = selectedValue === option.value;
-          const isDisabled = () => option.disabled === true || disabled;
+          const isDisabled = () => option.disabled === true || disabled || !shouldUseController;
           return (
             <Pressable
               accessibilityRole='radio'
@@ -56,7 +55,10 @@ const RadioBox = <TFieldValues extends FieldValues>({
               disabled={isDisabled()}
               key={option.key ?? option.value}
               onPress={() => {
-                onChange(option.value);
+                if (!shouldUseController || controller == null) {
+                  return;
+                }
+                controller.field.onChange(option.value);
               }}
               style={[styles.radioRow, optionRowStyle]}
             >

@@ -23,16 +23,24 @@ const Input = <TFieldValues extends FieldValues>({
   style,
   ...textInputProps
 }: TypeInput<TFieldValues>) => {
-  const {
-    field: { onBlur, onChange, value },
-  } = useController({ control, name, rules });
+  const shouldUseController = Boolean(control && name);
 
-  const inputValue = typeof value === 'string' ? value : '';
+  const controller = shouldUseController ? useController({ control, name, rules }) : null;
+
+  const inputValue = typeof controller?.field.value === 'string' ? controller.field.value : undefined;
   const hasError = Boolean(errorText);
   const trackAnimatedStyle = useMemo(
     () => [hasError ? styles.inputError : null, disabled ? styles.inputDisabled : null],
     [disabled, hasError],
   );
+
+  const controllerProps = shouldUseController
+    ? {
+        onBlur: controller?.field.onBlur,
+        onChangeText: controller?.field.onChange,
+        value: inputValue ?? '',
+      }
+    : {};
 
   return (
     <View style={containerStyle}>
@@ -40,11 +48,9 @@ const Input = <TFieldValues extends FieldValues>({
       <TextInput
         {...textInputProps}
         editable={!disabled}
-        onBlur={onBlur}
-        onChangeText={onChange}
         placeholderTextColor={'#9e9e9e'}
         style={[styles.input, trackAnimatedStyle, style]}
-        value={inputValue}
+        {...controllerProps}
       />
       <ErrorText errorText={errorText} />
     </View>

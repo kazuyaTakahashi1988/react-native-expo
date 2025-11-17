@@ -117,11 +117,14 @@ const RadioBoxCustom = <TFieldValues extends FieldValues>({
   trackStyle,
   knobStyle,
 }: TypeRadioBoxCustom<TFieldValues>) => {
-  const {
-    field: { value, onChange },
-  } = useController({ control, name, rules });
+  const shouldUseController = Boolean(control && name);
+  const controller = shouldUseController ? useController({ control, name, rules }) : null;
+  const controllerValue = controller?.field.value;
 
-  const selectedValue = useMemo(() => (typeof value === 'string' ? value : ''), [value]);
+  const selectedValue = useMemo(
+    () => (typeof controllerValue === 'string' ? controllerValue : ''),
+    [controllerValue],
+  );
 
   const hasError = Boolean(errorText);
 
@@ -135,7 +138,7 @@ const RadioBoxCustom = <TFieldValues extends FieldValues>({
       <View style={[styles.optionList, optionListStyle]}>
         {options.map((option) => {
           const isSelected = selectedValue === option.value;
-          const isDisabled = () => option.disabled === true || disabled;
+          const isDisabled = () => option.disabled === true || disabled || !shouldUseController;
           return (
             <ToggleRadioOption
               accessibilityState={{ selected: isSelected }}
@@ -149,7 +152,10 @@ const RadioBoxCustom = <TFieldValues extends FieldValues>({
               knobStyle={knobStyle}
               label={option.label}
               onPress={() => {
-                onChange(option.value);
+                if (!shouldUseController || controller == null) {
+                  return;
+                }
+                controller.field.onChange(option.value);
               }}
               optionLabelStyle={optionLabelStyle}
               optionRowStyle={optionRowStyle}

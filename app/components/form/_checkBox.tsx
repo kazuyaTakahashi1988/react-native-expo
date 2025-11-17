@@ -23,19 +23,23 @@ const CheckBox = <TFieldValues extends FieldValues>({
   options,
   rules,
 }: TypeCheckBox<TFieldValues>) => {
-  const {
-    field: { value, onChange },
-  } = useController({ control, name, rules });
+  const shouldUseController = Boolean(control && name);
+  const controller = shouldUseController ? useController({ control, name, rules }) : null;
+  const controllerValue = controller?.field.value;
 
-  const selectedValues = Array.isArray(value) ? (value as string[]) : [];
+  const selectedValues = Array.isArray(controllerValue) ? (controllerValue as string[]) : [];
   const hasError = Boolean(errorText);
 
   const handleToggle = (optionValue: string) => {
-    if (selectedValues.includes(optionValue)) {
-      onChange(selectedValues.filter((selected) => selected !== optionValue));
+    if (!shouldUseController || controller == null) {
       return;
     }
-    onChange([...selectedValues, optionValue]);
+
+    if (selectedValues.includes(optionValue)) {
+      controller.field.onChange(selectedValues.filter((selected) => selected !== optionValue));
+      return;
+    }
+    controller.field.onChange([...selectedValues, optionValue]);
   };
 
   const optionLabelStyle = (disabled?: boolean) => {
@@ -48,7 +52,7 @@ const CheckBox = <TFieldValues extends FieldValues>({
       <View style={[styles.checkBoxGroup, optionListStyle]}>
         {options.map((option) => {
           const isSelected = selectedValues.includes(option.value);
-          const isDisabled = () => option.disabled === true || disabled;
+          const isDisabled = () => option.disabled === true || disabled || !shouldUseController;
           return (
             <Pressable
               accessibilityRole='checkbox'
