@@ -6,8 +6,8 @@ import type { TypeResultArea } from './_type';
  * submit 出力結果表示エリア
  * ----------------------------------------------- */
 
-export const ResultArea: React.FC<TypeResultArea> = (submittedValues) => {
-  const { dummyName, genres, inquiry, payment, theme, address, description } = submittedValues;
+export const ResultArea: React.FC<TypeResultArea> = (formValues) => {
+  const { dummyName, genres, inquiry, payment, theme, address, description } = formValues;
 
   return (
     <View style={resultStyles.result}>
