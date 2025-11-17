@@ -1,18 +1,14 @@
-import { useForm } from 'react-hook-form';
 import { View } from 'react-native';
 
 import { styles } from '../../.storybook/styles';
-import CheckBoxCustom from '../../app/components/form/_checkBoxCustom';
+import * as Form from '../../app/components/form/';
 
 import type { TypeCheckBoxCustom } from '../../app/lib/types/typeComponents';
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite';
 
 type FormValues = { inquiry: string[] };
 
-type CheckBoxCustomStoryProps = Omit<
-  TypeCheckBoxCustom<FormValues>,
-  'control' | 'name' | 'options'
-> & {
+type CheckBoxCustomStoryProps = TypeCheckBoxCustom<FormValues> & {
   options?: TypeCheckBoxCustom<FormValues>['options'];
 };
 
@@ -22,24 +18,13 @@ const defaultOptions: TypeCheckBoxCustom<FormValues>['options'] = [
   { label: 'アプリ通知', value: 'push' },
 ];
 
-const CheckBoxCustomStoryComponent = ({
-  options = defaultOptions,
-  ...props
-}: CheckBoxCustomStoryProps) => {
-  const { control } = useForm<FormValues>({
-    defaultValues: {
-      inquiry: [],
-    },
-  });
-
-  return (
-    <CheckBoxCustom<FormValues> {...props} control={control} name='inquiry' options={options} />
-  );
+const CheckBoxCustom = ({ ...props }: CheckBoxCustomStoryProps) => {
+  return <Form.CheckBoxCustom<FormValues> {...props} />;
 };
 
 const meta = {
   title: 'Form/CheckBoxCustom',
-  component: CheckBoxCustomStoryComponent,
+  component: CheckBoxCustom,
   decorators: [
     (Story) => (
       <View style={styles.container}>
@@ -49,10 +34,20 @@ const meta = {
   ],
   tags: ['autodocs'],
   argTypes: {
+    label: {
+      control: { type: 'text' },
+    },
+    errorText: {
+      control: { type: 'text' },
+    },
+    rules: {
+      control: { type: 'object' },
+      description: 'バリデーションルール \n\n Set 例：{ "required": true }',
+    },
     containerStyle: {
       control: { type: 'object' },
       description:
-        'CheckBoxCustom を包むコンテナ（View）スタイル \n\n Set 例：{ "padding": 20, "backgroundColor": "red" }',
+        'CheckBox を包むコンテナ（View）スタイル \n\n Set 例：{ "padding": 20, "backgroundColor": "red" }',
     },
     optionListStyle: {
       control: { type: 'object' },
@@ -68,8 +63,12 @@ const meta = {
       control: { type: 'boolean' },
       description: '活性・非活性の制御',
     },
+    options: {
+      control: { type: 'object' },
+      description: 'オプション',
+    },
   },
-} satisfies Meta<typeof CheckBoxCustomStoryComponent>;
+} satisfies Meta<typeof CheckBoxCustom>;
 
 export default meta;
 
@@ -77,175 +76,48 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    label: '',
-    rules: { required: false },
-    errorText: '',
-  },
-  parameters: {
-    docs: {
-      source: {
-        code: `
-        // react-hook-form 使用必須
-        type FormValues = { inquiry: string[] };
-
-        const { control, formState: { errors } } = useForm<FormValues>({
-          defaultValues: {
-            inquiry: [],
-          },
-        });
-
-        <CheckBoxCustom
-          control={control}
-          name='inquiry'
-          options={[
-            { label: 'メール', value: 'email' },
-            { label: 'SMS', value: 'sms' },
-            { label: 'アプリ通知', value: 'push' },
-          ]}
-        />
-        `,
-      },
-    },
+    options: defaultOptions,
   },
 };
 
 export const Label: Story = {
   args: {
+    options: defaultOptions,
     label: 'お問い合わせ方法',
     rules: { required: false },
-    errorText: '',
-  },
-  parameters: {
-    docs: {
-      source: {
-        code: `
-        <CheckBoxCustom
-          control={control}
-          label='お問い合わせ方法'
-          name='inquiry'
-          options={[
-            { label: 'メール', value: 'email' },
-            { label: 'SMS', value: 'sms' },
-            { label: 'アプリ通知', value: 'push' },
-          ]}
-        />
-        `,
-      },
-    },
   },
 };
 
 export const Required: Story = {
   args: {
+    options: defaultOptions,
     label: 'お問い合わせ方法',
     rules: { required: '必須項目です' },
-    errorText: '',
-  },
-  parameters: {
-    docs: {
-      source: {
-        code: `
-        <CheckBoxCustom
-          control={control}
-          errorText={errors.inquiry?.message}
-          label='お問い合わせ方法'
-          name='inquiry'
-          options={[
-            { label: 'メール', value: 'email' },
-            { label: 'SMS', value: 'sms' },
-            { label: 'アプリ通知', value: 'push' },
-          ]}
-          rules={{ required: '必須項目です' }}
-        />
-        `,
-      },
-    },
   },
 };
 
 export const ErrorOccurred: Story = {
   args: {
+    options: defaultOptions,
     label: 'お問い合わせ方法',
     rules: { required: '必須項目です' },
     errorText: '必須項目です',
-  },
-  parameters: {
-    docs: {
-      source: {
-        code: `
-        <CheckBoxCustom
-          control={control}
-          errorText='必須項目です'
-          label='お問い合わせ方法'
-          name='inquiry'
-          options={[
-            { label: 'メール', value: 'email' },
-            { label: 'SMS', value: 'sms' },
-            { label: 'アプリ通知', value: 'push' },
-          ]}
-          rules={{ required: '必須項目です' }}
-        />
-        `,
-      },
-    },
   },
 };
 
 export const Disabled: Story = {
   args: {
+    options: defaultOptions,
     disabled: true,
-    label: '',
-    rules: { required: false },
-    errorText: '',
-  },
-  parameters: {
-    docs: {
-      source: {
-        code: `
-        <CheckBoxCustom
-          control={control}
-          disabled
-          name='inquiry'
-          options={[
-            { label: 'メール', value: 'email' },
-            { label: 'SMS', value: 'sms' },
-            { label: 'アプリ通知', value: 'push' },
-          ]}
-        />
-        `,
-      },
-    },
   },
 };
 
 export const CustomColors: Story = {
   args: {
+    options: defaultOptions,
     label: 'カスタムカラー',
     activeColor: '#0d9488',
     inactiveColor: '#cbd5f5',
     knobColor: '#042f2e',
-    rules: { required: false },
-    errorText: '',
-  },
-  parameters: {
-    docs: {
-      source: {
-        code: `
-        <CheckBoxCustom
-          activeColor='#0d9488'
-          control={control}
-          inactiveColor='#cbd5f5'
-          knobColor='#042f2e'
-          label='カスタムカラー'
-          name='inquiry'
-          options={[
-            { label: 'メール', value: 'email' },
-            { label: 'SMS', value: 'sms' },
-            { label: 'アプリ通知', value: 'push' },
-          ]}
-        />
-        `,
-      },
-    },
   },
 };

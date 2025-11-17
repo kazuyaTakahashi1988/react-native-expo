@@ -1,15 +1,14 @@
-import { useForm } from 'react-hook-form';
 import { View } from 'react-native';
 
 import { styles } from '../../.storybook/styles';
-import SelectBox from '../../app/components/form/_selectBox';
+import * as Form from '../../app/components/form';
 
 import type { TypeSelectBox } from '../../app/lib/types/typeComponents';
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite';
 
 type FormValues = { address: string };
 
-type SelectBoxStoryProps = Omit<TypeSelectBox<FormValues>, 'control' | 'name' | 'options'> & {
+type SelectBox = TypeSelectBox<FormValues> & {
   options?: TypeSelectBox<FormValues>['options'];
 };
 
@@ -19,19 +18,13 @@ const addressOptions: TypeSelectBox<FormValues>['options'] = [
   { label: '愛知県', value: 'aichi' },
 ];
 
-const SelectBoxStoryComponent = ({ options = addressOptions, ...props }: SelectBoxStoryProps) => {
-  const { control } = useForm<FormValues>({
-    defaultValues: {
-      address: '',
-    },
-  });
-
-  return <SelectBox<FormValues> {...props} control={control} name='address' options={options} />;
+const SelectBox = ({ ...props }: SelectBox) => {
+  return <Form.SelectBox<FormValues> {...props} />;
 };
 
 const meta = {
   title: 'Form/SelectBox',
-  component: SelectBoxStoryComponent,
+  component: SelectBox,
   decorators: [
     (Story) => (
       <View style={styles.container}>
@@ -41,6 +34,19 @@ const meta = {
   ],
   tags: ['autodocs'],
   argTypes: {
+    label: {
+      control: { type: 'text' },
+    },
+    placeholder: {
+      control: { type: 'text' },
+    },
+    errorText: {
+      control: { type: 'text' },
+    },
+    rules: {
+      control: { type: 'object' },
+      description: 'バリデーションルール \n\n Set 例：{ "required": true }',
+    },
     containerStyle: {
       control: { type: 'object' },
       description:
@@ -54,8 +60,12 @@ const meta = {
       control: { type: 'boolean' },
       description: '活性・非活性の制御',
     },
+    options: {
+      control: { type: 'object' },
+      description: 'オプション',
+    },
   },
-} satisfies Meta<typeof SelectBoxStoryComponent>;
+} satisfies Meta<typeof SelectBox>;
 
 export default meta;
 
@@ -63,151 +73,40 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    label: '',
-    placeholder: '',
-    rules: { required: false },
-    errorText: '',
-  },
-  parameters: {
-    docs: {
-      source: {
-        code: `
-        // react-hook-form 使用必須
-        type FormValues = { address: string };
-
-        const { control, formState: { errors } } = useForm<FormValues>({
-          defaultValues: {
-            address: '',
-          },
-        });
-        
-        <SelectBox
-          control={control}
-          name='address'
-          options={[
-            { label: '東京都', value: 'tokyo' },
-            { label: '大阪府', value: 'osaka' },
-            { label: '愛知県', value: 'aichi' },
-          ]}
-        />
-        `,
-      },
-    },
+    options: addressOptions,
   },
 };
 
 export const LabelAndPlaceholder: Story = {
   args: {
+    options: addressOptions,
     label: '都道府県',
     placeholder: 'お住まいの地域を選択',
-    rules: { required: false },
-    errorText: '',
-  },
-  parameters: {
-    docs: {
-      source: {
-        code: `
-        <SelectBox
-          control={control}
-          label='都道府県'
-          name='address'
-          options={[
-            { label: '東京都', value: 'tokyo' },
-            { label: '大阪府', value: 'osaka' },
-            { label: '愛知県', value: 'aichi' },
-          ]}
-          placeholder='お住まいの地域を選択'
-        />
-        `,
-      },
-    },
   },
 };
 
 export const Required: Story = {
   args: {
+    options: addressOptions,
     label: '都道府県',
     placeholder: 'お住まいの地域を選択',
     rules: { required: '必須項目です' },
-    errorText: '',
-  },
-  parameters: {
-    docs: {
-      source: {
-        code: `
-        <SelectBox
-          control={control}
-          errorText={errors.address?.message}
-          label='都道府県'
-          name='address'
-          options={[
-            { label: '東京都', value: 'tokyo' },
-            { label: '大阪府', value: 'osaka' },
-            { label: '愛知県', value: 'aichi' },
-          ]}
-          placeholder='お住まいの地域を選択'
-          rules={{ required: '必須項目です' }}
-        />
-        `,
-      },
-    },
   },
 };
 
 export const ErrorOccurred: Story = {
   args: {
+    options: addressOptions,
     label: '都道府県',
     placeholder: 'お住まいの地域を選択',
     rules: { required: '必須項目です' },
     errorText: '必須項目です',
   },
-  parameters: {
-    docs: {
-      source: {
-        code: `
-        <SelectBox
-          control={control}
-          errorText='必須項目です'
-          label='都道府県'
-          name='address'
-          options={[
-            { label: '東京都', value: 'tokyo' },
-            { label: '大阪府', value: 'osaka' },
-            { label: '愛知県', value: 'aichi' },
-          ]}
-          placeholder='お住まいの地域を選択'
-          rules={{ required: '必須項目です' }}
-        />
-        `,
-      },
-    },
-  },
 };
 
 export const Disabled: Story = {
   args: {
+    options: addressOptions,
     disabled: true,
-    label: '',
-    placeholder: '',
-    rules: { required: false },
-    errorText: '',
-  },
-  parameters: {
-    docs: {
-      source: {
-        code: `
-        <SelectBox
-          control={control}
-          disabled
-          name='address'
-          options={[
-            { label: '東京都', value: 'tokyo' },
-            { label: '大阪府', value: 'osaka' },
-            { label: '愛知県', value: 'aichi' },
-          ]}
-        />
-        `,
-      },
-    },
   },
 };

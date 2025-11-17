@@ -1,15 +1,14 @@
-import { useForm } from 'react-hook-form';
 import { View } from 'react-native';
 
 import { styles } from '../../.storybook/styles';
-import CheckBox from '../../app/components/form/_checkBox';
+import * as Form from '../../app/components/form';
 
 import type { TypeCheckBox } from '../../app/lib/types/typeComponents';
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite';
 
 type FormValues = { genres: string[] };
 
-type CheckBoxStoryProps = Omit<TypeCheckBox<FormValues>, 'control' | 'name' | 'options'> & {
+type CheckBoxStoryProps = TypeCheckBox<FormValues> & {
   options?: TypeCheckBox<FormValues>['options'];
 };
 
@@ -19,19 +18,13 @@ const defaultOptions: TypeCheckBox<FormValues>['options'] = [
   { label: 'ドラマ', value: 'drama' },
 ];
 
-const CheckBoxStoryComponent = ({ options = defaultOptions, ...props }: CheckBoxStoryProps) => {
-  const { control } = useForm<FormValues>({
-    defaultValues: {
-      genres: [],
-    },
-  });
-
-  return <CheckBox<FormValues> {...props} control={control} name='genres' options={options} />;
+const CheckBox = ({ ...props }: CheckBoxStoryProps) => {
+  return <Form.CheckBox<FormValues> {...props} />;
 };
 
 const meta = {
   title: 'Form/CheckBox',
-  component: CheckBoxStoryComponent,
+  component: CheckBox,
   decorators: [
     (Story) => (
       <View style={styles.container}>
@@ -41,6 +34,16 @@ const meta = {
   ],
   tags: ['autodocs'],
   argTypes: {
+    label: {
+      control: { type: 'text' },
+    },
+    errorText: {
+      control: { type: 'text' },
+    },
+    rules: {
+      control: { type: 'object' },
+      description: 'バリデーションルール \n\n Set 例：{ "required": true }',
+    },
     containerStyle: {
       control: { type: 'object' },
       description:
@@ -60,8 +63,12 @@ const meta = {
       control: { type: 'boolean' },
       description: '活性・非活性の制御',
     },
+    options: {
+      control: { type: 'object' },
+      description: 'オプション',
+    },
   },
-} satisfies Meta<typeof CheckBoxStoryComponent>;
+} satisfies Meta<typeof CheckBox>;
 
 export default meta;
 
@@ -69,143 +76,39 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    label: '',
-    rules: { required: false },
-    errorText: '',
-  },
-  parameters: {
-    docs: {
-      source: {
-        code: `
-        // react-hook-form 使用必須
-        type FormValues = { genres: string[] };
-
-        const { control, formState: { errors } } = useForm<FormValues>({
-          defaultValues: {
-            genres: [],
-          },
-        });
-
-        <CheckBox
-          control={control}
-          name='genres'
-          options={[
-            { label: 'アクション', value: 'action' },
-            { label: 'コメディ', value: 'comedy' },
-            { label: 'ドラマ', value: 'drama' },
-          ]}
-        />
-        `,
-      },
-    },
+    options: defaultOptions,
   },
 };
 
 export const Label: Story = {
   args: {
+    options: defaultOptions,
     label: 'よく視聴するジャンル',
     rules: { required: false },
-    errorText: '',
-  },
-  parameters: {
-    docs: {
-      source: {
-        code: `
-        <CheckBox
-          control={control}
-          label='よく視聴するジャンル'
-          name='genres'
-          options={[
-            { label: 'アクション', value: 'action' },
-            { label: 'コメディ', value: 'comedy' },
-            { label: 'ドラマ', value: 'drama' },
-          ]}
-        />
-        `,
-      },
-    },
   },
 };
 
 export const Required: Story = {
   args: {
+    options: defaultOptions,
     label: 'よく視聴するジャンル',
     rules: { required: '必須項目です' },
-    errorText: '',
-  },
-  parameters: {
-    docs: {
-      source: {
-        code: `
-        <CheckBox
-          control={control}
-          errorText={errors.genres?.message}
-          label='よく視聴するジャンル'
-          name='genres'
-          options={[
-            { label: 'アクション', value: 'action' },
-            { label: 'コメディ', value: 'comedy' },
-            { label: 'ドラマ', value: 'drama' },
-          ]}
-          rules={{ required: '必須項目です' }}
-        />
-        `,
-      },
-    },
   },
 };
 
 export const ErrorOccurred: Story = {
   args: {
+    options: defaultOptions,
     label: 'よく視聴するジャンル',
     rules: { required: '必須項目です' },
     errorText: '必須項目です',
-  },
-  parameters: {
-    docs: {
-      source: {
-        code: `
-        <CheckBox
-          control={control}
-          errorText='必須項目です'
-          label='よく視聴するジャンル'
-          name='genres'
-          options={[
-            { label: 'アクション', value: 'action' },
-            { label: 'コメディ', value: 'comedy' },
-            { label: 'ドラマ', value: 'drama' },
-          ]}
-          rules={{ required: '必須項目です' }}
-        />
-        `,
-      },
-    },
   },
 };
 
 export const Disabled: Story = {
   args: {
+    options: defaultOptions,
     disabled: true,
-    label: '',
     rules: { required: false },
-    errorText: '',
-  },
-  parameters: {
-    docs: {
-      source: {
-        code: `
-        <CheckBox
-          control={control}
-          disabled
-          name='genres'
-          options={[
-            { label: 'アクション', value: 'action' },
-            { label: 'コメディ', value: 'comedy' },
-            { label: 'ドラマ', value: 'drama' },
-          ]}
-        />
-        `,
-      },
-    },
   },
 };

@@ -1,29 +1,22 @@
-import { useForm } from 'react-hook-form';
 import { View } from 'react-native';
 
 import { styles } from '../../.storybook/styles';
-import TextArea from '../../app/components/form/_textarea';
+import * as Form from '../../app/components/form';
 
 import type { TypeTextArea } from '../../app/lib/types/typeComponents';
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite';
 
 type FormValues = { description: string };
 
-type TextAreaStoryProps = Omit<TypeTextArea<FormValues>, 'control' | 'name'>;
+type TextAreaStoryProps = TypeTextArea<FormValues>;
 
-const TextAreaStoryComponent = (props: TextAreaStoryProps) => {
-  const { control } = useForm<FormValues>({
-    defaultValues: {
-      description: '',
-    },
-  });
-
-  return <TextArea<FormValues> {...props} control={control} name='description' />;
+const TextArea = (props: TextAreaStoryProps) => {
+  return <Form.TextArea<FormValues> {...props} />;
 };
 
 const meta = {
   title: 'Form/TextArea',
-  component: TextAreaStoryComponent,
+  component: TextArea,
   decorators: [
     (Story) => (
       <View style={styles.container}>
@@ -33,6 +26,19 @@ const meta = {
   ],
   tags: ['autodocs'],
   argTypes: {
+    label: {
+      control: { type: 'text' },
+    },
+    placeholder: {
+      control: { type: 'text' },
+    },
+    errorText: {
+      control: { type: 'text' },
+    },
+    rules: {
+      control: { type: 'object' },
+      description: 'バリデーションルール \n\n Set 例：{ "required": true }',
+    },
     containerStyle: {
       control: { type: 'object' },
       description:
@@ -47,59 +53,20 @@ const meta = {
       description: '活性・非活性の制御',
     },
   },
-} satisfies Meta<typeof TextAreaStoryComponent>;
+} satisfies Meta<typeof TextArea>;
 
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  args: {
-    label: '',
-    placeholder: '',
-    rules: { required: false },
-    errorText: '',
-  },
-  parameters: {
-    docs: {
-      source: {
-        code: `
-        // react-hook-form 使用必須
-        type FormValues = { description: string };
-
-        const { control, formState: { errors } } = useForm<FormValues>({
-          defaultValues: {
-            description: '',
-          },
-        });
-
-        <TextArea control={control} name='description' />
-        `,
-      },
-    },
-  },
+  args: {},
 };
 
 export const LabelAndPlaceholder: Story = {
   args: {
     label: 'ご相談の内容',
     placeholder: 'ご要望やご質問をご記入ください',
-    rules: { required: false },
-    errorText: '',
-  },
-  parameters: {
-    docs: {
-      source: {
-        code: `
-        <TextArea
-          control={control}
-          label='ご相談の内容'
-          name='description'
-          placeholder='ご要望やご質問をご記入ください'
-        />
-        `,
-      },
-    },
   },
 };
 
@@ -108,23 +75,6 @@ export const Required: Story = {
     label: 'ご相談の内容',
     placeholder: 'ご要望やご質問をご記入ください',
     rules: { required: '必須項目です' },
-    errorText: '',
-  },
-  parameters: {
-    docs: {
-      source: {
-        code: `
-        <TextArea
-          control={control}
-          errorText={errors.description?.message}
-          label='ご相談の内容'
-          name='description'
-          placeholder='ご要望やご質問をご記入ください'
-          rules={{ required: '必須項目です' }}
-        />
-        `,
-      },
-    },
   },
 };
 
@@ -135,39 +85,10 @@ export const ErrorOccurred: Story = {
     rules: { required: '必須項目です' },
     errorText: '必須項目です',
   },
-  parameters: {
-    docs: {
-      source: {
-        code: `
-        <TextArea
-          control={control}
-          errorText='必須項目です'
-          label='ご相談の内容'
-          name='description'
-          placeholder='ご要望やご質問をご記入ください'
-          rules={{ required: '必須項目です' }}
-        />
-        `,
-      },
-    },
-  },
 };
 
 export const Disabled: Story = {
   args: {
     disabled: true,
-    label: '',
-    placeholder: '',
-    rules: { required: false },
-    errorText: '',
-  },
-  parameters: {
-    docs: {
-      source: {
-        code: `
-        <TextArea control={control} disabled name='description' />
-        `,
-      },
-    },
   },
 };

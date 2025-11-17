@@ -1,18 +1,14 @@
-import { useForm } from 'react-hook-form';
 import { View } from 'react-native';
 
 import { styles } from '../../.storybook/styles';
-import RadioBoxCustom from '../../app/components/form/_radioBoxCustom';
+import * as Form from '../../app/components/form';
 
 import type { TypeRadioBoxCustom } from '../../app/lib/types/typeComponents';
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite';
 
 type FormValues = { theme: string };
 
-type RadioBoxCustomStoryProps = Omit<
-  TypeRadioBoxCustom<FormValues>,
-  'control' | 'name' | 'options'
-> & {
+type RadioBoxCustomStoryProps = TypeRadioBoxCustom<FormValues> & {
   options?: TypeRadioBoxCustom<FormValues>['options'];
 };
 
@@ -22,22 +18,13 @@ const defaultOptions: TypeRadioBoxCustom<FormValues>['options'] = [
   { label: 'イエロー', value: 'yellow' },
 ];
 
-const RadioBoxCustomStoryComponent = ({
-  options = defaultOptions,
-  ...props
-}: RadioBoxCustomStoryProps) => {
-  const { control } = useForm<FormValues>({
-    defaultValues: {
-      theme: '',
-    },
-  });
-
-  return <RadioBoxCustom<FormValues> {...props} control={control} name='theme' options={options} />;
+const RadioBoxCustom = ({ ...props }: RadioBoxCustomStoryProps) => {
+  return <Form.RadioBoxCustom<FormValues> {...props} />;
 };
 
 const meta = {
   title: 'Form/RadioBoxCustom',
-  component: RadioBoxCustomStoryComponent,
+  component: RadioBoxCustom,
   decorators: [
     (Story) => (
       <View style={styles.container}>
@@ -47,6 +34,16 @@ const meta = {
   ],
   tags: ['autodocs'],
   argTypes: {
+    label: {
+      control: { type: 'text' },
+    },
+    errorText: {
+      control: { type: 'text' },
+    },
+    rules: {
+      control: { type: 'object' },
+      description: 'バリデーションルール \n\n Set 例：{ "required": true }',
+    },
     containerStyle: {
       control: { type: 'object' },
       description:
@@ -66,8 +63,12 @@ const meta = {
       control: { type: 'boolean' },
       description: '活性・非活性の制御',
     },
+    options: {
+      control: { type: 'object' },
+      description: 'オプション',
+    },
   },
-} satisfies Meta<typeof RadioBoxCustomStoryComponent>;
+} satisfies Meta<typeof RadioBoxCustom>;
 
 export default meta;
 
@@ -75,175 +76,47 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    label: '',
-    rules: { required: false },
-    errorText: '',
-  },
-  parameters: {
-    docs: {
-      source: {
-        code: `
-        // react-hook-form 使用必須
-        type FormValues = { theme: string };
-
-        const { control, formState: { errors } } = useForm<FormValues>({
-          defaultValues: {
-            theme: '',
-          },
-        });
-        
-        <RadioBoxCustom
-          control={control}
-          name='theme'
-          options={[
-            { label: 'シアン', value: 'cyan' },
-            { label: 'マゼンタ', value: 'magenta' },
-            { label: 'イエロー', value: 'yellow' },
-          ]}
-        />
-        `,
-      },
-    },
+    options: defaultOptions,
   },
 };
 
 export const Label: Story = {
   args: {
+    options: defaultOptions,
     label: 'テーマ色の選択',
-    rules: { required: false },
-    errorText: '',
-  },
-  parameters: {
-    docs: {
-      source: {
-        code: `
-        <RadioBoxCustom
-          control={control}
-          label='テーマ色の選択'
-          name='theme'
-          options={[
-            { label: 'シアン', value: 'cyan' },
-            { label: 'マゼンタ', value: 'magenta' },
-            { label: 'イエロー', value: 'yellow' },
-          ]}
-        />
-        `,
-      },
-    },
   },
 };
 
 export const Required: Story = {
   args: {
+    options: defaultOptions,
     label: 'テーマ色の選択',
     rules: { required: '必須項目です' },
-    errorText: '',
-  },
-  parameters: {
-    docs: {
-      source: {
-        code: `
-        <RadioBoxCustom
-          control={control}
-          errorText={errors.theme?.message}
-          label='テーマ色の選択'
-          name='theme'
-          options={[
-            { label: 'シアン', value: 'cyan' },
-            { label: 'マゼンタ', value: 'magenta' },
-            { label: 'イエロー', value: 'yellow' },
-          ]}
-          rules={{ required: '必須項目です' }}
-        />
-        `,
-      },
-    },
   },
 };
 
 export const ErrorOccurred: Story = {
   args: {
+    options: defaultOptions,
     label: 'テーマ色の選択',
     rules: { required: '必須項目です' },
     errorText: '必須項目です',
-  },
-  parameters: {
-    docs: {
-      source: {
-        code: `
-        <RadioBoxCustom
-          control={control}
-          errorText='必須項目です'
-          label='テーマ色の選択'
-          name='theme'
-          options={[
-            { label: 'シアン', value: 'cyan' },
-            { label: 'マゼンタ', value: 'magenta' },
-            { label: 'イエロー', value: 'yellow' },
-          ]}
-          rules={{ required: '必須項目です' }}
-        />
-        `,
-      },
-    },
   },
 };
 
 export const Disabled: Story = {
   args: {
+    options: defaultOptions,
     disabled: true,
-    label: '',
-    rules: { required: false },
-    errorText: '',
-  },
-  parameters: {
-    docs: {
-      source: {
-        code: `
-        <RadioBoxCustom
-          control={control}
-          disabled
-          name='theme'
-          options={[
-            { label: 'シアン', value: 'cyan' },
-            { label: 'マゼンタ', value: 'magenta' },
-            { label: 'イエロー', value: 'yellow' },
-          ]}
-        />
-        `,
-      },
-    },
   },
 };
 
 export const CustomColors: Story = {
   args: {
+    options: defaultOptions,
     label: 'カスタムカラー',
     activeColor: '#f97316',
     inactiveColor: '#fed7aa',
     knobColor: '#7c2d12',
-    rules: { required: false },
-    errorText: '',
-  },
-  parameters: {
-    docs: {
-      source: {
-        code: `
-        <RadioBoxCustom
-          activeColor='#f97316'
-          control={control}
-          inactiveColor='#fed7aa'
-          knobColor='#7c2d12'
-          label='カスタムカラー'
-          name='theme'
-          options={[
-            { label: 'シアン', value: 'cyan' },
-            { label: 'マゼンタ', value: 'magenta' },
-            { label: 'イエロー', value: 'yellow' },
-          ]}
-        />
-        `,
-      },
-    },
   },
 };

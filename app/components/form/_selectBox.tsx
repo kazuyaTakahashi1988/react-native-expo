@@ -32,11 +32,11 @@ const SelectBox = <TFieldValues extends FieldValues>({
   valueTextStyle,
 }: TypeSelectBox<TFieldValues>) => {
   const pickerRef = useRef<RNPickerSelect | null>(null);
-  const { controller, isActive } = useRHFController({ control, name, rules });
+  const { controller } = useRHFController({ control, name, rules });
 
-  const selectedValue = getSelectedValue(controller.field.value, isActive);
+  const selectedValue = getSelectedValue(controller.field.value);
   const hasError = Boolean(errorText);
-  const isDisabled = isSelectDisabled(disabled, isActive);
+  const isDisabled = isSelectDisabled(disabled);
 
   const selectedOption = options.find((option) => option.value === selectedValue);
   const isPlaceholder = selectedOption == null;
@@ -55,9 +55,7 @@ const SelectBox = <TFieldValues extends FieldValues>({
     pickerRef.current?.togglePicker(true);
   };
 
-  const handleValueChange = buildValueChangeHandler(
-    isActive ? controller.field.onChange : undefined,
-  );
+  const handleValueChange = buildValueChangeHandler(controller.field.onChange);
 
   return (
     <View style={containerStyle}>
@@ -173,15 +171,12 @@ const buildValueChangeHandler = (
   };
 };
 
-const getSelectedValue = (rawValue: unknown, isActive: boolean): string => {
-  if (!isActive) {
-    return '';
-  }
+const getSelectedValue = (rawValue: unknown): string => {
   return ensureString(rawValue);
 };
 
-const isSelectDisabled = (disabled: boolean, isActive: boolean): boolean => {
-  return disabled || !isActive;
+const isSelectDisabled = (disabled: boolean): boolean => {
+  return disabled;
 };
 
 const ensureString = (rawValue: unknown): string => {

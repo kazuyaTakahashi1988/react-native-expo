@@ -122,13 +122,10 @@ const CheckBoxCustom = <TFieldValues extends FieldValues>({
   trackStyle,
   knobStyle,
 }: TypeCheckBoxCustom<TFieldValues>) => {
-  const { controller, isActive } = useRHFController({ control, name, rules });
+  const { controller } = useRHFController({ control, name, rules });
   const controllerValue = controller.field.value;
 
-  const selectedValues = useMemo(
-    () => getSelectedValues(controllerValue, isActive),
-    [controllerValue, isActive],
-  );
+  const selectedValues = useMemo(() => getSelectedValues(controllerValue), [controllerValue]);
 
   const hasError = Boolean(errorText);
 
@@ -142,7 +139,7 @@ const CheckBoxCustom = <TFieldValues extends FieldValues>({
       <View style={[styles.optionList, optionListStyle]}>
         {options.map((option) => {
           const isSelected = selectedValues.includes(option.value);
-          const isDisabled = getIsOptionDisabled(option.disabled, disabled, isActive);
+          const isDisabled = getIsOptionDisabled(option.disabled, disabled);
           return (
             <ToggleCheckOption
               accessibilityState={{ checked: isSelected }}
@@ -156,12 +153,7 @@ const CheckBoxCustom = <TFieldValues extends FieldValues>({
               knobStyle={knobStyle}
               label={option.label}
               onPress={() => {
-                handleToggleOption(
-                  option.value,
-                  selectedValues,
-                  controller.field.onChange,
-                  isActive,
-                );
+                handleToggleOption(option.value, selectedValues, controller.field.onChange);
               }}
               optionLabelStyle={optionLabelStyle}
               optionRowStyle={optionRowStyle}
@@ -175,8 +167,8 @@ const CheckBoxCustom = <TFieldValues extends FieldValues>({
   );
 };
 
-const getSelectedValues = (value: unknown, isActive: boolean): string[] => {
-  if (!isActive || !Array.isArray(value)) {
+const getSelectedValues = (value: unknown): string[] => {
+  if (!Array.isArray(value)) {
     return [];
   }
   return value as string[];
@@ -185,12 +177,7 @@ const getSelectedValues = (value: unknown, isActive: boolean): string[] => {
 const getIsOptionDisabled = (
   optionDisabled: boolean | undefined,
   disabled: boolean | undefined,
-  isActive: boolean,
 ): boolean => {
-  if (!isActive) {
-    return true;
-  }
-
   return optionDisabled === true || disabled === true;
 };
 
@@ -198,12 +185,7 @@ const handleToggleOption = (
   optionValue: string,
   selectedValues: string[],
   onChange: (value: string[]) => void,
-  isActive: boolean,
 ) => {
-  if (!isActive) {
-    return;
-  }
-
   if (selectedValues.includes(optionValue)) {
     onChange(selectedValues.filter((selected) => selected !== optionValue));
     return;

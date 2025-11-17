@@ -1,15 +1,14 @@
-import { useForm } from 'react-hook-form';
 import { View } from 'react-native';
 
 import { styles } from '../../.storybook/styles';
-import RadioBox from '../../app/components/form/_radioBox';
+import * as Form from '../../app/components/form';
 
 import type { TypeRadioBox } from '../../app/lib/types/typeComponents';
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite';
 
 type FormValues = { payment: string };
 
-type RadioBoxStoryProps = Omit<TypeRadioBox<FormValues>, 'control' | 'name' | 'options'> & {
+type RadioBoxStoryProps = TypeRadioBox<FormValues> & {
   options?: TypeRadioBox<FormValues>['options'];
 };
 
@@ -19,19 +18,13 @@ const defaultOptions: TypeRadioBox<FormValues>['options'] = [
   { label: '電子マネー', value: 'wallet' },
 ];
 
-const RadioBoxStoryComponent = ({ options = defaultOptions, ...props }: RadioBoxStoryProps) => {
-  const { control } = useForm<FormValues>({
-    defaultValues: {
-      payment: '',
-    },
-  });
-
-  return <RadioBox<FormValues> {...props} control={control} name='payment' options={options} />;
+const RadioBox = ({ ...props }: RadioBoxStoryProps) => {
+  return <Form.RadioBox<FormValues> {...props} />;
 };
 
 const meta = {
   title: 'Form/RadioBox',
-  component: RadioBoxStoryComponent,
+  component: RadioBox,
   decorators: [
     (Story) => (
       <View style={styles.container}>
@@ -41,6 +34,16 @@ const meta = {
   ],
   tags: ['autodocs'],
   argTypes: {
+    label: {
+      control: { type: 'text' },
+    },
+    errorText: {
+      control: { type: 'text' },
+    },
+    rules: {
+      control: { type: 'object' },
+      description: 'バリデーションルール \n\n Set 例：{ "required": true }',
+    },
     containerStyle: {
       control: { type: 'object' },
       description:
@@ -60,8 +63,12 @@ const meta = {
       control: { type: 'boolean' },
       description: '活性・非活性の制御',
     },
+    options: {
+      control: { type: 'object' },
+      description: 'オプション',
+    },
   },
-} satisfies Meta<typeof RadioBoxStoryComponent>;
+} satisfies Meta<typeof RadioBox>;
 
 export default meta;
 
@@ -69,143 +76,37 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    label: '',
-    rules: { required: false },
-    errorText: '',
-  },
-  parameters: {
-    docs: {
-      source: {
-        code: `
-        // react-hook-form 使用必須
-        type FormValues = { payment: string };
-
-        const { control, formState: { errors } } = useForm<FormValues>({
-          defaultValues: {
-            payment: '',
-          },
-        });
-        
-        <RadioBox
-          control={control}
-          name='payment'
-          options={[
-            { label: 'クレジットカード', value: 'card' },
-            { label: '銀行振込', value: 'bank' },
-            { label: '電子マネー', value: 'wallet' },
-          ]}
-        />
-        `,
-      },
-    },
+    options: defaultOptions,
   },
 };
 
 export const Label: Story = {
   args: {
+    options: defaultOptions,
     label: 'お支払い方法',
-    rules: { required: false },
-    errorText: '',
-  },
-  parameters: {
-    docs: {
-      source: {
-        code: `
-        <RadioBox
-          control={control}
-          label='お支払い方法'
-          name='payment'
-          options={[
-            { label: 'クレジットカード', value: 'card' },
-            { label: '銀行振込', value: 'bank' },
-            { label: '電子マネー', value: 'wallet' },
-          ]}
-        />
-        `,
-      },
-    },
   },
 };
 
 export const Required: Story = {
   args: {
+    options: defaultOptions,
     label: 'お支払い方法',
     rules: { required: '必須項目です' },
-    errorText: '',
-  },
-  parameters: {
-    docs: {
-      source: {
-        code: `
-        <RadioBox
-          control={control}
-          errorText={errors.payment?.message}
-          label='お支払い方法'
-          name='payment'
-          options={[
-            { label: 'クレジットカード', value: 'card' },
-            { label: '銀行振込', value: 'bank' },
-            { label: '電子マネー', value: 'wallet' },
-          ]}
-          rules={{ required: '必須項目です' }}
-        />
-        `,
-      },
-    },
   },
 };
 
 export const ErrorOccurred: Story = {
   args: {
+    options: defaultOptions,
     label: 'お支払い方法',
     rules: { required: '必須項目です' },
     errorText: '必須項目です',
-  },
-  parameters: {
-    docs: {
-      source: {
-        code: `
-        <RadioBox
-          control={control}
-          errorText='必須項目です'
-          label='お支払い方法'
-          name='payment'
-          options={[
-            { label: 'クレジットカード', value: 'card' },
-            { label: '銀行振込', value: 'bank' },
-            { label: '電子マネー', value: 'wallet' },
-          ]}
-          rules={{ required: '必須項目です' }}
-        />
-        `,
-      },
-    },
   },
 };
 
 export const Disabled: Story = {
   args: {
+    options: defaultOptions,
     disabled: true,
-    label: '',
-    rules: { required: false },
-    errorText: '',
-  },
-  parameters: {
-    docs: {
-      source: {
-        code: `
-        <RadioBox
-          control={control}
-          disabled
-          name='payment'
-          options={[
-            { label: 'クレジットカード', value: 'card' },
-            { label: '銀行振込', value: 'bank' },
-            { label: '電子マネー', value: 'wallet' },
-          ]}
-        />
-        `,
-      },
-    },
   },
 };

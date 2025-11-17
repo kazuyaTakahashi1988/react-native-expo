@@ -24,7 +24,7 @@ const Input = <TFieldValues extends FieldValues>({
   style,
   ...textInputProps
 }: TypeInput<TFieldValues>) => {
-  const { controller, isActive } = useRHFController({ control, name, rules });
+  const { controller } = useRHFController({ control, name, rules });
 
   const hasError = Boolean(errorText);
   const trackAnimatedStyle = useMemo(
@@ -32,7 +32,7 @@ const Input = <TFieldValues extends FieldValues>({
     [disabled, hasError],
   );
 
-  const controllerProps = buildControllerProps(controller, isActive);
+  const controllerProps = buildControllerProps(controller);
 
   return (
     <View style={containerStyle}>
@@ -42,7 +42,7 @@ const Input = <TFieldValues extends FieldValues>({
         editable={!disabled}
         placeholderTextColor={'#9e9e9e'}
         style={[styles.input, ...trackAnimatedStyle, style]}
-        {...(controllerProps ?? {})}
+        {...controllerProps}
       />
       <ErrorText errorText={errorText} />
     </View>
@@ -64,12 +64,7 @@ const buildInputStateStyles = (hasError: boolean, disabled: boolean): StyleProp<
 
 const buildControllerProps = <TFieldValues extends FieldValues>(
   controller: UseControllerReturn<TFieldValues>,
-  isActive: boolean,
 ) => {
-  if (!isActive) {
-    return null;
-  }
-
   const controllerValue = controller.field.value;
   const value = typeof controllerValue === 'string' ? controllerValue : '';
 

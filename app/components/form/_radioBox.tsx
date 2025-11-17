@@ -23,9 +23,9 @@ const RadioBox = <TFieldValues extends FieldValues>({
   options,
   rules,
 }: TypeRadioBox<TFieldValues>) => {
-  const { controller, isActive } = useRHFController({ control, name, rules });
+  const { controller } = useRHFController({ control, name, rules });
 
-  const selectedValue = getSelectedValue(controller.field.value, isActive);
+  const selectedValue = getSelectedValue(controller.field.value);
   const hasError = Boolean(errorText);
 
   return (
@@ -34,7 +34,7 @@ const RadioBox = <TFieldValues extends FieldValues>({
       <View style={[styles.radioGroup, optionListStyle]}>
         {options.map((option) => {
           const isSelected = selectedValue === option.value;
-          const isDisabled = getIsOptionDisabled(option.disabled, disabled, isActive);
+          const isDisabled = getIsOptionDisabled(option.disabled, disabled);
           return (
             <Pressable
               accessibilityRole='radio'
@@ -42,7 +42,7 @@ const RadioBox = <TFieldValues extends FieldValues>({
               disabled={isDisabled}
               key={option.key ?? option.value}
               onPress={() => {
-                handleSelectOption(option.value, controller.field.onChange, isActive);
+                handleSelectOption(option.value, controller.field.onChange);
               }}
               style={[styles.radioRow, optionRowStyle]}
             >
@@ -66,32 +66,18 @@ const RadioBox = <TFieldValues extends FieldValues>({
   );
 };
 
-const getSelectedValue = (value: unknown, isActive: boolean): string => {
-  if (!isActive || typeof value !== 'string') {
+const getSelectedValue = (value: unknown): string => {
+  if (typeof value !== 'string') {
     return '';
   }
   return value;
 };
 
-const getIsOptionDisabled = (
-  optionDisabled: boolean | undefined,
-  disabled: boolean,
-  isActive: boolean,
-): boolean => {
-  if (!isActive) {
-    return true;
-  }
+const getIsOptionDisabled = (optionDisabled: boolean | undefined, disabled: boolean): boolean => {
   return optionDisabled === true || disabled;
 };
 
-const handleSelectOption = (
-  optionValue: string,
-  onChange: (value: string) => void,
-  isActive: boolean,
-) => {
-  if (!isActive) {
-    return;
-  }
+const handleSelectOption = (optionValue: string, onChange: (value: string) => void) => {
   onChange(optionValue);
 };
 

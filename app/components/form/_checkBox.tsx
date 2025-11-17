@@ -23,8 +23,8 @@ const CheckBox = <TFieldValues extends FieldValues>({
   options,
   rules,
 }: TypeCheckBox<TFieldValues>) => {
-  const { controller, isActive } = useRHFController({ control, name, rules });
-  const selectedValues = getSelectedValues(controller.field.value, isActive);
+  const { controller } = useRHFController({ control, name, rules });
+  const selectedValues = getSelectedValues(controller.field.value);
   const hasError = Boolean(errorText);
 
   return (
@@ -33,7 +33,7 @@ const CheckBox = <TFieldValues extends FieldValues>({
       <View style={[styles.checkBoxGroup, optionListStyle]}>
         {options.map((option) => {
           const isSelected = selectedValues.includes(option.value);
-          const isDisabled = getIsOptionDisabled(option.disabled, disabled, isActive);
+          const isDisabled = getIsOptionDisabled(option.disabled, disabled);
           return (
             <Pressable
               accessibilityRole='checkbox'
@@ -41,12 +41,7 @@ const CheckBox = <TFieldValues extends FieldValues>({
               disabled={isDisabled}
               key={option.key ?? option.value}
               onPress={() => {
-                handleToggleOption(
-                  option.value,
-                  selectedValues,
-                  controller.field.onChange,
-                  isActive,
-                );
+                handleToggleOption(option.value, selectedValues, controller.field.onChange);
               }}
               style={[styles.checkBoxRow, optionRowStyle]}
             >
@@ -68,22 +63,14 @@ const CheckBox = <TFieldValues extends FieldValues>({
   );
 };
 
-const getSelectedValues = (value: unknown, isActive: boolean): string[] => {
-  if (!isActive || !Array.isArray(value)) {
+const getSelectedValues = (value: unknown): string[] => {
+  if (!Array.isArray(value)) {
     return [];
   }
   return value as string[];
 };
 
-const getIsOptionDisabled = (
-  optionDisabled: boolean | undefined,
-  disabled: boolean,
-  isActive: boolean,
-): boolean => {
-  if (!isActive) {
-    return true;
-  }
-
+const getIsOptionDisabled = (optionDisabled: boolean | undefined, disabled: boolean): boolean => {
   return optionDisabled === true || disabled;
 };
 
@@ -91,12 +78,7 @@ const handleToggleOption = (
   optionValue: string,
   selectedValues: string[],
   onChange: (value: string[]) => void,
-  isActive: boolean,
 ) => {
-  if (!isActive) {
-    return;
-  }
-
   if (selectedValues.includes(optionValue)) {
     onChange(selectedValues.filter((selected) => selected !== optionValue));
     return;
