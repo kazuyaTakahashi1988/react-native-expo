@@ -1,12 +1,13 @@
 import { useMemo } from 'react';
-import { useController } from 'react-hook-form';
 import { StyleSheet, TextInput, View } from 'react-native';
 
 import ErrorText from './_errorText';
 import Label from './_label';
+import useOptionalController from './_useOptionalController';
 
 import type { TypeInput } from '../../lib/types/typeComponents';
-import type { FieldValues } from 'react-hook-form';
+import type { FieldValues, UseControllerReturn } from 'react-hook-form';
+import type { StyleProp, TextStyle } from 'react-native';
 
 /* -----------------------------------------------
  * インプット項目
@@ -23,24 +24,15 @@ const Input = <TFieldValues extends FieldValues>({
   style,
   ...textInputProps
 }: TypeInput<TFieldValues>) => {
-  const shouldUseController = Boolean(control && name);
+  const { controller, isActive } = useOptionalController({ control, name, rules });
 
-  const controller = shouldUseController ? useController({ control, name, rules }) : null;
-
-  const inputValue = typeof controller?.field.value === 'string' ? controller.field.value : undefined;
   const hasError = Boolean(errorText);
   const trackAnimatedStyle = useMemo(
-    () => [hasError ? styles.inputError : null, disabled ? styles.inputDisabled : null],
+    () => buildInputStateStyles(hasError, disabled),
     [disabled, hasError],
   );
 
-  const controllerProps = shouldUseController
-    ? {
-        onBlur: controller?.field.onBlur,
-        onChangeText: controller?.field.onChange,
-        value: inputValue ?? '',
-      }
-    : {};
+  const controllerProps = buildControllerProps(controller, isActive);
 
   return (
     <View style={containerStyle}>
@@ -49,12 +41,43 @@ const Input = <TFieldValues extends FieldValues>({
         {...textInputProps}
         editable={!disabled}
         placeholderTextColor={'#9e9e9e'}
-        style={[styles.input, trackAnimatedStyle, style]}
-        {...controllerProps}
+        style={[styles.input, ...trackAnimatedStyle, style]}
+        {...(controllerProps ?? {})}
       />
       <ErrorText errorText={errorText} />
     </View>
   );
+};
+
+const buildInputStateStyles = (hasError: boolean, disabled: boolean): StyleProp<TextStyle>[] => {
+  const computed: StyleProp<TextStyle>[] = [];
+
+  if (hasError) {
+    computed.push(styles.inputError);
+  }
+  if (disabled) {
+    computed.push(styles.inputDisabled);
+  }
+
+  return computed;
+};
+
+const buildControllerProps = <TFieldValues extends FieldValues>(
+  controller: UseControllerReturn<TFieldValues>,
+  isActive: boolean,
+) => {
+  if (!isActive) {
+    return null;
+  }
+
+  const controllerValue = controller.field.value;
+  const value = typeof controllerValue === 'string' ? controllerValue : '';
+
+  return {
+    onBlur: controller.field.onBlur,
+    onChangeText: controller.field.onChange,
+    value,
+  } as const;
 };
 
 const styles = StyleSheet.create({

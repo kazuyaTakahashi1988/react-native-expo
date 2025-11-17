@@ -1,5 +1,4 @@
 import { useEffect, useMemo } from 'react';
-import { useController } from 'react-hook-form';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import Animated, {
   interpolate,
@@ -12,6 +11,7 @@ import Animated, {
 
 import ErrorText from './_errorText';
 import Label from './_label';
+import useOptionalController from './_useOptionalController';
 
 import type { TypeRadioBoxCustom, TypeToggleRadioOption } from '../../lib/types/typeComponents';
 import type { FieldValues } from 'react-hook-form';
@@ -45,6 +45,7 @@ const ToggleRadioOption = ({
   knobStyle,
 }: TypeToggleRadioOption) => {
   const progress: SharedValue<number> = useSharedValue<number>(isSelected ? 1 : 0);
+  const isDisabled = disabled;
 
   useEffect(() => {
     progress.value = withTiming(isSelected ? 1 : 0, { duration: 200 });
@@ -52,11 +53,11 @@ const ToggleRadioOption = ({
 
   const trackAnimatedStyle = useAnimatedStyle(
     (): { backgroundColor: string } => ({
-      backgroundColor: disabled
+      backgroundColor: isDisabled
         ? DISABLED_COLOR
         : String(interpolateColor(progress.value, [0, 1], [inactiveColor, activeColor])),
     }),
-    [activeColor, disabled, inactiveColor],
+    [activeColor, inactiveColor, isDisabled],
   );
 
   const knobAnimatedStyle = useAnimatedStyle(
@@ -74,7 +75,7 @@ const ToggleRadioOption = ({
     <Pressable
       accessibilityRole='radio'
       accessibilityState={accessibilityState}
-      disabled={disabled}
+      disabled={isDisabled}
       onPress={onPress}
       style={[styles.optionRow, optionRowStyle]}
     >
@@ -90,9 +91,7 @@ const ToggleRadioOption = ({
           style={[styles.knob, { backgroundColor: knobColor }, knobAnimatedStyle, knobStyle]}
         />
       </Animated.View>
-      <Text
-        style={[styles.optionLabel, optionLabelStyle, disabled ? styles.optionLabelDisabled : null]}
-      >
+      <Text style={[styles.optionLabel, optionLabelStyle, isDisabled ? styles.optionLabelDisabled : null]}>
         {label}
       </Text>
     </Pressable>
@@ -117,13 +116,12 @@ const RadioBoxCustom = <TFieldValues extends FieldValues>({
   trackStyle,
   knobStyle,
 }: TypeRadioBoxCustom<TFieldValues>) => {
-  const shouldUseController = Boolean(control && name);
-  const controller = shouldUseController ? useController({ control, name, rules }) : null;
-  const controllerValue = controller?.field.value;
+  const { controller, isActive } = useOptionalController({ control, name, rules });
+  const controllerValue = controller.field.value;
 
   const selectedValue = useMemo(
-    () => (typeof controllerValue === 'string' ? controllerValue : ''),
-    [controllerValue],
+    () => getSelectedValue(controllerValue, isActive),
+    [controllerValue, isActive],
   );
 
   const hasError = Boolean(errorText);
@@ -138,12 +136,12 @@ const RadioBoxCustom = <TFieldValues extends FieldValues>({
       <View style={[styles.optionList, optionListStyle]}>
         {options.map((option) => {
           const isSelected = selectedValue === option.value;
-          const isDisabled = () => option.disabled === true || disabled || !shouldUseController;
+          const isDisabled = getIsOptionDisabled(option.disabled, disabled, isActive);
           return (
             <ToggleRadioOption
               accessibilityState={{ selected: isSelected }}
               activeColor={activeColor}
-              disabled={isDisabled()}
+              disabled={isDisabled}
               hasError={hasError}
               inactiveColor={inactiveColor}
               isSelected={isSelected}
@@ -152,10 +150,7 @@ const RadioBoxCustom = <TFieldValues extends FieldValues>({
               knobStyle={knobStyle}
               label={option.label}
               onPress={() => {
-                if (!shouldUseController || controller == null) {
-                  return;
-                }
-                controller.field.onChange(option.value);
+                handleSelectOption(option.value, controller.field.onChange, isActive);
               }}
               optionLabelStyle={optionLabelStyle}
               optionRowStyle={optionRowStyle}
@@ -167,6 +162,37 @@ const RadioBoxCustom = <TFieldValues extends FieldValues>({
       <ErrorText errorText={errorText} />
     </View>
   );
+};
+
+const getSelectedValue = (value: unknown, isActive: boolean): string => {
+  if (!isActive || typeof value !== 'string') {
+    return '';
+  }
+  return value;
+};
+
+const getIsOptionDisabled = (
+  optionDisabled: boolean | undefined,
+  disabled: boolean | undefined,
+  isActive: boolean,
+): boolean => {
+  if (!isActive) {
+    return true;
+  }
+
+  return optionDisabled === true || disabled === true;
+};
+
+const handleSelectOption = (
+  optionValue: string,
+  onChange: (value: string) => void,
+  isActive: boolean,
+) => {
+  if (!isActive) {
+    return;
+  }
+
+  onChange(optionValue);
 };
 
 const styles = StyleSheet.create({

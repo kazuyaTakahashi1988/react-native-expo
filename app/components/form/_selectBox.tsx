@@ -1,10 +1,10 @@
 import { useRef } from 'react';
-import { useController } from 'react-hook-form';
 import { Keyboard, Pressable, StyleSheet, Text, View } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 
 import ErrorText from './_errorText';
 import Label from './_label';
+import useOptionalController from './_useOptionalController';
 
 import type { TypeSelectBox, TypeSelectBoxOption } from '../../lib/types/typeComponents';
 import type { ComponentProps } from 'react';
@@ -32,12 +32,11 @@ const SelectBox = <TFieldValues extends FieldValues>({
   valueTextStyle,
 }: TypeSelectBox<TFieldValues>) => {
   const pickerRef = useRef<RNPickerSelect | null>(null);
-  const shouldUseController = Boolean(control && name);
-  const controller = shouldUseController ? useController({ control, name, rules }) : null;
+  const { controller, isActive } = useOptionalController({ control, name, rules });
 
-  const selectedValue = ensureString(controller?.field.value);
+  const selectedValue = getSelectedValue(controller.field.value, isActive);
   const hasError = Boolean(errorText);
-  const isDisabled = disabled || !shouldUseController;
+  const isDisabled = isSelectDisabled(disabled, isActive);
 
   const selectedOption = options.find((option) => option.value === selectedValue);
   const isPlaceholder = selectedOption == null;
@@ -56,12 +55,7 @@ const SelectBox = <TFieldValues extends FieldValues>({
     pickerRef.current?.togglePicker(true);
   };
 
-  const handleValueChange = (selected: string | null) => {
-    if (!shouldUseController || controller == null) {
-      return;
-    }
-    controller.field.onChange(selected ?? '');
-  };
+  const handleValueChange = buildValueChangeHandler(isActive ? controller.field.onChange : undefined);
 
   return (
     <View style={containerStyle}>
@@ -160,6 +154,28 @@ const baseSelectStyles = {
     fontWeight: '600',
   },
 } satisfies NonNullable<ComponentProps<typeof RNPickerSelect>['style']>;
+
+const buildValueChangeHandler = (
+  onChange: ((value: string) => void) | undefined,
+): ((selected: string | null) => void) => {
+  if (!onChange) {
+    return () => undefined;
+  }
+  return (selected: string | null) => {
+    onChange(selected ?? '');
+  };
+};
+
+const getSelectedValue = (rawValue: unknown, isActive: boolean): string => {
+  if (!isActive) {
+    return '';
+  }
+  return ensureString(rawValue);
+};
+
+const isSelectDisabled = (disabled: boolean, isActive: boolean): boolean => {
+  return disabled || !isActive;
+};
 
 const ensureString = (rawValue: unknown): string => {
   if (typeof rawValue === 'string') {

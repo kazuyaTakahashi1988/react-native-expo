@@ -1,5 +1,4 @@
 import { useEffect, useMemo } from 'react';
-import { useController } from 'react-hook-form';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import Animated, {
   interpolate,
@@ -12,6 +11,7 @@ import Animated, {
 
 import ErrorText from './_errorText';
 import Label from './_label';
+import useOptionalController from './_useOptionalController';
 
 import type { TypeCheckBoxCustom, TypeToggleCheckOption } from '../../lib/types/typeComponents';
 import type { FieldValues } from 'react-hook-form';
@@ -45,6 +45,7 @@ const ToggleCheckOption = ({
   knobStyle,
 }: TypeToggleCheckOption) => {
   const progress: SharedValue<number> = useSharedValue<number>(isSelected ? 1 : 0);
+  const isDisabled = disabled;
 
   useEffect(() => {
     progress.value = withTiming(isSelected ? 1 : 0, { duration: 200 });
@@ -52,11 +53,11 @@ const ToggleCheckOption = ({
 
   const trackAnimatedStyle = useAnimatedStyle(
     (): { backgroundColor: string } => ({
-      backgroundColor: disabled
+      backgroundColor: isDisabled
         ? DISABLED_COLOR
         : String(interpolateColor(progress.value, [0, 1], [inactiveColor, activeColor])),
     }),
-    [activeColor, disabled, inactiveColor],
+    [activeColor, inactiveColor, isDisabled],
   );
 
   const knobAnimatedStyle = useAnimatedStyle(
@@ -74,7 +75,7 @@ const ToggleCheckOption = ({
     <Pressable
       accessibilityRole='checkbox'
       accessibilityState={accessibilityState}
-      disabled={disabled}
+      disabled={isDisabled}
       onPress={onPress}
       style={[styles.optionRow, optionRowStyle]}
     >
@@ -90,9 +91,7 @@ const ToggleCheckOption = ({
           style={[styles.knob, { backgroundColor: knobColor }, knobAnimatedStyle, knobStyle]}
         />
       </Animated.View>
-      <Text
-        style={[styles.optionLabel, optionLabelStyle, disabled ? styles.optionLabelDisabled : null]}
-      >
+      <Text style={[styles.optionLabel, optionLabelStyle, isDisabled ? styles.optionLabelDisabled : null]}>
         {label}
       </Text>
     </Pressable>
@@ -117,13 +116,12 @@ const CheckBoxCustom = <TFieldValues extends FieldValues>({
   trackStyle,
   knobStyle,
 }: TypeCheckBoxCustom<TFieldValues>) => {
-  const shouldUseController = Boolean(control && name);
-  const controller = shouldUseController ? useController({ control, name, rules }) : null;
-  const controllerValue = controller?.field.value;
+  const { controller, isActive } = useOptionalController({ control, name, rules });
+  const controllerValue = controller.field.value;
 
   const selectedValues = useMemo(
-    () => (Array.isArray(controllerValue) ? (controllerValue as string[]) : []),
-    [controllerValue],
+    () => getSelectedValues(controllerValue, isActive),
+    [controllerValue, isActive],
   );
 
   const hasError = Boolean(errorText);
@@ -132,30 +130,18 @@ const CheckBoxCustom = <TFieldValues extends FieldValues>({
   const inactiveColor = inactiveColorProp ?? '#d1d5db';
   const knobColor = knobColorProp ?? '#ffffff';
 
-  const handleToggle = (optionValue: string) => {
-    if (!shouldUseController || controller == null) {
-      return;
-    }
-
-    if (selectedValues.includes(optionValue)) {
-      controller.field.onChange(selectedValues.filter((selected) => selected !== optionValue));
-      return;
-    }
-    controller.field.onChange([...selectedValues, optionValue]);
-  };
-
   return (
     <View style={containerStyle}>
       <Label {...{ label, rules }} />
       <View style={[styles.optionList, optionListStyle]}>
         {options.map((option) => {
           const isSelected = selectedValues.includes(option.value);
-          const isDisabled = () => option.disabled === true || disabled || !shouldUseController;
+          const isDisabled = getIsOptionDisabled(option.disabled, disabled, isActive);
           return (
             <ToggleCheckOption
               accessibilityState={{ checked: isSelected }}
               activeColor={activeColor}
-              disabled={isDisabled()}
+              disabled={isDisabled}
               hasError={hasError}
               inactiveColor={inactiveColor}
               isSelected={isSelected}
@@ -164,7 +150,7 @@ const CheckBoxCustom = <TFieldValues extends FieldValues>({
               knobStyle={knobStyle}
               label={option.label}
               onPress={() => {
-                handleToggle(option.value);
+                handleToggleOption(option.value, selectedValues, controller.field.onChange, isActive);
               }}
               optionLabelStyle={optionLabelStyle}
               optionRowStyle={optionRowStyle}
@@ -176,6 +162,42 @@ const CheckBoxCustom = <TFieldValues extends FieldValues>({
       <ErrorText errorText={errorText} />
     </View>
   );
+};
+
+const getSelectedValues = (value: unknown, isActive: boolean): string[] => {
+  if (!isActive || !Array.isArray(value)) {
+    return [];
+  }
+  return value as string[];
+};
+
+const getIsOptionDisabled = (
+  optionDisabled: boolean | undefined,
+  disabled: boolean | undefined,
+  isActive: boolean,
+): boolean => {
+  if (!isActive) {
+    return true;
+  }
+
+  return optionDisabled === true || disabled === true;
+};
+
+const handleToggleOption = (
+  optionValue: string,
+  selectedValues: string[],
+  onChange: (value: string[]) => void,
+  isActive: boolean,
+) => {
+  if (!isActive) {
+    return;
+  }
+
+  if (selectedValues.includes(optionValue)) {
+    onChange(selectedValues.filter((selected) => selected !== optionValue));
+    return;
+  }
+  onChange([...selectedValues, optionValue]);
 };
 
 const styles = StyleSheet.create({

@@ -1,8 +1,8 @@
-import { useController } from 'react-hook-form';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import ErrorText from './_errorText';
 import Label from './_label';
+import useOptionalController from './_useOptionalController';
 
 import type { TypeRadioBox } from '../../lib/types/typeComponents';
 import type { FieldValues } from 'react-hook-form';
@@ -23,23 +23,10 @@ const RadioBox = <TFieldValues extends FieldValues>({
   options,
   rules,
 }: TypeRadioBox<TFieldValues>) => {
-  const shouldUseController = Boolean(control && name);
-  const controller = shouldUseController ? useController({ control, name, rules }) : null;
+  const { controller, isActive } = useOptionalController({ control, name, rules });
 
-  const selectedValue = typeof controller?.field.value === 'string' ? controller.field.value : '';
+  const selectedValue = getSelectedValue(controller.field.value, isActive);
   const hasError = Boolean(errorText);
-
-  const optionLabelStyle = (disabled?: boolean) => {
-    return disabled === true ? styles.radioBoxTextDisabled : null;
-  };
-
-  const optionRadioOuterStyle = (disabled?: boolean) => {
-    return disabled === true ? styles.radioBoxDisabled : null;
-  };
-
-  const optionRadioInnerStyle = (disabled?: boolean) => {
-    return disabled === true ? styles.radioInnerDisabled : styles.radioInner;
-  };
 
   return (
     <View style={containerStyle}>
@@ -47,18 +34,15 @@ const RadioBox = <TFieldValues extends FieldValues>({
       <View style={[styles.radioGroup, optionListStyle]}>
         {options.map((option) => {
           const isSelected = selectedValue === option.value;
-          const isDisabled = () => option.disabled === true || disabled || !shouldUseController;
+          const isDisabled = getIsOptionDisabled(option.disabled, disabled, isActive);
           return (
             <Pressable
               accessibilityRole='radio'
               accessibilityState={{ selected: isSelected }}
-              disabled={isDisabled()}
+              disabled={isDisabled}
               key={option.key ?? option.value}
               onPress={() => {
-                if (!shouldUseController || controller == null) {
-                  return;
-                }
-                controller.field.onChange(option.value);
+                handleSelectOption(option.value, controller.field.onChange, isActive);
               }}
               style={[styles.radioRow, optionRowStyle]}
             >
@@ -67,12 +51,12 @@ const RadioBox = <TFieldValues extends FieldValues>({
                   styles.radioOuter,
                   isSelected ? styles.radioOuterSelected : null,
                   hasError ? styles.radioOuterError : null,
-                  optionRadioOuterStyle(isDisabled()),
+                  getOptionOuterStyle(isDisabled),
                 ]}
               >
-                {isSelected ? <View style={optionRadioInnerStyle(isDisabled())} /> : null}
+                {isSelected ? <View style={getOptionInnerStyle(isDisabled)} /> : null}
               </View>
-              <Text style={optionLabelStyle(isDisabled())}>{option.label}</Text>
+              <Text style={getOptionLabelStyle(isDisabled)}>{option.label}</Text>
             </Pressable>
           );
         })}
@@ -80,6 +64,56 @@ const RadioBox = <TFieldValues extends FieldValues>({
       <ErrorText errorText={errorText} />
     </View>
   );
+};
+
+const getSelectedValue = (value: unknown, isActive: boolean): string => {
+  if (!isActive || typeof value !== 'string') {
+    return '';
+  }
+  return value;
+};
+
+const getIsOptionDisabled = (
+  optionDisabled: boolean | undefined,
+  disabled: boolean,
+  isActive: boolean,
+): boolean => {
+  if (!isActive) {
+    return true;
+  }
+  return optionDisabled === true || disabled;
+};
+
+const handleSelectOption = (
+  optionValue: string,
+  onChange: (value: string) => void,
+  isActive: boolean,
+) => {
+  if (!isActive) {
+    return;
+  }
+  onChange(optionValue);
+};
+
+const getOptionLabelStyle = (disabled: boolean) => {
+  if (!disabled) {
+    return null;
+  }
+  return styles.radioBoxTextDisabled;
+};
+
+const getOptionOuterStyle = (disabled: boolean) => {
+  if (!disabled) {
+    return null;
+  }
+  return styles.radioBoxDisabled;
+};
+
+const getOptionInnerStyle = (disabled: boolean) => {
+  if (disabled) {
+    return styles.radioInnerDisabled;
+  }
+  return styles.radioInner;
 };
 
 const styles = StyleSheet.create({
