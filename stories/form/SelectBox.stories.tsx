@@ -44,11 +44,11 @@ const meta = {
     containerStyle: {
       control: { type: 'object' },
       description:
-        'SelectBox を包むコンテナ（View）スタイル \n\n 例 ：\n { "padding": 20, "backgroundColor": "red" }',
+        'SelectBox を包むコンテナ（View）スタイル \n\n Set 例：{ "padding": 20, "backgroundColor": "red" }',
     },
     triggerStyle: {
       control: { type: 'object' },
-      description: 'SelectBox のスタイル \n\n 例 ：\n  { "padding": 20, "borderRadius": 50 }',
+      description: 'SelectBox のスタイル \n\n Set 例： { "padding": 20, "borderRadius": 50 }',
     },
     disabled: {
       control: { type: 'boolean' },
@@ -62,7 +62,12 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  args: {},
+  args: {
+    label: '',
+    placeholder: '',
+    rules: { required: false },
+    errorText: '',
+  },
   parameters: {
     docs: {
       source: {
@@ -94,6 +99,8 @@ export const LabelAndPlaceholder: Story = {
   args: {
     label: '都道府県',
     placeholder: 'お住まいの地域を選択',
+    rules: { required: false },
+    errorText: '',
   },
   parameters: {
     docs: {
@@ -121,6 +128,7 @@ export const Required: Story = {
     label: '都道府県',
     placeholder: 'お住まいの地域を選択',
     rules: { required: '必須項目です' },
+    errorText: '',
   },
   parameters: {
     docs: {
@@ -178,6 +186,10 @@ export const ErrorOccurred: Story = {
 export const Disabled: Story = {
   args: {
     disabled: true,
+    label: '',
+    placeholder: '',
+    rules: { required: false },
+    errorText: '',
   },
   parameters: {
     docs: {

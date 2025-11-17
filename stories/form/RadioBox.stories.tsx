@@ -44,17 +44,17 @@ const meta = {
     containerStyle: {
       control: { type: 'object' },
       description:
-        'RadioBox を包むコンテナ（View）スタイル \n\n 例 ：\n { "padding": 20, "backgroundColor": "red" }',
+        'RadioBox を包むコンテナ（View）スタイル \n\n Set 例：{ "padding": 20, "backgroundColor": "red" }',
     },
     optionListStyle: {
       control: { type: 'object' },
       description:
-        'オプション のスタイル \n\n 例 ：\n { "padding": 20, "backgroundColor": "yellow" }',
+        'オプション のスタイル \n\n Set 例：{ "padding": 20, "backgroundColor": "yellow" }',
     },
     optionRowStyle: {
       control: { type: 'object' },
       description:
-        'オプション各行 のスタイル \n\n 例 ：\n { "padding": 20, "backgroundColor": "white" }',
+        'オプション各行 のスタイル \n\n Set 例：{ "padding": 20, "backgroundColor": "white" }',
     },
     disabled: {
       control: { type: 'boolean' },
@@ -68,7 +68,11 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  args: {},
+  args: {
+    label: '',
+    rules: { required: false },
+    errorText: '',
+  },
   parameters: {
     docs: {
       source: {
@@ -99,6 +103,8 @@ export const Default: Story = {
 export const Label: Story = {
   args: {
     label: 'お支払い方法',
+    rules: { required: false },
+    errorText: '',
   },
   parameters: {
     docs: {
@@ -124,6 +130,7 @@ export const Required: Story = {
   args: {
     label: 'お支払い方法',
     rules: { required: '必須項目です' },
+    errorText: '',
   },
   parameters: {
     docs: {
@@ -178,6 +185,9 @@ export const ErrorOccurred: Story = {
 export const Disabled: Story = {
   args: {
     disabled: true,
+    label: '',
+    rules: { required: false },
+    errorText: '',
   },
   parameters: {
     docs: {

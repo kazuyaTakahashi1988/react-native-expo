@@ -36,11 +36,11 @@ const meta = {
     containerStyle: {
       control: { type: 'object' },
       description:
-        'TextArea を包むコンテナ（View）スタイル \n\n 例 ：\n { "padding": 20, "backgroundColor": "red" }',
+        'TextArea を包むコンテナ（View）スタイル \n\n Set例：{ "padding": 20, "backgroundColor": "red" }',
     },
     style: {
       control: { type: 'object' },
-      description: 'TextInput 自体のスタイル \n\n 例 ：\n { "padding": 20, "borderRadius": 50 }',
+      description: 'TextInput 自体のスタイル \n\n Set例：{ "padding": 20, "borderRadius": 50 }',
     },
     disabled: {
       control: { type: 'boolean' },
@@ -54,7 +54,12 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  args: {},
+  args: {
+    label: '',
+    placeholder: '',
+    rules: { required: false },
+    errorText: '',
+  },
   parameters: {
     docs: {
       source: {
@@ -78,6 +83,8 @@ export const LabelAndPlaceholder: Story = {
   args: {
     label: 'ご相談の内容',
     placeholder: 'ご要望やご質問をご記入ください',
+    rules: { required: false },
+    errorText: '',
   },
   parameters: {
     docs: {
@@ -100,6 +107,7 @@ export const Required: Story = {
     label: 'ご相談の内容',
     placeholder: 'ご要望やご質問をご記入ください',
     rules: { required: '必須項目です' },
+    errorText: '',
   },
   parameters: {
     docs: {
@@ -147,6 +155,10 @@ export const ErrorOccurred: Story = {
 export const Disabled: Story = {
   args: {
     disabled: true,
+    label: '',
+    placeholder: '',
+    rules: { required: false },
+    errorText: '',
   },
   parameters: {
     docs: {

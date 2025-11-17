@@ -50,17 +50,17 @@ const meta = {
     containerStyle: {
       control: { type: 'object' },
       description:
-        'RadioBoxCustom を包むコンテナ（View）スタイル \n\n 例 ：\n { "padding": 20, "backgroundColor": "red" }',
+        'RadioBoxCustom を包むコンテナ（View）スタイル \n\n Set 例：{ "padding": 20, "backgroundColor": "red" }',
     },
     optionListStyle: {
       control: { type: 'object' },
       description:
-        'オプション のスタイル \n\n 例 ：\n { "padding": 20, "backgroundColor": "yellow" }',
+        'オプション のスタイル \n\n Set 例：{ "padding": 20, "backgroundColor": "yellow" }',
     },
     optionRowStyle: {
       control: { type: 'object' },
       description:
-        'オプション各行 のスタイル \n\n 例 ：\n { "padding": 20, "backgroundColor": "white" }',
+        'オプション各行 のスタイル \n\n Set 例：{ "padding": 20, "backgroundColor": "white" }',
     },
     disabled: {
       control: { type: 'boolean' },
@@ -74,7 +74,11 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  args: {},
+  args: {
+    label: '',
+    rules: { required: false },
+    errorText: '',
+  },
   parameters: {
     docs: {
       source: {
@@ -105,6 +109,8 @@ export const Default: Story = {
 export const Label: Story = {
   args: {
     label: 'テーマ色の選択',
+    rules: { required: false },
+    errorText: '',
   },
   parameters: {
     docs: {
@@ -130,6 +136,7 @@ export const Required: Story = {
   args: {
     label: 'テーマ色の選択',
     rules: { required: '必須項目です' },
+    errorText: '',
   },
   parameters: {
     docs: {
@@ -184,6 +191,9 @@ export const ErrorOccurred: Story = {
 export const Disabled: Story = {
   args: {
     disabled: true,
+    label: '',
+    rules: { required: false },
+    errorText: '',
   },
   parameters: {
     docs: {
@@ -211,6 +221,8 @@ export const CustomColors: Story = {
     activeColor: '#f97316',
     inactiveColor: '#fed7aa',
     knobColor: '#7c2d12',
+    rules: { required: false },
+    errorText: '',
   },
   parameters: {
     docs: {
