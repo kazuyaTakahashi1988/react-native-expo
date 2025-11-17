@@ -64,6 +64,7 @@ export const Default: Story = {
     docs: {
       source: {
         code: `
+        // react-hook-form 使用必須
         type FormValues = { dummyName: string };
 
         const { control, formState: { errors } } = useForm<FormValues>({
