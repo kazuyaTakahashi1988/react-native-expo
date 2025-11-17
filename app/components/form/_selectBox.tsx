@@ -4,7 +4,7 @@ import RNPickerSelect from 'react-native-picker-select';
 
 import ErrorText from './_errorText';
 import Label from './_label';
-import useOptionalController from './_useOptionalController';
+import { useRHFController } from '../../services/reactHookFormHelper';
 
 import type { TypeSelectBox, TypeSelectBoxOption } from '../../lib/types/typeComponents';
 import type { ComponentProps } from 'react';
@@ -32,7 +32,7 @@ const SelectBox = <TFieldValues extends FieldValues>({
   valueTextStyle,
 }: TypeSelectBox<TFieldValues>) => {
   const pickerRef = useRef<RNPickerSelect | null>(null);
-  const { controller, isActive } = useOptionalController({ control, name, rules });
+  const { controller, isActive } = useRHFController({ control, name, rules });
 
   const selectedValue = getSelectedValue(controller.field.value, isActive);
   const hasError = Boolean(errorText);
@@ -55,13 +55,20 @@ const SelectBox = <TFieldValues extends FieldValues>({
     pickerRef.current?.togglePicker(true);
   };
 
-  const handleValueChange = buildValueChangeHandler(isActive ? controller.field.onChange : undefined);
+  const handleValueChange = buildValueChangeHandler(
+    isActive ? controller.field.onChange : undefined,
+  );
 
   return (
     <View style={containerStyle}>
       <Label {...{ label, rules }} />
 
-      <Pressable accessibilityRole='button' disabled={isDisabled} onPress={openPicker} style={triggerStyles}>
+      <Pressable
+        accessibilityRole='button'
+        disabled={isDisabled}
+        onPress={openPicker}
+        style={triggerStyles}
+      >
         <Text style={triggerTextStyles}>{displayLabel}</Text>
       </Pressable>
 

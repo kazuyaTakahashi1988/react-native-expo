@@ -3,7 +3,7 @@ import { StyleSheet, TextInput, View } from 'react-native';
 
 import ErrorText from './_errorText';
 import Label from './_label';
-import useOptionalController from './_useOptionalController';
+import { useRHFController } from '../../services/reactHookFormHelper';
 
 import type { TypeInput } from '../../lib/types/typeComponents';
 import type { FieldValues, UseControllerReturn } from 'react-hook-form';
@@ -24,7 +24,7 @@ const Input = <TFieldValues extends FieldValues>({
   style,
   ...textInputProps
 }: TypeInput<TFieldValues>) => {
-  const { controller, isActive } = useOptionalController({ control, name, rules });
+  const { controller, isActive } = useRHFController({ control, name, rules });
 
   const hasError = Boolean(errorText);
   const trackAnimatedStyle = useMemo(

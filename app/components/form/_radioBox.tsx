@@ -2,7 +2,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import ErrorText from './_errorText';
 import Label from './_label';
-import useOptionalController from './_useOptionalController';
+import { useRHFController } from '../../services/reactHookFormHelper';
 
 import type { TypeRadioBox } from '../../lib/types/typeComponents';
 import type { FieldValues } from 'react-hook-form';
@@ -23,7 +23,7 @@ const RadioBox = <TFieldValues extends FieldValues>({
   options,
   rules,
 }: TypeRadioBox<TFieldValues>) => {
-  const { controller, isActive } = useOptionalController({ control, name, rules });
+  const { controller, isActive } = useRHFController({ control, name, rules });
 
   const selectedValue = getSelectedValue(controller.field.value, isActive);
   const hasError = Boolean(errorText);

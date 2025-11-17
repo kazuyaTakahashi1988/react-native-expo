@@ -11,7 +11,7 @@ import Animated, {
 
 import ErrorText from './_errorText';
 import Label from './_label';
-import useOptionalController from './_useOptionalController';
+import { useRHFController } from '../../services/reactHookFormHelper';
 
 import type { TypeCheckBoxCustom, TypeToggleCheckOption } from '../../lib/types/typeComponents';
 import type { FieldValues } from 'react-hook-form';
@@ -91,7 +91,13 @@ const ToggleCheckOption = ({
           style={[styles.knob, { backgroundColor: knobColor }, knobAnimatedStyle, knobStyle]}
         />
       </Animated.View>
-      <Text style={[styles.optionLabel, optionLabelStyle, isDisabled ? styles.optionLabelDisabled : null]}>
+      <Text
+        style={[
+          styles.optionLabel,
+          optionLabelStyle,
+          isDisabled ? styles.optionLabelDisabled : null,
+        ]}
+      >
         {label}
       </Text>
     </Pressable>
@@ -116,7 +122,7 @@ const CheckBoxCustom = <TFieldValues extends FieldValues>({
   trackStyle,
   knobStyle,
 }: TypeCheckBoxCustom<TFieldValues>) => {
-  const { controller, isActive } = useOptionalController({ control, name, rules });
+  const { controller, isActive } = useRHFController({ control, name, rules });
   const controllerValue = controller.field.value;
 
   const selectedValues = useMemo(
@@ -150,7 +156,12 @@ const CheckBoxCustom = <TFieldValues extends FieldValues>({
               knobStyle={knobStyle}
               label={option.label}
               onPress={() => {
-                handleToggleOption(option.value, selectedValues, controller.field.onChange, isActive);
+                handleToggleOption(
+                  option.value,
+                  selectedValues,
+                  controller.field.onChange,
+                  isActive,
+                );
               }}
               optionLabelStyle={optionLabelStyle}
               optionRowStyle={optionRowStyle}

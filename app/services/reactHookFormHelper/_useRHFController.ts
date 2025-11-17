@@ -12,19 +12,20 @@ import type {
 
 const FALLBACK_NAME = '__optional__';
 
-const useOptionalController = <TFieldValues extends FieldValues>(
-  params: {
-    control?: Control<TFieldValues>;
-    name?: Path<TFieldValues>;
-    rules?: RegisterOptions<TFieldValues, Path<TFieldValues>>;
-  },
-): { controller: UseControllerReturn<TFieldValues>; isActive: boolean } => {
+/* -----------------------------------------------
+ * react-hook-form
+ * useController 使用のための関数
+ * ----------------------------------------------- */
+
+export const useRHFController = <TFieldValues extends FieldValues>(params: {
+  control?: Control<TFieldValues>;
+  name?: Path<TFieldValues>;
+  rules?: RegisterOptions<TFieldValues, Path<TFieldValues>>;
+}): { controller: UseControllerReturn<TFieldValues>; isActive: boolean } => {
   const { control: fallbackControl } = useForm<TFieldValues>({
     defaultValues: {} as DefaultValues<TFieldValues>,
   });
-  const fallbackNameRef = useRef<Path<TFieldValues>>(
-    FALLBACK_NAME as Path<TFieldValues>,
-  );
+  const fallbackNameRef = useRef<Path<TFieldValues>>(FALLBACK_NAME as Path<TFieldValues>);
 
   const isActive = Boolean(params.control && params.name);
 
@@ -36,5 +37,3 @@ const useOptionalController = <TFieldValues extends FieldValues>(
 
   return { controller, isActive };
 };
-
-export default useOptionalController;
