@@ -1,0 +1,65 @@
+name: workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  setup-node: # ジョブ名(名前は任意)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10 # デフォルトは360（6時間）のため短い時間で設定しておく
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 22.x
+
+      - name: Cache dependencies # node_modulesのキャッシュ
+        id: node_modules_cache_id # キャッシュID(名前は任意)
+        uses: actions/cache@v3
+        with:
+          path: '**/node_modules'
+          key: node-modules-key-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Install dependencies
+        run: yarn install
+
+  deploy-storybook-static: # ジョブ名(名前は任意)
+    runs-on: ubuntu-latest
+    needs: setup-node # 分岐元のジョブ
+    timeout-minutes: 10
+    env:
+      NODE_ENV: production
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 22.x
+
+      - name: Restore node_modules # キャッシュしたnode_modulesの使用
+        id: node_modules_cache_id # キャッシュしたnode_modulesのID
+        uses: actions/cache@v3
+        with:
+          path: '**/node_modules'
+          key: node-modules-key-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Storybook-static Building
+        run: yarn build-storybook
+
+      - name: FTP-Deploy-Action
+        uses: SamKirkland/FTP-Deploy-Action@4.1.0 # FTPを使ってサーバーにDeployするアクションを実行
+        with:
+          server: ${{ secrets.FTP_SERVER }} # FTPサーバーのURLを設定
+          username: ${{ secrets.FTP_USERNAME }} # FTPのユーザー名を設定
+          password: ${{ secrets.FTP_PASSWORD }} # FTPのパスワードを設定
+          local-dir: ./storybook-static/ # どのディレクトリのデータをアップロードするか
+          server-dir: /storybook_for_expo/ # リモートのどのディレクトリにアップロードするか
