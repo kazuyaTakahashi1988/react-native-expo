@@ -4,7 +4,7 @@ import RNPickerSelect from 'react-native-picker-select';
 
 import ErrorText from './_errorText';
 import Label from './_label';
-import { useRHFController } from '../../services/reactHookFormHelper';
+import { useRHFController } from '../../services/formHelper';
 
 import type { TypeSelectBox, TypeSelectBoxOption } from '../../lib/types/typeComponents';
 import type { ComponentProps } from 'react';

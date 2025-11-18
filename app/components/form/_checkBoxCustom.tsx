@@ -11,7 +11,7 @@ import Animated, {
 
 import ErrorText from './_errorText';
 import Label from './_label';
-import { useRHFController } from '../../services/reactHookFormHelper';
+import { useRHFController } from '../../services/formHelper';
 
 import type { TypeCheckBoxCustom, TypeToggleCheckOption } from '../../lib/types/typeComponents';
 import type { FieldValues } from 'react-hook-form';
