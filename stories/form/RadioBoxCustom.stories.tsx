@@ -1,27 +1,18 @@
 import { View } from 'react-native';
 
 import { styles } from '../../.storybook/styles';
-import * as Form from '../../app/components/form';
+import { RadioBoxCustom } from '../../app/components/form';
 
 import type { TypeRadioBoxCustom } from '../../app/lib/types/typeComponents';
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite';
 
 type FormValues = { theme: string };
 
-type RadioBoxCustomStoryProps = TypeRadioBoxCustom<FormValues> & {
-  options?: TypeRadioBoxCustom<FormValues>['options'];
-};
-
 const defaultOptions: TypeRadioBoxCustom<FormValues>['options'] = [
   { label: 'シアン', value: 'cyan' },
   { label: 'マゼンタ', value: 'magenta' },
   { label: 'イエロー', value: 'yellow' },
 ];
-
-const RadioBoxCustom = ({ ...props }: RadioBoxCustomStoryProps) => {
-  return <Form.RadioBoxCustom<FormValues> {...props} />;
-};
-
 const meta = {
   title: 'Form/RadioBoxCustom',
   component: RadioBoxCustom,
@@ -36,9 +27,15 @@ const meta = {
   argTypes: {
     label: {
       control: { type: 'text' },
+      description: 'ラベルテキスト',
     },
     errorText: {
       control: { type: 'text' },
+      description: 'エラーテキスト',
+    },
+    name: {
+      control: { type: 'text' },
+      description: 'value ネーム',
     },
     rules: {
       control: { type: 'object' },
@@ -47,7 +44,7 @@ const meta = {
     containerStyle: {
       control: { type: 'object' },
       description:
-        'RadioBoxCustom を包むコンテナ（View）スタイル \n\n Set 例：{ "padding": 20, "backgroundColor": "red" }',
+        'CheckBox を包むコンテナ（View）スタイル \n\n Set 例：{ "padding": 20, "backgroundColor": "red" }',
     },
     optionListStyle: {
       control: { type: 'object' },
@@ -59,6 +56,21 @@ const meta = {
       description:
         'オプション各行 のスタイル \n\n Set 例：{ "padding": 20, "backgroundColor": "white" }',
     },
+    optionLabelStyle: {
+      control: { type: 'object' },
+      description:
+        'オプション各行 のラベルスタイル \n\n Set 例：{ "padding": 20, "backgroundColor": "green" }',
+    },
+    trackStyle: {
+      control: { type: 'object' },
+      description:
+        'オプション各行 のトラックスタイル \n\n Set 例：{ "padding": 20, "backgroundColor": "blue" }',
+    },
+    knobStyle: {
+      control: { type: 'object' },
+      description:
+        'オプション各行 のノブスタイル \n\n Set 例：{ "padding": 20, "backgroundColor": "black" }',
+    },
     disabled: {
       control: { type: 'boolean' },
       description: '活性・非活性の制御',
@@ -66,6 +78,22 @@ const meta = {
     options: {
       control: { type: 'object' },
       description: 'オプション',
+    },
+    control: {
+      control: { type: 'object' },
+      description: 'react-hook-form 用の props',
+    },
+    activeColor: {
+      control: { type: 'text' },
+      description: 'カスタムカラー \n\n Set 例：#0d9488',
+    },
+    inactiveColor: {
+      control: { type: 'text' },
+      description: 'カスタムカラー \n\n Set 例：#cbd5f5',
+    },
+    knobColor: {
+      control: { type: 'text' },
+      description: 'カスタムカラー \n\n Set 例：#042f2e',
     },
   },
 } satisfies Meta<typeof RadioBoxCustom>;

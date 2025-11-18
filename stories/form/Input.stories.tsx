@@ -19,15 +19,19 @@ const meta = {
   argTypes: {
     label: {
       control: { type: 'text' },
+      description: 'ラベルテキスト',
     },
     placeholder: {
       control: { type: 'text' },
+      description: 'プレイスホルダーテキスト',
     },
     errorText: {
       control: { type: 'text' },
+      description: 'エラーテキスト',
     },
     name: {
       control: { type: 'text' },
+      description: 'value ネーム',
     },
     rules: {
       control: { type: 'object' },

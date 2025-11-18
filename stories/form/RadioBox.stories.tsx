@@ -1,26 +1,18 @@
 import { View } from 'react-native';
 
 import { styles } from '../../.storybook/styles';
-import * as Form from '../../app/components/form';
+import { RadioBox } from '../../app/components/form';
 
 import type { TypeRadioBox } from '../../app/lib/types/typeComponents';
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite';
 
 type FormValues = { payment: string };
 
-type RadioBoxStoryProps = TypeRadioBox<FormValues> & {
-  options?: TypeRadioBox<FormValues>['options'];
-};
-
 const defaultOptions: TypeRadioBox<FormValues>['options'] = [
   { label: 'クレジットカード', value: 'card' },
   { label: '銀行振込', value: 'bank' },
   { label: '電子マネー', value: 'wallet' },
 ];
-
-const RadioBox = ({ ...props }: RadioBoxStoryProps) => {
-  return <Form.RadioBox<FormValues> {...props} />;
-};
 
 const meta = {
   title: 'Form/RadioBox',
@@ -36,9 +28,15 @@ const meta = {
   argTypes: {
     label: {
       control: { type: 'text' },
+      description: 'ラベルテキスト',
     },
     errorText: {
       control: { type: 'text' },
+      description: 'エラーテキスト',
+    },
+    name: {
+      control: { type: 'text' },
+      description: 'value ネーム',
     },
     rules: {
       control: { type: 'object' },
@@ -66,6 +64,10 @@ const meta = {
     options: {
       control: { type: 'object' },
       description: 'オプション',
+    },
+    control: {
+      control: { type: 'object' },
+      description: 'react-hook-form 用の props',
     },
   },
 } satisfies Meta<typeof RadioBox>;

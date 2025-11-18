@@ -1,18 +1,9 @@
 import { View } from 'react-native';
 
 import { styles } from '../../.storybook/styles';
-import * as Form from '../../app/components/form';
+import { TextArea } from '../../app/components/form';
 
-import type { TypeTextArea } from '../../app/lib/types/typeComponents';
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite';
-
-type FormValues = { description: string };
-
-type TextAreaStoryProps = TypeTextArea<FormValues>;
-
-const TextArea = (props: TextAreaStoryProps) => {
-  return <Form.TextArea<FormValues> {...props} />;
-};
 
 const meta = {
   title: 'Form/TextArea',
@@ -28,12 +19,19 @@ const meta = {
   argTypes: {
     label: {
       control: { type: 'text' },
+      description: 'ラベルテキスト',
     },
     placeholder: {
       control: { type: 'text' },
+      description: 'プレイスホルダーテキスト',
     },
     errorText: {
       control: { type: 'text' },
+      description: 'エラーテキスト',
+    },
+    name: {
+      control: { type: 'text' },
+      description: 'value ネーム',
     },
     rules: {
       control: { type: 'object' },
@@ -51,6 +49,14 @@ const meta = {
     disabled: {
       control: { type: 'boolean' },
       description: '活性・非活性の制御',
+    },
+    numberOfLines: {
+      control: { type: 'number' },
+      description: '行数',
+    },
+    control: {
+      control: { type: 'object' },
+      description: 'react-hook-form 用の props',
     },
   },
 } satisfies Meta<typeof TextArea>;

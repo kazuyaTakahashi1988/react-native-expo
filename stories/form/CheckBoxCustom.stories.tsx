@@ -1,26 +1,18 @@
 import { View } from 'react-native';
 
 import { styles } from '../../.storybook/styles';
-import * as Form from '../../app/components/form/';
+import { CheckBoxCustom } from '../../app/components/form/';
 
 import type { TypeCheckBoxCustom } from '../../app/lib/types/typeComponents';
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite';
 
 type FormValues = { inquiry: string[] };
 
-type CheckBoxCustomStoryProps = TypeCheckBoxCustom<FormValues> & {
-  options?: TypeCheckBoxCustom<FormValues>['options'];
-};
-
 const defaultOptions: TypeCheckBoxCustom<FormValues>['options'] = [
   { label: 'メール', value: 'email' },
   { label: 'SMS', value: 'sms' },
   { label: 'アプリ通知', value: 'push' },
 ];
-
-const CheckBoxCustom = ({ ...props }: CheckBoxCustomStoryProps) => {
-  return <Form.CheckBoxCustom<FormValues> {...props} />;
-};
 
 const meta = {
   title: 'Form/CheckBoxCustom',
@@ -36,9 +28,15 @@ const meta = {
   argTypes: {
     label: {
       control: { type: 'text' },
+      description: 'ラベルテキスト',
     },
     errorText: {
       control: { type: 'text' },
+      description: 'エラーテキスト',
+    },
+    name: {
+      control: { type: 'text' },
+      description: 'value ネーム',
     },
     rules: {
       control: { type: 'object' },
@@ -59,6 +57,21 @@ const meta = {
       description:
         'オプション各行 のスタイル \n\n Set 例：{ "padding": 20, "backgroundColor": "white" }',
     },
+    optionLabelStyle: {
+      control: { type: 'object' },
+      description:
+        'オプション各行 のラベルスタイル \n\n Set 例：{ "padding": 20, "backgroundColor": "green" }',
+    },
+    trackStyle: {
+      control: { type: 'object' },
+      description:
+        'オプション各行 のトラックスタイル \n\n Set 例：{ "padding": 20, "backgroundColor": "blue" }',
+    },
+    knobStyle: {
+      control: { type: 'object' },
+      description:
+        'オプション各行 のノブスタイル \n\n Set 例：{ "padding": 20, "backgroundColor": "black" }',
+    },
     disabled: {
       control: { type: 'boolean' },
       description: '活性・非活性の制御',
@@ -66,6 +79,22 @@ const meta = {
     options: {
       control: { type: 'object' },
       description: 'オプション',
+    },
+    control: {
+      control: { type: 'object' },
+      description: 'react-hook-form 用の props',
+    },
+    activeColor: {
+      control: { type: 'text' },
+      description: 'カスタムカラー \n\n Set 例：#0d9488',
+    },
+    inactiveColor: {
+      control: { type: 'text' },
+      description: 'カスタムカラー \n\n Set 例：#cbd5f5',
+    },
+    knobColor: {
+      control: { type: 'text' },
+      description: 'カスタムカラー \n\n Set 例：#042f2e',
     },
   },
 } satisfies Meta<typeof CheckBoxCustom>;

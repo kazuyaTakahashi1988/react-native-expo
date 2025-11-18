@@ -1,26 +1,18 @@
 import { View } from 'react-native';
 
 import { styles } from '../../.storybook/styles';
-import * as Form from '../../app/components/form';
+import { CheckBox } from '../../app/components/form';
 
 import type { TypeCheckBox } from '../../app/lib/types/typeComponents';
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite';
 
 type FormValues = { genres: string[] };
 
-type CheckBoxStoryProps = TypeCheckBox<FormValues> & {
-  options?: TypeCheckBox<FormValues>['options'];
-};
-
 const defaultOptions: TypeCheckBox<FormValues>['options'] = [
   { label: 'アクション', value: 'action' },
   { label: 'コメディ', value: 'comedy' },
   { label: 'ドラマ', value: 'drama' },
 ];
-
-const CheckBox = ({ ...props }: CheckBoxStoryProps) => {
-  return <Form.CheckBox<FormValues> {...props} />;
-};
 
 const meta = {
   title: 'Form/CheckBox',
@@ -36,9 +28,15 @@ const meta = {
   argTypes: {
     label: {
       control: { type: 'text' },
+      description: 'ラベルテキスト',
     },
     errorText: {
       control: { type: 'text' },
+      description: 'エラーテキスト',
+    },
+    name: {
+      control: { type: 'text' },
+      description: 'value ネーム',
     },
     rules: {
       control: { type: 'object' },
@@ -66,6 +64,10 @@ const meta = {
     options: {
       control: { type: 'object' },
       description: 'オプション',
+    },
+    control: {
+      control: { type: 'object' },
+      description: 'react-hook-form 用の props',
     },
   },
 } satisfies Meta<typeof CheckBox>;
