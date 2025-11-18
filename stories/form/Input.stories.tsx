@@ -1,18 +1,9 @@
 import { View } from 'react-native';
 
 import { styles } from '../../.storybook/styles';
-import * as Form from '../../app/components/form';
+import { Input } from '../../app/components/form';
 
-import type { TypeInput } from '../../app/lib/types/typeComponents';
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite';
-
-type FormValues = { dummyName: string };
-
-type InputStoryProps = TypeInput<FormValues>;
-
-const Input = (props: InputStoryProps) => {
-  return <Form.Input<FormValues> {...props} />;
-};
 
 const meta = {
   title: 'Form/Input',
@@ -35,6 +26,9 @@ const meta = {
     errorText: {
       control: { type: 'text' },
     },
+    name: {
+      control: { type: 'text' },
+    },
     rules: {
       control: { type: 'object' },
       description: 'バリデーションルール \n\n Set 例：{ "required": true }',
@@ -51,6 +45,10 @@ const meta = {
     disabled: {
       control: { type: 'boolean' },
       description: '活性・非活性の制御',
+    },
+    control: {
+      control: { type: 'object' },
+      description: 'react-hook-form 用の props',
     },
   },
 } satisfies Meta<typeof Input>;
