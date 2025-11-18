@@ -24,6 +24,7 @@ $ yarn storybook
 
 Open <a href="http://localhost:6006" target="_blank">http://localhost:6006</a> in your browser<br>
 <br>
+`yarn build-storybook` コマンドでのビルド成果物 → <a href="http://storybook-for-expo.empty-service.com" target="_blank">http://storybook-for-expo.empty-service.com</a>
 
 # ③ EAS Build する場合
 
