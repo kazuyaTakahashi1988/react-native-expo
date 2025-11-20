@@ -86,7 +86,6 @@ export const Label: Story = {
   args: {
     options: defaultOptions,
     label: 'よく視聴するジャンル',
-    rules: { required: false },
   },
 };
 
@@ -111,6 +110,5 @@ export const Disabled: Story = {
   args: {
     options: defaultOptions,
     disabled: true,
-    rules: { required: false },
   },
 };

@@ -113,7 +113,6 @@ export const Label: Story = {
   args: {
     options: defaultOptions,
     label: 'お問い合わせ方法',
-    rules: { required: false },
   },
 };
 
