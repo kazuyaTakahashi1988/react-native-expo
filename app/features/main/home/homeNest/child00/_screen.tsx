@@ -188,8 +188,8 @@ const Child00Screen: React.FC = () => {
         <Button color='#444' onPress={onReset} title='Reset' />
       </View>
 
-      {/* submit 出力結果表示エリア */}
-      {formValues && <ResultArea {...formValues} />}
+      {/* 出力結果エリア */}
+      <ResultArea {...formValues} />
     </Layout>
   );
 };

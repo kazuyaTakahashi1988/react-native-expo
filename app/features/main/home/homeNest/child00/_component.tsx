@@ -3,10 +3,17 @@ import { StyleSheet, Text, View } from 'react-native';
 import type { TypeResultArea } from './_type';
 
 /* -----------------------------------------------
- * submit 出力結果表示エリア
+ * 出力結果エリア
  * ----------------------------------------------- */
 
+// formValues に値があれば出力結果エリア呼び出し
 export const ResultArea: React.FC<TypeResultArea> = (formValues) => {
+  const hasValues = Object.keys(formValues).length > 0;
+  return hasValues ? <ResultAreaCalled {...formValues} /> : null;
+};
+
+// 出力結果エリア呼び出し
+const ResultAreaCalled: React.FC<TypeResultArea> = (formValues) => {
   const { dummyName, genres, inquiry, payment, theme, address, description } = formValues;
 
   return (
