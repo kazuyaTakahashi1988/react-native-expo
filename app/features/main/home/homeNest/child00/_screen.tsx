@@ -24,14 +24,9 @@ const Child00Screen: React.FC = () => {
   const [formValues, setFormValues] = useState<TypeFormValues | null>(null);
 
   /*
-   * form設定
+   * RHForm使用設定
    */
-  const {
-    control,
-    formState: { errors, isSubmitting },
-    handleSubmit,
-    reset,
-  } = useForm<TypeFormValues>({
+  const form = useForm<TypeFormValues>({
     defaultValues: {
       dummyName: '',
       genres: [],
@@ -47,24 +42,24 @@ const Child00Screen: React.FC = () => {
    * エラーテキスト取得処理
    */
   const getErrorText = useCallback(
-    (field: keyof TypeFormValues) => errors[field]?.message,
-    [errors],
+    (name: keyof TypeFormValues) => form.formState.errors[name]?.message,
+    [form.formState.errors],
   );
 
   /*
    * submitボタン処理
    */
   const onSubmit = useCallback(() => {
-    void handleSubmit((values: TypeFormValues) => {
+    void form.handleSubmit((values: TypeFormValues) => {
       setFormValues(values);
     })();
-  }, [handleSubmit]);
+  }, [form]);
 
   /*
    * resetボタン処理
    */
   const onReset = () => {
-    reset();
+    form.reset();
     setFormValues(null);
   };
 
@@ -76,7 +71,7 @@ const Child00Screen: React.FC = () => {
       <Input
         autoCapitalize='words'
         containerStyle={styles.container}
-        control={control}
+        control={form.control}
         errorText={getErrorText('dummyName')}
         label='ラベル テキスト'
         name='dummyName'
@@ -87,7 +82,7 @@ const Child00Screen: React.FC = () => {
       {/* チェックボックス項目 */}
       <CheckBox
         containerStyle={styles.container}
-        control={control}
+        control={form.control}
         errorText={getErrorText('genres')}
         label='よく視聴するジャンル'
         name='genres'
@@ -106,7 +101,7 @@ const Child00Screen: React.FC = () => {
       <CheckBoxCustom
         activeColor='#22c55e'
         containerStyle={styles.container}
-        control={control}
+        control={form.control}
         errorText={getErrorText('inquiry')}
         label='お問い合わせ方法'
         name='inquiry'
@@ -121,7 +116,7 @@ const Child00Screen: React.FC = () => {
       {/* ラヂオボックス項目 */}
       <RadioBox
         containerStyle={styles.container}
-        control={control}
+        control={form.control}
         errorText={getErrorText('payment')}
         label='お支払い方法'
         name='payment'
@@ -137,7 +132,7 @@ const Child00Screen: React.FC = () => {
       <RadioBoxCustom
         activeColor='#6366f1'
         containerStyle={styles.container}
-        control={control}
+        control={form.control}
         errorText={getErrorText('theme')}
         label='テーマ色の選択'
         name='theme'
@@ -152,7 +147,7 @@ const Child00Screen: React.FC = () => {
       {/* セレクトボックス項目 */}
       <SelectBox
         containerStyle={styles.container}
-        control={control}
+        control={form.control}
         errorText={getErrorText('address')}
         label='都道府県'
         name='address'
@@ -168,7 +163,7 @@ const Child00Screen: React.FC = () => {
       {/* テキストエリア項目 */}
       <TextArea
         containerStyle={styles.container}
-        control={control}
+        control={form.control}
         errorText={getErrorText('description')}
         label='ご相談の内容'
         name='description'
@@ -184,7 +179,7 @@ const Child00Screen: React.FC = () => {
 
       {/* submit ボタン */}
       <View style={styles.actions}>
-        <Button onPress={onSubmit} title={isSubmitting ? 'Submitting…' : 'Submit'} />
+        <Button onPress={onSubmit} title='Submit' />
         <Button color='#444' onPress={onReset} title='Reset' />
       </View>
 
