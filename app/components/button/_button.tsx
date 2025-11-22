@@ -14,7 +14,6 @@ const Button = ({
   containerStyle,
   style,
   disabled = false,
-  titleIcon,
 }: TypeButton) => {
   /*
    * 適用スタイル
@@ -52,7 +51,7 @@ const Button = ({
         onPress={onPress}
         style={buttonStyle}
       >
-        <Text style={textStyle}>{[titleIcon, title]}</Text>
+        <Text style={textStyle}>{title}</Text>
       </TouchableOpacity>
     </View>
   );

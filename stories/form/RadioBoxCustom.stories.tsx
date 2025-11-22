@@ -80,7 +80,7 @@ const meta = {
       description: 'オプション',
     },
     control: {
-      control: { type: 'object' },
+      control: false,
       description: 'react-hook-form 用の props',
     },
     activeColor: {

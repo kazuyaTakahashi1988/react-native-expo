@@ -51,7 +51,7 @@ const meta = {
       description: '活性・非活性の制御',
     },
     control: {
-      control: { type: 'object' },
+      control: false,
       description: 'react-hook-form 用の props',
     },
   },

@@ -1,4 +1,4 @@
-import { View } from 'react-native';
+import { Text, View } from 'react-native';
 
 import { styles } from '../../.storybook/styles.ts';
 import Button from '../../app/components/button/_button.tsx';
@@ -66,10 +66,14 @@ export const Secondary: Story = {
   },
 };
 
-export const IsIcon: Story = {
+export const Icon: Story = {
   args: {
-    title: ' ボタン',
-    titleIcon: <IconInfo color='#fff' />,
+    title: (
+      <>
+        <IconInfo color='#fff' />
+        <Text> ボタン</Text>
+      </>
+    ),
     onPress() {
       alert('Icon Event!!');
     },
