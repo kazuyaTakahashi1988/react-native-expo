@@ -1,8 +1,9 @@
 import { useCallback, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Button, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 import { ResultArea } from './_component';
+import { Button } from '../../../../../components/button';
 import {
   CheckBox,
   CheckBoxCustom,
@@ -178,9 +179,9 @@ const Child00Screen: React.FC = () => {
       />
 
       {/* submit ボタン */}
-      <View style={styles.actions}>
+      <View style={styles.submit}>
         <Button onPress={onSubmit} title='Submit' />
-        <Button color='#444' onPress={onReset} title='Reset' />
+        <Button onPress={onReset} pattern='secondary' title='Reset' />
       </View>
 
       {/* 出力結果エリア */}
@@ -196,7 +197,7 @@ const styles = StyleSheet.create({
     marginBottom: 24,
     textAlign: 'center',
   },
-  actions: {
+  submit: {
     columnGap: 12,
     flexDirection: 'row',
     justifyContent: 'space-between',
