@@ -9,11 +9,13 @@ import type { TypeArticle } from './_type';
 
 const Child01Screen: React.FC = () => {
   const [articles, setArticles] = React.useState<TypeArticle[] | null>(null);
+  const [isDisabled, setIsDisabled] = React.useState<boolean>(false);
 
   /*
    * 「記事を取得する」ボタン処理
    */
   const getArticles = async () => {
+    setIsDisabled(true);
     const result = await getArticleApi();
     setArticles(result.data as TypeArticle[]);
   };
@@ -30,7 +32,7 @@ const Child01Screen: React.FC = () => {
       <Text style={styles.title}>API Helper example</Text>
 
       <Button
-        disabled={articles != null}
+        disabled={isDisabled}
         onPress={() => {
           void getArticles();
         }}
