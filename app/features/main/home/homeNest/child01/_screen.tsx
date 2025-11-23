@@ -16,8 +16,14 @@ const Child01Screen: React.FC = () => {
    */
   const getArticles = async () => {
     setIsDisabled(true);
-    const result = await getArticleApi();
-    setArticles(result.data as TypeArticle[]);
+    try {
+      const result = await getArticleApi();
+      setArticles(result.data as TypeArticle[]);
+    } catch (error) {
+      console.error('Failed to fetch articles', error);
+    } finally {
+      setIsDisabled(false);
+    }
   };
 
   /*
@@ -32,7 +38,7 @@ const Child01Screen: React.FC = () => {
       <Text style={styles.title}>API Helper example</Text>
 
       <Button
-        disabled={isDisabled}
+        disabled={isDisabled || articles != null}
         onPress={() => {
           void getArticles();
         }}
