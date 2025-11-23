@@ -19,7 +19,6 @@ const meta = {
   tags: ['autodocs'],
   argTypes: {
     title: {
-      control: { type: 'text' },
       description: 'ボタンタイトル',
     },
     onPress: {
