@@ -23,6 +23,16 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["app/**/*.ts", "app/**/*.tsx", "index.ts"],
+  "include": [
+    "app/**/*.ts",
+    "app/**/*.tsx",
+    ".storybook/**/*.ts",
+    ".storybook/**/*.tsx",
+    "stories/**/*.ts",
+    "stories/**/*.tsx",
+    "vitest.config.ts",
+    "vitest.shims.d.ts",
+    "index.ts"
+  ],
   "exclude": ["node_modules", ".expo", "ios", "android", "eslint.config.js"]
 }

@@ -42,6 +42,7 @@ export default [
     languageOptions: {
       parser: tseslint.parser,
       parserOptions: {
+        projectService: true,
         ecmaVersion: 'latest',
         sourceType: 'module',
         project: ['./tsconfig.eslint.json'],
