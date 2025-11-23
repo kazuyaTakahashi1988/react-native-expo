@@ -1,47 +1,96 @@
-import { Button, StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { Linking, StyleSheet, Text, View } from 'react-native';
 
+import { Button } from '../../../../../components/button';
 import { Layout } from '../../../../../components/layout';
+import { getArticleApi } from '../../../../../services/apiHelper';
 
-import type { TypeChild01Screen } from './_type';
+import type { TypeArticle } from './_type';
 
-const Child01Screen: React.FC<TypeChild01Screen> = (props) => {
-  const { navigation } = props;
+const Child01Screen: React.FC = () => {
+  const [articles, setArticles] = React.useState<TypeArticle[] | null>(null);
 
-  const goToHome = () => {
-    navigation.navigate('home');
+  /*
+   * 「記事を取得する」ボタン処理
+   */
+  const getArticles = async () => {
+    const result = await getArticleApi();
+    setArticles(result.data as TypeArticle[]);
   };
 
-  const goToAbout = () => {
-    navigation.navigate('about');
+  /*
+   * 「記事へ飛ぶ」ボタン処理
+   */
+  const goToLink = (link: string) => {
+    void Linking.openURL(link);
   };
 
   return (
-    <View style={styles.container}>
-      <Layout>
-        <Text>Child01 Screen</Text>
-        <Button
-          onPress={() => {
-            goToHome();
-          }}
-          title='Go to Home'
-        />
-        <Button
-          onPress={() => {
-            goToAbout();
-          }}
-          title='Go to About'
-        />
-      </Layout>
-    </View>
+    <Layout>
+      <Text style={styles.title}>API Helper example</Text>
+
+      <Button
+        disabled={articles != null}
+        onPress={() => {
+          void getArticles();
+        }}
+        style={styles.button}
+        title='- 記事を取得する -'
+      />
+
+      {/* 記事一覧の表示 */}
+      {articles && (
+        <View>
+          {articles.map((elm) => (
+            <View key={elm.id} style={styles.article}>
+              <Text>記事ID: {elm.id}</Text>
+              <Text style={styles.articleTitle}>{elm.title.rendered}</Text>
+              <Button
+                onPress={() => {
+                  goToLink(elm.link);
+                }}
+                pattern='secondary'
+                size='small'
+                style={styles.articleButton}
+                title='- 記事へ飛ぶ -'
+              />
+            </View>
+          ))}
+        </View>
+      )}
+    </Layout>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-    backgroundColor: '#ccc',
-    flex: 1,
-    justifyContent: 'center',
+  title: {
+    fontSize: 20,
+    fontWeight: '600',
+    marginBottom: 24,
+    textAlign: 'center',
+  },
+  button: {
+    marginBottom: 16,
+    minHeight: 'auto',
+    padding: 8,
+    width: '100%',
+  },
+  article: {
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    display: 'flex',
+    marginBottom: 16,
+    padding: 12,
+  },
+  articleTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 8,
+  },
+  articleButton: {
+    minHeight: 'auto',
+    padding: 8,
+    width: '100%',
   },
 });
 

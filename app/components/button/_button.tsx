@@ -63,7 +63,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#2196f3',
     borderRadius: 8,
     justifyContent: 'center',
-    minHeight: 40,
     padding: 16,
     textAlign: 'center',
     width: 'auto',
@@ -74,13 +73,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   small: {
-    fontSize: 8,
+    fontSize: 10,
   },
   medium: {
     fontSize: 16,
   },
   large: {
-    fontSize: 24,
+    fontSize: 22,
   },
   primaryButton: {
     backgroundColor: '#2196f3',

@@ -3,9 +3,9 @@ import axios from 'axios';
 import type { TypeOptions } from '../../lib/types/typeService';
 import type { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 
-const DEFAULT_API_BASE_URL = 'wp.empty-service.com';
+const DEFAULT_API_BASE_URL = 'https://wp.empty-service.com';
 
-const normalizeUrl = (baseURL: string, apiPath: string): string => {
+const setUrl = (baseURL: string, apiPath: string): string => {
   if (apiPath.startsWith('http://') || apiPath.startsWith('https://')) {
     return apiPath;
   }
@@ -16,7 +16,7 @@ const normalizeUrl = (baseURL: string, apiPath: string): string => {
   return `${normalizedBase}/${normalizedPath}`;
 };
 
-const buildHeaders = (
+const setHeaders = (
   accessToken?: string,
   headers?: Record<string, string>,
 ): Record<string, string> => {
@@ -49,10 +49,10 @@ export const execute = async <TResponse = unknown, TRequest = unknown>(
 
   const requestConfig: AxiosRequestConfig = {
     method,
-    url: normalizeUrl(baseURL, apiPath),
+    url: setUrl(baseURL, apiPath),
     data: requestData,
     params,
-    headers: buildHeaders(accessToken, headers),
+    headers: setHeaders(accessToken, headers),
   };
 
   try {
@@ -89,3 +89,8 @@ export const postApi = async <TResponse = unknown, TRequest = unknown>(
     requestData,
     ...options,
   });
+
+// テストゲットAPI（てきとーなやつ）
+export const getArticleApi = () => {
+  return getApi('/wp-json/wp/v2/posts');
+};

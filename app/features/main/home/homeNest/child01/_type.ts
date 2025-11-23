@@ -1,4 +1,11 @@
-import type { TypeRootList } from '../../../../../lib/types/typeNavigation';
-import type { MaterialTopTabScreenProps } from '@react-navigation/material-top-tabs';
+/* -----------------------------------------------
+ * ./_screen.tsx
+ * ----------------------------------------------- */
 
-export type TypeChild01Screen = MaterialTopTabScreenProps<TypeRootList>;
+export type TypeArticle = {
+  id: number;
+  title: {
+    rendered: string;
+  };
+  link: string;
+};
