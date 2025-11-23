@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import type { TypeOptions } from '../../lib/types/typeService';
-import type { AxiosRequestConfig, AxiosResponse } from 'axios';
+import type { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 
 const DEFAULT_API_BASE_URL = 'https://wp.empty-service.com';
 
@@ -57,9 +57,12 @@ export const execute = async <TResponse = unknown, TRequest = unknown>(
 
   try {
     return await axios.request<TResponse>(requestConfig);
-  } catch (err) {
-    console.error('API request failed', err);
-    throw err;
+  } catch (error) {
+    const axiosError = error as AxiosError;
+    const message = axiosError.response?.data ?? axiosError.message;
+
+    console.error('API request failed', message);
+    throw axiosError;
   }
 };
 
