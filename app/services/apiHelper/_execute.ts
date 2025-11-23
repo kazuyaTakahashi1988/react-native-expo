@@ -57,12 +57,17 @@ export const execute = async <TResponse = unknown, TRequest = unknown>(
 
   try {
     return await axios.request<TResponse>(requestConfig);
-  } catch (error) {
-    const axiosError = error as AxiosError;
-    const message = axiosError.response?.data ?? axiosError.message;
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      const message = error.response?.data ?? error.message;
 
+      console.error('API request failed', message);
+      throw error;
+    }
+
+    const message = error instanceof Error ? error.message : 'Unknown error';
     console.error('API request failed', message);
-    throw axiosError;
+    throw error instanceof Error ? error : new Error(message);
   }
 };
 
@@ -91,6 +96,5 @@ export const postApi = async <TResponse = unknown, TRequest = unknown>(
   });
 
 // テストゲットAPI（てきとーなやつ）
-export const getArticleApi = () => {
-  return getApi('/wp-json/wp/v2/posts');
-};
+export const getArticleApi = <TResponse = unknown>() =>
+  getApi<TResponse>('/wp-json/wp/v2/posts');

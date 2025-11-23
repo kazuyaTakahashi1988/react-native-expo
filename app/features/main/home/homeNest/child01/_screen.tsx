@@ -17,10 +17,11 @@ const Child01Screen: React.FC = () => {
   const getArticles = async () => {
     setIsDisabled(true);
     try {
-      const result = await getArticleApi();
-      setArticles(result.data as TypeArticle[]);
-    } catch (error) {
-      console.error('Failed to fetch articles', error);
+      const result = await getArticleApi<TypeArticle[]>();
+      setArticles(result.data);
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : 'Unknown error';
+      console.error('Failed to fetch articles', message);
     } finally {
       setIsDisabled(false);
     }
