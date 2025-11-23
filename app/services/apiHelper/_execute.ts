@@ -34,7 +34,7 @@ const setHeaders = (
   };
 };
 
-export const execute = async <TResponse = unknown, TRequest = unknown>(
+export const execute = async <TResponse, TRequest>(
   options: TypeOptions<TRequest>,
 ): Promise<AxiosResponse<TResponse>> => {
   const {
@@ -66,7 +66,7 @@ export const execute = async <TResponse = unknown, TRequest = unknown>(
   }
 };
 
-export const getApi = async <TResponse = unknown>(
+export const getApi = async <TResponse>(
   apiPath: string,
   params?: Record<string, unknown>,
   options: Omit<TypeOptions<never>, 'apiPath' | 'method' | 'params'> = {},
@@ -78,7 +78,7 @@ export const getApi = async <TResponse = unknown>(
     ...options,
   });
 
-export const postApi = async <TResponse = unknown, TRequest = unknown>(
+export const postApi = async <TResponse, TRequest>(
   apiPath: string,
   requestData?: TRequest,
   options: Omit<TypeOptions<TRequest>, 'apiPath' | 'method' | 'requestData'> = {},
