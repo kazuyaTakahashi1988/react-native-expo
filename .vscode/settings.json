@@ -28,6 +28,7 @@
   // ESLint設定を明示的に追加
   "eslint.enable": true,
   "eslint.run": "onType",
+  "eslint.useFlatConfig": true,
   "eslint.validate": [
     "javascript",
     "javascriptreact",
