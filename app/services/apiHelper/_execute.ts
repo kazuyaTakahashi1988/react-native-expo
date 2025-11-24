@@ -104,7 +104,7 @@ export const getCategorizedArticleApi = (params: {
 }) => {
   const filteredParams = Object.fromEntries(
     Object.entries(params).filter(([, value]) =>
-      Array.isArray(value) ? value.length > 0 : value != null,
+      Array.isArray(value) ? value.length > 0 : value !== '',
     ),
   );
 

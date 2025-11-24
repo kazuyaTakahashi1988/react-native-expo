@@ -26,13 +26,11 @@ const Child02Screen: React.FC = () => {
   });
 
   /*
-   * submitボタン処理
+   * 「選択したカテゴリーで記事を取得」ボタン処理
    */
   const onSubmit = useCallback(() => {
     void form.handleSubmit(async (values: TypeFormValues) => {
       setIsDisabled(true);
-      // eslint-disable-next-line no-console
-      console.log(values);
       try {
         const result = await getCategorizedArticleApi({
           post: 'custompost',
@@ -40,11 +38,9 @@ const Child02Screen: React.FC = () => {
           'taxCategory02[]': values.taxCategory02,
           'taxCategory03[]': values.taxCategory03,
         });
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-argument
-        setArticles(result.data as any);
+        setArticles(result.data as TypeArticle[]);
       } catch (error) {
         console.error('Failed to fetch articles', error);
-      } finally {
         setIsDisabled(false);
       }
     })();
@@ -56,6 +52,7 @@ const Child02Screen: React.FC = () => {
   const onReset = () => {
     form.reset();
     setArticles(null);
+    setIsDisabled(false);
   };
 
   /*
@@ -73,6 +70,7 @@ const Child02Screen: React.FC = () => {
         <CheckBox
           containerStyle={styles.container}
           control={form.control}
+          disabled={isDisabled}
           label='[ - カテゴリー01 - ]'
           name='taxCategory01'
           options={[
@@ -86,6 +84,7 @@ const Child02Screen: React.FC = () => {
         <CheckBox
           containerStyle={styles.container}
           control={form.control}
+          disabled={isDisabled}
           label='[ - カテゴリー02 - ]'
           name='taxCategory02'
           options={[
@@ -99,6 +98,7 @@ const Child02Screen: React.FC = () => {
         <CheckBox
           containerStyle={styles.container}
           control={form.control}
+          disabled={isDisabled}
           label='[ - カテゴリー03 - ]'
           name='taxCategory03'
           options={[
@@ -112,7 +112,7 @@ const Child02Screen: React.FC = () => {
       </View>
 
       <Button
-        disabled={isDisabled || articles != null}
+        disabled={isDisabled}
         onPress={onSubmit}
         style={styles.button}
         title='選択したカテゴリーで記事を取得'
@@ -124,10 +124,10 @@ const Child02Screen: React.FC = () => {
           {articles.map((elm) => (
             <View key={elm.id} style={styles.article}>
               <Text>記事ID: {elm.id}</Text>
-              <Text style={styles.articleTitle}>{elm.title.rendered}</Text>
+              <Text style={styles.articleTitle}>{elm.getTheTitle}</Text>
               <Button
                 onPress={() => {
-                  goToLink(elm.link);
+                  goToLink(elm.getPermalink);
                 }}
                 pattern='secondary'
                 size='small'
