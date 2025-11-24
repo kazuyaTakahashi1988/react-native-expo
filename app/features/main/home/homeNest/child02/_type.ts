@@ -6,3 +6,11 @@ export type TypeFormValues = {
   taxCategory02: string[];
   taxCategory03: string[];
 };
+
+export type TypeArticle = {
+  id: number;
+  title: {
+    rendered: string;
+  };
+  link: string;
+};

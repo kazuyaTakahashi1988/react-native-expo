@@ -1,16 +1,18 @@
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
-import { StyleSheet, Text, View } from 'react-native';
+import { Linking, StyleSheet, Text, View } from 'react-native';
 
 import { Button } from '../../../../../components/button';
 import { CheckBox } from '../../../../../components/form';
 import { Layout } from '../../../../../components/layout';
 import { getCategorizedArticleApi } from '../../../../../services/apiHelper';
 
-import type { TypeFormValues } from './_type';
+import type { TypeArticle, TypeFormValues } from './_type';
 
 const Child02Screen: React.FC = () => {
-  const [formValues, setFormValues] = useState<TypeFormValues | null>(null);
+  const [articles, setArticles] = React.useState<TypeArticle[] | null>(null);
+  const [isDisabled, setIsDisabled] = React.useState<boolean>(false);
 
   /*
    * RHForm使用設定
@@ -28,39 +30,45 @@ const Child02Screen: React.FC = () => {
    */
   const onSubmit = useCallback(() => {
     void form.handleSubmit(async (values: TypeFormValues) => {
-      setFormValues(values);
+      setIsDisabled(true);
+      // eslint-disable-next-line no-console
+      console.log(values);
       try {
         const result = await getCategorizedArticleApi();
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-explicit-any
-        setFormValues(result.data as any);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-argument
+        setArticles(result.data as any);
       } catch (error) {
         console.error('Failed to fetch articles', error);
       } finally {
-        // eslint-disable-next-line no-console
-        console.log(formValues);
+        setIsDisabled(false);
       }
     })();
-  }, [form, formValues]);
+  }, [form]);
 
   /*
    * resetボタン処理
    */
   const onReset = () => {
     form.reset();
-    setFormValues(null);
+    setArticles(null);
+  };
+
+  /*
+   * 「記事へ飛ぶ」ボタン処理
+   */
+  const goToLink = (link: string) => {
+    void Linking.openURL(link);
   };
 
   return (
     <Layout>
       <Text style={styles.title}>API Helper / react-hook-form{`\n`}example</Text>
 
-      <Button onPress={onReset} pattern='secondary' style={styles.button} title='Reset' />
-
       <View style={styles.category}>
         <CheckBox
           containerStyle={styles.container}
           control={form.control}
-          label='カテゴリ01'
+          label='[ - カテゴリー01 - ]'
           name='taxCategory01'
           options={[
             { label: 'カテゴリー01_A', value: '18' },
@@ -73,7 +81,7 @@ const Child02Screen: React.FC = () => {
         <CheckBox
           containerStyle={styles.container}
           control={form.control}
-          label='カテゴリ02'
+          label='[ - カテゴリー02 - ]'
           name='taxCategory02'
           options={[
             { label: 'カテゴリー02_A', value: '23' },
@@ -86,7 +94,7 @@ const Child02Screen: React.FC = () => {
         <CheckBox
           containerStyle={styles.container}
           control={form.control}
-          label='カテゴリ03'
+          label='[ - カテゴリー03 - ]'
           name='taxCategory03'
           options={[
             { label: 'カテゴリー03_A', value: '28' },
@@ -98,7 +106,35 @@ const Child02Screen: React.FC = () => {
         />
       </View>
 
-      <Button onPress={onSubmit} style={styles.button} title='選択したカテゴリーで記事を取得' />
+      <Button
+        disabled={isDisabled || articles != null}
+        onPress={onSubmit}
+        style={styles.button}
+        title='選択したカテゴリーで記事を取得'
+      />
+
+      {/* 記事一覧の表示 */}
+      {articles && (
+        <View>
+          {articles.map((elm) => (
+            <View key={elm.id} style={styles.article}>
+              <Text>記事ID: {elm.id}</Text>
+              <Text style={styles.articleTitle}>{elm.title.rendered}</Text>
+              <Button
+                onPress={() => {
+                  goToLink(elm.link);
+                }}
+                pattern='secondary'
+                size='small'
+                style={styles.articleButton}
+                title='- 記事へ飛ぶ -'
+              />
+            </View>
+          ))}
+        </View>
+      )}
+
+      <Button onPress={onReset} pattern='secondary' style={styles.button} title='Reset' />
     </Layout>
   );
 };
@@ -118,9 +154,25 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     justifyContent: 'space-between',
   },
-
   button: {
     marginBottom: 16,
+    minHeight: 'auto',
+    padding: 8,
+    width: '100%',
+  },
+  article: {
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    display: 'flex',
+    marginBottom: 16,
+    padding: 12,
+  },
+  articleTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 8,
+  },
+  articleButton: {
     minHeight: 'auto',
     padding: 8,
     width: '100%',
