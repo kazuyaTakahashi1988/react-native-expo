@@ -95,9 +95,18 @@ export const getArticleApi = () => {
   return getApi('/wp-json/wp/v2/posts');
 };
 
-// テストゲットAPI（てきとーなやつ）
-export const getCategorizedArticleApi = () => {
-  return getApi(
-    'http://search-wp.empty-service.com/wp-json/wp/v2/org_api?post=custompost&taxCategory01[]=22&taxCategory01[]=18&taxCategory01[]=19',
+// カテゴリーで絞り込んだ記事の取得
+export const getCategorizedArticleApi = (params: {
+  post?: string;
+  'taxCategory01[]'?: string[];
+  'taxCategory02[]'?: string[];
+  'taxCategory03[]'?: string[];
+}) => {
+  const filteredParams = Object.fromEntries(
+    Object.entries(params).filter(([, value]) =>
+      Array.isArray(value) ? value.length > 0 : value != null,
+    ),
   );
+
+  return getApi('http://search-wp.empty-service.com/wp-json/wp/v2/org_api', filteredParams);
 };

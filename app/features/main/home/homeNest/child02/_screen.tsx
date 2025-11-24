@@ -34,7 +34,12 @@ const Child02Screen: React.FC = () => {
       // eslint-disable-next-line no-console
       console.log(values);
       try {
-        const result = await getCategorizedArticleApi();
+        const result = await getCategorizedArticleApi({
+          post: 'custompost',
+          'taxCategory01[]': values.taxCategory01,
+          'taxCategory02[]': values.taxCategory02,
+          'taxCategory03[]': values.taxCategory03,
+        });
         // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-argument
         setArticles(result.data as any);
       } catch (error) {
