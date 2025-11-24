@@ -9,3 +9,10 @@ export type TypeOptions<TRequest> = {
   baseURL?: string;
   accessToken?: string;
 };
+
+export type TypeGetCategorizedArticleApi = {
+  post: string;
+  'taxCategory01[]'?: string[];
+  'taxCategory02[]'?: string[];
+  'taxCategory03[]'?: string[];
+};

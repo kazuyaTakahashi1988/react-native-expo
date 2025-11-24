@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import type { TypeOptions } from '../../lib/types/typeService';
+import type { TypeGetCategorizedArticleApi, TypeOptions } from '../../lib/types/typeService';
 import type { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 
 const DEFAULT_API_BASE_URL = 'http://wp.empty-service.com';
@@ -96,17 +96,6 @@ export const getArticleApi = () => {
 };
 
 // カテゴリーで絞り込んだ記事の取得
-export const getCategorizedArticleApi = (params: {
-  post?: string;
-  'taxCategory01[]'?: string[];
-  'taxCategory02[]'?: string[];
-  'taxCategory03[]'?: string[];
-}) => {
-  const filteredParams = Object.fromEntries(
-    Object.entries(params).filter(([, value]) =>
-      Array.isArray(value) ? value.length > 0 : value !== '',
-    ),
-  );
-
-  return getApi('http://search-wp.empty-service.com/wp-json/wp/v2/org_api', filteredParams);
+export const getCategorizedArticleApi = (params: TypeGetCategorizedArticleApi) => {
+  return getApi('http://search-wp.empty-service.com/wp-json/wp/v2/org_api', params);
 };

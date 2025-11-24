@@ -26,18 +26,21 @@ const Child02Screen: React.FC = () => {
   });
 
   /*
-   * 「選択したカテゴリーで記事を取得」ボタン処理
+   * 「選択したカテゴリーで記事を絞り込み検索」ボタン処理
    */
   const onSubmit = useCallback(() => {
     void form.handleSubmit(async (values: TypeFormValues) => {
       setIsDisabled(true);
       try {
-        const result = await getCategorizedArticleApi({
+        // 選択したカテゴリーをクエリパラム化
+        const params = {
           post: 'custompost',
           'taxCategory01[]': values.taxCategory01,
           'taxCategory02[]': values.taxCategory02,
           'taxCategory03[]': values.taxCategory03,
-        });
+        };
+        // クエリパラムを使用して記事取得API処理
+        const result = await getCategorizedArticleApi(params);
         setArticles(result.data as TypeArticle[]);
       } catch (error) {
         console.error('Failed to fetch articles', error);
@@ -115,10 +118,11 @@ const Child02Screen: React.FC = () => {
         disabled={isDisabled}
         onPress={onSubmit}
         style={styles.button}
-        title='選択したカテゴリーで記事を取得'
+        title='選択したカテゴリーで記事を絞り込み検索'
       />
 
       {/* 記事一覧の表示 */}
+      {isDisabled && <Text style={styles.container}>取得記事{articles?.length ?? '0'}件</Text>}
       {articles && (
         <View>
           {articles.map((elm) => (
