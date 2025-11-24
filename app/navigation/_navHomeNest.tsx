@@ -31,7 +31,7 @@ const NavHomeNest: React.FC = () => {
 
       {/* Child02 画面 */}
       <MaterialTopTab.Screen name='child02' options={{ title: 'Child02' }}>
-        {(props) => <Child02Screen {...props} />}
+        {() => <Child02Screen />}
       </MaterialTopTab.Screen>
 
       {/* Childxx 画面 */}

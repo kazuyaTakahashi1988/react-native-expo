@@ -3,7 +3,7 @@ import axios from 'axios';
 import type { TypeOptions } from '../../lib/types/typeService';
 import type { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 
-const DEFAULT_API_BASE_URL = 'https://wp.empty-service.com';
+const DEFAULT_API_BASE_URL = 'http://wp.empty-service.com';
 
 const setUrl = (baseURL: string, apiPath: string): string => {
   if (apiPath.startsWith('http://') || apiPath.startsWith('https://')) {
@@ -93,4 +93,11 @@ export const postApi = async <TResponse = unknown, TRequest = unknown>(
 // テストゲットAPI（てきとーなやつ）
 export const getArticleApi = () => {
   return getApi('/wp-json/wp/v2/posts');
+};
+
+// テストゲットAPI（てきとーなやつ）
+export const getCategorizedArticleApi = () => {
+  return getApi(
+    'http://search-wp.empty-service.com/wp-json/wp/v2/org_api?post=custompost&taxCategory01[]=22&taxCategory01[]=18&taxCategory01[]=19',
+  );
 };

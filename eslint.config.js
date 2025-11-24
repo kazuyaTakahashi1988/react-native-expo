@@ -149,6 +149,8 @@ export default [
       complexity: ['error', { max: 5 }],
       'max-depth': ['error', 5],
       'no-else-return': ['error'],
+      /* http:// 文字列の使用禁止を off */
+      'sonarjs/no-clear-text-protocols': 'off',
 
       /* -------------------------------------------------------
       'total-functions/no-unsafe-type-assertion': 'error'

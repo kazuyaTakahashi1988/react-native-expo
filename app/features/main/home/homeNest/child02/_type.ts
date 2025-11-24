@@ -1,4 +1,8 @@
-import type { TypeRootList } from '../../../../../lib/types/typeNavigation';
-import type { MaterialTopTabScreenProps } from '@react-navigation/material-top-tabs';
-
-export type TypeChild02Screen = MaterialTopTabScreenProps<TypeRootList>;
+/* -----------------------------------------------
+ * ./_screen.tsx
+ * ----------------------------------------------- */
+export type TypeFormValues = {
+  taxCategory01: string[];
+  taxCategory02: string[];
+  taxCategory03: string[];
+};
