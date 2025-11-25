@@ -63,28 +63,24 @@ const setHeaders = (
 };
 
 // GET 処理
-export const getApi = async <TResponse = unknown>(
+export const getApi = async <TResponse = unknown, TRequest = unknown>(
   apiPath: string,
-  params?: Record<string, unknown>,
-  options: Omit<TypeOptions<never>, 'apiPath' | 'method' | 'params'> = {},
+  options: Omit<TypeOptions<TRequest>, 'apiPath' | 'method'> = {},
 ): Promise<AxiosResponse<TResponse>> =>
-  execute<TResponse, never>({
+  execute<TResponse, TRequest>({
     apiPath,
     method: 'GET',
-    params,
     ...options,
   }); // API通信の実行処理
 
 // POST 処理
 export const postApi = async <TResponse = unknown, TRequest = unknown>(
   apiPath: string,
-  requestData?: TRequest,
-  options: Omit<TypeOptions<TRequest>, 'apiPath' | 'method' | 'requestData'> = {},
+  options: Omit<TypeOptions<TRequest>, 'apiPath' | 'method'> = {},
 ): Promise<AxiosResponse<TResponse>> =>
   execute<TResponse, TRequest>({
     apiPath,
     method: 'POST',
-    requestData,
     ...options,
   }); // API通信の実行処理
 
@@ -94,17 +90,21 @@ export const postApi = async <TResponse = unknown, TRequest = unknown>(
 
 // 記事を取得するAPI（てきとーなやつ）
 export const getArticleApi = () => {
-  return getApi('/wp-json/wp/v2/posts'); // DEFAULT_BASE_URL を使う例
+  return getApi('/wp-json/wp/v2/posts');
 };
 
 // クエリパラムを使用して記事を取得するAPI（てきとーなやつ）
 export const getCategorizedArticleApi = (params: TypeParams) => {
-  const options = { baseURL: 'http://search-wp.empty-service.com' };
-  return getApi('/wp-json/wp/v2/org_api', params, options); // DEFAULT_BASE_URL を使わない例
+  const options = {
+    params,
+    baseURL: 'http://search-wp.empty-service.com', // DEFAULT_BASE_URL を使わないケース
+  };
+  return getApi('/wp-json/wp/v2/org_api', options);
 };
 
 /*
  * export const postXXXXApi = (requestData: TypeXXXX) => {
- *  return postApi('/XXXX/XXXX', requestData);
+ * const options = { requestData };
+ *  return postApi('/XXXX/XXXX', options);
  * };
  */
