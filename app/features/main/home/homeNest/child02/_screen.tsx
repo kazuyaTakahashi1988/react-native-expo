@@ -29,8 +29,8 @@ const Child02Screen: React.FC = () => {
    * 「選択したカテゴリーで記事を絞り込み検索」ボタン処理
    */
   const onSubmit = useCallback(() => {
+    setIsDisabled(true);
     void form.handleSubmit(async (values: TypeFormValues) => {
-      setIsDisabled(true);
       try {
         // 選択したカテゴリーをクエリパラム化
         const params = {
@@ -39,7 +39,7 @@ const Child02Screen: React.FC = () => {
           'taxCategory02[]': values.taxCategory02,
           'taxCategory03[]': values.taxCategory03,
         };
-        // クエリパラムを使用して記事取得API処理
+        // クエリパラムを使用して記事を取得するAPI処理
         const result = await getCategorizedArticleApi(params);
         setArticles(result.data as TypeArticle[]);
       } catch (error) {

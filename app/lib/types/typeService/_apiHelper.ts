@@ -10,7 +10,7 @@ export type TypeOptions<TRequest> = {
   accessToken?: string;
 };
 
-export type TypeGetCategorizedArticleApi = {
+export type TypeParams = {
   post: string;
   'taxCategory01[]'?: string[];
   'taxCategory02[]'?: string[];

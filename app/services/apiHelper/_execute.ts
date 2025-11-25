@@ -1,21 +1,49 @@
 import axios from 'axios';
 
-import type { TypeGetCategorizedArticleApi, TypeOptions } from '../../lib/types/typeService';
+import type { TypeOptions, TypeParams } from '../../lib/types/typeService';
 import type { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 
-const DEFAULT_API_BASE_URL = 'http://wp.empty-service.com';
+/* -----------------------------------------------
+ * API処理
+ * ----------------------------------------------- */
 
-const setUrl = (baseURL: string, apiPath: string): string => {
-  if (apiPath.startsWith('http://') || apiPath.startsWith('https://')) {
-    return apiPath;
+// デフォルトのベースURL
+const DEFAULT_BASE_URL = 'http://wp.empty-service.com';
+
+// API通信の実行処理
+export const execute = async <TResponse = unknown, TRequest = unknown>(
+  options: TypeOptions<TRequest>,
+): Promise<AxiosResponse<TResponse>> => {
+  const {
+    apiPath,
+    method,
+    requestData,
+    params,
+    headers,
+    baseURL = DEFAULT_BASE_URL, // デフォルトのベースURL
+    accessToken,
+  } = options;
+
+  const requestConfig: AxiosRequestConfig = {
+    method,
+    url: `${baseURL}${apiPath}`,
+    data: requestData,
+    params,
+    headers: setHeaders(accessToken, headers), // ヘッダー情報のセット
+  };
+
+  try {
+    return await axios.request<TResponse>(requestConfig);
+  } catch (error) {
+    const axiosError = error as AxiosError;
+    const message = axiosError.response?.data ?? axiosError.message;
+
+    console.error('API request failed', message);
+    throw axiosError;
   }
-
-  const normalizedBase = baseURL.endsWith('/') ? baseURL.slice(0, -1) : baseURL;
-  const normalizedPath = apiPath.startsWith('/') ? apiPath.slice(1) : apiPath;
-
-  return `${normalizedBase}/${normalizedPath}`;
 };
 
+// ヘッダー情報のセット
 const setHeaders = (
   accessToken?: string,
   headers?: Record<string, string>,
@@ -34,38 +62,7 @@ const setHeaders = (
   };
 };
 
-export const execute = async <TResponse = unknown, TRequest = unknown>(
-  options: TypeOptions<TRequest>,
-): Promise<AxiosResponse<TResponse>> => {
-  const {
-    apiPath,
-    method,
-    requestData,
-    params,
-    headers,
-    baseURL = DEFAULT_API_BASE_URL,
-    accessToken,
-  } = options;
-
-  const requestConfig: AxiosRequestConfig = {
-    method,
-    url: setUrl(baseURL, apiPath),
-    data: requestData,
-    params,
-    headers: setHeaders(accessToken, headers),
-  };
-
-  try {
-    return await axios.request<TResponse>(requestConfig);
-  } catch (error) {
-    const axiosError = error as AxiosError;
-    const message = axiosError.response?.data ?? axiosError.message;
-
-    console.error('API request failed', message);
-    throw axiosError;
-  }
-};
-
+// GET 処理
 export const getApi = async <TResponse = unknown>(
   apiPath: string,
   params?: Record<string, unknown>,
@@ -76,8 +73,9 @@ export const getApi = async <TResponse = unknown>(
     method: 'GET',
     params,
     ...options,
-  });
+  }); // API通信の実行処理
 
+// POST 処理
 export const postApi = async <TResponse = unknown, TRequest = unknown>(
   apiPath: string,
   requestData?: TRequest,
@@ -88,14 +86,25 @@ export const postApi = async <TResponse = unknown, TRequest = unknown>(
     method: 'POST',
     requestData,
     ...options,
-  });
+  }); // API通信の実行処理
 
-// テストゲットAPI（てきとーなやつ）
+/* -----------------------------------------------
+ * 各API（並べくswaggerの順序と揃える）
+ * ----------------------------------------------- */
+
+// 記事を取得するAPI（てきとーなやつ）
 export const getArticleApi = () => {
-  return getApi('/wp-json/wp/v2/posts');
+  return getApi('/wp-json/wp/v2/posts'); // DEFAULT_BASE_URL を使う例
 };
 
-// カテゴリーで絞り込んだ記事の取得
-export const getCategorizedArticleApi = (params: TypeGetCategorizedArticleApi) => {
-  return getApi('http://search-wp.empty-service.com/wp-json/wp/v2/org_api', params);
+// クエリパラムを使用して記事を取得するAPI（てきとーなやつ）
+export const getCategorizedArticleApi = (params: TypeParams) => {
+  const options = { baseURL: 'http://search-wp.empty-service.com' };
+  return getApi('/wp-json/wp/v2/org_api', params, options); // DEFAULT_BASE_URL を使わない例
 };
+
+/*
+ * export const postXXXXApi = (requestData: TypeXXXX) => {
+ *  return postApi('/XXXX/XXXX', requestData);
+ * };
+ */
