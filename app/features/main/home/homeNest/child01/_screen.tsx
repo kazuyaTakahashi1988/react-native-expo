@@ -17,8 +17,8 @@ const Child01Screen: React.FC = () => {
   const getArticles = async () => {
     setIsDisabled(true);
     try {
-      const result = await getArticleApi();
-      setArticles(result.data as TypeArticle[]);
+      const result = await getArticleApi<TypeArticle[]>();
+      setArticles(result.data);
     } catch (error) {
       console.error('Failed to fetch articles', error);
     } finally {

@@ -40,8 +40,8 @@ const Child02Screen: React.FC = () => {
           'taxCategory03[]': values.taxCategory03,
         };
         // クエリパラムを使用して記事を取得するAPI処理
-        const result = await getCategorizedArticleApi(params);
-        setArticles(result.data as TypeArticle[]);
+        const result = await getCategorizedArticleApi<TypeArticle[]>(params);
+        setArticles(result.data);
       } catch (error) {
         console.error('Failed to fetch articles', error);
         setIsDisabled(false);
