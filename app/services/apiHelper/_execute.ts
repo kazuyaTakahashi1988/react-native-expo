@@ -62,7 +62,7 @@ const setHeaders = (
   };
 };
 
-// GET通信
+// GET 処理
 export const getApi = async <TResponse = unknown>(
   apiPath: string,
   params?: Record<string, unknown>,
@@ -75,7 +75,7 @@ export const getApi = async <TResponse = unknown>(
     ...options,
   }); // API通信の実行処理
 
-// POST通信
+// POST 処理
 export const postApi = async <TResponse = unknown, TRequest = unknown>(
   apiPath: string,
   requestData?: TRequest,
