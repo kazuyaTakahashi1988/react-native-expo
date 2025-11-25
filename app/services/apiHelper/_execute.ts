@@ -10,34 +10,6 @@ import type { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 // デフォルトのベースURL
 const DEFAULT_BASE_URL = 'http://wp.empty-service.com';
 
-// eslint-disable-next-line complexity -- Necessary branches to safely parse axios error payloads
-const buildErrorMessage = (error: AxiosError): string => {
-  const responseData = error.response?.data;
-
-  if (typeof responseData === 'string') {
-    return responseData;
-  }
-
-  if (responseData !== null && typeof responseData === 'object') {
-    const message = (responseData as { message?: unknown }).message;
-    if (typeof message === 'string') {
-      return message;
-    }
-  }
-
-  return error.message;
-};
-
-const handleRequestError = (error: unknown): never => {
-  if (axios.isAxiosError(error)) {
-    console.error('API request failed', buildErrorMessage(error));
-    throw error;
-  }
-
-  console.error('API request failed', error);
-  throw new Error('API request failed');
-};
-
 // API通信の実行処理
 export const execute = async <TResponse = unknown, TRequest = unknown>(
   options: TypeOptions<TRequest>,
@@ -62,8 +34,12 @@ export const execute = async <TResponse = unknown, TRequest = unknown>(
 
   try {
     return await axios.request<TResponse>(requestConfig);
-  } catch (error: unknown) {
-    return handleRequestError(error);
+  } catch (error) {
+    const axiosError = error as AxiosError;
+    const message = axiosError.response?.data ?? axiosError.message;
+
+    console.error('API request failed', message);
+    throw axiosError;
   }
 };
 
@@ -117,14 +93,14 @@ export const postApi = async <TResponse = unknown, TRequest = unknown>(
  * ----------------------------------------------- */
 
 // 記事を取得するAPI（てきとーなやつ）
-export const getArticleApi = <TResponse = unknown>() => {
-  return getApi<TResponse>('/wp-json/wp/v2/posts'); // DEFAULT_BASE_URL を使う例
+export const getArticleApi = () => {
+  return getApi('/wp-json/wp/v2/posts'); // DEFAULT_BASE_URL を使う例
 };
 
 // クエリパラムを使用して記事を取得するAPI（てきとーなやつ）
-export const getCategorizedArticleApi = <TResponse = unknown>(params: TypeParams) => {
+export const getCategorizedArticleApi = (params: TypeParams) => {
   const options = { baseURL: 'http://search-wp.empty-service.com' };
-  return getApi<TResponse>('/wp-json/wp/v2/org_api', params, options); // DEFAULT_BASE_URL を使わない例
+  return getApi('/wp-json/wp/v2/org_api', params, options); // DEFAULT_BASE_URL を使わない例
 };
 
 /*
