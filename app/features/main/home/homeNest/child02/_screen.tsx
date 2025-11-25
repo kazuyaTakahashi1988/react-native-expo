@@ -31,14 +31,14 @@ const Child02Screen: React.FC = () => {
   const onSubmit = useCallback(() => {
     setIsDisabled(true);
     void form.handleSubmit(async (values: TypeFormValues) => {
+      // 選択したカテゴリーをクエリパラム化
+      const params = {
+        post: 'custompost',
+        'taxCategory01[]': values.taxCategory01,
+        'taxCategory02[]': values.taxCategory02,
+        'taxCategory03[]': values.taxCategory03,
+      };
       try {
-        // 選択したカテゴリーをクエリパラム化
-        const params = {
-          post: 'custompost',
-          'taxCategory01[]': values.taxCategory01,
-          'taxCategory02[]': values.taxCategory02,
-          'taxCategory03[]': values.taxCategory03,
-        };
         // クエリパラム使用の記事取得API処理
         const result = await getCategorizedArticleApi(params);
         setArticles(result.data as TypeArticle[]);

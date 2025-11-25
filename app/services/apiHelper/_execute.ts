@@ -4,7 +4,7 @@ import type { TypeOptions, TypeParams } from '../../lib/types/typeService';
 import type { AxiosError, AxiosRequestConfig, AxiosResponse, Method } from 'axios';
 
 /* -----------------------------------------------
- * API処理
+ * APIヘルパー
  * ----------------------------------------------- */
 
 // デフォルトのベースURL
@@ -76,19 +76,19 @@ const request = async <TResponse = unknown, TRequest = unknown>(
     method,
     apiPath,
     ...options,
-  });
+  }); // APIリクエスト 実行処理
 
 /* -----------------------------------------------
  * 各 APIリクエスト
  * （並べくswaggerの順序と揃える）
  * ----------------------------------------------- */
 
-// 記事取得API（てきとーなやつ）
+// 記事取得API
 export const getArticleApi = () => {
   return request('GET', '/wp-json/wp/v2/posts');
 };
 
-// クエリパラム使用の記事取得API（てきとーなやつ）
+// クエリパラム使用の記事取得API
 export const getCategorizedArticleApi = (params: TypeParams) => {
   const options = {
     params,
