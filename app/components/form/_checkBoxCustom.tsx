@@ -3,7 +3,6 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import Animated, {
   interpolate,
   interpolateColor,
-  type SharedValue,
   useAnimatedStyle,
   useSharedValue,
   withTiming,
@@ -15,6 +14,7 @@ import { useRHFController } from '../../services/formHelper';
 
 import type { TypeCheckBoxCustom, TypeToggleCheckOption } from '../../lib/types/typeComponents';
 import type { FieldValues } from 'react-hook-form';
+import type { SharedValue } from 'react-native-reanimated';
 
 /* -----------------------------------------------
  * チェックボックスカスタム項目

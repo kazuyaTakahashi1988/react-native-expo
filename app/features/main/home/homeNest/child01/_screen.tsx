@@ -12,11 +12,12 @@ const Child01Screen: React.FC = () => {
   const [isDisabled, setIsDisabled] = React.useState<boolean>(false);
 
   /*
-   * 「記事を取得する」ボタン処理
+   * 「記事取得」ボタン処理
    */
   const getArticles = async () => {
     setIsDisabled(true);
     try {
+      // 記事取得API処理
       const result = await getArticleApi();
       setArticles(result.data as TypeArticle[]);
     } catch (error) {
@@ -43,7 +44,7 @@ const Child01Screen: React.FC = () => {
           void getArticles();
         }}
         style={styles.button}
-        title='- 記事を取得する -'
+        title='- 記事取得 -'
       />
 
       {/* 記事一覧の表示 */}

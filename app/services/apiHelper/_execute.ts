@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import type { TypeOptions, TypeParams } from '../../lib/types/typeService';
-import type { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
+import type { AxiosError, AxiosRequestConfig, AxiosResponse, Method } from 'axios';
 
 /* -----------------------------------------------
  * API処理
@@ -10,8 +10,10 @@ import type { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 // デフォルトのベースURL
 const DEFAULT_BASE_URL = 'http://wp.empty-service.com';
 
-// API通信の実行処理
-export const execute = async <TResponse = unknown, TRequest = unknown>(
+/*
+ * APIリクエスト 実行処理
+ */
+const execute = async <TResponse = unknown, TRequest = unknown>(
   options: TypeOptions<TRequest>,
 ): Promise<AxiosResponse<TResponse>> => {
   const {
@@ -62,49 +64,45 @@ const setHeaders = (
   };
 };
 
-// GET 処理
-export const getApi = async <TResponse = unknown, TRequest = unknown>(
+/*
+ * APIリクエスト（フォーマット） 処理
+ */
+const request = async <TResponse = unknown, TRequest = unknown>(
+  method: Method,
   apiPath: string,
   options: Omit<TypeOptions<TRequest>, 'apiPath' | 'method'> = {},
 ): Promise<AxiosResponse<TResponse>> =>
   execute<TResponse, TRequest>({
+    method,
     apiPath,
-    method: 'GET',
     ...options,
-  }); // API通信の実行処理
-
-// POST 処理
-export const postApi = async <TResponse = unknown, TRequest = unknown>(
-  apiPath: string,
-  options: Omit<TypeOptions<TRequest>, 'apiPath' | 'method'> = {},
-): Promise<AxiosResponse<TResponse>> =>
-  execute<TResponse, TRequest>({
-    apiPath,
-    method: 'POST',
-    ...options,
-  }); // API通信の実行処理
+  });
 
 /* -----------------------------------------------
- * 各API（並べくswaggerの順序と揃える）
+ * 各 APIリクエスト
+ * （並べくswaggerの順序と揃える）
  * ----------------------------------------------- */
 
-// 記事を取得するAPI（てきとーなやつ）
+// 記事取得API（てきとーなやつ）
 export const getArticleApi = () => {
-  return getApi('/wp-json/wp/v2/posts');
+  return request('GET', '/wp-json/wp/v2/posts');
 };
 
-// クエリパラムを使用して記事を取得するAPI（てきとーなやつ）
+// クエリパラム使用の記事取得API（てきとーなやつ）
 export const getCategorizedArticleApi = (params: TypeParams) => {
   const options = {
     params,
     baseURL: 'http://search-wp.empty-service.com', // DEFAULT_BASE_URL を使わないケース
+    // headers,
+    // requestData,
+    // accessToken,
   };
-  return getApi('/wp-json/wp/v2/org_api', options);
+  return request('GET', '/wp-json/wp/v2/org_api', options);
 };
 
 /*
  * export const postXXXXApi = (requestData: TypeXXXX) => {
- * const options = { requestData };
- *  return postApi('/XXXX/XXXX', options);
+ *  const options = { requestData };
+ *  return request('POST', '/xxxx/xxxx', options);
  * };
  */

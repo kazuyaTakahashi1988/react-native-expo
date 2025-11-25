@@ -1,6 +1,3 @@
-/* -----------------------------------------------
- * ./_screen.tsx
- * ----------------------------------------------- */
 export type TypeFormValues = {
   dummyName: string;
   genres: string[];
@@ -11,7 +8,4 @@ export type TypeFormValues = {
   description: string;
 };
 
-/* -----------------------------------------------
- * ./_component.tsx
- * ----------------------------------------------- */
 export type TypeResultArea = Partial<TypeFormValues>;

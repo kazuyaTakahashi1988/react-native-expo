@@ -39,7 +39,7 @@ const Child02Screen: React.FC = () => {
           'taxCategory02[]': values.taxCategory02,
           'taxCategory03[]': values.taxCategory03,
         };
-        // クエリパラムを使用して記事を取得するAPI処理
+        // クエリパラム使用の記事取得API処理
         const result = await getCategorizedArticleApi(params);
         setArticles(result.data as TypeArticle[]);
       } catch (error) {
