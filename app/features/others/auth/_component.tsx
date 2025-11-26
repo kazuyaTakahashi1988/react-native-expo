@@ -21,6 +21,8 @@ export const SignInForm: React.FC<TypeAuthForm<TypeSignIValues>> = ({
   return (
     <View style={styles.container}>
       <Text style={styles.title}>◇ Sign In</Text>
+
+      {/* メールアドレス 入力項目 */}
       <Input
         autoCapitalize='none'
         containerStyle={styles.input}
@@ -38,6 +40,8 @@ export const SignInForm: React.FC<TypeAuthForm<TypeSignIValues>> = ({
           required: '必須項目です。',
         }}
       />
+
+      {/* パスワード 入力項目 */}
       <Input
         autoCapitalize='none'
         containerStyle={styles.input}
@@ -49,6 +53,8 @@ export const SignInForm: React.FC<TypeAuthForm<TypeSignIValues>> = ({
         rules={{ required: '必須項目です。' }}
         secureTextEntry
       />
+
+      {/* submit & resetボタン */}
       <Button onPress={onSubmit} style={styles.submit} title='Sign In' />
       <Button onPress={form.reset} pattern='secondary' style={styles.reset} title='Reset' />
     </View>
@@ -70,6 +76,8 @@ export const SignUpForm: React.FC<TypeAuthForm<TypeSignUpValues>> = ({
   return (
     <View style={styles.container}>
       <Text style={styles.title}>◇ Sign Up</Text>
+
+      {/* メールアドレス 入力項目 */}
       <Input
         autoCapitalize='none'
         containerStyle={styles.input}
@@ -87,6 +95,8 @@ export const SignUpForm: React.FC<TypeAuthForm<TypeSignUpValues>> = ({
           required: '必須項目です。',
         }}
       />
+
+      {/* パスワード 入力項目 */}
       <Input
         autoCapitalize='none'
         containerStyle={styles.input}
@@ -98,6 +108,8 @@ export const SignUpForm: React.FC<TypeAuthForm<TypeSignUpValues>> = ({
         rules={{ required: '必須項目です。' }}
         secureTextEntry
       />
+
+      {/* submit & resetボタン */}
       <Button onPress={onSubmit} style={styles.submit} title='Sign Up' />
       <Button onPress={form.reset} pattern='secondary' style={styles.reset} title='Reset' />
     </View>
@@ -119,6 +131,8 @@ export const VerifyForm: React.FC<TypeAuthForm<TypeVerifyValues>> = ({
   return (
     <View style={styles.container}>
       <Text style={styles.title}>◇ Verify</Text>
+
+      {/* verificationCode 入力項目 */}
       <Input
         autoCapitalize='none'
         containerStyle={styles.input}
@@ -130,6 +144,8 @@ export const VerifyForm: React.FC<TypeAuthForm<TypeVerifyValues>> = ({
         rules={{ required: '必須項目です。' }}
         secureTextEntry
       />
+
+      {/* メールアドレス 入力項目 */}
       <Input
         autoCapitalize='none'
         containerStyle={styles.input}
@@ -147,6 +163,8 @@ export const VerifyForm: React.FC<TypeAuthForm<TypeVerifyValues>> = ({
           required: '必須項目です。',
         }}
       />
+
+      {/* submit & resetボタン */}
       <Button onPress={onSubmit} style={styles.submit} title='Verify' />
       <Button onPress={form.reset} pattern='secondary' style={styles.reset} title='Reset' />
     </View>

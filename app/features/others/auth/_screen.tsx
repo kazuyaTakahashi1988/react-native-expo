@@ -6,98 +6,94 @@ import { SignInForm, SignUpForm, VerifyForm } from './_component';
 import { Button } from '../../../components/button';
 import { Layout } from '../../../components/layout';
 
-import type { TypeSignIValues, TypeSignUpValues, TypeVerifyValues } from './_type';
+import type { TypeSignIValues, TypeSignUpValues, TypeTabKey, TypeVerifyValues } from './_type';
 
 /* -----------------------------------------------
  * Auth 画面
  * ----------------------------------------------- */
 
 const AuthScreen: React.FC = () => {
-  const [tabKey, setTabKey] = React.useState<'signIn' | 'signUp' | 'verify'>('signIn');
+  const [tabKey, setTabKey] = React.useState<TypeTabKey>('signIn');
 
-  /* ---------------------------------------------
+  /*
+   * tabKey マッチングフラグ
+   */
+  const keyMatch = (key: TypeTabKey) => {
+    return tabKey === key;
+  };
+
+  /*
    * Sign In の RHForm使用設定
-   * --------------------------------------------- */
+   */
   const signInForm = useForm<TypeSignIValues>({
     defaultValues: {
       email: '',
       password: '',
     },
-  }); // フォーム設定
+  });
 
+  // submit処理
   const onSignInSubmit = React.useCallback(() => {
     void signInForm.handleSubmit((values: TypeSignIValues) => {
       // eslint-disable-next-line no-console
       console.log(values);
     })();
-  }, [signInForm]); // submitボタン処理
+  }, [signInForm]);
 
-  /* ---------------------------------------------
+  /*
    * Sign Up の RHForm使用設定
-   * --------------------------------------------- */
+   */
   const signUpForm = useForm<TypeSignUpValues>({
     defaultValues: {
       email: '',
       password: '',
     },
-  }); // フォーム設定
+  });
 
+  // submit処理
   const onSignUpSubmit = React.useCallback(() => {
     void signUpForm.handleSubmit((values: TypeSignUpValues) => {
       // eslint-disable-next-line no-console
       console.log(values);
     })();
-  }, [signUpForm]); // submitボタン処理
+  }, [signUpForm]);
 
-  /* ---------------------------------------------
+  /*
    * verify の RHForm使用設定
-   * --------------------------------------------- */
+   */
   const verifyForm = useForm<TypeVerifyValues>({
     defaultValues: {
       verificationCode: '',
       email: '',
     },
-  }); // フォーム設定
+  });
 
+  // submit処理
   const onVerifySubmit = React.useCallback(() => {
     void verifyForm.handleSubmit((values: TypeVerifyValues) => {
       // eslint-disable-next-line no-console
       console.log(values);
     })();
-  }, [verifyForm]); // submitボタン処理
-
-  /*
-   * tabKey マッチフラグ
-   */
-  const keyMatch = (key: string) => {
-    return tabKey === key;
-  };
+  }, [verifyForm]);
 
   return (
     <Layout>
-      {/* タブ */}
+      {/* タブボタン */}
       <View style={styles.tab}>
-        <Button
-          onPress={() => {
-            setTabKey('signIn');
-          }}
-          {...(!keyMatch('signIn') && { pattern: 'secondary' })}
-          title='Sign In'
-        />
-        <Button
-          onPress={() => {
-            setTabKey('signUp');
-          }}
-          {...(!keyMatch('signUp') && { pattern: 'secondary' })}
-          title='Sign Up'
-        />
-        <Button
-          onPress={() => {
-            setTabKey('verify');
-          }}
-          {...(!keyMatch('verify') && { pattern: 'secondary' })}
-          title='Verify'
-        />
+        {[
+          { title: 'Sign In', key: 'signIn' as const },
+          { title: 'Sign Up', key: 'signUp' as const },
+          { title: 'Verify', key: 'verify' as const },
+        ].map((elm, index) => (
+          <Button
+            key={index}
+            onPress={() => {
+              setTabKey(elm.key);
+            }}
+            {...(!keyMatch(elm.key) && { pattern: 'secondary' })}
+            title={elm.title}
+          />
+        ))}
       </View>
 
       {/* Sign In フォーム */}
