@@ -1,4 +1,4 @@
-/* eslint-disable complexity */
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import { StyleSheet, Text, View } from 'react-native';
 
@@ -19,7 +19,9 @@ export type TypeFormValues02 = {
   verifiEmail: string;
 };
 
+// eslint-disable-next-line complexity
 const InformationScreen: React.FC = () => {
+  const [tab, setTab] = React.useState<'signIn' | 'signUp' | 'verify'>('signIn');
   /*
    * RHForm使用設定
    */
@@ -35,7 +37,7 @@ const InformationScreen: React.FC = () => {
       signUpPassword: '',
     },
   });
-  const verifiForm = useForm<TypeFormValues02>({
+  const verifyForm = useForm<TypeFormValues02>({
     defaultValues: {
       verificationCode: '',
       verifiEmail: '',
@@ -44,137 +46,143 @@ const InformationScreen: React.FC = () => {
 
   return (
     <Layout>
-      <View style={styles.container}>
-        {/* SignIn フォーム項目 */}
-        <Text style={styles.title}>◇ Sign In</Text>
-        <Input
-          autoCapitalize='none'
-          containerStyle={styles.input}
-          control={signInForm.control}
-          errorText={signInForm.formState.errors.signInEmail?.message}
-          keyboardType='ascii-capable'
-          label='emailを入力してください'
-          name='signInEmail'
-          placeholder='○○○○＠○○○○.com'
-          rules={{
-            pattern: {
-              message: 'Emailアドレスを入力してください.',
-              value: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$/,
-            },
-            required: '必須項目です。',
+      <View style={styles.tab}>
+        <Button
+          onPress={() => {
+            setTab('signIn');
           }}
+          pattern={tab !== 'signIn' ? 'secondary' : undefined}
+          title='Sign In'
         />
-        <Input
-          autoCapitalize='none'
-          containerStyle={styles.input}
-          control={signInForm.control}
-          errorText={signInForm.formState.errors.signInPassword?.message}
-          label='passwordを入力してください'
-          name='signInPassword'
-          placeholder='○○○○○○○○'
-          rules={{
-            minLength: {
-              message: 'Password は6文字以上で入力してください。',
-              value: 6,
-            },
-            required: '必須項目です。',
+        <Button
+          onPress={() => {
+            setTab('signUp');
           }}
-          secureTextEntry
+          pattern={tab !== 'signUp' ? 'secondary' : undefined}
+          title='Sign Up'
         />
-        {/* submit ボタン */}
-        <View style={styles.submit}>
-          <Button title='Sign In' />
-          <Button pattern='secondary' title='Reset' />
-        </View>
+        <Button
+          onPress={() => {
+            setTab('verify');
+          }}
+          pattern={tab !== 'verify' ? 'secondary' : undefined}
+          title='Verify'
+        />
       </View>
 
-      {/* SignUp フォーム項目 */}
-      <View style={styles.container}>
-        <Text style={styles.title}>◇ Sign Up</Text>
-        <Input
-          autoCapitalize='none'
-          containerStyle={styles.input}
-          control={signUpForm.control}
-          errorText={signUpForm.formState.errors.signUpEmail?.message}
-          keyboardType='ascii-capable'
-          label='emailを入力してください'
-          name='signUpEmail'
-          placeholder='○○○○＠○○○○.com'
-          rules={{
-            pattern: {
-              message: 'Emailアドレスを入力してください.',
-              value: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$/,
-            },
-            required: '必須項目です。',
-          }}
-        />
-        <Input
-          autoCapitalize='none'
-          containerStyle={styles.input}
-          control={signUpForm.control}
-          errorText={signUpForm.formState.errors.signUpPassword?.message}
-          label='passwordを入力してください'
-          name='signUpPassword'
-          placeholder='○○○○○○○○'
-          rules={{
-            minLength: {
-              message: 'Password は6文字以上で入力してください。',
-              value: 6,
-            },
-            required: '必須項目です。',
-          }}
-          secureTextEntry
-        />
-        {/* submit ボタン */}
-        <View style={styles.submit}>
-          <Button title='Sign Up' />
-          <Button pattern='secondary' title='Reset' />
+      {/* Sign In フォーム */}
+      {tab === 'signIn' && (
+        <View style={styles.container}>
+          <Text style={styles.title}>◇ Sign In</Text>
+          <Input
+            autoCapitalize='none'
+            containerStyle={styles.input}
+            control={signInForm.control}
+            errorText={signInForm.formState.errors.signInEmail?.message}
+            keyboardType='ascii-capable'
+            label='emailを入力してください'
+            name='signInEmail'
+            placeholder='○○○○＠○○○○.com'
+            rules={{
+              pattern: {
+                message: 'Emailアドレスを入力してください.',
+                value: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$/,
+              },
+              required: '必須項目です。',
+            }}
+          />
+          <Input
+            autoCapitalize='none'
+            containerStyle={styles.input}
+            control={signInForm.control}
+            errorText={signInForm.formState.errors.signInPassword?.message}
+            label='passwordを入力してください'
+            name='signInPassword'
+            placeholder='○○○○○○○○'
+            rules={{ required: '必須項目です。' }}
+            secureTextEntry
+          />
+          {/* submit ボタン */}
+          <Button style={styles.submit} title='Sign In' />
+          <Button pattern='secondary' style={styles.reset} title='Reset' />
         </View>
-      </View>
+      )}
 
-      {/* verification フォーム項目 */}
-      <View style={styles.container}>
-        <Text style={styles.title}>◇ verification</Text>
-        <Input
-          autoCapitalize='none'
-          containerStyle={styles.input}
-          control={verifiForm.control}
-          errorText={verifiForm.formState.errors.verificationCode?.message}
-          label='verificationコード入力 項目'
-          name='verificationCode'
-          placeholder='○○○○○○○○'
-          rules={{
-            minLength: {
-              message: 'Password は6文字以上で入力してください。',
-              value: 6,
-            },
-            required: '必須項目です。',
-          }}
-          secureTextEntry
-        />
-        <Input
-          autoCapitalize='none'
-          containerStyle={styles.input}
-          control={verifiForm.control}
-          errorText={verifiForm.formState.errors.verifiEmail?.message}
-          keyboardType='ascii-capable'
-          label='emailを入力してください'
-          name='verifiEmail'
-          placeholder='○○○○＠○○○○.com'
-          rules={{
-            pattern: {
-              message: 'Emailアドレスを入力してください.',
-              value: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$/,
-            },
-            required: '必須項目です。',
-          }}
-        />
-        {/* submit ボタン */}
-        <View style={styles.submit}>
-          <Button title='Verify' />
-          <Button pattern='secondary' title='Reset' />
+      {/* Sign Up フォーム */}
+      {tab === 'signUp' && (
+        <View style={styles.container}>
+          <Text style={styles.title}>◇ Sign Up</Text>
+          <Input
+            autoCapitalize='none'
+            containerStyle={styles.input}
+            control={signUpForm.control}
+            errorText={signUpForm.formState.errors.signUpEmail?.message}
+            keyboardType='ascii-capable'
+            label='emailを入力してください'
+            name='signUpEmail'
+            placeholder='○○○○＠○○○○.com'
+            rules={{
+              pattern: {
+                message: 'Emailアドレスを入力してください.',
+                value: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$/,
+              },
+              required: '必須項目です。',
+            }}
+          />
+          <Input
+            autoCapitalize='none'
+            containerStyle={styles.input}
+            control={signUpForm.control}
+            errorText={signUpForm.formState.errors.signUpPassword?.message}
+            label='passwordを入力してください'
+            name='signUpPassword'
+            placeholder='○○○○○○○○'
+            rules={{ required: '必須項目です。' }}
+            secureTextEntry
+          />
+          {/* submit ボタン */}
+          <Button style={styles.submit} title='Sign Up' />
+          <Button pattern='secondary' style={styles.reset} title='Reset' />
         </View>
-      </View>
+      )}
+
+      {/* Verify フォーム */}
+      {tab === 'verify' && (
+        <View style={styles.container}>
+          <Text style={styles.title}>◇ Verify</Text>
+          <Input
+            autoCapitalize='none'
+            containerStyle={styles.input}
+            control={verifyForm.control}
+            errorText={verifyForm.formState.errors.verificationCode?.message}
+            label='verificationCodeを入力してください'
+            name='verificationCode'
+            placeholder='○○○○○○○○'
+            rules={{ required: '必須項目です。' }}
+            secureTextEntry
+          />
+          <Input
+            autoCapitalize='none'
+            containerStyle={styles.input}
+            control={verifyForm.control}
+            errorText={verifyForm.formState.errors.verifiEmail?.message}
+            keyboardType='ascii-capable'
+            label='emailを入力してください'
+            name='verifiEmail'
+            placeholder='○○○○＠○○○○.com'
+            rules={{
+              pattern: {
+                message: 'Emailアドレスを入力してください.',
+                value: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$/,
+              },
+              required: '必須項目です。',
+            }}
+          />
+          {/* submit ボタン */}
+          <Button style={styles.submit} title='Verify' />
+          <Button pattern='secondary' style={styles.reset} title='Reset' />
+        </View>
+      )}
     </Layout>
   );
 };
@@ -185,6 +193,12 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     textAlign: 'left',
   },
+  tab: {
+    columnGap: 12,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 24,
+  },
   container: {
     backgroundColor: '#fff',
     marginBottom: 24,
@@ -193,12 +207,15 @@ const styles = StyleSheet.create({
   input: {
     marginTop: 24,
   },
-
   submit: {
-    columnGap: 12,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
     marginTop: 24,
+    width: '100%',
+  },
+  reset: {
+    marginTop: 24,
+    minHeight: 'auto',
+    padding: 8,
+    width: '100%',
   },
 });
 
