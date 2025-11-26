@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import { StyleSheet, Text, View } from 'react-native';
 
@@ -22,7 +22,7 @@ import type { TypeFormValues } from './_type';
  * ----------------------------------------------- */
 
 const Child00Screen: React.FC = () => {
-  const [formValues, setFormValues] = useState<TypeFormValues | null>(null);
+  const [formValues, setFormValues] = React.useState<TypeFormValues | null>(null);
 
   /*
    * RHForm使用設定
@@ -42,7 +42,7 @@ const Child00Screen: React.FC = () => {
   /*
    * エラーテキスト取得処理
    */
-  const getErrorText = useCallback(
+  const getErrorText = React.useCallback(
     (name: keyof TypeFormValues) => form.formState.errors[name]?.message,
     [form.formState.errors],
   );
@@ -50,7 +50,7 @@ const Child00Screen: React.FC = () => {
   /*
    * submitボタン処理
    */
-  const onSubmit = useCallback(() => {
+  const onSubmit = React.useCallback(() => {
     void form.handleSubmit((values: TypeFormValues) => {
       setFormValues(values);
     })();
