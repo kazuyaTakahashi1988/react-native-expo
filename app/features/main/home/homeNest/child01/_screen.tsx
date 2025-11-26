@@ -7,6 +7,10 @@ import { getArticleApi } from '../../../../../services/apiHelper';
 
 import type { TypeArticle } from './_type';
 
+/* -----------------------------------------------
+ * Child01 画面
+ * ----------------------------------------------- */
+
 const Child01Screen: React.FC = () => {
   const [articles, setArticles] = React.useState<TypeArticle[] | null>(null);
   const [isDisabled, setIsDisabled] = React.useState<boolean>(false);

@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { HeaderSub } from '../components/layout';
-import { InformationScreen } from '../features/others/information/';
+import { AuthScreen } from '../features/others/auth/';
 
 import type { TypeRootList } from '../lib/types/typeNavigation';
 import type React from 'react';
@@ -18,15 +18,15 @@ const NavOthers: React.FC = () => {
    * --------------------------------------------- */
   return (
     <NativeStack.Navigator>
-      {/* Information 画面 */}
+      {/* Auth 画面 */}
       <NativeStack.Screen
-        name='information'
+        name='auth'
         options={{
-          title: 'Information',
+          title: 'Auth',
           header: (props) => <HeaderSub {...props} goBack='戻る' />, // 共通ヘッダー（サブ用）
         }}
       >
-        {(props) => <InformationScreen {...props} />}
+        {() => <AuthScreen />}
       </NativeStack.Screen>
 
       {/* Xxxx 画面 */}

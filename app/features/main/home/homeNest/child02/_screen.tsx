@@ -1,4 +1,3 @@
-import { useCallback } from 'react';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { Linking, StyleSheet, Text, View } from 'react-native';
@@ -9,6 +8,10 @@ import { Layout } from '../../../../../components/layout';
 import { getCategorizedArticleApi } from '../../../../../services/apiHelper';
 
 import type { TypeArticle, TypeFormValues } from './_type';
+
+/* -----------------------------------------------
+ * Child02 画面
+ * ----------------------------------------------- */
 
 const Child02Screen: React.FC = () => {
   const [articles, setArticles] = React.useState<TypeArticle[] | null>(null);
@@ -28,7 +31,7 @@ const Child02Screen: React.FC = () => {
   /*
    * 「選択したカテゴリーで記事を絞り込み検索」ボタン処理
    */
-  const onSubmit = useCallback(() => {
+  const onSubmit = React.useCallback(() => {
     setIsDisabled(true);
     void form.handleSubmit(async (values: TypeFormValues) => {
       // 選択したカテゴリーをクエリパラム化
