@@ -26,7 +26,7 @@ const NavOthers: React.FC = () => {
           header: (props) => <HeaderSub {...props} goBack='戻る' />, // 共通ヘッダー（サブ用）
         }}
       >
-        {(props) => <InformationScreen {...props} />}
+        {() => <InformationScreen />}
       </NativeStack.Screen>
 
       {/* Xxxx 画面 */}
