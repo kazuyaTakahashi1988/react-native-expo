@@ -1,28 +1,28 @@
 import React from 'react';
-import { useForm } from 'react-hook-form';
+import { type FieldValues, useForm, type UseFormReturn } from 'react-hook-form';
 import { StyleSheet, Text, View } from 'react-native';
 
 import { Button } from '../../../components/button';
 import { Input } from '../../../components/form';
 import { Layout } from '../../../components/layout';
 
-export type TypeFormValues = {
+export interface TypeFormValues extends FieldValues {
   signInEmail: string;
   signInPassword: string;
-};
-export type TypeFormValues01 = {
+}
+export interface TypeFormValues01 extends FieldValues {
   signUpEmail: string;
   signUpPassword: string;
-};
-export type TypeFormValues02 = {
+}
+export interface TypeFormValues02 extends FieldValues {
   verificationCode: string;
   verifiEmail: string;
-};
+}
 
 type TabKey = 'signIn' | 'signUp' | 'verify';
 
-type AuthFormProps<T> = {
-  form: ReturnType<typeof useForm<T>>;
+type AuthFormProps<T extends FieldValues> = {
+  form: UseFormReturn<T>;
 };
 
 const TabSwitcher: React.FC<{ tab: TabKey; onChange: (tab: TabKey) => void }> = ({
