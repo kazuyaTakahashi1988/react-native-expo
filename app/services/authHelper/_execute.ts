@@ -6,12 +6,15 @@ import {
   confirmSignUp,
 } from 'aws-amplify/auth';
 
-import type { SignInResult, SignInValues, SignUpResult, SignUpValues, VerifyValues } from './types';
-import type { ResourcesConfig } from 'aws-amplify';
-
-type AmplifyClient = {
-  configure: (config: ResourcesConfig) => void;
-};
+import type {
+  AmplifyClient,
+  ResourcesConfig,
+  SignInResult,
+  SignInValues,
+  SignUpResult,
+  SignUpValues,
+  VerifyValues,
+} from '../../lib/types/typeService/_authHelper';
 
 const amplifyClient: AmplifyClient = Amplify as unknown as AmplifyClient;
 

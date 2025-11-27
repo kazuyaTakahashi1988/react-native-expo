@@ -6,7 +6,7 @@ import {
 } from '../../../services/authHelper';
 
 import type { TypeSignInValues, TypeSignUpValues, TypeVerifyValues } from './_type';
-import type { SignInResult, SignUpResult } from '../../../services/authHelper/types';
+import type { SignInResult, SignUpResult } from '../../../lib/types/typeService/_authHelper';
 
 /* -----------------------------------------------
  * Auth 画面用サービス
