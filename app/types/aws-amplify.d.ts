@@ -2,7 +2,6 @@ declare module 'aws-amplify' {
   export interface ResourcesConfig {
     Auth?: {
       Cognito?: {
-        region: string;
         userPoolId: string;
         userPoolClientId: string;
         loginWith?: {

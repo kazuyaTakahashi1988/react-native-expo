@@ -1,5 +1,10 @@
 import { Amplify } from 'aws-amplify';
-import { signIn as cognitoSignIn, signOut as cognitoSignOut, signUp as cognitoSignUp, confirmSignUp } from 'aws-amplify/auth';
+import {
+  signIn as cognitoSignIn,
+  signOut as cognitoSignOut,
+  signUp as cognitoSignUp,
+  confirmSignUp,
+} from 'aws-amplify/auth';
 
 import type { SignInResult, SignInValues, SignUpResult, SignUpValues, VerifyValues } from './types';
 import type { ResourcesConfig } from 'aws-amplify';
@@ -18,9 +23,8 @@ const amplifyClient: AmplifyClient = Amplify as unknown as AmplifyClient;
 const authConfig: ResourcesConfig = {
   Auth: {
     Cognito: {
-      region: 'ap-northeast-1',
-      userPoolId: 'ap-northeast-1_rKjlyQsbS',
-      userPoolClientId: '40oec5o56lukbe6ch1s9al1qh',
+      userPoolId: 'ap-northeast-1_ukr54toDk',
+      userPoolClientId: '7qccrkdu7aq97so0cj0d61j0kv',
       loginWith: { email: true },
     },
   },
@@ -44,7 +48,12 @@ export const signUp = async (values: SignUpValues): Promise<SignUpResult> => {
 
   const username = response.username ?? values.email;
 
-  return { isSignUpComplete: response.isSignUpComplete, nextStep: response.nextStep, username, userId: response.userId };
+  return {
+    isSignUpComplete: response.isSignUpComplete,
+    nextStep: response.nextStep,
+    username,
+    userId: response.userId,
+  };
 };
 
 /*
@@ -58,7 +67,12 @@ export const signIn = async (values: SignInValues): Promise<SignInResult> => {
 
   const username = response.username ?? values.email;
 
-  return { isSignedIn: response.isSignedIn, nextStep: response.nextStep, username, userId: response.userId };
+  return {
+    isSignedIn: response.isSignedIn,
+    nextStep: response.nextStep,
+    username,
+    userId: response.userId,
+  };
 };
 
 /*
