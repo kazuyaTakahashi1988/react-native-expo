@@ -1,10 +1,17 @@
 declare module 'aws-amplify' {
   export interface ResourcesConfig {
     Auth?: {
-      region?: string;
-      userPoolId?: string;
-      userPoolWebClientId?: string;
-      authenticationFlowType?: string;
+      Cognito?: {
+        region: string;
+        userPoolId: string;
+        userPoolClientId: string;
+        loginWith?: {
+          email?: boolean;
+          phone?: boolean;
+          username?: boolean;
+          preferredUsername?: boolean;
+        };
+      };
     };
   }
 
@@ -12,23 +19,37 @@ declare module 'aws-amplify' {
     configure: (config: ResourcesConfig) => void;
   };
 
-  export interface AuthUser {
-    getUsername?: () => string;
-  }
-
   export interface SignUpResult {
-    user?: AuthUser;
+    isSignUpComplete?: boolean;
+    nextStep?: {
+      signUpStep?: string;
+      codeDeliveryDetails?: {
+        attributeName?: string;
+        deliveryMedium?: string;
+        destination?: string;
+      };
+    };
+    userId?: string;
     username?: string;
   }
 
   export interface SignInResult {
-    isSignedIn?: boolean;
+    isSignedIn: boolean;
+    nextStep?: {
+      signInStep?: string;
+      additionalInfo?: Record<string, unknown>;
+    };
+    userId?: string;
     username?: string;
   }
 
   export const Amplify: AmplifyClient;
   export const Auth: {
-    signUp: (input: { username: string; password: string; attributes?: { email?: string } }) => Promise<SignUpResult>;
+    signUp: (input: {
+      username: string;
+      password: string;
+      options: { userAttributes: { email: string } };
+    }) => Promise<SignUpResult>;
     signIn: (input: { username: string; password: string }) => Promise<SignInResult>;
     confirmSignUp: (username: string, confirmationCode: string) => Promise<void>;
     signOut: () => Promise<void>;

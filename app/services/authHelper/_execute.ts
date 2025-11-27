@@ -4,7 +4,11 @@ import type { SignInResult, SignInValues, SignUpResult, SignUpValues, VerifyValu
 import type { ResourcesConfig } from 'aws-amplify';
 
 type AuthClient = {
-  signUp: (input: { username: string; password: string; attributes: { email: string } }) => Promise<SignUpResult>;
+  signUp: (input: {
+    username: string;
+    password: string;
+    options: { userAttributes: { email: string } };
+  }) => Promise<SignUpResult>;
   signIn: (input: { username: string; password: string }) => Promise<SignInResult>;
   confirmSignUp: (username: string, confirmationCode: string) => Promise<void>;
   signOut: () => Promise<void>;
@@ -24,10 +28,12 @@ const authClient: AuthClient = Auth as unknown as AuthClient;
 // Amplify 設定
 const authConfig: ResourcesConfig = {
   Auth: {
-    region: 'ap-northeast-1',
-    userPoolId: 'ap-northeast-1_rKjlyQsbS',
-    userPoolWebClientId: '40oec5o56lukbe6ch1s9al1qh',
-    authenticationFlowType: 'USER_PASSWORD_AUTH',
+    Cognito: {
+      region: 'ap-northeast-1',
+      userPoolId: 'ap-northeast-1_rKjlyQsbS',
+      userPoolClientId: '40oec5o56lukbe6ch1s9al1qh',
+      loginWith: { email: true },
+    },
   },
 };
 
@@ -40,14 +46,16 @@ export const signUp = async (values: SignUpValues): Promise<SignUpResult> => {
   const response = await authClient.signUp({
     username: values.email,
     password: values.password,
-    attributes: {
-      email: values.email,
+    options: {
+      userAttributes: {
+        email: values.email,
+      },
     },
   });
 
-  const username = response.user?.getUsername?.();
+  const username = response.username ?? values.email;
 
-  return { username };
+  return { isSignUpComplete: response.isSignUpComplete, nextStep: response.nextStep, username, userId: response.userId };
 };
 
 /*
@@ -59,10 +67,9 @@ export const signIn = async (values: SignInValues): Promise<SignInResult> => {
     password: values.password,
   });
 
-  const username = response.username;
-  const isSignedIn = response.isSignedIn;
+  const username = response.username ?? values.email;
 
-  return { isSignedIn, username };
+  return { isSignedIn: response.isSignedIn, nextStep: response.nextStep, username, userId: response.userId };
 };
 
 /*

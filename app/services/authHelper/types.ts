@@ -14,13 +14,25 @@ export type VerifyValues = {
 };
 
 export type SignUpResult = {
-  user?: {
-    getUsername?: () => string;
+  isSignUpComplete?: boolean;
+  nextStep?: {
+    signUpStep?: string;
+    codeDeliveryDetails?: {
+      attributeName?: string;
+      deliveryMedium?: string;
+      destination?: string;
+    };
   };
+  userId?: string;
   username?: string;
 };
 
 export type SignInResult = {
-  isSignedIn?: boolean;
+  isSignedIn: boolean;
+  nextStep?: {
+    signInStep?: string;
+    additionalInfo?: Record<string, unknown>;
+  };
+  userId?: string;
   username?: string;
 };

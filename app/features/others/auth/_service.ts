@@ -52,7 +52,7 @@ export const signIn = async (values: TypeSignInValues): Promise<SignInResponse> 
 
   return {
     isSignedIn: Boolean(response.isSignedIn),
-    message: response.isSignedIn === true
+    message: response.isSignedIn
       ? 'Signed in successfully.'
       : 'Additional steps are required to complete sign in.',
     username: response.username ?? values.email,
