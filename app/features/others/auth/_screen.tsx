@@ -1,8 +1,9 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 import { SignInForm, SignUpForm, VerifyForm } from './_component';
+import { signIn, signOut, signUp, verify } from './_service';
 import { Button } from '../../../components/button';
 import { Layout } from '../../../components/layout';
 
@@ -14,6 +15,8 @@ import type { TypeSignInValues, TypeSignUpValues, TypeTabKey, TypeVerifyValues }
 
 const AuthScreen: React.FC = () => {
   const [tabKey, setTabKey] = React.useState<TypeTabKey>('signIn');
+  const [resultMessage, setResultMessage] = React.useState<string>('');
+  const [errorMessage, setErrorMessage] = React.useState<string>('');
 
   /*
    * tabKey アクティブ判定
@@ -33,8 +36,16 @@ const AuthScreen: React.FC = () => {
   // submit処理
   const onSignInSubmit = React.useCallback(() => {
     void signInForm.handleSubmit((values: TypeSignInValues) => {
-      // eslint-disable-next-line no-console
-      console.log(values);
+      setErrorMessage('');
+      setResultMessage('');
+
+      signIn(values)
+        .then((res) => {
+          setResultMessage(`${res.message} (user: ${res.username})`);
+        })
+        .catch((error: unknown) => {
+          setErrorMessage(error instanceof Error ? error.message : 'Sign in failed.');
+        });
     })();
   }, [signInForm]);
 
@@ -51,8 +62,17 @@ const AuthScreen: React.FC = () => {
   // submit処理
   const onSignUpSubmit = React.useCallback(() => {
     void signUpForm.handleSubmit((values: TypeSignUpValues) => {
-      // eslint-disable-next-line no-console
-      console.log(values);
+      setErrorMessage('');
+      setResultMessage('');
+
+      signUp(values)
+        .then((res) => {
+          setResultMessage(`${res.message} (user: ${res.username})`);
+          setTabKey('verify');
+        })
+        .catch((error: unknown) => {
+          setErrorMessage(error instanceof Error ? error.message : 'Sign up failed.');
+        });
     })();
   }, [signUpForm]);
 
@@ -69,10 +89,31 @@ const AuthScreen: React.FC = () => {
   // submit処理
   const onVerifySubmit = React.useCallback(() => {
     void verifyForm.handleSubmit((values: TypeVerifyValues) => {
-      // eslint-disable-next-line no-console
-      console.log(values);
+      setErrorMessage('');
+      setResultMessage('');
+
+      verify(values)
+        .then((res) => {
+          setResultMessage(res.message);
+        })
+        .catch((error: unknown) => {
+          setErrorMessage(error instanceof Error ? error.message : 'Verification failed.');
+        });
     })();
   }, [verifyForm]);
+
+  const onSignOutPress = React.useCallback(() => {
+    setErrorMessage('');
+    setResultMessage('');
+
+    signOut()
+      .then((res) => {
+        setResultMessage(res.message);
+      })
+      .catch((error: unknown) => {
+        setErrorMessage(error instanceof Error ? error.message : 'Sign out failed.');
+      });
+  }, []);
 
   return (
     <Layout>
@@ -94,6 +135,10 @@ const AuthScreen: React.FC = () => {
         ))}
       </View>
 
+      {/* メッセージ表示 */}
+      {resultMessage !== '' ? <Text style={styles.result}>{resultMessage}</Text> : null}
+      {errorMessage !== '' ? <Text style={styles.error}>{errorMessage}</Text> : null}
+
       {/* Sign In フォーム */}
       <SignInForm form={signInForm} onSubmit={onSignInSubmit} visibled={isActive('signIn')} />
 
@@ -102,6 +147,9 @@ const AuthScreen: React.FC = () => {
 
       {/* Verify フォーム */}
       <VerifyForm form={verifyForm} onSubmit={onVerifySubmit} visibled={isActive('verify')} />
+
+      {/* Sign Out ボタン */}
+      <Button onPress={onSignOutPress} pattern='secondary' title='Sign Out' />
     </Layout>
   );
 };
@@ -112,6 +160,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 24,
+  },
+  result: {
+    color: '#2d6a4f',
+    marginBottom: 12,
+  },
+  error: {
+    color: '#c1121f',
+    marginBottom: 12,
   },
 });
 
