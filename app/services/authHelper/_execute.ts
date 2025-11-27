@@ -18,6 +18,15 @@ import type {
 
 const amplifyClient: AmplifyClient = Amplify as unknown as AmplifyClient;
 
+const isObject = (value: unknown): value is Record<string, unknown> =>
+  typeof value === 'object' && value !== null;
+
+const isSignUpResponse = (value: unknown): value is SignUpResult =>
+  isObject(value) && ('isSignUpComplete' in value || 'nextStep' in value || 'userId' in value);
+
+const isSignInResponse = (value: unknown): value is SignInResult =>
+  isObject(value) && ('isSignedIn' in value || 'nextStep' in value || 'userId' in value);
+
 /* -----------------------------------------------
  * Cognito Auth ヘルパー
  * ----------------------------------------------- */
@@ -39,7 +48,7 @@ amplifyClient.configure(authConfig);
  * Sign Up
  */
 export const signUp = async (values: SignUpValues): Promise<SignUpResult> => {
-  const response = await cognitoSignUp({
+  const response: unknown = await cognitoSignUp({
     username: values.email,
     password: values.password,
     options: {
@@ -48,6 +57,10 @@ export const signUp = async (values: SignUpValues): Promise<SignUpResult> => {
       },
     },
   });
+
+  if (!isSignUpResponse(response)) {
+    throw new Error('Unexpected sign up response');
+  }
 
   const username = response.username ?? values.email;
 
@@ -63,10 +76,14 @@ export const signUp = async (values: SignUpValues): Promise<SignUpResult> => {
  * Sign In
  */
 export const signIn = async (values: SignInValues): Promise<SignInResult> => {
-  const response = await cognitoSignIn({
+  const response: unknown = await cognitoSignIn({
     username: values.email,
     password: values.password,
   });
+
+  if (!isSignInResponse(response)) {
+    throw new Error('Unexpected sign in response');
+  }
 
   const username = response.username ?? values.email;
 
