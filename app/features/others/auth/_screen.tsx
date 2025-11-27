@@ -3,9 +3,9 @@ import { useForm } from 'react-hook-form';
 import { StyleSheet, Text, View } from 'react-native';
 
 import { SignInForm, SignUpForm, VerifyForm } from './_component';
+import { signIn, signOut, signUp, verify } from './_service';
 import { Button } from '../../../components/button';
 import { Layout } from '../../../components/layout';
-import { signIn, signOut, signUp, verify } from './_service';
 
 import type { TypeSignInValues, TypeSignUpValues, TypeTabKey, TypeVerifyValues } from './_type';
 
