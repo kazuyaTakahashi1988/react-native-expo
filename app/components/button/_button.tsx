@@ -99,6 +99,8 @@ const styles = StyleSheet.create({
   },
   disabledButton: {
     backgroundColor: '#9e9e9e',
+    borderColor: '#9e9e9e',
+    borderWidth: 1,
   },
   disabledText: {
     color: '#fff',

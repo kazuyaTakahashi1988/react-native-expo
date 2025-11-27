@@ -185,7 +185,7 @@ const Child00Screen: React.FC = () => {
       </View>
 
       {/* 出力結果エリア */}
-      <ResultArea {...formValues} />
+      <ResultArea {...(formValues ?? {})} />
     </Layout>
   );
 };
