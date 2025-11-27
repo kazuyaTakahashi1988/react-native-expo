@@ -3,13 +3,22 @@ import { StyleSheet, Text, View } from 'react-native';
 import { Button } from '../../../components/button';
 import { Input } from '../../../components/form';
 
-import type { TypeAuthForm, TypeSignIValues, TypeSignUpValues, TypeVerifyValues } from './_type';
+import type { TypeAuthForm, TypeSignInValues, TypeSignUpValues, TypeVerifyValues } from './_type';
 import type React from 'react';
+
+// メールアドレス項目のバリデーションルール
+const rules = {
+  pattern: {
+    message: 'Emailアドレスを入力してください。',
+    value: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/,
+  },
+  required: '必須項目です。',
+};
 
 /* -----------------------------------------------
  * Sign In フォーム
  * ----------------------------------------------- */
-export const SignInForm: React.FC<TypeAuthForm<TypeSignIValues>> = ({
+export const SignInForm: React.FC<TypeAuthForm<TypeSignInValues>> = ({
   form,
   onSubmit,
   visibled,
@@ -22,7 +31,7 @@ export const SignInForm: React.FC<TypeAuthForm<TypeSignIValues>> = ({
     <View style={styles.container}>
       <Text style={styles.title}>◇ Sign In</Text>
 
-      {/* メールアドレス 入力項目 */}
+      {/* メールアドレス項目 */}
       <Input
         autoCapitalize='none'
         containerStyle={styles.input}
@@ -32,16 +41,10 @@ export const SignInForm: React.FC<TypeAuthForm<TypeSignIValues>> = ({
         label='emailを入力してください'
         name='email'
         placeholder='○○○○＠○○○○.com'
-        rules={{
-          pattern: {
-            message: 'Emailアドレスを入力してください。',
-            value: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/,
-          },
-          required: '必須項目です。',
-        }}
+        rules={rules}
       />
 
-      {/* パスワード 入力項目 */}
+      {/* パスワード項目 */}
       <Input
         autoCapitalize='none'
         containerStyle={styles.input}
@@ -77,7 +80,7 @@ export const SignUpForm: React.FC<TypeAuthForm<TypeSignUpValues>> = ({
     <View style={styles.container}>
       <Text style={styles.title}>◇ Sign Up</Text>
 
-      {/* メールアドレス 入力項目 */}
+      {/* メールアドレス項目 */}
       <Input
         autoCapitalize='none'
         containerStyle={styles.input}
@@ -87,16 +90,10 @@ export const SignUpForm: React.FC<TypeAuthForm<TypeSignUpValues>> = ({
         label='emailを入力してください'
         name='email'
         placeholder='○○○○＠○○○○.com'
-        rules={{
-          pattern: {
-            message: 'Emailアドレスを入力してください。',
-            value: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/,
-          },
-          required: '必須項目です。',
-        }}
+        rules={rules}
       />
 
-      {/* パスワード 入力項目 */}
+      {/* パスワード項目 */}
       <Input
         autoCapitalize='none'
         containerStyle={styles.input}
@@ -132,7 +129,7 @@ export const VerifyForm: React.FC<TypeAuthForm<TypeVerifyValues>> = ({
     <View style={styles.container}>
       <Text style={styles.title}>◇ Verify</Text>
 
-      {/* verificationCode 入力項目 */}
+      {/* verificationCode項目 */}
       <Input
         autoCapitalize='none'
         containerStyle={styles.input}
@@ -145,7 +142,7 @@ export const VerifyForm: React.FC<TypeAuthForm<TypeVerifyValues>> = ({
         secureTextEntry
       />
 
-      {/* メールアドレス 入力項目 */}
+      {/* メールアドレス項目 */}
       <Input
         autoCapitalize='none'
         containerStyle={styles.input}
@@ -155,13 +152,7 @@ export const VerifyForm: React.FC<TypeAuthForm<TypeVerifyValues>> = ({
         label='emailを入力してください'
         name='email'
         placeholder='○○○○＠○○○○.com'
-        rules={{
-          pattern: {
-            message: 'Emailアドレスを入力してください。',
-            value: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/,
-          },
-          required: '必須項目です。',
-        }}
+        rules={rules}
       />
 
       {/* submit & resetボタン */}

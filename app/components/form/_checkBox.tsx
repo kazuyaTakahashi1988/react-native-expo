@@ -48,11 +48,15 @@ const CheckBox = <TFieldValues extends FieldValues>({
               <View
                 style={[
                   styles.checkBoxBase,
-                  isSelected ? styles.checkBoxChecked : null,
                   hasError ? styles.checkBoxError : null,
                   isDisabled ? styles.checkBoxDisabled : null,
                 ]}
-              />
+              >
+                {isSelected && (
+                  <View style={[styles.checkBoxSelected, getSelectedStyle(isDisabled)]} />
+                )}
+              </View>
+
               <Text style={getOptionLabelStyle(isDisabled)}>{option.label}</Text>
             </Pressable>
           );
@@ -93,6 +97,13 @@ const getOptionLabelStyle = (disabled: boolean) => {
   return styles.checkBoxTextDisabled;
 };
 
+const getSelectedStyle = (disabled: boolean) => {
+  if (!disabled) {
+    return null;
+  }
+  return (styles.checkBoxSelected, styles.checkBoxSelectedDisabled);
+};
+
 const styles = StyleSheet.create({
   checkBoxGroup: {
     rowGap: 12,
@@ -103,24 +114,32 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   checkBoxBase: {
+    alignItems: 'center',
     borderColor: '#007aff',
     borderRadius: 4,
     borderWidth: 2,
     height: 20,
+    justifyContent: 'center',
     width: 20,
   },
   checkBoxTextDisabled: {
     color: '#9e9e9e',
   },
-  checkBoxChecked: {
+  checkBoxSelected: {
     backgroundColor: '#007aff',
-    borderColor: '#007aff',
+    borderRadius: 4,
+    bottom: 0,
+    height: 12,
+    width: 12,
+  },
+  checkBoxSelectedDisabled: {
+    backgroundColor: '#9e9e9e',
   },
   checkBoxError: {
     borderColor: '#e53935',
   },
   checkBoxDisabled: {
-    backgroundColor: '#9e9e9e',
+    backgroundColor: '#fff',
     borderColor: '#9e9e9e',
   },
 });
