@@ -17,19 +17,6 @@ export type AmplifyClient = {
   configure: (config: ResourcesConfig) => void;
 };
 
-export type SignUpInput = {
-  username: string;
-  password: string;
-  options: { userAttributes: { email: string } };
-};
-
-export type SignInInput = { username: string; password: string };
-
-export type ConfirmSignUpInput = {
-  username: string;
-  confirmationCode: string;
-};
-
 export type SignUpValues = {
   email: string;
   password: string;
