@@ -14,7 +14,7 @@ import type {
   SignUpResult,
   SignUpValues,
   VerifyValues,
-} from '../../lib/types/typeService/_authHelper';
+} from '../../lib/types/typeService';
 
 const amplifyClient: AmplifyClient = Amplify as unknown as AmplifyClient;
 
