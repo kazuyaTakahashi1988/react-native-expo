@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { IconArrow } from '../svg/icon';
 
@@ -16,15 +16,15 @@ const HeaderSub: React.FC<TypeHeaderSub> = (props) => {
     <View style={styles.header}>
       <View style={styles.headerInner}>
         {isGoBack() && (
-          <Text
+          <Pressable
             onPress={() => {
               navigation.goBack();
             }}
-            style={[styles.headerItem, styles.headerLeft]}
+            style={styles.headerLeft}
           >
             <IconArrow />
-            {typeof goBack === 'string' && goBack}
-          </Text>
+            {typeof goBack === 'string' && <Text style={styles.headerLeftLabel}>{goBack}</Text>}
+          </Pressable>
         )}
         <Text style={styles.headerItem}>{headerTitle}</Text>
         <Text style={[styles.headerItem, styles.headerRight]} />
@@ -53,10 +53,16 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   headerLeft: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    left: 0,
+    padding: 10,
+    position: 'absolute',
+  },
+  headerLeftLabel: {
     fontSize: 16,
     fontWeight: '400',
-    left: 0,
-    position: 'absolute',
+    marginLeft: 6,
   },
   headerRight: {
     position: 'absolute',
