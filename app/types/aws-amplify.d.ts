@@ -19,6 +19,10 @@ declare module 'aws-amplify' {
     configure: (config: ResourcesConfig) => void;
   };
 
+  export const Amplify: AmplifyClient;
+}
+
+declare module 'aws-amplify/auth' {
   export interface SignUpResult {
     isSignUpComplete?: boolean;
     nextStep?: {
@@ -43,15 +47,21 @@ declare module 'aws-amplify' {
     username?: string;
   }
 
-  export const Amplify: AmplifyClient;
-  export const Auth: {
-    signUp: (input: {
-      username: string;
-      password: string;
-      options: { userAttributes: { email: string } };
-    }) => Promise<SignUpResult>;
-    signIn: (input: { username: string; password: string }) => Promise<SignInResult>;
-    confirmSignUp: (username: string, confirmationCode: string) => Promise<void>;
-    signOut: () => Promise<void>;
+  export type SignUpInput = {
+    username: string;
+    password: string;
+    options: { userAttributes: { email: string } };
   };
+
+  export type SignInInput = { username: string; password: string };
+
+  export type ConfirmSignUpInput = {
+    username: string;
+    confirmationCode: string;
+  };
+
+  export const signUp: (input: SignUpInput) => Promise<SignUpResult>;
+  export const signIn: (input: SignInInput) => Promise<SignInResult>;
+  export const confirmSignUp: (input: ConfirmSignUpInput) => Promise<void>;
+  export const signOut: () => Promise<void>;
 }

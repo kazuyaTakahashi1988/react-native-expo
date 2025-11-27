@@ -1,25 +1,14 @@
-import { Amplify, Auth } from 'aws-amplify';
+import { Amplify } from 'aws-amplify';
+import { signIn as cognitoSignIn, signOut as cognitoSignOut, signUp as cognitoSignUp, confirmSignUp } from 'aws-amplify/auth';
 
 import type { SignInResult, SignInValues, SignUpResult, SignUpValues, VerifyValues } from './types';
 import type { ResourcesConfig } from 'aws-amplify';
-
-type AuthClient = {
-  signUp: (input: {
-    username: string;
-    password: string;
-    options: { userAttributes: { email: string } };
-  }) => Promise<SignUpResult>;
-  signIn: (input: { username: string; password: string }) => Promise<SignInResult>;
-  confirmSignUp: (username: string, confirmationCode: string) => Promise<void>;
-  signOut: () => Promise<void>;
-};
 
 type AmplifyClient = {
   configure: (config: ResourcesConfig) => void;
 };
 
 const amplifyClient: AmplifyClient = Amplify as unknown as AmplifyClient;
-const authClient: AuthClient = Auth as unknown as AuthClient;
 
 /* -----------------------------------------------
  * Cognito Auth ヘルパー
@@ -43,7 +32,7 @@ amplifyClient.configure(authConfig);
  * Sign Up
  */
 export const signUp = async (values: SignUpValues): Promise<SignUpResult> => {
-  const response = await authClient.signUp({
+  const response = await cognitoSignUp({
     username: values.email,
     password: values.password,
     options: {
@@ -62,7 +51,7 @@ export const signUp = async (values: SignUpValues): Promise<SignUpResult> => {
  * Sign In
  */
 export const signIn = async (values: SignInValues): Promise<SignInResult> => {
-  const response = await authClient.signIn({
+  const response = await cognitoSignIn({
     username: values.email,
     password: values.password,
   });
@@ -76,12 +65,12 @@ export const signIn = async (values: SignInValues): Promise<SignInResult> => {
  * Verify（確認コード検証）
  */
 export const verify = async (values: VerifyValues): Promise<void> => {
-  await authClient.confirmSignUp(values.email, values.verificationCode);
+  await confirmSignUp({ username: values.email, confirmationCode: values.verificationCode });
 };
 
 /*
  * Sign Out
  */
 export const signOut = async (): Promise<void> => {
-  await authClient.signOut();
+  await cognitoSignOut();
 };
