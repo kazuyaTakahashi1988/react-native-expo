@@ -66,7 +66,7 @@ const Child00Screen: React.FC = () => {
 
   return (
     <Layout>
-      <Text style={styles.title}>react-hook-form example</Text>
+      <Text style={styles.title}>react-hook-form{`\n`}example</Text>
 
       {/* インプット項目 */}
       <Input
