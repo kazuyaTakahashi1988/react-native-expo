@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 
-import { IconInfo } from '../svg/icon';
+import { IconLogin } from '../svg/icon';
 import { Logo } from '../svg/logo';
 
 import type { TypeHeaderHome } from '../../lib/types/typeComponents';
@@ -25,7 +25,7 @@ const HeaderHome: React.FC<TypeHeaderHome> = (props) => {
             goToInfo();
           }}
         >
-          <IconInfo />
+          <IconLogin />
         </Text>
       </View>
     </View>
@@ -35,7 +35,7 @@ const HeaderHome: React.FC<TypeHeaderHome> = (props) => {
 const styles = StyleSheet.create({
   header: {
     backgroundColor: 'red',
-    paddingTop: 20,
+    paddingTop: 50,
   },
   headerInner: {
     alignItems: 'center',

@@ -36,7 +36,7 @@ const HeaderSub: React.FC<TypeHeaderSub> = (props) => {
 const styles = StyleSheet.create({
   header: {
     backgroundColor: 'red',
-    paddingTop: 20,
+    paddingTop: 50,
   },
   headerInner: {
     alignItems: 'center',

@@ -82,9 +82,9 @@ const AuthScreen: React.FC = () => {
           { title: 'Sign In', key: 'signIn' as const },
           { title: 'Sign Up', key: 'signUp' as const },
           { title: 'Verify', key: 'verify' as const },
-        ].map((elm, index) => (
+        ].map((elm, i) => (
           <Button
-            key={index}
+            key={i}
             onPress={() => {
               setTabKey(elm.key);
             }}
