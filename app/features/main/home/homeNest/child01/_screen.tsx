@@ -40,7 +40,7 @@ const Child01Screen: React.FC = () => {
 
   return (
     <Layout>
-      <Text style={styles.title}>API Helper example</Text>
+      <Text style={styles.title}>API Helper{`\n`}example</Text>
 
       <Button
         disabled={isDisabled || articles != null}

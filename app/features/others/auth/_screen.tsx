@@ -6,7 +6,7 @@ import { SignInForm, SignUpForm, VerifyForm } from './_component';
 import { Button } from '../../../components/button';
 import { Layout } from '../../../components/layout';
 
-import type { TypeSignIValues, TypeSignUpValues, TypeTabKey, TypeVerifyValues } from './_type';
+import type { TypeSignInValues, TypeSignUpValues, TypeTabKey, TypeVerifyValues } from './_type';
 
 /* -----------------------------------------------
  * Auth 画面
@@ -16,16 +16,14 @@ const AuthScreen: React.FC = () => {
   const [tabKey, setTabKey] = React.useState<TypeTabKey>('signIn');
 
   /*
-   * tabKey マッチングフラグ
+   * tabKey アクティブ判定
    */
-  const keyMatch = (key: TypeTabKey) => {
-    return tabKey === key;
-  };
+  const isActive = (key: TypeTabKey) => tabKey === key;
 
   /*
    * Sign In の RHForm使用設定
    */
-  const signInForm = useForm<TypeSignIValues>({
+  const signInForm = useForm<TypeSignInValues>({
     defaultValues: {
       email: '',
       password: '',
@@ -34,7 +32,7 @@ const AuthScreen: React.FC = () => {
 
   // submit処理
   const onSignInSubmit = React.useCallback(() => {
-    void signInForm.handleSubmit((values: TypeSignIValues) => {
+    void signInForm.handleSubmit((values: TypeSignInValues) => {
       // eslint-disable-next-line no-console
       console.log(values);
     })();
@@ -79,7 +77,7 @@ const AuthScreen: React.FC = () => {
   return (
     <Layout>
       {/* タブボタン */}
-      <View style={styles.tab}>
+      <View style={styles.tabButton}>
         {[
           { title: 'Sign In', key: 'signIn' as const },
           { title: 'Sign Up', key: 'signUp' as const },
@@ -90,26 +88,26 @@ const AuthScreen: React.FC = () => {
             onPress={() => {
               setTabKey(elm.key);
             }}
-            {...(!keyMatch(elm.key) && { pattern: 'secondary' })}
+            {...(!isActive(elm.key) && { pattern: 'secondary' })}
             title={elm.title}
           />
         ))}
       </View>
 
       {/* Sign In フォーム */}
-      <SignInForm form={signInForm} onSubmit={onSignInSubmit} visibled={keyMatch('signIn')} />
+      <SignInForm form={signInForm} onSubmit={onSignInSubmit} visibled={isActive('signIn')} />
 
       {/* Sign Up フォーム */}
-      <SignUpForm form={signUpForm} onSubmit={onSignUpSubmit} visibled={keyMatch('signUp')} />
+      <SignUpForm form={signUpForm} onSubmit={onSignUpSubmit} visibled={isActive('signUp')} />
 
       {/* Verify フォーム */}
-      <VerifyForm form={verifyForm} onSubmit={onVerifySubmit} visibled={keyMatch('verify')} />
+      <VerifyForm form={verifyForm} onSubmit={onVerifySubmit} visibled={isActive('verify')} />
     </Layout>
   );
 };
 
 const styles = StyleSheet.create({
-  tab: {
+  tabButton: {
     columnGap: 12,
     flexDirection: 'row',
     justifyContent: 'space-between',

@@ -70,9 +70,10 @@ const Child02Screen: React.FC = () => {
 
   return (
     <Layout>
-      <Text style={styles.title}>API Helper / react-hook-form{`\n`}example</Text>
+      <Text style={styles.title}>API Helper & react-hook-form{`\n`}example</Text>
 
       <View style={styles.category}>
+        {/* taxCategory01 チェックボックス項目 */}
         <CheckBox
           containerStyle={styles.container}
           control={form.control}
@@ -87,6 +88,8 @@ const Child02Screen: React.FC = () => {
             { label: 'カテゴリー01_E', value: '22' },
           ]}
         />
+
+        {/* taxCategory02 チェックボックス項目 */}
         <CheckBox
           containerStyle={styles.container}
           control={form.control}
@@ -101,6 +104,8 @@ const Child02Screen: React.FC = () => {
             { label: 'カテゴリー02_E', value: '27' },
           ]}
         />
+
+        {/* taxCategory03 チェックボックス項目 */}
         <CheckBox
           containerStyle={styles.container}
           control={form.control}
@@ -117,34 +122,44 @@ const Child02Screen: React.FC = () => {
         />
       </View>
 
+      {/* submit ボタン */}
       <Button
         disabled={isDisabled}
         onPress={onSubmit}
         style={styles.button}
         title='選択したカテゴリーで記事を絞り込み検索'
       />
+      <Text style={styles.container}>※ No ﾁｪｯｸなら全件取得</Text>
 
       {/* 記事一覧の表示 */}
-      {isDisabled && <Text style={styles.container}>取得記事{articles?.length ?? '0'}件</Text>}
-      {articles && (
-        <View>
-          {articles.map((elm) => (
-            <View key={elm.id} style={styles.article}>
-              <Text>記事ID: {elm.id}</Text>
-              <Text style={styles.articleTitle}>{elm.getTheTitle}</Text>
-              <Button
-                onPress={() => {
-                  goToLink(elm.getPermalink);
-                }}
-                pattern='secondary'
-                size='small'
-                style={styles.articleButton}
-                title='- 記事へ飛ぶ -'
-              />
+      <Text style={styles.container}>取得件数：{articles?.length}</Text>
+      {articles &&
+        articles.map((elm, i) => (
+          <View key={i} style={styles.article}>
+            <Text>記事ID: {elm.id}</Text>
+            <Text style={styles.articleTitle}>{elm.getTheTitle}</Text>
+            <View style={styles.articleCategories}>
+              {elm.getTaxCategory01.map((_elm, _i) => (
+                <Text key={_i}>・{_elm.name}</Text>
+              ))}
+              {elm.getTaxCategory02.map((_elm, _i) => (
+                <Text key={_i}>・{_elm.name}</Text>
+              ))}
+              {elm.getTaxCategory03.map((_elm, _i) => (
+                <Text key={_i}>・{_elm.name}</Text>
+              ))}
             </View>
-          ))}
-        </View>
-      )}
+            <Button
+              onPress={() => {
+                goToLink(elm.getPermalink);
+              }}
+              pattern='secondary'
+              size='small'
+              style={styles.articleButton}
+              title='- 記事へ飛ぶ -'
+            />
+          </View>
+        ))}
 
       <Button onPress={onReset} pattern='secondary' style={styles.button} title='Reset' />
     </Layout>
@@ -182,6 +197,10 @@ const styles = StyleSheet.create({
   articleTitle: {
     fontSize: 16,
     fontWeight: 'bold',
+    marginBottom: 8,
+  },
+  articleCategories: {
+    fontSize: 12,
     marginBottom: 8,
   },
   articleButton: {

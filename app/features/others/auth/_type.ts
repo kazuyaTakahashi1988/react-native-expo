@@ -8,7 +8,7 @@ export type TypeAuthForm<T extends FieldValues> = {
   visibled: boolean;
 };
 
-export interface TypeSignIValues extends FieldValues {
+export interface TypeSignInValues extends FieldValues {
   email: string;
   password: string;
 }

@@ -8,4 +8,7 @@ export type TypeArticle = {
   id: number;
   getTheTitle: string;
   getPermalink: string;
+  getTaxCategory01: { name: string }[];
+  getTaxCategory02: { name: string }[];
+  getTaxCategory03: { name: string }[];
 };
