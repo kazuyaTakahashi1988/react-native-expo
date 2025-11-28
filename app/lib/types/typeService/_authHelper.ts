@@ -10,6 +10,7 @@ export type TypeAuthConfig = {
         preferredUsername?: boolean;
       };
     };
+    storage?: unknown;
   };
 };
 
