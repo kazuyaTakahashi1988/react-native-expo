@@ -1,3 +1,5 @@
+import '@aws-amplify/react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Amplify } from 'aws-amplify';
 import {
   signIn as cognitoSignIn,
@@ -41,6 +43,7 @@ const authConfig: TypeAuthConfig = {
       userPoolClientId: '7qccrkdu7aq97so0cj0d61j0kv',
       loginWith: { email: true },
     },
+    storage: AsyncStorage,
   },
 };
 
