@@ -7,24 +7,24 @@ import {
 } from 'aws-amplify/auth';
 
 import type {
-  AmplifyClient,
-  ResourcesConfig,
-  SignInResult,
-  SignInValues,
-  SignUpResult,
-  SignUpValues,
-  VerifyValues,
+  TypeAmplifyClient,
+  TypeResourcesConfig,
+  TypeSignInResult,
+  TypeSignInValues,
+  TypeSignUpResult,
+  TypeSignUpValues,
+  TypeVerifyValues,
 } from '../../lib/types/typeService';
 
-const amplifyClient: AmplifyClient = Amplify as unknown as AmplifyClient;
+const amplifyClient: TypeAmplifyClient = Amplify as unknown as TypeAmplifyClient;
 
 const isObject = (value: unknown): value is Record<string, unknown> =>
   typeof value === 'object' && value !== null;
 
-const isSignUpResponse = (value: unknown): value is SignUpResult =>
+const isSignUpResponse = (value: unknown): value is TypeSignUpResult =>
   isObject(value) && ('isSignUpComplete' in value || 'nextStep' in value || 'userId' in value);
 
-const isSignInResponse = (value: unknown): value is SignInResult =>
+const isSignInResponse = (value: unknown): value is TypeSignInResult =>
   isObject(value) && ('isSignedIn' in value || 'nextStep' in value || 'userId' in value);
 
 /* -----------------------------------------------
@@ -32,7 +32,7 @@ const isSignInResponse = (value: unknown): value is SignInResult =>
  * ----------------------------------------------- */
 
 // Amplify 設定
-const authConfig: ResourcesConfig = {
+const authConfig: TypeResourcesConfig = {
   Auth: {
     Cognito: {
       userPoolId: 'ap-northeast-1_ukr54toDk',
@@ -47,7 +47,7 @@ amplifyClient.configure(authConfig);
 /*
  * Sign Up
  */
-export const signUp = async (values: SignUpValues): Promise<SignUpResult> => {
+export const signUp = async (values: TypeSignUpValues): Promise<TypeSignUpResult> => {
   const response: unknown = await cognitoSignUp({
     username: values.email,
     password: values.password,
@@ -75,7 +75,7 @@ export const signUp = async (values: SignUpValues): Promise<SignUpResult> => {
 /*
  * Sign In
  */
-export const signIn = async (values: SignInValues): Promise<SignInResult> => {
+export const signIn = async (values: TypeSignInValues): Promise<TypeSignInResult> => {
   const response: unknown = await cognitoSignIn({
     username: values.email,
     password: values.password,
@@ -98,7 +98,7 @@ export const signIn = async (values: SignInValues): Promise<SignInResult> => {
 /*
  * Verify（確認コード検証）
  */
-export const verify = async (values: VerifyValues): Promise<void> => {
+export const verify = async (values: TypeVerifyValues): Promise<void> => {
   await confirmSignUp({ username: values.email, confirmationCode: values.verificationCode });
 };
 

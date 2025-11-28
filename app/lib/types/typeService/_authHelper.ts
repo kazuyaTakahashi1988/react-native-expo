@@ -1,4 +1,4 @@
-export type ResourcesConfig = {
+export type TypeResourcesConfig = {
   Auth?: {
     Cognito?: {
       userPoolId: string;
@@ -13,16 +13,16 @@ export type ResourcesConfig = {
   };
 };
 
-export type AmplifyClient = {
-  configure: (config: ResourcesConfig) => void;
+export type TypeAmplifyClient = {
+  configure: (config: TypeResourcesConfig) => void;
 };
 
-export type SignUpValues = {
+export type TypeSignUpValues = {
   email: string;
   password: string;
 };
 
-export type SignUpResult = {
+export type TypeSignUpResult = {
   isSignUpComplete?: boolean;
   nextStep?: {
     signUpStep?: string;
@@ -36,12 +36,12 @@ export type SignUpResult = {
   username?: string;
 };
 
-export type SignInValues = {
+export type TypeSignInValues = {
   email: string;
   password: string;
 };
 
-export type SignInResult = {
+export type TypeSignInResult = {
   isSignedIn: boolean;
   nextStep?: {
     signInStep?: string;
@@ -51,7 +51,7 @@ export type SignInResult = {
   username?: string;
 };
 
-export type VerifyValues = {
+export type TypeVerifyValues = {
   email: string;
   verificationCode: string;
 };

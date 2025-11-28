@@ -7,7 +7,12 @@ import { signIn, signOut, signUp, verify } from './_service';
 import { Button } from '../../../components/button';
 import { Layout } from '../../../components/layout';
 
-import type { TypeSignInValues, TypeSignUpValues, TypeTabKey, TypeVerifyValues } from './_type';
+import type { TypeTabKey } from './_type';
+import type {
+  TypeSignInValues,
+  TypeSignUpValues,
+  TypeVerifyValues,
+} from '../../../lib/types/typeService';
 
 /* -----------------------------------------------
  * Auth 画面

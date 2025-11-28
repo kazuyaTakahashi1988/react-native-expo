@@ -7,16 +7,3 @@ export type TypeAuthForm<T extends FieldValues> = {
   onSubmit: () => void;
   visibled: boolean;
 };
-
-export interface TypeSignInValues extends FieldValues {
-  email: string;
-  password: string;
-}
-export interface TypeSignUpValues extends FieldValues {
-  email: string;
-  password: string;
-}
-export interface TypeVerifyValues extends FieldValues {
-  verificationCode: string;
-  email: string;
-}
