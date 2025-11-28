@@ -11,7 +11,9 @@ const authConfig: TypeAuthConfig = {
       userPoolId: 'ap-northeast-1_ukr54toDk',
       userPoolClientId: '7qccrkdu7aq97so0cj0d61j0kv',
       loginWith: { email: true },
+      region: 'ap-northeast-1',
     },
+    storage: AsyncStorage,
   },
 };
 
