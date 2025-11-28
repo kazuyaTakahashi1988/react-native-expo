@@ -7,10 +7,9 @@ import App from './app/App';
 
 if (Platform.OS !== 'web') {
   // Amplify needs native random values polyfilled on iOS/Android
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-require-imports
-  const { loadGetRandomValues } = require('@aws-amplify/react-native');
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-  loadGetRandomValues();
+  void import('@aws-amplify/react-native').then(({ loadGetRandomValues }) => {
+    loadGetRandomValues();
+  });
 }
 
 // registerRootComponent calls AppRegistry.registerComponent('main', () => App);
