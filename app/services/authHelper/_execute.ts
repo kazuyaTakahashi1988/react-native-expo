@@ -8,7 +8,7 @@ import {
 
 import type {
   TypeAmplifyClient,
-  TypeResourcesConfig,
+  TypeAuthConfig,
   TypeSignInResult,
   TypeSignInValues,
   TypeSignUpResult,
@@ -16,23 +16,25 @@ import type {
   TypeVerifyValues,
 } from '../../lib/types/typeService';
 
-const amplifyClient: TypeAmplifyClient = Amplify as unknown as TypeAmplifyClient;
-
 const isObject = (value: unknown): value is Record<string, unknown> =>
   typeof value === 'object' && value !== null;
 
-const isSignUpResponse = (value: unknown): value is TypeSignUpResult =>
-  isObject(value) && ('isSignUpComplete' in value || 'nextStep' in value || 'userId' in value);
-
 const isSignInResponse = (value: unknown): value is TypeSignInResult =>
   isObject(value) && ('isSignedIn' in value || 'nextStep' in value || 'userId' in value);
+
+const isSignUpResponse = (value: unknown): value is TypeSignUpResult =>
+  isObject(value) && ('isSignUpComplete' in value || 'nextStep' in value || 'userId' in value);
 
 /* -----------------------------------------------
  * Cognito Auth ヘルパー
  * ----------------------------------------------- */
 
-// Amplify 設定
-const authConfig: TypeResourcesConfig = {
+/*
+ * Amplify 設定
+ */
+const amplifyClient: TypeAmplifyClient = Amplify as unknown as TypeAmplifyClient;
+
+const authConfig: TypeAuthConfig = {
   Auth: {
     Cognito: {
       userPoolId: 'ap-northeast-1_ukr54toDk',
@@ -45,7 +47,7 @@ const authConfig: TypeResourcesConfig = {
 amplifyClient.configure(authConfig);
 
 /*
- * Sign In
+ * Sign In 処理
  */
 export const signIn = async (values: TypeSignInValues): Promise<TypeSignInResult> => {
   const result: unknown = await cognitoSignIn({
@@ -61,7 +63,7 @@ export const signIn = async (values: TypeSignInValues): Promise<TypeSignInResult
 };
 
 /*
- * Sign Up
+ * Sign Up 処理
  */
 export const signUp = async (values: TypeSignUpValues): Promise<TypeSignUpResult> => {
   const result: unknown = await cognitoSignUp({
@@ -82,14 +84,14 @@ export const signUp = async (values: TypeSignUpValues): Promise<TypeSignUpResult
 };
 
 /*
- * Verify（確認コード検証）
+ * Verify 処理
  */
 export const verify = async (values: TypeVerifyValues): Promise<void> => {
   await confirmSignUp({ username: values.email, confirmationCode: values.verificationCode });
 };
 
 /*
- * Sign Out
+ * Sign Out 処理
  */
 export const signOut = async (): Promise<void> => {
   await cognitoSignOut();

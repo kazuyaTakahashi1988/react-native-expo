@@ -3,10 +3,9 @@ import { useForm } from 'react-hook-form';
 import { StyleSheet, Text, View } from 'react-native';
 
 import { SignInForm, SignUpForm, VerifyForm } from './_component';
-import { signOut, verify } from './_service';
 import { Button } from '../../../components/button';
 import { Layout } from '../../../components/layout';
-import { signIn, signUp } from '../../../services/authHelper';
+import { signIn, signOut, signUp, verify } from '../../../services/authHelper';
 
 import type { TypeTabKey } from './_type';
 import type {
@@ -52,11 +51,11 @@ const AuthScreen: React.FC = () => {
         .then((res: TypeSignInResult) => {
           const message = res.isSignedIn
             ? 'Sign In 成功、ログイン済みだよ！'
-            : 'Sign In 完了ためには追加の手順が必要だよ！';
+            : 'Sign In にはまだ追加手順（Verify）が必要だよ！';
           setResultMessage(message);
         })
         .catch((err: unknown) => {
-          const message = err instanceof Error ? err.message : '残念、Sign In に失敗したよ...。';
+          const message = err instanceof Error ? err.message : 'Sign In に失敗したよ...';
           setErrorMessage(message);
         });
     })();
@@ -81,15 +80,15 @@ const AuthScreen: React.FC = () => {
       // Sign Up 処理
       signUp(values)
         .then((res: TypeSignUpResult) => {
-          const message =
-            res.isSignUpComplete === true
-              ? 'Sign Up 成功' // verify不必要 message
-              : 'Sign Up 完了ためには確認コードをメールで確認してね！'; // verify必要 message
+          const noVerify = res.isSignUpComplete === true; // verifyの手順を必要かフラグ
+          const message = noVerify
+            ? 'Sign Up 成功! Sign In しよう！' // verify 不要時
+            : 'OK！ Sign Up 完了ために確認コードをメールで確認してね！'; // verify 必要時
           setResultMessage(message);
-          setTabKey('verify');
+          setTabKey(noVerify ? 'signIn' : 'verify');
         })
         .catch((err: unknown) => {
-          const message = err instanceof Error ? err.message : '残念、Sign Up に失敗したよ...。';
+          const message = err instanceof Error ? err.message : 'Sign Up に失敗したよ...';
           setErrorMessage(message);
         });
     })();
@@ -105,34 +104,50 @@ const AuthScreen: React.FC = () => {
     },
   });
 
-  // submit処理
+  // submit（verify）処理
   const onVerifySubmit = React.useCallback(() => {
     void verifyForm.handleSubmit((values: TypeVerifyValues) => {
       setErrorMessage('');
       setResultMessage('');
 
+      // verify 処理
       verify(values)
-        .then((res) => {
-          setResultMessage(res.message);
+        .then(() => {
+          setResultMessage('verify 完了、Sign In できるよ！');
+          setTabKey('signIn');
         })
-        .catch((error: unknown) => {
-          setErrorMessage(error instanceof Error ? error.message : 'Verification failed.');
+        .catch((err: unknown) => {
+          const message = err instanceof Error ? err.message : 'verify に失敗したよ...';
+          setErrorMessage(message);
         });
     })();
   }, [verifyForm]);
 
+  /*
+   * Sign Out ボタン処理
+   */
   const onSignOutPress = React.useCallback(() => {
     setErrorMessage('');
     setResultMessage('');
 
+    // Sign Out 処理
     signOut()
-      .then((res) => {
-        setResultMessage(res.message);
+      .then(() => {
+        setResultMessage('正常にサインアウトしたよ！');
       })
       .catch((error: unknown) => {
-        setErrorMessage(error instanceof Error ? error.message : 'Sign out failed.');
+        setErrorMessage(error instanceof Error ? error.message : 'Sign out に失敗したよ...');
       });
   }, []);
+
+  /*
+   * タブボタン処理
+   */
+  const onTabPress = (tabKey: TypeTabKey) => {
+    setErrorMessage('');
+    setResultMessage('');
+    setTabKey(tabKey);
+  };
 
   return (
     <Layout>
@@ -146,7 +161,7 @@ const AuthScreen: React.FC = () => {
           <Button
             key={i}
             onPress={() => {
-              setTabKey(elm.key);
+              onTabPress(elm.key);
             }}
             {...(!isActive(elm.key) && { pattern: 'secondary' })}
             title={elm.title}
@@ -154,7 +169,7 @@ const AuthScreen: React.FC = () => {
         ))}
       </View>
 
-      {/* メッセージ表示 */}
+      {/* 成功・異常 メッセージ表示 */}
       {resultMessage !== '' ? <Text style={styles.result}>{resultMessage}</Text> : null}
       {errorMessage !== '' ? <Text style={styles.error}>{errorMessage}</Text> : null}
 
