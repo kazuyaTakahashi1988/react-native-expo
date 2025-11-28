@@ -14,7 +14,7 @@ export type TypeAuthConfig = {
 };
 
 export type TypeAmplifyClient = {
-  configure: (config: TypeAuthConfig, options?: Record<string, unknown>) => void;
+  configure: (config: Record<string, unknown>) => void;
 };
 
 export type TypeSignInValues = {
