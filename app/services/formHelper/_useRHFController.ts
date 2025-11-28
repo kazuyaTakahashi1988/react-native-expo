@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import React from 'react';
 import { useController, useForm } from 'react-hook-form';
 
 import type {
@@ -25,7 +25,7 @@ export const useRHFController = <TFieldValues extends FieldValues>(params: {
   const { control: fallbackControl } = useForm<TFieldValues>({
     defaultValues: {} as DefaultValues<TFieldValues>,
   });
-  const fallbackNameRef = useRef<Path<TFieldValues>>(FALLBACK_NAME as Path<TFieldValues>);
+  const fallbackNameRef = React.useRef<Path<TFieldValues>>(FALLBACK_NAME as Path<TFieldValues>);
 
   const isActive = Boolean(params.control && params.name);
 

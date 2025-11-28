@@ -36,8 +36,8 @@ const execute = async <TResponse = unknown, TRequest = unknown>(
 
   try {
     return await axios.request<TResponse>(requestConfig);
-  } catch (error) {
-    const axiosError = error as AxiosError;
+  } catch (err) {
+    const axiosError = err as AxiosError;
     const message = axiosError.response?.data ?? axiosError.message;
 
     console.error('API request failed', message);

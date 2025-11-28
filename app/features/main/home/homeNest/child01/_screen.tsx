@@ -24,8 +24,8 @@ const Child01Screen: React.FC = () => {
       // 記事取得API処理
       const result = await getArticleApi();
       setArticles(result.data as TypeArticle[]);
-    } catch (error) {
-      console.error('Failed to fetch articles', error);
+    } catch (err) {
+      console.error('Failed to fetch articles', err);
     } finally {
       setIsDisabled(false);
     }
