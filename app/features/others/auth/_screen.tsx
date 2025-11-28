@@ -3,13 +3,16 @@ import { useForm } from 'react-hook-form';
 import { StyleSheet, Text, View } from 'react-native';
 
 import { SignInForm, SignUpForm, VerifyForm } from './_component';
-import { signIn, signOut, signUp, verify } from './_service';
+import { signOut, verify } from './_service';
 import { Button } from '../../../components/button';
 import { Layout } from '../../../components/layout';
+import { signIn, signUp } from '../../../services/authHelper';
 
 import type { TypeTabKey } from './_type';
 import type {
+  TypeSignInResult,
   TypeSignInValues,
+  TypeSignUpResult,
   TypeSignUpValues,
   TypeVerifyValues,
 } from '../../../lib/types/typeService';
@@ -38,18 +41,23 @@ const AuthScreen: React.FC = () => {
     },
   });
 
-  // submit処理
+  // submit（Sign In）処理
   const onSignInSubmit = React.useCallback(() => {
     void signInForm.handleSubmit((values: TypeSignInValues) => {
       setErrorMessage('');
       setResultMessage('');
 
+      // Sign In 処理
       signIn(values)
-        .then((res) => {
-          setResultMessage(`${res.message} (user: ${res.username})`);
+        .then((res: TypeSignInResult) => {
+          const message = res.isSignedIn
+            ? 'Sign In 成功、ログイン済みだよ！'
+            : 'Sign In 完了ためには追加の手順が必要だよ！';
+          setResultMessage(message);
         })
-        .catch((error: unknown) => {
-          setErrorMessage(error instanceof Error ? error.message : 'Sign in failed.');
+        .catch((err: unknown) => {
+          const message = err instanceof Error ? err.message : '残念、Sign In に失敗したよ...。';
+          setErrorMessage(message);
         });
     })();
   }, [signInForm]);
@@ -64,19 +72,25 @@ const AuthScreen: React.FC = () => {
     },
   });
 
-  // submit処理
+  // submit（Sign Up）処理
   const onSignUpSubmit = React.useCallback(() => {
     void signUpForm.handleSubmit((values: TypeSignUpValues) => {
       setErrorMessage('');
       setResultMessage('');
 
+      // Sign Up 処理
       signUp(values)
-        .then((res) => {
-          setResultMessage(`${res.message} (user: ${res.username})`);
+        .then((res: TypeSignUpResult) => {
+          const message =
+            res.isSignUpComplete === true
+              ? 'Sign Up 成功' // verify不必要 message
+              : 'Sign Up 完了ためには確認コードをメールで確認してね！'; // verify必要 message
+          setResultMessage(message);
           setTabKey('verify');
         })
-        .catch((error: unknown) => {
-          setErrorMessage(error instanceof Error ? error.message : 'Sign up failed.');
+        .catch((err: unknown) => {
+          const message = err instanceof Error ? err.message : '残念、Sign Up に失敗したよ...。';
+          setErrorMessage(message);
         });
     })();
   }, [signUpForm]);

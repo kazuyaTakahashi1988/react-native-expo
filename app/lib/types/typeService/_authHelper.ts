@@ -32,8 +32,6 @@ export type TypeSignUpResult = {
       destination?: string;
     };
   };
-  userId?: string;
-  username?: string;
 };
 
 export type TypeSignInValues = {
@@ -47,8 +45,6 @@ export type TypeSignInResult = {
     signInStep?: string;
     additionalInfo?: Record<string, unknown>;
   };
-  userId?: string;
-  username?: string;
 };
 
 export type TypeVerifyValues = {
