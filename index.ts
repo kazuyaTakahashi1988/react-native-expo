@@ -1,5 +1,3 @@
-import 'react-native-get-random-values';
-import 'react-native-url-polyfill/auto';
 import { registerRootComponent } from 'expo';
 import { Platform } from 'react-native';
 
@@ -7,9 +5,8 @@ import App from './app/App';
 
 if (Platform.OS !== 'web') {
   // Amplify needs native random values polyfilled on iOS/Android
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-require-imports
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
   const { loadGetRandomValues } = require('@aws-amplify/react-native');
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
   loadGetRandomValues();
 }
 
