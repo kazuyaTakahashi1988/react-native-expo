@@ -17,23 +17,24 @@ const baseAuthConfig: TypeAuthConfig = {
   },
 };
 
-const createStorageAdapter = () => ({
-  async getItem(key: string) {
-    return AsyncStorage.getItem(key);
-  },
+const createStorageAdapter = () =>
+  Object.freeze({
+    async getItem(key: string) {
+      return AsyncStorage.getItem(key);
+    },
 
-  async setItem(key: string, value: string) {
-    await AsyncStorage.setItem(key, value);
-  },
+    async setItem(key: string, value: string) {
+      await AsyncStorage.setItem(key, value);
+    },
 
-  async removeItem(key: string) {
-    await AsyncStorage.removeItem(key);
-  },
+    async removeItem(key: string) {
+      await AsyncStorage.removeItem(key);
+    },
 
-  async clear() {
-    await AsyncStorage.clear();
-  },
-});
+    async clear() {
+      await AsyncStorage.clear();
+    },
+  });
 
 let isConfigured = false;
 
