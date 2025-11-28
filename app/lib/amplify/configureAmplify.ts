@@ -1,4 +1,4 @@
-import { getAmplifyConfig } from '@aws-amplify/react-native';
+import { getAmplifyConfig } from 'aws-amplify/react-native';
 import { Amplify } from 'aws-amplify';
 
 import type { TypeAmplifyClient, TypeAuthConfig } from '../types/typeService';
