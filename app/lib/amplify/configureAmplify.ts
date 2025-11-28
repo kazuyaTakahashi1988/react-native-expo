@@ -17,9 +17,7 @@ const baseAuthConfig: TypeAuthConfig = {
   },
 };
 
-const createStorageAdapter = () => Object.create(AmplifyAsyncStoragePrototype);
-
-const AmplifyAsyncStoragePrototype = {
+const createStorageAdapter = () => ({
   async getItem(key: string) {
     return AsyncStorage.getItem(key);
   },
@@ -35,7 +33,7 @@ const AmplifyAsyncStoragePrototype = {
   async clear() {
     await AsyncStorage.clear();
   },
-};
+});
 
 let isConfigured = false;
 
