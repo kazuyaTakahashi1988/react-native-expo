@@ -3,6 +3,7 @@ export type TypeAuthConfig = {
     Cognito?: {
       userPoolId: string;
       userPoolClientId: string;
+      region?: string;
       loginWith?: {
         email?: boolean;
         phone?: boolean;
