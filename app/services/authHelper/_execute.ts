@@ -45,6 +45,29 @@ const authConfig: TypeResourcesConfig = {
 amplifyClient.configure(authConfig);
 
 /*
+ * Sign In
+ */
+export const signIn = async (values: TypeSignInValues): Promise<TypeSignInResult> => {
+  const response: unknown = await cognitoSignIn({
+    username: values.email,
+    password: values.password,
+  });
+
+  if (!isSignInResponse(response)) {
+    throw new Error('Unexpected sign in response');
+  }
+
+  const username = response.username ?? values.email;
+
+  return {
+    isSignedIn: response.isSignedIn,
+    nextStep: response.nextStep,
+    username,
+    userId: response.userId,
+  };
+};
+
+/*
  * Sign Up
  */
 export const signUp = async (values: TypeSignUpValues): Promise<TypeSignUpResult> => {
@@ -66,29 +89,6 @@ export const signUp = async (values: TypeSignUpValues): Promise<TypeSignUpResult
 
   return {
     isSignUpComplete: response.isSignUpComplete,
-    nextStep: response.nextStep,
-    username,
-    userId: response.userId,
-  };
-};
-
-/*
- * Sign In
- */
-export const signIn = async (values: TypeSignInValues): Promise<TypeSignInResult> => {
-  const response: unknown = await cognitoSignIn({
-    username: values.email,
-    password: values.password,
-  });
-
-  if (!isSignInResponse(response)) {
-    throw new Error('Unexpected sign in response');
-  }
-
-  const username = response.username ?? values.email;
-
-  return {
-    isSignedIn: response.isSignedIn,
     nextStep: response.nextStep,
     username,
     userId: response.userId,
