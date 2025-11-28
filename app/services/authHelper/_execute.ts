@@ -11,6 +11,7 @@ import {
 import type {
   TypeAmplifyClient,
   TypeAuthConfig,
+  TypeAuthStorage,
   TypeSignInResult,
   TypeSignInValues,
   TypeSignUpResult,
@@ -36,6 +37,12 @@ const isSignUpResponse = (value: unknown): value is TypeSignUpResult =>
  */
 const amplifyClient: TypeAmplifyClient = Amplify as unknown as TypeAmplifyClient;
 
+const storage: TypeAuthStorage = {
+  getItem: (key) => AsyncStorage.getItem(key),
+  setItem: (key, value) => AsyncStorage.setItem(key, value),
+  removeItem: (key) => AsyncStorage.removeItem(key),
+};
+
 const authConfig: TypeAuthConfig = {
   Auth: {
     Cognito: {
@@ -43,7 +50,7 @@ const authConfig: TypeAuthConfig = {
       userPoolClientId: '7qccrkdu7aq97so0cj0d61j0kv',
       loginWith: { email: true },
     },
-    storage: AsyncStorage,
+    storage,
   },
 };
 
