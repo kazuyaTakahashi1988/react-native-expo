@@ -37,11 +37,7 @@ const isSignUpResponse = (value: unknown): value is TypeSignUpResult =>
  */
 const amplifyClient: TypeAmplifyClient = Amplify as unknown as TypeAmplifyClient;
 
-const storage: TypeAuthStorage = {
-  getItem: (key) => AsyncStorage.getItem(key),
-  setItem: (key, value) => AsyncStorage.setItem(key, value),
-  removeItem: (key) => AsyncStorage.removeItem(key),
-};
+const storage: TypeAuthStorage = AsyncStorage;
 
 const authConfig: TypeAuthConfig = {
   Auth: {
