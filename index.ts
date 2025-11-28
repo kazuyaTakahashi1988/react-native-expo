@@ -3,7 +3,10 @@ import 'react-native-url-polyfill/auto';
 import { registerRootComponent } from 'expo';
 import { Platform } from 'react-native';
 
+import { configureAmplify } from './app/lib/amplify/configureAmplify';
 import App from './app/App';
+
+configureAmplify();
 
 if (Platform.OS !== 'web') {
   // Amplify needs native random values polyfilled on iOS/Android

@@ -1,4 +1,3 @@
-import { Amplify } from 'aws-amplify';
 import {
   signIn as cognitoSignIn,
   signOut as cognitoSignOut,
@@ -7,14 +6,13 @@ import {
 } from 'aws-amplify/auth';
 
 import type {
-  TypeAmplifyClient,
-  TypeAuthConfig,
   TypeSignInResult,
   TypeSignInValues,
   TypeSignUpResult,
   TypeSignUpValues,
   TypeVerifyValues,
 } from '../../lib/types/typeService';
+import { configureAmplify } from '../../lib/amplify/configureAmplify';
 
 const isObject = (value: unknown): value is Record<string, unknown> =>
   typeof value === 'object' && value !== null;
@@ -29,22 +27,7 @@ const isSignUpResponse = (value: unknown): value is TypeSignUpResult =>
  * Cognito Auth ヘルパー
  * ----------------------------------------------- */
 
-/*
- * Amplify 設定
- */
-const amplifyClient: TypeAmplifyClient = Amplify as unknown as TypeAmplifyClient;
-
-const authConfig: TypeAuthConfig = {
-  Auth: {
-    Cognito: {
-      userPoolId: 'ap-northeast-1_ukr54toDk',
-      userPoolClientId: '7qccrkdu7aq97so0cj0d61j0kv',
-      loginWith: { email: true },
-    },
-  },
-};
-
-amplifyClient.configure(authConfig);
+configureAmplify();
 
 /*
  * Sign In 処理
