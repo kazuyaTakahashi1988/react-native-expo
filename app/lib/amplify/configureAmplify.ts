@@ -16,28 +16,29 @@ const baseAuthConfig: TypeAuthConfig = {
   },
 };
 
+class AmplifyAsyncStorageAdapter {
+  async getItem(key: string) {
+    return AsyncStorage.getItem(key);
+  }
+
+  async setItem(key: string, value: string) {
+    await AsyncStorage.setItem(key, value);
+  }
+
+  async removeItem(key: string) {
+    await AsyncStorage.removeItem(key);
+  }
+
+  async clear() {
+    await AsyncStorage.clear();
+  }
+}
+
 const createFrozenStorageAdapter = () => {
-  const adapter = {
-    async getItem(key: string) {
-      return AsyncStorage.getItem(key);
-    },
-    async setItem(key: string, value: string) {
-      await AsyncStorage.setItem(key, value);
-    },
-    async removeItem(key: string) {
-      await AsyncStorage.removeItem(key);
-    },
-    async clear() {
-      await AsyncStorage.clear();
-    },
-  } as const;
-
-  Object.values(adapter).forEach((value) => {
-    if (typeof value === 'function') {
-      Object.freeze(value);
-    }
-  });
-
+  // Keep the instance mutability minimal (no own enumerable props) so Amplify's deepFreeze
+  // recursion doesn't trip over strict-mode function properties like `caller`/`arguments`.
+  const adapter = new AmplifyAsyncStorageAdapter();
+  Object.freeze(Object.getPrototypeOf(adapter));
   return Object.freeze(adapter);
 };
 
