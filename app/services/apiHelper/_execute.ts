@@ -92,17 +92,20 @@ export const getArticleApi = () => {
 export const getCategorizedArticleApi = (params: TypeParams) => {
   const options = {
     params,
-    baseURL: 'http://search-wp.empty-service.com', // DEFAULT_BASE_URL を使わないケース
-    // headers,
-    // requestData,
-    // accessToken,
+    baseURL: 'http://search-wp.empty-service.com',
   };
   return request('GET', '/wp-json/wp/v2/org_api', options);
 };
 
 /*
- * export const postXXXXApi = (requestData: TypeXXXX) => {
- *  const options = { requestData };
+ * export const postXXXXApi = (params, baseURL, headers, requestData, accessToken) => {
+ *  const options = {
+ *    params // クエリパラム
+ *    baseURL // DEFAULT_BASE_URL 使わない際のベースURL
+ *    headers // 追加ヘッダー情報を付与
+ *    requestData // リクエストデータ（リクエストボディ）
+ *    accessToken // アクセストークン
+ *  };
  *  return request('POST', '/xxxx/xxxx', options);
  * };
  */

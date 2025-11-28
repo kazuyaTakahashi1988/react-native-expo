@@ -109,7 +109,7 @@ const bottomTabStyles: BottomTabNavigationOptions = {
     borderTopColor: 'rgba(255,255,255,0.08)',
     borderTopWidth: 1,
     elevation: 12,
-    height: 58,
+    height: 88,
     paddingBottom: 8,
     paddingTop: 6,
   }, // タブバーのViewラッパースタイル（全体背景色など）

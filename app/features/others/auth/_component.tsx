@@ -3,7 +3,12 @@ import { StyleSheet, Text, View } from 'react-native';
 import { Button } from '../../../components/button';
 import { Input } from '../../../components/form';
 
-import type { TypeAuthForm, TypeSignInValues, TypeSignUpValues, TypeVerifyValues } from './_type';
+import type { TypeAuthForm } from './_type';
+import type {
+  TypeSignInValues,
+  TypeSignUpValues,
+  TypeVerifyValues,
+} from '../../../lib/types/typeService';
 import type React from 'react';
 
 // メールアドレス項目のバリデーションルール
