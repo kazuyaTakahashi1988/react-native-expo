@@ -17,41 +17,23 @@ const baseAuthConfig: TypeAuthConfig = {
   },
 };
 
-const createStorageAdapter = () =>
-  Object.freeze({
-    async getItem(key: string) {
-      return AsyncStorage.getItem(key);
-    },
-
-    async setItem(key: string, value: string) {
-      await AsyncStorage.setItem(key, value);
-    },
-
-    async removeItem(key: string) {
-      await AsyncStorage.removeItem(key);
-    },
-
-    async clear() {
-      await AsyncStorage.clear();
-    },
-  });
-
 let isConfigured = false;
 
 export const configureAmplify = (): void => {
   if (isConfigured) return;
 
-  const nativeStorageConfig: TypeAuthConfig =
+  const nativeStorageConfig: TypeAuthConfig['Auth'] =
     Platform.OS === 'web'
-      ? {}
+      ? baseAuthConfig.Auth
       : {
-          Auth: {
-            ...baseAuthConfig.Auth,
-            // Use AsyncStorage for token persistence on native platforms
-            storage: createStorageAdapter(),
-          },
+          ...baseAuthConfig.Auth,
+          // Use AsyncStorage directly to align with Amplify's native defaults
+          storage: AsyncStorage,
         };
 
-  amplifyClient.configure({ ...baseAuthConfig, ...nativeStorageConfig });
+  amplifyClient.configure({
+    ...baseAuthConfig,
+    Auth: nativeStorageConfig,
+  });
   isConfigured = true;
 };
