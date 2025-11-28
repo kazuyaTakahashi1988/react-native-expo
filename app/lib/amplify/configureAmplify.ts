@@ -16,6 +16,31 @@ const baseAuthConfig: TypeAuthConfig = {
   },
 };
 
+const createFrozenStorageAdapter = () => {
+  const adapter = {
+    async getItem(key: string) {
+      return AsyncStorage.getItem(key);
+    },
+    async setItem(key: string, value: string) {
+      await AsyncStorage.setItem(key, value);
+    },
+    async removeItem(key: string) {
+      await AsyncStorage.removeItem(key);
+    },
+    async clear() {
+      await AsyncStorage.clear();
+    },
+  } as const;
+
+  Object.values(adapter).forEach((value) => {
+    if (typeof value === 'function') {
+      Object.freeze(value);
+    }
+  });
+
+  return Object.freeze(adapter);
+};
+
 let isConfigured = false;
 
 export const configureAmplify = (): void => {
@@ -28,7 +53,7 @@ export const configureAmplify = (): void => {
           Auth: {
             ...baseAuthConfig.Auth,
             // Use AsyncStorage for token persistence on native platforms
-            storage: AsyncStorage,
+            storage: createFrozenStorageAdapter(),
           },
         };
 
