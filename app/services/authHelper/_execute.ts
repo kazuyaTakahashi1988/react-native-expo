@@ -37,8 +37,8 @@ const amplifyClient: TypeAmplifyClient = Amplify as unknown as TypeAmplifyClient
 const authConfig: TypeAuthConfig = {
   Auth: {
     Cognito: {
-      userPoolId: 'ap-northeast-1_ukr54toDk',
-      userPoolClientId: '7qccrkdu7aq97so0cj0d61j0kv',
+      userPoolId: 'ap-northeast-1_xxxxxxxxx',
+      userPoolClientId: 'xxxxxxxxxxxxxxxxxx',
       loginWith: { email: true },
     },
   },
@@ -53,6 +53,9 @@ export const signIn = async (values: TypeSignInValues): Promise<TypeSignInResult
   const result: unknown = await cognitoSignIn({
     username: values.email,
     password: values.password,
+    options: {
+      authFlowType: 'USER_PASSWORD_AUTH',
+    },
   });
 
   if (!isSignInResponse(result)) {
