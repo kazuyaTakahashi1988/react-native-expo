@@ -50,11 +50,12 @@ const AuthScreen: React.FC = () => {
           const message = res.isSignedIn
             ? 'Sign In 成功、ログイン済みだよ！'
             : 'Sign In にはまだ追加手順（Verify）が必要だよ！';
-          setResult({ type: 'success', message: message });
+          setResult({ type: 'success', message });
+          signInForm.reset();
         })
         .catch((err: unknown) => {
           const message = err instanceof Error ? err.message : 'Sign In に失敗したよ...';
-          setResult({ type: 'error', message: message });
+          setResult({ type: 'error', message });
         });
     })();
   }, [signInForm]);
@@ -80,13 +81,14 @@ const AuthScreen: React.FC = () => {
           const noVerify = res.isSignUpComplete === true; // verifyの手順を必要かフラグ
           const message = noVerify
             ? 'Sign Up 成功! Sign In しよう！' // verify 不要時
-            : 'OK！ verify用のコードをメールで送ったから確認してね！'; // verify 必要時
+            : 'OK！ Verify用のコードをメールで送ったから確認してね！'; // verify 必要時
           setTabKey(noVerify ? 'signIn' : 'verify');
-          setResult({ type: 'success', message: message });
+          setResult({ type: 'success', message });
+          signUpForm.reset();
         })
         .catch((err: unknown) => {
           const message = err instanceof Error ? err.message : 'Sign Up に失敗したよ...';
-          setResult({ type: 'error', message: message });
+          setResult({ type: 'error', message });
         });
     })();
   }, [signUpForm]);
@@ -101,20 +103,21 @@ const AuthScreen: React.FC = () => {
     },
   });
 
-  // submit（verify）処理
+  // submit（Verify）処理
   const onVerifySubmit = React.useCallback(() => {
     void verifyForm.handleSubmit((values: TypeVerifyValues) => {
       setResult({});
 
-      // verify 処理
+      // Verify 処理
       verify(values)
         .then(() => {
           setTabKey('signIn');
-          setResult({ type: 'success', message: 'verify 完了、Sign In できるよ！' });
+          setResult({ type: 'success', message: 'Verify 完了、Sign In できるよ！' });
+          verifyForm.reset();
         })
         .catch((err: unknown) => {
-          const message = err instanceof Error ? err.message : 'verify に失敗したよ...';
-          setResult({ type: 'error', message: message });
+          const message = err instanceof Error ? err.message : 'Verify に失敗したよ...';
+          setResult({ type: 'error', message });
         });
     })();
   }, [verifyForm]);
@@ -132,7 +135,7 @@ const AuthScreen: React.FC = () => {
       })
       .catch((err: unknown) => {
         const message = err instanceof Error ? err.message : 'Sign Out に失敗したよ...';
-        setResult({ type: 'error', message: message });
+        setResult({ type: 'error', message });
       });
   }, []);
 
