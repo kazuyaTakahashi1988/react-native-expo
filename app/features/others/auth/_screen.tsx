@@ -7,7 +7,7 @@ import { Button } from '../../../components/button';
 import { Layout } from '../../../components/layout';
 import { signIn, signOut, signUp, verify } from '../../../services/authHelper';
 
-import type { TypeTabKey } from './_type';
+import type { TypeResult, TypeTabKey } from './_type';
 import type {
   TypeSignInResult,
   TypeSignInValues,
@@ -22,8 +22,7 @@ import type {
 
 const AuthScreen: React.FC = () => {
   const [tabKey, setTabKey] = React.useState<TypeTabKey>('signIn');
-  const [resultMessage, setResultMessage] = React.useState<string>('');
-  const [errorMessage, setErrorMessage] = React.useState<string>('');
+  const [result, setResult] = React.useState<TypeResult>({});
 
   /*
    * tabKey アクティブ判定
@@ -43,8 +42,7 @@ const AuthScreen: React.FC = () => {
   // submit（Sign In）処理
   const onSignInSubmit = React.useCallback(() => {
     void signInForm.handleSubmit((values: TypeSignInValues) => {
-      setErrorMessage('');
-      setResultMessage('');
+      setResult({});
 
       // Sign In 処理
       signIn(values)
@@ -52,11 +50,11 @@ const AuthScreen: React.FC = () => {
           const message = res.isSignedIn
             ? 'Sign In 成功、ログイン済みだよ！'
             : 'Sign In にはまだ追加手順（Verify）が必要だよ！';
-          setResultMessage(message);
+          setResult({ type: 'success', message: message });
         })
         .catch((err: unknown) => {
           const message = err instanceof Error ? err.message : 'Sign In に失敗したよ...';
-          setErrorMessage(message);
+          setResult({ type: 'error', message: message });
         });
     })();
   }, [signInForm]);
@@ -74,8 +72,7 @@ const AuthScreen: React.FC = () => {
   // submit（Sign Up）処理
   const onSignUpSubmit = React.useCallback(() => {
     void signUpForm.handleSubmit((values: TypeSignUpValues) => {
-      setErrorMessage('');
-      setResultMessage('');
+      setResult({});
 
       // Sign Up 処理
       signUp(values)
@@ -83,13 +80,13 @@ const AuthScreen: React.FC = () => {
           const noVerify = res.isSignUpComplete === true; // verifyの手順を必要かフラグ
           const message = noVerify
             ? 'Sign Up 成功! Sign In しよう！' // verify 不要時
-            : 'OK！ Sign Up 完了ために確認コードをメールで確認してね！'; // verify 必要時
-          setResultMessage(message);
+            : 'OK！ verify用のコードをメールで送ったから確認してね！'; // verify 必要時
           setTabKey(noVerify ? 'signIn' : 'verify');
+          setResult({ type: 'success', message: message });
         })
         .catch((err: unknown) => {
           const message = err instanceof Error ? err.message : 'Sign Up に失敗したよ...';
-          setErrorMessage(message);
+          setResult({ type: 'error', message: message });
         });
     })();
   }, [signUpForm]);
@@ -107,18 +104,17 @@ const AuthScreen: React.FC = () => {
   // submit（verify）処理
   const onVerifySubmit = React.useCallback(() => {
     void verifyForm.handleSubmit((values: TypeVerifyValues) => {
-      setErrorMessage('');
-      setResultMessage('');
+      setResult({});
 
       // verify 処理
       verify(values)
         .then(() => {
-          setResultMessage('verify 完了、Sign In できるよ！');
           setTabKey('signIn');
+          setResult({ type: 'success', message: 'verify 完了、Sign In できるよ！' });
         })
         .catch((err: unknown) => {
           const message = err instanceof Error ? err.message : 'verify に失敗したよ...';
-          setErrorMessage(message);
+          setResult({ type: 'error', message: message });
         });
     })();
   }, [verifyForm]);
@@ -127,27 +123,18 @@ const AuthScreen: React.FC = () => {
    * Sign Out ボタン処理
    */
   const onSignOutPress = React.useCallback(() => {
-    setErrorMessage('');
-    setResultMessage('');
+    setResult({});
 
     // Sign Out 処理
     signOut()
       .then(() => {
-        setResultMessage('正常にサインアウトしたよ！');
+        setResult({ type: 'success', message: '正常に Sign Out したよ！' });
       })
-      .catch((error: unknown) => {
-        setErrorMessage(error instanceof Error ? error.message : 'Sign out に失敗したよ...');
+      .catch((err: unknown) => {
+        const message = err instanceof Error ? err.message : 'Sign Out に失敗したよ...';
+        setResult({ type: 'error', message: message });
       });
   }, []);
-
-  /*
-   * タブボタン処理
-   */
-  const onTabPress = (tabKey: TypeTabKey) => {
-    setErrorMessage('');
-    setResultMessage('');
-    setTabKey(tabKey);
-  };
 
   return (
     <Layout>
@@ -161,7 +148,8 @@ const AuthScreen: React.FC = () => {
           <Button
             key={i}
             onPress={() => {
-              onTabPress(elm.key);
+              setTabKey(elm.key);
+              setResult({});
             }}
             {...(!isActive(elm.key) && { pattern: 'secondary' })}
             title={elm.title}
@@ -169,9 +157,12 @@ const AuthScreen: React.FC = () => {
         ))}
       </View>
 
-      {/* 成功・異常 メッセージ表示 */}
-      {resultMessage !== '' ? <Text style={styles.result}>{resultMessage}</Text> : null}
-      {errorMessage !== '' ? <Text style={styles.error}>{errorMessage}</Text> : null}
+      {/* 成功 or エラーメッセージ表示 */}
+      {result.message !== '' && (
+        <Text style={result.type === 'success' ? styles.success : styles.error}>
+          {result.message}
+        </Text>
+      )}
 
       {/* Sign In フォーム */}
       <SignInForm form={signInForm} onSubmit={onSignInSubmit} visibled={isActive('signIn')} />
@@ -195,7 +186,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginBottom: 24,
   },
-  result: {
+  success: {
     color: '#2d6a4f',
     marginBottom: 12,
   },
