@@ -19,38 +19,38 @@ const ResultAreaCalled: React.FC<TypeResultArea> = (formValues) => {
   const { dummyName, genres, inquiry, payment, theme, address, description } = formValues;
 
   return (
-    <View style={resultStyles.result}>
-      <Text style={resultStyles.resultTitle}>Submitted values</Text>
-      <Text style={resultStyles.resultRow}>
+    <View style={styles.result}>
+      <Text style={styles.resultTitle}>Submitted values</Text>
+      <Text style={styles.resultRow}>
         ラベル テキスト: {'\n'}[ {dummyName} ]
       </Text>
-      <Text style={resultStyles.resultRow}>
+      <Text style={styles.resultRow}>
         よく視聴するジャンル:
         {'\n'}[ {genres && genres.map((item) => `\n・${item}`)}
         {genres && '\n'} ]
       </Text>
-      <Text style={resultStyles.resultRow}>
+      <Text style={styles.resultRow}>
         お問い合わせ方法:
         {'\n'}[ {inquiry && inquiry.map((item) => `\n・${item}`)}
         {inquiry && '\n'} ]
       </Text>
-      <Text style={resultStyles.resultRow}>
+      <Text style={styles.resultRow}>
         お支払い方法: {'\n'}[ {payment} ]
       </Text>
-      <Text style={resultStyles.resultRow}>
+      <Text style={styles.resultRow}>
         テーマ色の選択: {'\n'}[ {theme} ]
       </Text>
-      <Text style={resultStyles.resultRow}>
+      <Text style={styles.resultRow}>
         都道府県: {'\n'}[ {address} ]
       </Text>
-      <Text style={resultStyles.resultRow}>
+      <Text style={styles.resultRow}>
         ご相談の内容: {'\n'}[ {description} ]
       </Text>
     </View>
   );
 };
 
-const resultStyles = StyleSheet.create({
+const styles = StyleSheet.create({
   result: {
     backgroundColor: color.white,
     borderRadius: 8,
