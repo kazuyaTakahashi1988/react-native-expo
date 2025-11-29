@@ -11,4 +11,4 @@ export type TypeArticle = {
   getTaxCategory01: { name: string }[];
   getTaxCategory02: { name: string }[];
   getTaxCategory03: { name: string }[];
-};
+}[];

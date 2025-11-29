@@ -79,7 +79,7 @@ const AuthScreen: React.FC = () => {
       // Sign Up 処理
       signUp(values)
         .then((res: TypeSignUpResult) => {
-          const noVerify = res.isSignUpComplete === true; // verifyの手順を必要かフラグ
+          const noVerify = res.isSignUpComplete === true; // verifyの手順必要かフラグ
           const message = noVerify
             ? 'Sign Up 成功! Sign In しよう！' // verify 不要時
             : 'OK！ Verify用のコードをメールで送ったから確認してね！'; // verify 必要時
@@ -150,9 +150,9 @@ const AuthScreen: React.FC = () => {
           { title: 'Sign In', key: 'signIn' as const },
           { title: 'Sign Up', key: 'signUp' as const },
           { title: 'Verify', key: 'verify' as const },
-        ].map((elm, i) => (
+        ].map((elm) => (
           <Button
-            key={i}
+            key={elm.key}
             onPress={() => {
               setTabKey(elm.key);
               setResult({});

@@ -15,7 +15,7 @@ import type { TypeArticle, TypeFormValues } from './_type';
  * ----------------------------------------------- */
 
 const Child02Screen: React.FC = () => {
-  const [articles, setArticles] = React.useState<TypeArticle[] | null>(null);
+  const [articles, setArticles] = React.useState<TypeArticle | null>(null);
   const [isDisabled, setIsDisabled] = React.useState<boolean>(false);
 
   /*
@@ -45,7 +45,7 @@ const Child02Screen: React.FC = () => {
       try {
         // クエリパラム使用の記事取得API処理
         const result = await getCategorizedArticleApi(params);
-        setArticles(result.data as TypeArticle[]);
+        setArticles(result.data as TypeArticle);
       } catch (err) {
         console.error('Failed to fetch articles', err);
         setIsDisabled(false);
@@ -60,13 +60,6 @@ const Child02Screen: React.FC = () => {
     form.reset();
     setArticles(null);
     setIsDisabled(false);
-  };
-
-  /*
-   * 記事へ飛ぶ ボタン処理
-   */
-  const goToLink = (link: string) => {
-    void Linking.openURL(link);
   };
 
   return (
@@ -139,6 +132,7 @@ const Child02Screen: React.FC = () => {
           <View key={elm.id} style={styles.article}>
             <Text>記事ID: {elm.id}</Text>
             <Text style={styles.articleTitle}>{elm.getTheTitle}</Text>
+
             <View style={styles.articleCategories}>
               {elm.getTaxCategory01.map((_elm, _i) => (
                 <Text key={_i}>・{_elm.name}</Text>
@@ -150,9 +144,10 @@ const Child02Screen: React.FC = () => {
                 <Text key={_i}>・{_elm.name}</Text>
               ))}
             </View>
+
             <Button
               onPress={() => {
-                goToLink(elm.getPermalink);
+                void Linking.openURL(elm.getPermalink);
               }}
               pattern='secondary'
               size='small'

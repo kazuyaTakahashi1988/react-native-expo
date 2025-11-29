@@ -13,7 +13,7 @@ import type { TypeArticle } from './_type';
  * ----------------------------------------------- */
 
 const Child01Screen: React.FC = () => {
-  const [articles, setArticles] = React.useState<TypeArticle[] | null>(null);
+  const [articles, setArticles] = React.useState<TypeArticle | null>(null);
   const [isDisabled, setIsDisabled] = React.useState<boolean>(false);
 
   /*
@@ -24,7 +24,7 @@ const Child01Screen: React.FC = () => {
     try {
       // 記事取得API処理
       const result = await getArticleApi();
-      setArticles(result.data as TypeArticle[]);
+      setArticles(result.data as TypeArticle);
     } catch (err) {
       console.error('Failed to fetch articles', err);
     } finally {

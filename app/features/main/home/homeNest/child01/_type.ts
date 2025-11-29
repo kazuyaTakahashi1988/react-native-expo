@@ -4,4 +4,4 @@ export type TypeArticle = {
     rendered: string;
   };
   link: string;
-};
+}[];
