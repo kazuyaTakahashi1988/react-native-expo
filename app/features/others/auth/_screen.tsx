@@ -143,7 +143,7 @@ const AuthScreen: React.FC = () => {
       <Text style={styles.title}>Auth Example</Text>
 
       {/* タブボタン */}
-      <View style={styles.tabButton}>
+      <View style={styles.tabButtonArea}>
         {[
           { title: 'Sign In', key: 'signIn' as const },
           { title: 'Sign Up', key: 'signUp' as const },
@@ -156,6 +156,7 @@ const AuthScreen: React.FC = () => {
               setResult({});
             }}
             {...(!isActive(elm.key) && { pattern: 'secondary' })}
+            containerStyle={styles.tabButton}
             title={elm.title}
           />
         ))}
@@ -190,11 +191,14 @@ const styles = StyleSheet.create({
     marginBottom: 24,
     textAlign: 'center',
   },
-  tabButton: {
+  tabButtonArea: {
     columnGap: 12,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 24,
+    marginBottom: 16,
+  },
+  tabButton: {
+    maxWidth: '30%',
   },
   success: {
     color: color.green,
