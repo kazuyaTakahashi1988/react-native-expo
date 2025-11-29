@@ -8,7 +8,7 @@ import type { AxiosError, AxiosRequestConfig, AxiosResponse, Method } from 'axio
  * ----------------------------------------------- */
 
 // デフォルトのベースURL
-const DEFAULT_BASE_URL = 'http://wp.empty-service.com';
+const DEFAULT_BASE_URL = 'https://wp.empty-service.com';
 
 /*
  * APIリクエスト 実行処理
@@ -92,7 +92,7 @@ export const getArticleApi = () => {
 export const getCategorizedArticleApi = (params: TypeParams) => {
   const options = {
     params,
-    baseURL: 'http://search-wp.empty-service.com',
+    baseURL: 'https://search-wp.empty-service.com',
   };
   return request('GET', '/wp-json/wp/v2/org_api', options);
 };

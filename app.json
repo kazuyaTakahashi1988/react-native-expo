@@ -17,10 +17,7 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.kazuya631130.reactnativeexpo",
       "infoPlist": {
-        "ITSAppUsesNonExemptEncryption": false,
-        "NSAppTransportSecurity": {
-          "NSAllowsArbitraryLoads": true
-        }
+        "ITSAppUsesNonExemptEncryption": false
       },
       "resourceClass": "large"
     },
@@ -30,7 +27,6 @@
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
-      "usesCleartextTraffic": true,
       "resourceClass": "medium"
     },
     "web": {
