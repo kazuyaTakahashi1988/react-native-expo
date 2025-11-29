@@ -4,7 +4,7 @@ import { StyleSheet, Text, View } from 'react-native';
 
 import { SignInForm, SignUpForm, VerifyForm } from './_component';
 import { Button } from '../../../components/button';
-import { Layout } from '../../../components/layout';
+import { Layout } from '../../../components/layouts/layout';
 import { color } from '../../../lib/mixin';
 import { signIn, signOut, signUp, verify } from '../../../services/authHelper';
 
@@ -142,6 +142,8 @@ const AuthScreen: React.FC = () => {
 
   return (
     <Layout>
+      <Text style={styles.title}>Auth Example</Text>
+
       {/* タブボタン */}
       <View style={styles.tabButton}>
         {[
@@ -184,6 +186,12 @@ const AuthScreen: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
+  title: {
+    fontSize: 20,
+    fontWeight: '600',
+    marginBottom: 24,
+    textAlign: 'center',
+  },
   tabButton: {
     columnGap: 12,
     flexDirection: 'row',

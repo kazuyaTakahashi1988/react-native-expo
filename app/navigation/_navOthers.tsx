@@ -1,7 +1,10 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { Pressable } from 'react-native';
 
-import { HeaderSub } from '../components/layout';
+import { HeaderSub } from '../components/layouts/header';
+import { IconInfo } from '../components/svg/icon';
 import { AuthScreen } from '../features/others/auth/';
+import { InformationScreen } from '../features/others/information/';
 
 import type { TypeRootList } from '../lib/types/typeNavigation';
 import type React from 'react';
@@ -23,10 +26,32 @@ const NavOthers: React.FC = () => {
         name='auth'
         options={{
           title: 'Auth',
-          header: (props) => <HeaderSub {...props} goBack='戻る' />, // 共通ヘッダー（サブ用）
+          header: (props) => {
+            const rightItem = (
+              <Pressable
+                onPress={() => {
+                  props.navigation.navigate('information');
+                }}
+              >
+                <IconInfo />
+              </Pressable>
+            );
+            return <HeaderSub {...props} goBack='戻る' rightItem={rightItem} />; // 共通ヘッダー（サブ用）
+          },
         }}
       >
         {() => <AuthScreen />}
+      </NativeStack.Screen>
+
+      {/* Information 画面 */}
+      <NativeStack.Screen
+        name='information'
+        options={{
+          title: 'Information',
+          header: (props) => <HeaderSub {...props} goBack={true} />, // 共通ヘッダー（サブ用）
+        }}
+      >
+        {(props) => <InformationScreen {...props} />}
       </NativeStack.Screen>
 
       {/* Xxxx 画面 */}

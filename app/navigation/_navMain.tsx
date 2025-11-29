@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StyleSheet } from 'react-native';
 
 import NavHomeNest from './_navHomeNest';
-import { HeaderHome, HeaderSub } from '../components/layout';
+import { HeaderHome, HeaderSub } from '../components/layouts/header';
 import { IconAbout, IconHome, IconWork } from '../components/svg/icon';
 import { AboutScreen } from '../features/main/about/';
 import { WorkScreen } from '../features/main/work/';

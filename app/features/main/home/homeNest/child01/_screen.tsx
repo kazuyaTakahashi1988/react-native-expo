@@ -2,7 +2,7 @@ import React from 'react';
 import { Linking, StyleSheet, Text, View } from 'react-native';
 
 import { Button } from '../../../../../components/button';
-import { Layout } from '../../../../../components/layout';
+import { Layout } from '../../../../../components/layouts/layout';
 import { color } from '../../../../../lib/mixin';
 import { getArticleApi } from '../../../../../services/apiHelper';
 
@@ -17,7 +17,7 @@ const Child01Screen: React.FC = () => {
   const [isDisabled, setIsDisabled] = React.useState<boolean>(false);
 
   /*
-   * 「記事取得」ボタン処理
+   * 記事取得 ボタン処理
    */
   const getArticles = async () => {
     setIsDisabled(true);
@@ -33,7 +33,7 @@ const Child01Screen: React.FC = () => {
   };
 
   /*
-   * 「記事へ飛ぶ」ボタン処理
+   * 記事へ飛ぶ ボタン処理
    */
   const goToLink = (link: string) => {
     void Linking.openURL(link);
@@ -41,8 +41,9 @@ const Child01Screen: React.FC = () => {
 
   return (
     <Layout>
-      <Text style={styles.title}>API Helper{`\n`}example</Text>
+      <Text style={styles.title}>API Helper{`\n`}Example</Text>
 
+      {/* 記事取得 ボタン */}
       <Button
         disabled={isDisabled || articles != null}
         onPress={() => {
