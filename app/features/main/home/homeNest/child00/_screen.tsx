@@ -25,7 +25,7 @@ const Child00Screen: React.FC = () => {
   const [formValues, setFormValues] = React.useState<TypeFormValues | null>(null);
 
   /*
-   * RHForm使用設定
+   * RHForm 使用設定
    */
   const form = useForm<TypeFormValues>({
     defaultValues: {

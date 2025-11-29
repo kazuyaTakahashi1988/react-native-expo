@@ -19,7 +19,7 @@ const Child02Screen: React.FC = () => {
   const [isDisabled, setIsDisabled] = React.useState<boolean>(false);
 
   /*
-   * RHForm使用設定
+   * RHForm 使用設定
    */
   const form = useForm<TypeFormValues>({
     defaultValues: {

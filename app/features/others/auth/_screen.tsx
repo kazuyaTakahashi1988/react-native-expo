@@ -26,12 +26,7 @@ const AuthScreen: React.FC = () => {
   const [result, setResult] = React.useState<TypeResult>({});
 
   /*
-   * tabKey アクティブ判定
-   */
-  const isActive = (key: TypeTabKey) => tabKey === key;
-
-  /*
-   * Sign In の RHForm使用設定
+   * Sign In の RHForm 使用設定
    */
   const signInForm = useForm<TypeSignInValues>({
     defaultValues: {
@@ -40,7 +35,7 @@ const AuthScreen: React.FC = () => {
     },
   });
 
-  // submit（Sign In）処理
+  // Sign In の submit ボタン処理
   const onSignInSubmit = React.useCallback(() => {
     void signInForm.handleSubmit((values: TypeSignInValues) => {
       setResult({});
@@ -62,7 +57,7 @@ const AuthScreen: React.FC = () => {
   }, [signInForm]);
 
   /*
-   * Sign Up の RHForm使用設定
+   * Sign Up の RHForm 使用設定
    */
   const signUpForm = useForm<TypeSignUpValues>({
     defaultValues: {
@@ -71,7 +66,7 @@ const AuthScreen: React.FC = () => {
     },
   });
 
-  // submit（Sign Up）処理
+  // Sign Up の submit ボタン処理
   const onSignUpSubmit = React.useCallback(() => {
     void signUpForm.handleSubmit((values: TypeSignUpValues) => {
       setResult({});
@@ -95,7 +90,7 @@ const AuthScreen: React.FC = () => {
   }, [signUpForm]);
 
   /*
-   * verify の RHForm使用設定
+   * Verify の RHForm 使用設定
    */
   const verifyForm = useForm<TypeVerifyValues>({
     defaultValues: {
@@ -104,7 +99,7 @@ const AuthScreen: React.FC = () => {
     },
   });
 
-  // submit（Verify）処理
+  // Verify の submit ボタン処理
   const onVerifySubmit = React.useCallback(() => {
     void verifyForm.handleSubmit((values: TypeVerifyValues) => {
       setResult({});
@@ -139,6 +134,9 @@ const AuthScreen: React.FC = () => {
         setResult({ type: 'error', message });
       });
   }, []);
+
+  // タブボタン アクティブ判定
+  const isActive = (key: TypeTabKey) => tabKey === key;
 
   return (
     <Layout>
