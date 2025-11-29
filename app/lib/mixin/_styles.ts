@@ -1,3 +1,6 @@
+/* -----------------------------------------------
+ * カラーアセット
+ * ----------------------------------------------- */
 export const color = {
   white: '#fff',
   black: '#000',
@@ -8,6 +11,6 @@ export const color = {
   gray100: '#9e9e9e',
   gray200: '#f5f5f5',
   primary: '#2196f3',
-  secondary: '#FFCCCC',
+  secondary: '#FF00FF',
   transparent: 'transparent',
 };

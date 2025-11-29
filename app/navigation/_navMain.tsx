@@ -1,17 +1,16 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { StyleSheet } from 'react-native';
+import React from 'react';
 
 import NavHomeNest from './_navHomeNest';
 import { HeaderHome, HeaderSub } from '../components/layouts/header';
 import { IconAbout, IconHome, IconWork } from '../components/svg/icon';
 import { AboutScreen } from '../features/main/about/';
 import { WorkScreen } from '../features/main/work/';
-import { color } from '../lib/mixin';
+import { color, useSafeAreaConst } from '../lib/mixin';
 
 import type { TypeRootList } from '../lib/types/typeNavigation';
 import type { BottomTabNavigationOptions } from '@react-navigation/bottom-tabs';
-import type React from 'react';
 
 /* -----------------------------------------------
  * メイン 各画面追加
@@ -21,13 +20,23 @@ const BottomTab = createBottomTabNavigator<TypeRootList>();
 const NativeStack = createNativeStackNavigator<TypeRootList>();
 
 const NavMain: React.FC = () => {
+  const { safeAreaBottom } = useSafeAreaConst(); // デバイス固有のセーフエリアBottom値
+
+  /*
+   * BottomTabスタイル 呼び出し
+   */
+  const bottomTabStyles = React.useMemo(
+    () => bottomTabStylesCalled(safeAreaBottom),
+    [safeAreaBottom],
+  );
+
   /* ---------------------------------------------
    * メイン 各画面
    * --------------------------------------------- */
   return (
     <BottomTab.Navigator
       screenOptions={() => ({
-        ...bottomTabStyles, // bottomTabスタイル
+        ...bottomTabStyles, // BottomTabスタイル
       })}
     >
       {/* Home 画面 */}
@@ -78,7 +87,7 @@ const NavMain: React.FC = () => {
           header: (props) => <HeaderSub {...props} />, // 共通ヘッダー（サブ用）
           tabBarIcon: ({ color }) => <IconWork color={color} />,
           tabBarBadge: undefined,
-          ...tabBarItemLastChild, // :last-childスタイル
+          tabBarItemStyle: { borderRightWidth: 0 }, // last-childに対するスタイル
         }}
       >
         {(props) => <WorkScreen {...props} />}
@@ -92,7 +101,7 @@ const NavMain: React.FC = () => {
           header: (props) => <HeaderSub {...props} />, // 共通ヘッダー（サブ用）
           tabBarIcon: ({ color }) => <IconXxxx color={color} />,
           tabBarBadge: undefined,
-          ...tabBarItemLastChild, // :last-childスタイル
+          tabBarItemStyle: { borderRightWidth: 0 }, // last-childに対するスタイル
         }}
       >
         {(props) => <XxxxScreen {...props} />}
@@ -101,29 +110,33 @@ const NavMain: React.FC = () => {
   );
 };
 
-/* bottomTabスタイル */
-const bottomTabStyles: BottomTabNavigationOptions = {
-  tabBarActiveTintColor: color.primary, // アクティブカラー
-  tabBarInactiveTintColor: color.white, // 非アクティブカラー
-  tabBarStyle: {
-    backgroundColor: '#0b1220',
-    borderTopColor: 'rgba(255,255,255,0.08)',
-    borderTopWidth: 1,
-    elevation: 12,
-    height: 88,
-    paddingBottom: 8,
-    paddingTop: 6,
-  }, // タブバーのViewラッパースタイル（全体背景色など）
-  tabBarItemStyle: {
-    borderRightColor: color.white,
-    borderRightWidth: StyleSheet.hairlineWidth,
-  }, // タブバーのTextラッパースタイル
-  tabBarLabelStyle: { fontSize: 12, fontWeight: '600' }, // タブバーのTextスタイル
-};
-
-/* :last-childスタイル */
-const tabBarItemLastChild: BottomTabNavigationOptions = {
-  tabBarItemStyle: { borderRightWidth: 0 },
+/*
+ * BottomTabスタイル
+ */
+const bottomTabStylesCalled = (safeAreaBottom: number): BottomTabNavigationOptions => {
+  return {
+    // アイコンアクティブカラー
+    tabBarActiveTintColor: color.primary,
+    // アイコン非アクティブカラー
+    tabBarInactiveTintColor: color.white,
+    // BottomTabのViewラッパースタイル（全体背景色など）
+    tabBarStyle: {
+      backgroundColor: color.black,
+      borderTopColor: color.black,
+      borderTopWidth: 1,
+      elevation: 12,
+      height: 50 + safeAreaBottom,
+      paddingBottom: 8,
+      paddingTop: 6,
+    },
+    // BottomTabのTextラッパースタイル
+    tabBarItemStyle: {
+      borderRightColor: color.white,
+      borderRightWidth: 1,
+    },
+    // BottomTabのTextスタイル
+    tabBarLabelStyle: { fontSize: 12, fontWeight: '600' },
+  };
 };
 
 export default NavMain;

@@ -1,6 +1,6 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
-import { color } from '../../../lib/mixin';
+import { color, useSafeAreaConst } from '../../../lib/mixin';
 import { IconArrow } from '../../svg/icon';
 
 import type { TypeHeaderSub } from '../../../lib/types/typeComponents';
@@ -8,13 +8,14 @@ import type { TypeHeaderSub } from '../../../lib/types/typeComponents';
 const HeaderSub: React.FC<TypeHeaderSub> = (props) => {
   const { navigation, route, options, goBack = false, rightItem } = props;
   const headerTitle = options.title ?? route.name;
+  const { safeAreaTop } = useSafeAreaConst(); // デバイス固有のセーフエリアTop値
 
   const isGoBack = () => {
     return goBack === true || (typeof goBack === 'string' && goBack.trim() !== '');
   };
 
   return (
-    <View style={styles.header}>
+    <View style={[styles.header, { paddingTop: safeAreaTop }]}>
       <View style={styles.headerInner}>
         {isGoBack() && (
           <Pressable
@@ -37,7 +38,7 @@ const HeaderSub: React.FC<TypeHeaderSub> = (props) => {
 const styles = StyleSheet.create({
   header: {
     backgroundColor: color.red,
-    paddingTop: 50,
+    paddingTop: 0,
   },
   headerInner: {
     alignItems: 'center',

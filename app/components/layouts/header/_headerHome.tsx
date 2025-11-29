@@ -1,6 +1,6 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
-import { color } from '../../../lib/mixin';
+import { color, useSafeAreaConst } from '../../../lib/mixin';
 import { IconLogin } from '../../svg/icon';
 import { Logo } from '../../svg/logo';
 
@@ -8,6 +8,7 @@ import type { TypeHeaderHome } from '../../../lib/types/typeComponents';
 
 const HeaderHome: React.FC<TypeHeaderHome> = (props) => {
   const { navigation } = props;
+  const { safeAreaTop } = useSafeAreaConst(); // デバイス固有のセーフエリアTop値
 
   const goToInfo = () => {
     navigation.navigate('others', {
@@ -16,7 +17,7 @@ const HeaderHome: React.FC<TypeHeaderHome> = (props) => {
   };
 
   return (
-    <View style={styles.header}>
+    <View style={[styles.header, { paddingTop: safeAreaTop }]}>
       <View style={styles.headerInner}>
         <Text>
           <Logo />
@@ -36,7 +37,7 @@ const HeaderHome: React.FC<TypeHeaderHome> = (props) => {
 const styles = StyleSheet.create({
   header: {
     backgroundColor: color.red,
-    paddingTop: 50,
+    paddingTop: 0,
   },
   headerInner: {
     alignItems: 'center',
