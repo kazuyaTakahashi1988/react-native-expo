@@ -41,7 +41,7 @@ const Input = <TFieldValues extends FieldValues>({
       <TextInput
         {...textInputProps}
         editable={!disabled}
-        placeholderTextColor={'#9e9e9e'}
+        placeholderTextColor={color.gray100}
         style={[styles.input, ...trackAnimatedStyle, style]}
         {...controllerProps}
       />
@@ -79,17 +79,17 @@ const buildControllerProps = <TFieldValues extends FieldValues>(
 const styles = StyleSheet.create({
   input: {
     backgroundColor: color.white,
-    borderColor: '#d6d6d6',
+    borderColor: color.gray100,
     borderRadius: 8,
     borderWidth: 1,
     paddingHorizontal: 12,
     paddingVertical: 10,
   },
   inputError: {
-    borderColor: '#e53935',
+    borderColor: color.red,
   },
   inputDisabled: {
-    backgroundColor: '#9e9e9e',
+    backgroundColor: color.gray100,
     color: color.white,
   },
 });

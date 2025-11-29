@@ -1,8 +1,10 @@
 import { StyleSheet } from 'react-native';
+
+import { color } from '../app/lib/mixin';
 export const styles = StyleSheet.create({
   container: {
     alignItems: 'stretch',
-    backgroundColor: '#f5f5f5',
+    backgroundColor: color.gray200,
     flex: 1,
     padding: 16,
   },

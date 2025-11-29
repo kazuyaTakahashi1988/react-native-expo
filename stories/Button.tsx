@@ -1,5 +1,7 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
+import { color } from '../app/lib/mixin';
+
 import type { StyleProp, ViewStyle } from 'react-native';
 
 export interface ButtonProps {
@@ -33,10 +35,10 @@ export const Button = ({ primary = false, size = 'medium', label, onPress }: But
 
 const styles = StyleSheet.create({
   primaryText: {
-    color: 'white',
+    color: color.white,
   },
   secondaryText: {
-    color: '#333',
+    color: color.black,
   },
   smallText: {
     fontSize: 12,

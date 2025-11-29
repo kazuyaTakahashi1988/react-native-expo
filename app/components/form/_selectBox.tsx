@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
   selectTrigger: {
     alignItems: 'center',
     backgroundColor: color.white,
-    borderColor: '#d6d6d6',
+    borderColor: color.gray100,
     borderRadius: 8,
     borderWidth: 1,
     flexDirection: 'row',
@@ -103,21 +103,21 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   selectTriggerDisabled: {
-    backgroundColor: '#9e9e9e',
+    backgroundColor: color.gray100,
   },
   selectValueText: {
-    color: '#212121',
+    color: color.black,
     fontSize: 14,
   },
   selectValueTextDisabled: {
     color: color.white,
   },
   selectPlaceholderText: {
-    color: '#9e9e9e',
+    color: color.gray100,
     fontSize: 14,
   },
   inputError: {
-    borderColor: '#e53935',
+    borderColor: color.red,
   },
 });
 
@@ -139,7 +139,7 @@ const baseSelectStyles = {
     opacity: 0,
   },
   placeholder: {
-    color: '#9e9e9e',
+    color: color.gray100,
   },
   viewContainer: {
     height: '100%',

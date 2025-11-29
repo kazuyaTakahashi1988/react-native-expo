@@ -1,5 +1,7 @@
 import { StyleSheet, Text } from 'react-native';
 
+import { color } from '../../lib/mixin';
+
 import type { TypeLabel } from '../../lib/types/typeComponents';
 import type { FieldValues } from 'react-hook-form';
 
@@ -30,7 +32,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   comma: {
-    color: '#e53935',
+    color: color.red,
     fontSize: 10,
   },
 });

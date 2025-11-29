@@ -1,6 +1,7 @@
 import { Button, StyleSheet, Text, View } from 'react-native';
 
 import { Layout } from '../../../components/layout';
+import { color } from '../../../lib/mixin';
 
 import type { TypeAboutScreen } from './_type';
 
@@ -44,7 +45,7 @@ const AboutScreen: React.FC<TypeAboutScreen> = (props) => {
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    backgroundColor: '#ccc',
+    backgroundColor: color.gray,
     flex: 1,
     justifyContent: 'center',
   },

@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
     width: 20,
   },
   checkBoxTextDisabled: {
-    color: '#9e9e9e',
+    color: color.gray100,
   },
   checkBoxSelected: {
     backgroundColor: color.primary,
@@ -134,14 +134,14 @@ const styles = StyleSheet.create({
     width: 12,
   },
   checkBoxSelectedDisabled: {
-    backgroundColor: '#9e9e9e',
+    backgroundColor: color.gray100,
   },
   checkBoxError: {
-    borderColor: '#e53935',
+    borderColor: color.red,
   },
   checkBoxDisabled: {
     backgroundColor: color.white,
-    borderColor: '#9e9e9e',
+    borderColor: color.gray100,
   },
 });
 

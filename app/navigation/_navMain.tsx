@@ -115,7 +115,7 @@ const bottomTabStyles: BottomTabNavigationOptions = {
     paddingTop: 6,
   }, // タブバーのViewラッパースタイル（全体背景色など）
   tabBarItemStyle: {
-    borderRightColor: 'white',
+    borderRightColor: color.white,
     borderRightWidth: StyleSheet.hairlineWidth,
   }, // タブバーのTextラッパースタイル
   tabBarLabelStyle: { fontSize: 12, fontWeight: '600' }, // タブバーのTextスタイル

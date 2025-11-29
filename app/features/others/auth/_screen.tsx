@@ -5,6 +5,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { SignInForm, SignUpForm, VerifyForm } from './_component';
 import { Button } from '../../../components/button';
 import { Layout } from '../../../components/layout';
+import { color } from '../../../lib/mixin';
 import { signIn, signOut, signUp, verify } from '../../../services/authHelper';
 
 import type { TypeResult, TypeTabKey } from './_type';
@@ -190,11 +191,11 @@ const styles = StyleSheet.create({
     marginBottom: 24,
   },
   success: {
-    color: '#2d6a4f',
+    color: color.green,
     marginBottom: 12,
   },
   error: {
-    color: '#c1121f',
+    color: color.red,
     marginBottom: 12,
   },
 });

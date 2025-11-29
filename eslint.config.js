@@ -65,8 +65,6 @@ export default [
     },
     rules: {
       ...reactNativePlugin.configs.all.rules,
-      /* 色コードを直接書くことを禁止するルールを"off" */
-      'react-native/no-color-literals': 'off',
       /* StyleSheet.create内スタイルのプロパティをソート */
       'react-native/sort-styles': ['error', 'asc', { ignoreClassNames: true }],
       /* 未定義の変数を使うことを禁止するルールを"off" */

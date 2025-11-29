@@ -26,8 +26,8 @@ const TRACK_HEIGHT = 28;
 const KNOB_SIZE = 22;
 const KNOB_MARGIN = (TRACK_HEIGHT - KNOB_SIZE) / 2;
 
-const ERROR_COLOR = '#e53935';
-const DISABLED_COLOR = '#9e9e9e';
+const ERROR_COLOR = color.red;
+const DISABLED_COLOR = color.gray100;
 const KNOB_MAX_TRANSLATE = TRACK_WIDTH - KNOB_SIZE - KNOB_MARGIN;
 
 const ToggleCheckOption = ({
@@ -212,7 +212,7 @@ const styles = StyleSheet.create({
     width: TRACK_WIDTH,
   },
   trackDefault: {
-    borderColor: 'transparent',
+    borderColor: color.transparent,
   },
   trackError: {
     borderColor: ERROR_COLOR,
@@ -221,7 +221,7 @@ const styles = StyleSheet.create({
     borderRadius: KNOB_SIZE / 2,
     elevation: 2,
     height: KNOB_SIZE,
-    shadowColor: '#000',
+    shadowColor: color.black,
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.2,
     shadowRadius: 1.41,
@@ -231,7 +231,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   optionLabelDisabled: {
-    color: '#9e9e9e',
+    color: color.gray100,
   },
 });
 

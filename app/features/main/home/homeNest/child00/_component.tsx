@@ -53,9 +53,7 @@ const ResultAreaCalled: React.FC<TypeResultArea> = (formValues) => {
 const resultStyles = StyleSheet.create({
   result: {
     backgroundColor: color.white,
-    borderColor: '#d6d6d6',
     borderRadius: 8,
-    borderWidth: 1,
     padding: 16,
     rowGap: 8,
   },
@@ -65,7 +63,7 @@ const resultStyles = StyleSheet.create({
     marginBottom: 16,
   },
   resultRow: {
-    borderBottomColor: '#d6d6d6',
+    borderBottomColor: color.gray,
     borderBottomWidth: 1,
     marginBottom: 16,
     paddingBottom: 16,

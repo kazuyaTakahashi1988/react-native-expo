@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
     width: 20,
   },
   radioBoxTextDisabled: {
-    color: '#9e9e9e',
+    color: color.gray100,
   },
   radioOuterSelected: {
     borderColor: color.primary,
@@ -140,11 +140,11 @@ const styles = StyleSheet.create({
     width: 10,
   },
   radioOuterError: {
-    borderColor: '#e53935',
+    borderColor: color.red,
   },
   radioBoxDisabled: {
-    backgroundColor: '#9e9e9e',
-    borderColor: '#9e9e9e',
+    backgroundColor: color.gray100,
+    borderColor: color.gray100,
   },
 });
 

@@ -93,15 +93,15 @@ const styles = StyleSheet.create({
   },
   secondaryButton: {
     backgroundColor: color.white,
-    borderColor: '#9e9e9e',
+    borderColor: color.gray100,
     borderWidth: 1,
   },
   secondaryText: {
-    color: '#333',
+    color: color.black,
   },
   disabledButton: {
-    backgroundColor: '#9e9e9e',
-    borderColor: '#9e9e9e',
+    backgroundColor: color.gray100,
+    borderColor: color.gray100,
     borderWidth: 1,
   },
   disabledText: {
