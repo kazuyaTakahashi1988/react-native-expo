@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import Animated, {
   interpolate,
@@ -47,7 +47,7 @@ const ToggleRadioOption = ({
   const progress: SharedValue<number> = useSharedValue<number>(isSelected ? 1 : 0);
   const isDisabled = disabled;
 
-  useEffect(() => {
+  React.useEffect(() => {
     progress.value = withTiming(isSelected ? 1 : 0, { duration: 200 });
   }, [isSelected, progress]);
 
@@ -125,7 +125,7 @@ const RadioBoxCustom = <TFieldValues extends FieldValues>({
   const { controller } = useRHFController({ control, name, rules });
   const controllerValue = controller.field.value;
 
-  const selectedValue = useMemo(() => getSelectedValue(controllerValue), [controllerValue]);
+  const selectedValue = React.useMemo(() => getSelectedValue(controllerValue), [controllerValue]);
 
   const hasError = Boolean(errorText);
 

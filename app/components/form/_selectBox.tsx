@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import React from 'react';
 import { Keyboard, Pressable, StyleSheet, Text, View } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 
@@ -31,7 +31,7 @@ const SelectBox = <TFieldValues extends FieldValues>({
   triggerStyle,
   valueTextStyle,
 }: TypeSelectBox<TFieldValues>) => {
-  const pickerRef = useRef<RNPickerSelect | null>(null);
+  const pickerRef = React.useRef<RNPickerSelect | null>(null);
   const { controller } = useRHFController({ control, name, rules });
 
   const selectedValue = getSelectedValue(controller.field.value);

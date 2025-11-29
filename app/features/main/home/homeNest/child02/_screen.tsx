@@ -45,8 +45,8 @@ const Child02Screen: React.FC = () => {
         // クエリパラム使用の記事取得API処理
         const result = await getCategorizedArticleApi(params);
         setArticles(result.data as TypeArticle[]);
-      } catch (error) {
-        console.error('Failed to fetch articles', error);
+      } catch (err) {
+        console.error('Failed to fetch articles', err);
         setIsDisabled(false);
       }
     })();

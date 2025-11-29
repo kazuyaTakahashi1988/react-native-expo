@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useReducer, useRef } from 'react';
+import React from 'react';
 import { Animated as RNAnimated } from 'react-native';
 
 import type { DependencyList } from 'react';
@@ -167,7 +167,7 @@ const isTimingAnimation = <T>(value: unknown): value is TimingAnimation<T> => {
 };
 
 export const useSharedValue = <T>(initialValue: T): SharedValue<T> => {
-  const ref = useRef<SharedValueImpl<T> | null>(null);
+  const ref = React.useRef<SharedValueImpl<T> | null>(null);
   if (ref.current == null) {
     ref.current = new SharedValueImpl<T>(initialValue);
   }
@@ -188,16 +188,16 @@ const collectSharedDependencies = <T>(factory: () => T) => {
 };
 
 export const useAnimatedStyle = <T>(factory: () => T, deps?: DependencyList): T => {
-  const [tick, forceTick] = useReducer((count) => count + 1, 0);
+  const [tick, forceTick] = React.useReducer((count) => count + 1, 0);
   const resolvedDeps = deps ?? EMPTY_DEPS;
-  const collection = useMemo(() => {
+  const collection = React.useMemo(() => {
     if (resolvedDeps.length > 0 && tick < 0) {
       return collectSharedDependencies(factory);
     }
     return collectSharedDependencies(factory);
   }, [factory, resolvedDeps, tick]);
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (collection.deps.length === 0) {
       return undefined;
     }
