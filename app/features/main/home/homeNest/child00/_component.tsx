@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
   },
   resultRowValue: {
     backgroundColor: color.gray200,
-    borderRadius: 16,
+    borderRadius: 8,
     marginTop: 5,
     padding: 8,
   },
