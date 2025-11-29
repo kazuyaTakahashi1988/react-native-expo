@@ -11,7 +11,7 @@ import type {
  * ディープリンク設定
  * ----------------------------------------------- */
 
-const navLinking: LinkingOptions<{
+const linking: LinkingOptions<{
   main: NavigatorScreenParams<ParamListBase>;
   others: NavigatorScreenParams<ParamListBase>;
 }> = {
@@ -46,4 +46,4 @@ const navLinking: LinkingOptions<{
   },
 };
 
-export default navLinking;
+export default linking;
