@@ -37,8 +37,8 @@ const amplifyClient: TypeAmplifyClient = Amplify as unknown as TypeAmplifyClient
 const authConfig: TypeAuthConfig = {
   Auth: {
     Cognito: {
-      userPoolId: 'ap-northeast-1_xxxxxxxxx',
-      userPoolClientId: 'xxxxxxxxxxxxxxxxxx',
+      userPoolId: process.env.EXPO_PUBLIC_AUTH_USER_POOL_ID ?? '',
+      userPoolClientId: process.env.EXPO_PUBLIC_AUTH_USER_POOL_CLIENT_ID ?? '',
       loginWith: { email: true },
     },
   },
