@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 
-import { Button } from './Button';
+import { Button } from '../app/components/button';
 import { color } from '../app/lib/mixin';
 
 export type HeaderProps = {
@@ -22,18 +22,12 @@ export const Header = ({ user, onLogin, onLogout, onCreateAccount }: HeaderProps
             <Text>Welcome, </Text>
             <Text style={styles.userName}>{user.name}!</Text>
 
-            <Button label='Log out' onPress={onLogout} size='small' style={styles.button} />
+            <Button onPress={onLogout} size='small' style={styles.button} title='Log out' />
           </>
         ) : (
           <>
-            <Button label='Log in' onPress={onLogin} size='small' style={styles.button} />
-            <Button
-              label='Sign up'
-              onPress={onCreateAccount}
-              primary
-              size='small'
-              style={styles.button}
-            />
+            <Button onPress={onLogin} size='small' style={styles.button} title='Log in' />
+            <Button onPress={onCreateAccount} size='small' style={styles.button} title='Sign up' />
           </>
         )}
       </View>
