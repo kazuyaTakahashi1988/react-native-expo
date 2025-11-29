@@ -8,44 +8,37 @@ import type { TypeResultArea } from './_type';
  * 出力結果エリア
  * ----------------------------------------------- */
 
-// formValues に値があれば出力結果エリア呼び出し
 export const ResultArea: React.FC<TypeResultArea> = (formValues) => {
+  // formValues が空なら離脱
   const hasValues = Object.keys(formValues).length > 0;
-  return hasValues ? <ResultAreaCalled {...formValues} /> : null;
-};
+  if (!hasValues) {
+    return null;
+  }
 
-// 出力結果エリア呼び出し
-const ResultAreaCalled: React.FC<TypeResultArea> = (formValues) => {
   const { dummyName, genres, inquiry, payment, theme, address, description } = formValues;
+  const resultList = [
+    { label: 'ラベル テキスト', value: dummyName },
+    { label: 'よく視聴するジャンル', value: genres },
+    { label: 'お問い合わせ方法', value: inquiry },
+    { label: 'お支払い方法', value: payment },
+    { label: 'テーマ色の選択', value: theme },
+    { label: '都道府県', value: address },
+    { label: 'ご相談の内容', value: description },
+  ];
 
   return (
     <View style={styles.result}>
       <Text style={styles.resultTitle}>Submitted values</Text>
-      <Text style={styles.resultRow}>
-        ラベル テキスト: {'\n'}[ {dummyName} ]
-      </Text>
-      <Text style={styles.resultRow}>
-        よく視聴するジャンル:
-        {'\n'}[ {genres && genres.map((item) => `\n・${item}`)}
-        {genres && '\n'} ]
-      </Text>
-      <Text style={styles.resultRow}>
-        お問い合わせ方法:
-        {'\n'}[ {inquiry && inquiry.map((item) => `\n・${item}`)}
-        {inquiry && '\n'} ]
-      </Text>
-      <Text style={styles.resultRow}>
-        お支払い方法: {'\n'}[ {payment} ]
-      </Text>
-      <Text style={styles.resultRow}>
-        テーマ色の選択: {'\n'}[ {theme} ]
-      </Text>
-      <Text style={styles.resultRow}>
-        都道府県: {'\n'}[ {address} ]
-      </Text>
-      <Text style={styles.resultRow}>
-        ご相談の内容: {'\n'}[ {description} ]
-      </Text>
+      {resultList.map((elm, i) => (
+        <View key={i} style={styles.resultRow}>
+          <Text>{elm.label}</Text>
+          <Text style={styles.resultRowValue}>
+            {typeof elm.value === 'object'
+              ? elm.value.map((_elm, _i) => <Text key={_i}>・{_elm}</Text>)
+              : elm.value}
+          </Text>
+        </View>
+      ))}
     </View>
   );
 };
@@ -67,5 +60,11 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     marginBottom: 16,
     paddingBottom: 16,
+  },
+  resultRowValue: {
+    backgroundColor: color.gray200,
+    borderRadius: 16,
+    marginTop: 5,
+    padding: 8,
   },
 });
