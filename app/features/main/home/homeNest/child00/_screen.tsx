@@ -28,8 +28,11 @@ const Child00Screen: React.FC = () => {
    * RHForm 使用設定
    */
   const form = useForm<TypeFormValues>({
+    mode: 'onSubmit', // 'onChange' or 'onBlur' or 'onSubmit' or 'onTouched' or 'all'
+    reValidateMode: 'onChange', // 'onChange' or 'onBlur' or 'onSubmit'
+    criteriaMode: 'all', // 'firstError' or 'all'
     defaultValues: {
-      dummyName: '',
+      name: '',
       genres: [],
       inquiry: [],
       payment: '',
@@ -73,9 +76,9 @@ const Child00Screen: React.FC = () => {
         autoCapitalize='words'
         containerStyle={styles.container}
         control={form.control}
-        errorText={getErrorText('dummyName')}
-        label='ラベル テキスト'
-        name='dummyName'
+        errorText={getErrorText('name')}
+        label='お名前'
+        name='name'
         placeholder='プレイスホルダー テキスト'
         rules={{ required: '必須項目です' }}
       />
@@ -100,7 +103,6 @@ const Child00Screen: React.FC = () => {
 
       {/* チェックボックスカスタム項目 */}
       <CheckBoxCustom
-        activeColor='#22c55e'
         containerStyle={styles.container}
         control={form.control}
         errorText={getErrorText('inquiry')}
@@ -131,7 +133,6 @@ const Child00Screen: React.FC = () => {
 
       {/* ラヂオボックスカスタム項目 */}
       <RadioBoxCustom
-        activeColor='#6366f1'
         containerStyle={styles.container}
         control={form.control}
         errorText={getErrorText('theme')}

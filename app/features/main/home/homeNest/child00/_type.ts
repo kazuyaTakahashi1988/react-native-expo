@@ -1,5 +1,5 @@
 export type TypeFormValues = {
-  dummyName: string;
+  name: string;
   genres: string[];
   inquiry: string[];
   payment: string;

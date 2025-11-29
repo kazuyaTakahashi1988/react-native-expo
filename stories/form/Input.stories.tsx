@@ -67,14 +67,14 @@ export const Default: Story = {
 
 export const LabelAndPlaceholder: Story = {
   args: {
-    label: 'ラベル テキスト',
+    label: 'お名前',
     placeholder: 'プレイスホルダー テキスト',
   },
 };
 
 export const Required: Story = {
   args: {
-    label: 'ラベル テキスト',
+    label: 'お名前',
     placeholder: 'プレイスホルダー テキスト',
     rules: { required: '必須項目です' },
   },
@@ -82,7 +82,7 @@ export const Required: Story = {
 
 export const ErrorOccurred: Story = {
   args: {
-    label: 'ラベル テキスト',
+    label: 'お名前',
     errorText: '必須項目です',
     placeholder: 'プレイスホルダー テキスト',
     rules: { required: '必須項目です' },

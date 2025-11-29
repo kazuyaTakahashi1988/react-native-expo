@@ -15,9 +15,9 @@ export const ResultArea: React.FC<TypeResultArea> = (formValues) => {
     return null;
   }
 
-  const { dummyName, genres, inquiry, payment, theme, address, description } = formValues;
+  const { name, genres, inquiry, payment, theme, address, description } = formValues;
   const resultList = [
-    { label: 'ラベル テキスト', value: dummyName },
+    { label: 'お名前', value: name },
     { label: 'よく視聴するジャンル', value: genres },
     { label: 'お問い合わせ方法', value: inquiry },
     { label: 'お支払い方法', value: payment },
