@@ -1,10 +1,10 @@
 import { StyleSheet, Text, View } from 'react-native';
 
-import { color } from '../../lib/mixin';
-import { IconLogin } from '../svg/icon';
-import { Logo } from '../svg/logo';
+import { color } from '../../../lib/mixin';
+import { IconLogin } from '../../svg/icon';
+import { Logo } from '../../svg/logo';
 
-import type { TypeHeaderHome } from '../../lib/types/typeComponents';
+import type { TypeHeaderHome } from '../../../lib/types/typeComponents';
 
 const HeaderHome: React.FC<TypeHeaderHome> = (props) => {
   const { navigation } = props;

@@ -2,7 +2,7 @@ import React from 'react';
 import { Linking, StyleSheet, Text, View } from 'react-native';
 
 import { Button } from '../../../../../components/button';
-import { Layout } from '../../../../../components/layout';
+import { Layout } from '../../../../../components/layouts/layout';
 import { color } from '../../../../../lib/mixin';
 import { getArticleApi } from '../../../../../services/apiHelper';
 

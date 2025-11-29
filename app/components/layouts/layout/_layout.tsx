@@ -1,8 +1,8 @@
 import { ScrollView, StyleSheet, View } from 'react-native';
 
-import { color } from '../../lib/mixin';
+import { color } from '../../../lib/mixin';
 
-import type { TypeLayout } from '../../lib/types/typeComponents';
+import type { TypeLayout } from '../../../lib/types/typeComponents';
 import type { FC } from 'react';
 
 export const Layout: FC<TypeLayout> = (props) => {

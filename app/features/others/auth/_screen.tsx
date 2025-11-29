@@ -4,7 +4,7 @@ import { StyleSheet, Text, View } from 'react-native';
 
 import { SignInForm, SignUpForm, VerifyForm } from './_component';
 import { Button } from '../../../components/button';
-import { Layout } from '../../../components/layout';
+import { Layout } from '../../../components/layouts/layout';
 import { color } from '../../../lib/mixin';
 import { signIn, signOut, signUp, verify } from '../../../services/authHelper';
 

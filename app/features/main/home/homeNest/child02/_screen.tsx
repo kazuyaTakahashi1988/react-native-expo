@@ -4,7 +4,7 @@ import { Linking, StyleSheet, Text, View } from 'react-native';
 
 import { Button } from '../../../../../components/button';
 import { CheckBox } from '../../../../../components/form';
-import { Layout } from '../../../../../components/layout';
+import { Layout } from '../../../../../components/layouts/layout';
 import { color } from '../../../../../lib/mixin';
 import { getCategorizedArticleApi } from '../../../../../services/apiHelper';
 

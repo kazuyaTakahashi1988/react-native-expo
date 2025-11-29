@@ -13,7 +13,7 @@ import {
   SelectBox,
   TextArea,
 } from '../../../../../components/form';
-import { Layout } from '../../../../../components/layout';
+import { Layout } from '../../../../../components/layouts/layout';
 
 import type { TypeFormValues } from './_type';
 
