@@ -2,6 +2,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import ErrorText from './_errorText';
 import Label from './_label';
+import { color } from '../../lib/mixin';
 import { useRHFController } from '../../services/formHelper';
 
 import type { TypeCheckBox } from '../../lib/types/typeComponents';
@@ -115,7 +116,7 @@ const styles = StyleSheet.create({
   },
   checkBoxBase: {
     alignItems: 'center',
-    borderColor: '#007aff',
+    borderColor: color.primary,
     borderRadius: 4,
     borderWidth: 2,
     height: 20,
@@ -126,7 +127,7 @@ const styles = StyleSheet.create({
     color: '#9e9e9e',
   },
   checkBoxSelected: {
-    backgroundColor: '#007aff',
+    backgroundColor: color.primary,
     borderRadius: 4,
     bottom: 0,
     height: 12,
@@ -139,7 +140,7 @@ const styles = StyleSheet.create({
     borderColor: '#e53935',
   },
   checkBoxDisabled: {
-    backgroundColor: '#fff',
+    backgroundColor: color.white,
     borderColor: '#9e9e9e',
   },
 });

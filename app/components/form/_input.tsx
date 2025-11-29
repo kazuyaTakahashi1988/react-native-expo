@@ -3,6 +3,7 @@ import { StyleSheet, TextInput, View } from 'react-native';
 
 import ErrorText from './_errorText';
 import Label from './_label';
+import { color } from '../../lib/mixin';
 import { useRHFController } from '../../services/formHelper';
 
 import type { TypeInput } from '../../lib/types/typeComponents';
@@ -77,7 +78,7 @@ const buildControllerProps = <TFieldValues extends FieldValues>(
 
 const styles = StyleSheet.create({
   input: {
-    backgroundColor: '#fff',
+    backgroundColor: color.white,
     borderColor: '#d6d6d6',
     borderRadius: 8,
     borderWidth: 1,
@@ -89,7 +90,7 @@ const styles = StyleSheet.create({
   },
   inputDisabled: {
     backgroundColor: '#9e9e9e',
-    color: '#fff',
+    color: color.white,
   },
 });
 

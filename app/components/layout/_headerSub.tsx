@@ -1,5 +1,6 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
+import { color } from '../../lib/mixin';
 import { IconArrow } from '../svg/icon';
 
 import type { TypeHeaderSub } from '../../lib/types/typeComponents';
@@ -35,7 +36,7 @@ const HeaderSub: React.FC<TypeHeaderSub> = (props) => {
 
 const styles = StyleSheet.create({
   header: {
-    backgroundColor: 'red',
+    backgroundColor: color.red,
     paddingTop: 50,
   },
   headerInner: {

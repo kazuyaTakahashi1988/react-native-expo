@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 
+import { color } from '../../lib/mixin';
 import { IconLogin } from '../svg/icon';
 import { Logo } from '../svg/logo';
 
@@ -34,12 +35,12 @@ const HeaderHome: React.FC<TypeHeaderHome> = (props) => {
 
 const styles = StyleSheet.create({
   header: {
-    backgroundColor: 'red',
+    backgroundColor: color.red,
     paddingTop: 50,
   },
   headerInner: {
     alignItems: 'center',
-    backgroundColor: 'red',
+    backgroundColor: color.red,
     flexDirection: 'row',
     height: 50,
     justifyContent: 'space-between',

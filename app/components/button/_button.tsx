@@ -1,5 +1,7 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
+import { color } from '../../lib/mixin';
+
 import type { TypeButton } from '../../lib/types/typeComponents';
 
 /* -----------------------------------------------
@@ -60,8 +62,8 @@ const Button = ({
 const styles = StyleSheet.create({
   button: {
     alignItems: 'center',
-    backgroundColor: '#2196f3',
-    borderColor: '#2196f3',
+    backgroundColor: color.primary,
+    borderColor: color.primary,
     borderRadius: 8,
     borderWidth: 1,
     justifyContent: 'center',
@@ -84,13 +86,13 @@ const styles = StyleSheet.create({
     fontSize: 22,
   },
   primaryButton: {
-    backgroundColor: '#2196f3',
+    backgroundColor: color.primary,
   },
   primaryText: {
-    color: '#fff',
+    color: color.white,
   },
   secondaryButton: {
-    backgroundColor: '#fff',
+    backgroundColor: color.white,
     borderColor: '#9e9e9e',
     borderWidth: 1,
   },
@@ -103,7 +105,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   disabledText: {
-    color: '#fff',
+    color: color.white,
   },
 });
 

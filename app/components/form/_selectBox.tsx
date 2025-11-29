@@ -4,6 +4,7 @@ import RNPickerSelect from 'react-native-picker-select';
 
 import ErrorText from './_errorText';
 import Label from './_label';
+import { color } from '../../lib/mixin';
 import { useRHFController } from '../../services/formHelper';
 
 import type { TypeSelectBox, TypeSelectBoxOption } from '../../lib/types/typeComponents';
@@ -92,7 +93,7 @@ const SelectBox = <TFieldValues extends FieldValues>({
 const styles = StyleSheet.create({
   selectTrigger: {
     alignItems: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: color.white,
     borderColor: '#d6d6d6',
     borderRadius: 8,
     borderWidth: 1,
@@ -109,7 +110,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   selectValueTextDisabled: {
-    color: '#fff',
+    color: color.white,
   },
   selectPlaceholderText: {
     color: '#9e9e9e',
@@ -148,13 +149,13 @@ const baseSelectStyles = {
     left: 0,
   },
   modalViewMiddle: {
-    backgroundColor: '#fff',
+    backgroundColor: color.white,
   },
   modalViewBottom: {
-    backgroundColor: '#fff',
+    backgroundColor: color.white,
   },
   done: {
-    color: '#007aff',
+    color: color.primary,
     fontSize: 16,
     fontWeight: '600',
   },

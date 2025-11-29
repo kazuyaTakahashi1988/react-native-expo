@@ -10,6 +10,7 @@ import Animated, {
 
 import ErrorText from './_errorText';
 import Label from './_label';
+import { color } from '../../lib/mixin';
 import { useRHFController } from '../../services/formHelper';
 
 import type { TypeCheckBoxCustom, TypeToggleCheckOption } from '../../lib/types/typeComponents';
@@ -129,9 +130,9 @@ const CheckBoxCustom = <TFieldValues extends FieldValues>({
 
   const hasError = Boolean(errorText);
 
-  const activeColor = activeColorProp ?? '#007aff';
+  const activeColor = activeColorProp ?? color.primary;
   const inactiveColor = inactiveColorProp ?? '#d1d5db';
-  const knobColor = knobColorProp ?? '#ffffff';
+  const knobColor = knobColorProp ?? color.white;
 
   return (
     <View style={containerStyle}>

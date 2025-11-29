@@ -1,5 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native';
 
+import { color } from '../../../../../lib/mixin';
+
 import type { TypeResultArea } from './_type';
 
 /* -----------------------------------------------
@@ -50,7 +52,7 @@ const ResultAreaCalled: React.FC<TypeResultArea> = (formValues) => {
 
 const resultStyles = StyleSheet.create({
   result: {
-    backgroundColor: '#fff',
+    backgroundColor: color.white,
     borderColor: '#d6d6d6',
     borderRadius: 8,
     borderWidth: 1,
