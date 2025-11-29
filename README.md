@@ -6,7 +6,10 @@ v22.x
 
 $ yarn install
 $ cp .env.sample .env
-$ yarn web
+$ yarn start
+~~~
+› Press w │ open web
+~~~
 ```
 
 ↓↓↓↓<br>
