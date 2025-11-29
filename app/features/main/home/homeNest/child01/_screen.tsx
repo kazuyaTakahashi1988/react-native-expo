@@ -3,6 +3,7 @@ import { Linking, StyleSheet, Text, View } from 'react-native';
 
 import { Button } from '../../../../../components/button';
 import { Layout } from '../../../../../components/layout';
+import { color } from '../../../../../lib/mixin';
 import { getArticleApi } from '../../../../../services/apiHelper';
 
 import type { TypeArticle } from './_type';
@@ -89,7 +90,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   article: {
-    backgroundColor: '#fff',
+    backgroundColor: color.white,
     borderRadius: 8,
     display: 'flex',
     marginBottom: 16,

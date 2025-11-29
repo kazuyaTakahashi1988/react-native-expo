@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 import { Header } from './Header';
+import { color } from '../app/lib/mixin';
 
 export const Page = () => {
   const [user, setUser] = useState<{ name: string } | undefined>();
@@ -72,7 +73,7 @@ export const Page = () => {
 
 const styles = StyleSheet.create({
   section: {
-    color: '#333',
+    color: color.black,
     fontFamily: "'Nunito Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif",
     fontSize: 14,
     lineHeight: 24,
@@ -95,11 +96,11 @@ const styles = StyleSheet.create({
   },
 
   a: {
-    color: '#1ea7fd',
+    color: color.primary,
   },
   tip: {
     alignSelf: 'flex-start',
-    backgroundColor: '#e7fdd8',
+    backgroundColor: color.gray,
     borderRadius: 16,
     marginBottom: 4,
     marginRight: 10,
@@ -107,7 +108,7 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
   },
   tipText: {
-    color: '#66bf3c',
+    color: color.white,
     fontSize: 11,
     fontWeight: '700',
     lineHeight: 12,

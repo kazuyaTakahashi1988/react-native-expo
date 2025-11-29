@@ -2,6 +2,7 @@ import { StyleSheet, Text, View } from 'react-native';
 
 import { Button } from '../../../components/button';
 import { Input } from '../../../components/form';
+import { color } from '../../../lib/mixin';
 
 import type { TypeAuthForm } from './_type';
 import type {
@@ -174,7 +175,7 @@ const styles = StyleSheet.create({
     textAlign: 'left',
   },
   container: {
-    backgroundColor: '#fff',
+    backgroundColor: color.white,
     marginBottom: 24,
     padding: 24,
   },

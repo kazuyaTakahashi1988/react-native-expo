@@ -1,13 +1,15 @@
 import { StyleSheet } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
 
+import { color as mixinColor } from '../../../lib/mixin';
+
 import type { TypeIcon } from '../../../lib/types/typeComponents';
 import type React from 'react';
 
-const IconLogin: React.FC<TypeIcon> = ({ color = '#9e9e9e', size = 34 }) => {
+const IconLogin: React.FC<TypeIcon> = ({ color = mixinColor.gray100, size = 34 }) => {
   const styles = StyleSheet.create({
     svgColor: {
-      backgroundColor: '#fff',
+      backgroundColor: mixinColor.white,
       borderRadius: size,
     },
   });

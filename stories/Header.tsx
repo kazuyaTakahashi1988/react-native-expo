@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native';
 
 import { Button } from './Button';
+import { color } from '../app/lib/mixin';
 
 export type HeaderProps = {
   user?: { name: string };
@@ -42,7 +43,7 @@ export const Header = ({ user, onLogin, onLogout, onCreateAccount }: HeaderProps
 
 const styles = StyleSheet.create({
   wrapper: {
-    borderBottomColor: 'rgba(0, 0, 0, 0.1)',
+    borderBottomColor: color.gray,
     borderBottomWidth: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -51,7 +52,7 @@ const styles = StyleSheet.create({
   },
   h1: {
     alignSelf: 'flex-start',
-    color: 'black',
+    color: color.black,
     fontSize: 20,
     fontWeight: '900',
     marginBottom: 6,

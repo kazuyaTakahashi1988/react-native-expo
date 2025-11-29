@@ -2,6 +2,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import ErrorText from './_errorText';
 import Label from './_label';
+import { color } from '../../lib/mixin';
 import { useRHFController } from '../../services/formHelper';
 
 import type { TypeRadioBox } from '../../lib/types/typeComponents';
@@ -113,7 +114,7 @@ const styles = StyleSheet.create({
   },
   radioOuter: {
     alignItems: 'center',
-    borderColor: '#007aff',
+    borderColor: color.primary,
     borderRadius: 999,
     borderWidth: 2,
     height: 20,
@@ -121,29 +122,29 @@ const styles = StyleSheet.create({
     width: 20,
   },
   radioBoxTextDisabled: {
-    color: '#9e9e9e',
+    color: color.gray100,
   },
   radioOuterSelected: {
-    borderColor: '#007aff',
+    borderColor: color.primary,
   },
   radioInner: {
-    backgroundColor: '#007aff',
+    backgroundColor: color.primary,
     borderRadius: 999,
     height: 10,
     width: 10,
   },
   radioInnerDisabled: {
-    backgroundColor: '#fff',
+    backgroundColor: color.white,
     borderRadius: 999,
     height: 10,
     width: 10,
   },
   radioOuterError: {
-    borderColor: '#e53935',
+    borderColor: color.red,
   },
   radioBoxDisabled: {
-    backgroundColor: '#9e9e9e',
-    borderColor: '#9e9e9e',
+    backgroundColor: color.gray100,
+    borderColor: color.gray100,
   },
 });
 

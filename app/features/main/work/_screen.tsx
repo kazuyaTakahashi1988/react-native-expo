@@ -1,6 +1,7 @@
 import { Button, StyleSheet, Text, View } from 'react-native';
 
 import { Layout } from '../../../components/layout';
+import { color } from '../../../lib/mixin';
 
 import type { TypeWorkScreen } from './_type';
 
@@ -29,7 +30,7 @@ const WorkScreen: React.FC<TypeWorkScreen> = (props) => {
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: color.white,
     flex: 1,
     justifyContent: 'center',
   },

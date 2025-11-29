@@ -7,6 +7,7 @@ import { HeaderHome, HeaderSub } from '../components/layout';
 import { IconAbout, IconHome, IconWork } from '../components/svg/icon';
 import { AboutScreen } from '../features/main/about/';
 import { WorkScreen } from '../features/main/work/';
+import { color } from '../lib/mixin';
 
 import type { TypeRootList } from '../lib/types/typeNavigation';
 import type { BottomTabNavigationOptions } from '@react-navigation/bottom-tabs';
@@ -102,8 +103,8 @@ const NavMain: React.FC = () => {
 
 /* bottomTabスタイル */
 const bottomTabStyles: BottomTabNavigationOptions = {
-  tabBarActiveTintColor: '#0ea5e9', // アクティブカラー
-  tabBarInactiveTintColor: '#fff', // 非アクティブカラー
+  tabBarActiveTintColor: color.primary, // アクティブカラー
+  tabBarInactiveTintColor: color.white, // 非アクティブカラー
   tabBarStyle: {
     backgroundColor: '#0b1220',
     borderTopColor: 'rgba(255,255,255,0.08)',
@@ -114,7 +115,7 @@ const bottomTabStyles: BottomTabNavigationOptions = {
     paddingTop: 6,
   }, // タブバーのViewラッパースタイル（全体背景色など）
   tabBarItemStyle: {
-    borderRightColor: 'white',
+    borderRightColor: color.white,
     borderRightWidth: StyleSheet.hairlineWidth,
   }, // タブバーのTextラッパースタイル
   tabBarLabelStyle: { fontSize: 12, fontWeight: '600' }, // タブバーのTextスタイル

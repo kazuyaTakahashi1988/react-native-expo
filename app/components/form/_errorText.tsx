@@ -1,5 +1,7 @@
 import { StyleSheet, Text } from 'react-native';
 
+import { color } from '../../lib/mixin';
+
 import type { TypeErrorText } from '../../lib/types/typeComponents';
 
 /* -----------------------------------------------
@@ -14,7 +16,7 @@ const ErrorText: React.FC<{ errorText?: TypeErrorText }> = ({ errorText }) => {
 };
 const errorStyles = StyleSheet.create({
   text: {
-    color: '#e53935',
+    color: color.red,
     fontSize: 12,
     marginTop: 4,
   },

@@ -1,5 +1,7 @@
 import { ScrollView, StyleSheet, View } from 'react-native';
 
+import { color } from '../../lib/mixin';
+
 import type { TypeLayout } from '../../lib/types/typeComponents';
 import type { FC } from 'react';
 
@@ -17,7 +19,7 @@ export const Layout: FC<TypeLayout> = (props) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#ccc',
+    backgroundColor: color.gray,
     flex: 1,
     flexDirection: 'column',
     width: '100%',

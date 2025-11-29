@@ -3,6 +3,7 @@ import { Text, View } from 'react-native';
 import { styles } from '../../.storybook/styles.ts';
 import Button from '../../app/components/button/_button.tsx';
 import { IconInfo } from '../../app/components/svg/icon';
+import { color } from '../../app/lib/mixin';
 
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite';
 
@@ -69,7 +70,7 @@ export const Icon: Story = {
   args: {
     title: (
       <>
-        <IconInfo color='#fff' />
+        <IconInfo color={color.white} />
         <Text> ボタン</Text>
       </>
     ),
