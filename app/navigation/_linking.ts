@@ -40,6 +40,7 @@ const linking: LinkingOptions<{
       others: {
         screens: {
           auth: 'auth',
+          information: 'information',
         },
       } as PathConfig<ParamListBase>,
     },
