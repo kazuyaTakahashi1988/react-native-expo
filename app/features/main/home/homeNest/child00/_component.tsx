@@ -29,6 +29,7 @@ export const ResultArea: React.FC<TypeResultArea> = (formValues) => {
   return (
     <View style={styles.result}>
       <Text style={styles.resultTitle}>Submitted values</Text>
+
       {resultList.map((elm, i) => (
         <View key={i} style={styles.resultRow}>
           <Text>{elm.label}</Text>
