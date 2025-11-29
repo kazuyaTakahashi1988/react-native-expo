@@ -8,7 +8,7 @@ import type { AxiosError, AxiosRequestConfig, AxiosResponse, Method } from 'axio
  * ----------------------------------------------- */
 
 // デフォルトのベースURL
-const DEFAULT_BASE_URL = 'https://wp.empty-service.com';
+const DEFAULT_BASE_URL = process.env.EXPO_PUBLIC_API_BASE_URL ?? '';
 
 /*
  * APIリクエスト 実行処理

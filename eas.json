@@ -6,14 +6,29 @@
   "build": {
     "development": {
       "developmentClient": true,
-      "distribution": "internal"
+      "distribution": "internal",
+      "env": {
+        "EXPO_PUBLIC_API_BASE_URL": "https://wp.empty-service.com",
+        "EXPO_PUBLIC_AUTH_USER_POOL_ID": "ap-northeast-1_development",
+        "EXPO_PUBLIC_AUTH_USER_POOL_CLIENT_ID": "development_client_id"
+      }
     },
     "preview": {
       "developmentClient": false,
-      "distribution": "internal"
+      "distribution": "internal",
+      "env": {
+        "EXPO_PUBLIC_API_BASE_URL": "https://stg.wp.empty-service.com",
+        "EXPO_PUBLIC_AUTH_USER_POOL_ID": "ap-northeast-1_staging",
+        "EXPO_PUBLIC_AUTH_USER_POOL_CLIENT_ID": "staging_client_id"
+      }
     },
     "production": {
-      "autoIncrement": true
+      "autoIncrement": true,
+      "env": {
+        "EXPO_PUBLIC_API_BASE_URL": "https://wp.empty-service.com",
+        "EXPO_PUBLIC_AUTH_USER_POOL_ID": "ap-northeast-1_production",
+        "EXPO_PUBLIC_AUTH_USER_POOL_CLIENT_ID": "production_client_id"
+      }
     }
   }
 }
