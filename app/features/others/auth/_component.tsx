@@ -35,7 +35,7 @@ export const SignInForm: React.FC<TypeAuthForm<TypeSignInValues>> = ({
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>◇ Sign In</Text>
+      <Text style={styles.title}>◇ Sign In - ログインフォーム</Text>
 
       {/* メールアドレス項目 */}
       <Input
@@ -84,7 +84,7 @@ export const SignUpForm: React.FC<TypeAuthForm<TypeSignUpValues>> = ({
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>◇ Sign Up</Text>
+      <Text style={styles.title}>◇ Sign Up - 登録フォーム</Text>
 
       {/* メールアドレス項目 */}
       <Input
@@ -133,7 +133,7 @@ export const VerifyForm: React.FC<TypeAuthForm<TypeVerifyValues>> = ({
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>◇ Verify</Text>
+      <Text style={styles.title}>◇ Verify - 認証フォーム</Text>
 
       {/* verificationCode項目 */}
       <Input

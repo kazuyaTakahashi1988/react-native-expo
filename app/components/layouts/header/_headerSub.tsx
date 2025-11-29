@@ -6,7 +6,7 @@ import { IconArrow } from '../../svg/icon';
 import type { TypeHeaderSub } from '../../../lib/types/typeComponents';
 
 const HeaderSub: React.FC<TypeHeaderSub> = (props) => {
-  const { navigation, route, options, goBack = false, rightButton } = props;
+  const { navigation, route, options, goBack = false, rightItem } = props;
   const headerTitle = options.title ?? route.name;
 
   const isGoBack = () => {
@@ -28,7 +28,7 @@ const HeaderSub: React.FC<TypeHeaderSub> = (props) => {
           </Pressable>
         )}
         <Text style={styles.headerItem}>{headerTitle}</Text>
-        <Text style={[styles.headerItem, styles.headerRight]}>{rightButton}</Text>
+        <Text style={[styles.headerItem, styles.headerRight]}>{rightItem}</Text>
       </View>
     </View>
   );

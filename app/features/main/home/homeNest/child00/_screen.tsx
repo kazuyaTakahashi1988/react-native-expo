@@ -48,7 +48,7 @@ const Child00Screen: React.FC = () => {
   );
 
   /*
-   * submitボタン処理
+   * submit ボタン処理
    */
   const onSubmit = React.useCallback(() => {
     void form.handleSubmit((values: TypeFormValues) => {
@@ -57,7 +57,7 @@ const Child00Screen: React.FC = () => {
   }, [form]);
 
   /*
-   * resetボタン処理
+   * reset ボタン処理
    */
   const onReset = () => {
     form.reset();
@@ -66,7 +66,7 @@ const Child00Screen: React.FC = () => {
 
   return (
     <Layout>
-      <Text style={styles.title}>react-hook-form{`\n`}example</Text>
+      <Text style={styles.title}>react-hook-form{`\n`}Example</Text>
 
       {/* インプット項目 */}
       <Input
@@ -178,7 +178,7 @@ const Child00Screen: React.FC = () => {
         }}
       />
 
-      {/* submit ボタン */}
+      {/* submit ボタン & reset ボタン */}
       <View style={styles.submit}>
         <Button onPress={onSubmit} title='Submit' />
         <Button onPress={onReset} pattern='secondary' title='Reset' />

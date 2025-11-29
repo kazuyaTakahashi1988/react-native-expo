@@ -3,18 +3,22 @@ import { StyleSheet, Text } from 'react-native';
 import { Button } from '../../../components/button';
 import { Layout } from '../../../components/layouts/layout';
 
-import type { TypeWorkScreen } from './_type';
+import type { TypeInformationScreen } from './_type';
 
-const WorkScreen: React.FC<TypeWorkScreen> = (props) => {
+/* -----------------------------------------------
+ * Information 画面
+ * ----------------------------------------------- */
+
+const InformationScreen: React.FC<TypeInformationScreen> = (props) => {
   const { navigation } = props;
 
   const goToAbout = () => {
-    navigation.navigate('about');
+    navigation.navigate('main', { screen: 'about' });
   };
 
   return (
     <Layout>
-      <Text style={styles.title}>Work Screen</Text>
+      <Text style={styles.title}>Information Screen</Text>
       <Button
         onPress={() => {
           goToAbout();
@@ -34,4 +38,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default WorkScreen;
+export default InformationScreen;

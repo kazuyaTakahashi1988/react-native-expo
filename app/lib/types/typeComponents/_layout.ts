@@ -9,7 +9,7 @@ export type TypeHeaderHome = NativeStackHeaderProps | BottomTabHeaderProps;
 
 export type TypeHeaderSub = (NativeStackHeaderProps | BottomTabHeaderProps) & {
   goBack?: string | boolean;
-  rightButton?: React.ReactNode;
+  rightItem?: React.ReactNode;
 };
 
 export type TypeLayout = {

@@ -177,7 +177,7 @@ export default [
             {
               group: ['**/features/**', '!**/features/**/', '!**/features/**/index.*'],
               message:
-                'features 配下の実装は index.{tsx/ts} しか、features 外に import できません。またパスの末尾には [ / ] or [ /index.{tsx/ts} ] を付与してください',
+                'Screenパスの末尾には /（スラッシュ）を付与してください。また features 配下の実装は index.{tsx/ts} しか、features 外に import できません',
             },
             {
               group: ['**/_*', '!./_*'],

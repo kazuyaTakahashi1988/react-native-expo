@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { color } from '../../../lib/mixin';
 import { IconLogin } from '../../svg/icon';
@@ -11,7 +11,7 @@ const HeaderHome: React.FC<TypeHeaderHome> = (props) => {
 
   const goToInfo = () => {
     navigation.navigate('others', {
-      screen: 'information',
+      screen: 'auth',
     });
   };
 
@@ -21,13 +21,13 @@ const HeaderHome: React.FC<TypeHeaderHome> = (props) => {
         <Text>
           <Logo />
         </Text>
-        <Text
+        <Pressable
           onPress={() => {
             goToInfo();
           }}
         >
           <IconLogin />
-        </Text>
+        </Pressable>
       </View>
     </View>
   );

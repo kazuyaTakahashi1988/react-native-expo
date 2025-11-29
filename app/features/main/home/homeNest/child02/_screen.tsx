@@ -30,7 +30,7 @@ const Child02Screen: React.FC = () => {
   });
 
   /*
-   * 「選択したカテゴリーで記事を絞り込み検索」ボタン処理
+   * 選択したカテゴリーで記事を絞り込み検索 ボタン処理
    */
   const onSubmit = React.useCallback(() => {
     setIsDisabled(true);
@@ -54,7 +54,7 @@ const Child02Screen: React.FC = () => {
   }, [form]);
 
   /*
-   * resetボタン処理
+   * reset ボタン処理
    */
   const onReset = () => {
     form.reset();
@@ -63,7 +63,7 @@ const Child02Screen: React.FC = () => {
   };
 
   /*
-   * 「記事へ飛ぶ」ボタン処理
+   * 記事へ飛ぶ ボタン処理
    */
   const goToLink = (link: string) => {
     void Linking.openURL(link);
@@ -71,7 +71,7 @@ const Child02Screen: React.FC = () => {
 
   return (
     <Layout>
-      <Text style={styles.title}>API Helper & react-hook-form{`\n`}example</Text>
+      <Text style={styles.title}>API Helper & react-hook-form{`\n`}Example</Text>
 
       <View style={styles.category}>
         {/* taxCategory01 チェックボックス項目 */}
@@ -130,7 +130,7 @@ const Child02Screen: React.FC = () => {
         style={styles.button}
         title='選択したカテゴリーで記事を絞り込み検索'
       />
-      <Text style={styles.container}>※ No ﾁｪｯｸなら全件取得</Text>
+      <Text style={styles.container}>※ no ﾁｪｯｸなら全件取得</Text>
 
       {/* 記事一覧の表示 */}
       <Text style={styles.container}>取得件数：{articles?.length}</Text>
@@ -162,6 +162,7 @@ const Child02Screen: React.FC = () => {
           </View>
         ))}
 
+      {/* reset ボタン */}
       <Button onPress={onReset} pattern='secondary' style={styles.button} title='Reset' />
     </Layout>
   );

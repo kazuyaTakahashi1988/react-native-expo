@@ -30,7 +30,8 @@ const Navigation: React.FC = () => {
         </NativeStack.Screen>
 
         {/* --------------------------------------
-         * その他 各画面追加（Auth画面など）
+         * その他 各画面追加
+         *（ Auth / Information 画面など）
          * --------------------------------------- */}
         <NativeStack.Screen name='others' options={{ headerShown: false }}>
           {
