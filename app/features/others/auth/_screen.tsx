@@ -5,6 +5,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { SignInForm, SignUpForm, VerifyForm } from './_component';
 import { Button } from '../../../components/button';
 import { Layout } from '../../../components/layouts/layout';
+import { useAuthSession } from '../../../lib/hooks/useAuthSession';
 import { color } from '../../../lib/mixin';
 import { signIn, signOut, signUp, verify } from '../../../services/authHelper';
 
@@ -24,6 +25,7 @@ import type {
 const AuthScreen: React.FC = () => {
   const [tabKey, setTabKey] = React.useState<TypeTabKey>('signIn');
   const [result, setResult] = React.useState<TypeResult>({});
+  const { isLoggedIn, refreshAuthSession } = useAuthSession();
 
   /*
    * Sign In の RHForm 使用設定
@@ -48,13 +50,14 @@ const AuthScreen: React.FC = () => {
             : 'Sign In にはまだ追加手順（Verify）が必要だよ！';
           setResult({ type: 'success', message });
           signInForm.reset();
+          void refreshAuthSession();
         })
         .catch((err: unknown) => {
           const message = err instanceof Error ? err.message : 'Sign In に失敗したよ...';
           setResult({ type: 'error', message });
         });
     })();
-  }, [signInForm]);
+  }, [refreshAuthSession, signInForm]);
 
   /*
    * Sign Up の RHForm 使用設定
@@ -128,12 +131,13 @@ const AuthScreen: React.FC = () => {
     signOut()
       .then(() => {
         setResult({ type: 'success', message: '正常に Sign Out したよ！' });
+        void refreshAuthSession();
       })
       .catch((err: unknown) => {
         const message = err instanceof Error ? err.message : 'Sign Out に失敗したよ...';
         setResult({ type: 'error', message });
       });
-  }, []);
+  }, [refreshAuthSession]);
 
   // タブボタン アクティブ判定
   const isActive = (key: TypeTabKey) => tabKey === key;
@@ -179,7 +183,7 @@ const AuthScreen: React.FC = () => {
       <VerifyForm form={verifyForm} onSubmit={onVerifySubmit} visibled={isActive('verify')} />
 
       {/* Sign Out ボタン */}
-      <Button onPress={onSignOutPress} pattern='secondary' title='Sign Out' />
+      {isLoggedIn && <Button onPress={onSignOutPress} pattern='secondary' title='Sign Out' />}
     </Layout>
   );
 };
