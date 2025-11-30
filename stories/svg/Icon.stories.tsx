@@ -9,19 +9,15 @@ import type React from 'react';
 
 const iconEntries = Object.entries(Icons).sort(([a], [b]) => a.localeCompare(b));
 
-type IconCatalogProps = {
-  color?: string;
-};
-
 const iconUsageSnippet = `import { ${iconEntries.map(([name]) => name).join(', ')} } from '../../app/components/svg/icon';
 
-${iconEntries.map(([name]) => `<${name} color="${color.black}" />`).join('\n')}`;
+${iconEntries.map(([name]) => ['<', name, ' />'].join('')).join('\n')}`;
 
-const IconCatalog: React.FC<IconCatalogProps> = ({ color: iconColor = color.black }) => (
+const IconCatalog: React.FC = () => (
   <View style={[catalogStyles.grid, storyStyles.container]}>
     {iconEntries.map(([name, IconComponent]) => (
       <View key={name} style={catalogStyles.item}>
-        <IconComponent color={iconColor} />
+        <IconComponent />
         <Text style={catalogStyles.label}>{name}</Text>
       </View>
     ))}
@@ -39,12 +35,7 @@ const meta = {
     ),
   ],
   tags: ['autodocs'],
-  argTypes: {
-    color: {
-      control: { type: 'color' },
-      description: 'Apply a single color to all icons in the catalog.',
-    },
-  },
+  argTypes: {},
   parameters: {
     docs: {
       source: {
@@ -59,9 +50,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  args: {
-    color: color.black,
-  },
+  args: {},
 };
 
 const catalogStyles = StyleSheet.create({
@@ -82,9 +71,10 @@ const catalogStyles = StyleSheet.create({
     shadowRadius: 4,
   },
   label: {
-    color: color.black,
+    color: color.primary,
     fontSize: 10,
     fontWeight: '600',
     marginTop: 8,
+    paddingTop: 4,
   },
 });
