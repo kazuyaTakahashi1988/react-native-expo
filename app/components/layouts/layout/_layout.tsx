@@ -5,6 +5,10 @@ import { color } from '../../../lib/mixin';
 import type { TypeLayout } from '../../../lib/types/typeComponents';
 import type { FC } from 'react';
 
+/* -----------------------------------------------
+ * 共通レイアウト
+ * ----------------------------------------------- */
+
 export const Layout: FC<TypeLayout> = (props) => {
   const { children } = props;
 

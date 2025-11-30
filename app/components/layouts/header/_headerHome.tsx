@@ -9,6 +9,10 @@ import { Logo } from '../../svg/logo';
 import type { TypeHeaderHome } from '../../../lib/types/typeComponents';
 import type { NavigationProp, ParamListBase } from '@react-navigation/native';
 
+/* -----------------------------------------------
+ * 共通ヘッダー（Home用）
+ * ----------------------------------------------- */
+
 const HeaderHome: React.FC<TypeHeaderHome> = (props) => {
   const { navigation } = props;
   const { safeAreaTop } = useSafeAreaConst(); // デバイス固有のセーフエリアTop値
@@ -28,7 +32,7 @@ const HeaderHome: React.FC<TypeHeaderHome> = (props) => {
   }, [navigation, refreshAuthSession]);
 
   /*
-   * Auth 画面遷移処理
+   * Auth画面遷移 処理
    */
   const goToAuth = () => {
     navigation.navigate('others', {
