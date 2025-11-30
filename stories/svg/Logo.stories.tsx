@@ -9,11 +9,19 @@ import type React from 'react';
 
 const logoEntries = Object.entries(Logos).sort(([a], [b]) => a.localeCompare(b));
 
-const LogoCatalog: React.FC = () => (
+type LogoCatalogProps = {
+  color?: string;
+};
+
+const logoUsageSnippet = `import { ${logoEntries.map(([name]) => name).join(', ')} } from '../../app/components/svg/logo';
+
+${logoEntries.map(([name]) => `<${name} color="${color.black}" />`).join('\n')}`;
+
+const LogoCatalog: React.FC<LogoCatalogProps> = ({ color: logoColor = color.black }) => (
   <View style={[catalogStyles.grid, storyStyles.container]}>
     {logoEntries.map(([name, LogoComponent]) => (
       <View key={name} style={catalogStyles.item}>
-        <LogoComponent />
+        <LogoComponent color={logoColor} />
         <Text style={catalogStyles.label}>{name}</Text>
       </View>
     ))}
@@ -31,7 +39,19 @@ const meta = {
     ),
   ],
   tags: ['autodocs'],
-  argTypes: {},
+  argTypes: {
+    color: {
+      control: { type: 'color' },
+      description: 'Apply a single color to all logos in the catalog.',
+    },
+  },
+  parameters: {
+    docs: {
+      source: {
+        code: logoUsageSnippet,
+      },
+    },
+  },
 } satisfies Meta<typeof LogoCatalog>;
 
 export default meta;
@@ -39,7 +59,9 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  args: {},
+  args: {
+    color: color.black,
+  },
 };
 
 const catalogStyles = StyleSheet.create({
