@@ -4,7 +4,9 @@ import {
   signOut as cognitoSignOut,
   signUp as cognitoSignUp,
   confirmSignUp,
+  fetchAuthSession,
 } from 'aws-amplify/auth';
+import React from 'react';
 
 import type {
   TypeAmplifyClient,
@@ -98,4 +100,26 @@ export const verify = async (values: TypeVerifyValues): Promise<void> => {
  */
 export const signOut = async (): Promise<void> => {
   await cognitoSignOut();
+};
+
+/*
+ * ログインフラグ 更新・取得処理
+ */
+export const useAuthSession = () => {
+  const [isAuth, setIsAuth] = React.useState(false);
+
+  const refreshAuthSession = React.useCallback(async () => {
+    try {
+      const session = await fetchAuthSession();
+      setIsAuth(Boolean(session.tokens));
+    } catch {
+      setIsAuth(false);
+    }
+  }, []);
+
+  React.useEffect(() => {
+    void refreshAuthSession();
+  }, [refreshAuthSession]);
+
+  return { isAuth, refreshAuthSession };
 };

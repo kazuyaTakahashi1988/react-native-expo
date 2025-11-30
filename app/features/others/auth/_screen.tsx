@@ -5,9 +5,8 @@ import { StyleSheet, Text, View } from 'react-native';
 import { SignInForm, SignUpForm, VerifyForm } from './_component';
 import { Button } from '../../../components/button';
 import { Layout } from '../../../components/layouts/layout';
-import { useAuthSession } from '../../../lib/hooks/useAuthSession';
 import { color } from '../../../lib/mixin';
-import { signIn, signOut, signUp, verify } from '../../../services/authHelper';
+import { signIn, signOut, signUp, useAuthSession, verify } from '../../../services/authHelper';
 
 import type { TypeResult, TypeTabKey } from './_type';
 import type {
@@ -25,7 +24,7 @@ import type {
 const AuthScreen: React.FC = () => {
   const [tabKey, setTabKey] = React.useState<TypeTabKey>('signIn');
   const [result, setResult] = React.useState<TypeResult>({});
-  const { isLoggedIn, refreshAuthSession } = useAuthSession();
+  const { isAuth, refreshAuthSession } = useAuthSession(); // ログインフラグ
 
   /*
    * Sign In の RHForm 使用設定
@@ -50,7 +49,7 @@ const AuthScreen: React.FC = () => {
             : 'Sign In にはまだ追加手順（Verify）が必要だよ！';
           setResult({ type: 'success', message });
           signInForm.reset();
-          void refreshAuthSession();
+          void refreshAuthSession(); // ログインフラグ 更新処理
         })
         .catch((err: unknown) => {
           const message = err instanceof Error ? err.message : 'Sign In に失敗したよ...';
@@ -131,7 +130,7 @@ const AuthScreen: React.FC = () => {
     signOut()
       .then(() => {
         setResult({ type: 'success', message: '正常に Sign Out したよ！' });
-        void refreshAuthSession();
+        void refreshAuthSession(); // ログインフラグ 更新処理
       })
       .catch((err: unknown) => {
         const message = err instanceof Error ? err.message : 'Sign Out に失敗したよ...';
@@ -139,7 +138,17 @@ const AuthScreen: React.FC = () => {
       });
   }, [refreshAuthSession]);
 
-  // タブボタン アクティブ判定
+  /*
+   * タブボタン 処理
+   */
+  const onTabButton = (key: TypeTabKey) => {
+    setTabKey(key);
+    setResult({});
+  };
+
+  /*
+   * タブボタン アクティブ判定
+   */
   const isActive = (key: TypeTabKey) => tabKey === key;
 
   return (
@@ -147,7 +156,7 @@ const AuthScreen: React.FC = () => {
       <Text style={styles.title}>Auth Example</Text>
 
       {/* タブボタン */}
-      <View style={styles.tabButtonArea}>
+      <View style={styles.tab}>
         {[
           { title: 'Sign In', key: 'signIn' as const },
           { title: 'Sign Up', key: 'signUp' as const },
@@ -156,11 +165,11 @@ const AuthScreen: React.FC = () => {
           <Button
             key={elm.key}
             onPress={() => {
-              setTabKey(elm.key);
-              setResult({});
+              onTabButton(elm.key);
             }}
             {...(!isActive(elm.key) && { pattern: 'secondary' })}
             containerStyle={styles.tabButton}
+            disabled={isAuth}
             title={elm.title}
           />
         ))}
@@ -173,17 +182,23 @@ const AuthScreen: React.FC = () => {
         </Text>
       )}
 
-      {/* Sign In フォーム */}
-      <SignInForm form={signInForm} onSubmit={onSignInSubmit} visibled={isActive('signIn')} />
+      {!isAuth ? (
+        <>
+          {/* Sign In フォーム */}
+          <SignInForm form={signInForm} onSubmit={onSignInSubmit} visibled={isActive('signIn')} />
 
-      {/* Sign Up フォーム */}
-      <SignUpForm form={signUpForm} onSubmit={onSignUpSubmit} visibled={isActive('signUp')} />
+          {/* Sign Up フォーム */}
+          <SignUpForm form={signUpForm} onSubmit={onSignUpSubmit} visibled={isActive('signUp')} />
 
-      {/* Verify フォーム */}
-      <VerifyForm form={verifyForm} onSubmit={onVerifySubmit} visibled={isActive('verify')} />
-
-      {/* Sign Out ボタン */}
-      {isLoggedIn && <Button onPress={onSignOutPress} pattern='secondary' title='Sign Out' />}
+          {/* Verify フォーム */}
+          <VerifyForm form={verifyForm} onSubmit={onVerifySubmit} visibled={isActive('verify')} />
+        </>
+      ) : (
+        <>
+          {/* Sign Out ボタン */}
+          <Button onPress={onSignOutPress} pattern='secondary' title='Sign Out' />
+        </>
+      )}
     </Layout>
   );
 };
@@ -195,7 +210,7 @@ const styles = StyleSheet.create({
     marginBottom: 24,
     textAlign: 'center',
   },
-  tabButtonArea: {
+  tab: {
     columnGap: 12,
     flexDirection: 'row',
     justifyContent: 'space-between',

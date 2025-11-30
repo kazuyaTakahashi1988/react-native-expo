@@ -1,33 +1,36 @@
-import type { NavigationProp, ParamListBase } from '@react-navigation/native';
 import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { color, useSafeAreaConst } from '../../../lib/mixin';
-import { useAuthSession } from '../../../lib/hooks/useAuthSession';
+import { useAuthSession } from '../../../services/authHelper';
 import { IconLogin } from '../../svg/icon';
 import { Logo } from '../../svg/logo';
 
 import type { TypeHeaderHome } from '../../../lib/types/typeComponents';
+import type { NavigationProp, ParamListBase } from '@react-navigation/native';
 
 const HeaderHome: React.FC<TypeHeaderHome> = (props) => {
   const { navigation } = props;
   const { safeAreaTop } = useSafeAreaConst(); // デバイス固有のセーフエリアTop値
-  const { isLoggedIn, refreshAuthSession } = useAuthSession();
+  const { isAuth, refreshAuthSession } = useAuthSession(); // ログインフラグ
 
+  /*
+   * ログインフラグ 更新・取得処理
+   */
   React.useEffect(() => {
-    const unsubscribe = (navigation as NavigationProp<ParamListBase>).addListener(
-      'focus',
-      () => {
-        void refreshAuthSession();
-      },
-    );
+    const unsubscribe = (navigation as NavigationProp<ParamListBase>).addListener('focus', () => {
+      void refreshAuthSession();
+    });
 
     return () => {
       unsubscribe();
     };
   }, [navigation, refreshAuthSession]);
 
-  const goToInfo = () => {
+  /*
+   * Auth 画面遷移処理
+   */
+  const goToAuth = () => {
     navigation.navigate('others', {
       screen: 'auth',
     });
@@ -41,10 +44,10 @@ const HeaderHome: React.FC<TypeHeaderHome> = (props) => {
         </Text>
         <Pressable
           onPress={() => {
-            goToInfo();
+            goToAuth();
           }}
         >
-          <IconLogin {...(isLoggedIn ? { color: color.red } : {})} size={34} />
+          <IconLogin {...(isAuth && { color: color.secondary })} size={34} />
         </Pressable>
       </View>
     </View>
