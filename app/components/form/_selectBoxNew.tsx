@@ -16,6 +16,8 @@ import type { StyleProp, TextStyle, ViewStyle } from 'react-native';
  * セレクトボックス (クロスプラットフォーム)
  * ----------------------------------------------- */
 
+type PickerRef = { togglePicker?: () => void } | null;
+
 const SelectBoxNew = <TFieldValues extends FieldValues>({
   containerStyle,
   control,
@@ -31,29 +33,41 @@ const SelectBoxNew = <TFieldValues extends FieldValues>({
   rules,
   valueTextStyle,
 }: TypeSelectBox<TFieldValues>) => {
-  const pickerRef = React.useRef<any>(null);
+  const pickerRef = React.useRef<PickerRef>(null);
   const { controller } = useRHFController({ control, name, rules });
 
-  const isWeb = Platform.OS === 'web';
-  const isIOS = Platform.OS === 'ios';
+  const platformState = React.useMemo(() => ({
+    isWeb: Platform.OS === 'web',
+    isIOS: Platform.OS === 'ios',
+  }), []);
 
-  const selectedValue = getSelectedValue(controller.field.value);
-  const hasError = Boolean(errorText);
+  const fieldState = React.useMemo(() => {
+    const selectedValue = getSelectedValue(controller.field.value);
+    const selectedOption = options.find((option) => option.value === selectedValue);
+
+    return {
+      selectedValue,
+      selectedOption,
+      displayedLabel: selectedOption?.label ?? placeholder,
+      isPlaceholder: !selectedOption,
+    };
+  }, [controller.field.value, options, placeholder]);
+
   const isDisabled = isSelectDisabled(disabled);
-  const selectedOption = options.find((option) => option.value === selectedValue);
+  const hasError = Boolean(errorText);
 
   const mergedPickerStyles = React.useMemo(
     () =>
       buildPickerStyles({
-        baseStyles: isWeb ? baseWebSelectStyles : baseNativeSelectStyles,
+        baseStyles: selectBaseStyles(platformState.isWeb),
         pickerSelectStyles,
         valueTextStyle,
         placeholderTextStyle,
         hasError,
         isDisabled,
-        isWeb,
+        isWeb: platformState.isWeb,
       }),
-    [isWeb, pickerSelectStyles, valueTextStyle, placeholderTextStyle, hasError, isDisabled],
+    [platformState.isWeb, pickerSelectStyles, valueTextStyle, placeholderTextStyle, hasError, isDisabled],
   );
 
   const handleValueChange = buildValueChangeHandler(controller.field.onChange);
@@ -69,9 +83,9 @@ const SelectBoxNew = <TFieldValues extends FieldValues>({
       ref={(ref) => {
         pickerRef.current = ref;
       }}
-      style={isIOS ? iosHiddenPickerStyles : mergedPickerStyles}
+      style={platformState.isIOS ? iosHiddenPickerStyles : mergedPickerStyles}
       useNativeAndroidPickerStyle={false}
-      value={toPickerValue(selectedValue)}
+      value={toPickerValue(fieldState.selectedValue)}
     />
   );
 
@@ -80,19 +94,18 @@ const SelectBoxNew = <TFieldValues extends FieldValues>({
     pickerRef.current?.togglePicker?.();
   };
 
-  const displayedLabel = selectedOption?.label ?? placeholder;
-  const isPlaceholder = !selectedOption;
-  const textStyle = StyleSheet.flatten([
-    isPlaceholder ? mergedPickerStyles.placeholder : mergedPickerStyles.inputIOS,
+  const textStyle = buildDisplayedTextStyle({
+    mergedPickerStyles,
     valueTextStyle,
-    isPlaceholder ? placeholderTextStyle : null,
-    isDisabled ? { color: color.white } : null,
-  ]);
+    placeholderTextStyle,
+    isPlaceholder: fieldState.isPlaceholder,
+    isDisabled,
+  });
 
   return (
     <View style={containerStyle}>
       <Label {...{ label, rules }} />
-      {isIOS ? (
+      {platformState.isIOS ? (
         <View>
           {pickerElement}
           <Pressable
@@ -100,7 +113,7 @@ const SelectBoxNew = <TFieldValues extends FieldValues>({
             onPress={handleOpenPicker}
             style={mergedPickerStyles.inputIOS as StyleProp<ViewStyle>}
           >
-            <Text style={textStyle}>{displayedLabel}</Text>
+            <Text style={textStyle}>{fieldState.displayedLabel}</Text>
           </Pressable>
         </View>
       ) : (
@@ -186,7 +199,6 @@ const baseWebSelectStyles = {
     minHeight: 44,
     paddingHorizontal: 12,
     paddingVertical: 10,
-    outlineStyle: 'none',
   },
   placeholder: {
     color: color.gray100,
@@ -213,6 +225,10 @@ const baseWebSelectStyles = {
   },
 } satisfies NonNullable<ComponentProps<typeof RNPickerSelect>['style']>;
 
+const selectBaseStyles = (isWeb: boolean) => (isWeb ? baseWebSelectStyles : baseNativeSelectStyles);
+
+// The style merging involves multiple conditionally included fragments, so we allow a higher complexity here.
+// eslint-disable-next-line complexity
 const buildPickerStyles = ({
   baseStyles,
   pickerSelectStyles,
@@ -230,34 +246,87 @@ const buildPickerStyles = ({
   isDisabled: boolean;
   isWeb: boolean;
 }): NonNullable<ComponentProps<typeof RNPickerSelect>['style']> => {
-  const errorInputBorder: ViewStyle | undefined = hasError ? { borderColor: color.red } : undefined;
-  const disabledInput: ViewStyle | TextStyle | undefined = isDisabled
-    ? { backgroundColor: color.gray100, color: color.white }
-    : undefined;
-
-  const mergedInput = (base: TextStyle) =>
-    StyleSheet.flatten([base, valueTextStyle, errorInputBorder, disabledInput, isWeb ? null : { paddingVertical: 10 }]);
-
-  const mergedPlaceholder = StyleSheet.flatten([
-    baseStyles.placeholder,
-    placeholderTextStyle,
-    isDisabled ? { color: color.white } : null,
-  ]);
+  const sharedInputStyles = composeInputState({ hasError, isDisabled, isWeb, valueTextStyle });
+  const placeholder = composePlaceholder({ baseStyles, placeholderTextStyle, isDisabled });
 
   return {
-    inputIOS: StyleSheet.flatten([mergedInput(baseStyles.inputIOS as TextStyle), pickerSelectStyles?.inputIOS]),
+    inputIOS: StyleSheet.flatten([
+      composeInput(baseStyles.inputIOS as TextStyle, sharedInputStyles),
+      pickerSelectStyles?.inputIOS,
+    ]),
     inputAndroid: StyleSheet.flatten([
-      mergedInput(baseStyles.inputAndroid as TextStyle),
+      composeInput(baseStyles.inputAndroid as TextStyle, sharedInputStyles),
       pickerSelectStyles?.inputAndroid,
     ]),
-    inputWeb: StyleSheet.flatten([mergedInput(baseStyles.inputWeb as TextStyle), pickerSelectStyles?.inputWeb]),
-    placeholder: mergedPlaceholder,
+    inputWeb: StyleSheet.flatten([
+      composeInput(baseStyles.inputWeb as TextStyle, sharedInputStyles),
+      pickerSelectStyles?.inputWeb,
+    ]),
+    placeholder,
     viewContainer: StyleSheet.flatten([baseStyles.viewContainer, pickerSelectStyles?.viewContainer]),
     iconContainer: StyleSheet.flatten([baseStyles.iconContainer, pickerSelectStyles?.iconContainer]),
     modalViewMiddle: StyleSheet.flatten([baseStyles.modalViewMiddle, pickerSelectStyles?.modalViewMiddle]),
     modalViewBottom: StyleSheet.flatten([baseStyles.modalViewBottom, pickerSelectStyles?.modalViewBottom]),
     done: StyleSheet.flatten([baseStyles.done, pickerSelectStyles?.done]),
   };
+};
+
+const buildDisplayedTextStyle = ({
+  mergedPickerStyles,
+  valueTextStyle,
+  placeholderTextStyle,
+  isPlaceholder,
+  isDisabled,
+}: {
+  mergedPickerStyles: NonNullable<ComponentProps<typeof RNPickerSelect>['style']>;
+  valueTextStyle: StyleProp<TextStyle> | undefined;
+  placeholderTextStyle: StyleProp<TextStyle> | undefined;
+  isPlaceholder: boolean;
+  isDisabled: boolean;
+}) => {
+  const baseTextStyle = isPlaceholder ? mergedPickerStyles.placeholder : mergedPickerStyles.inputIOS;
+  const disabledColor = isDisabled ? { color: color.white } : null;
+
+  return StyleSheet.flatten([baseTextStyle, valueTextStyle, isPlaceholder ? placeholderTextStyle : null, disabledColor]);
+};
+
+const composeInputState = ({
+  hasError,
+  isDisabled,
+  isWeb,
+  valueTextStyle,
+}: {
+  hasError: boolean;
+  isDisabled: boolean;
+  isWeb: boolean;
+  valueTextStyle: StyleProp<TextStyle> | undefined;
+}) => {
+  const errorInputBorder: ViewStyle | undefined = hasError ? { borderColor: color.red } : undefined;
+  const disabledInput: ViewStyle | TextStyle | undefined = isDisabled
+    ? { backgroundColor: color.gray100, color: color.white }
+    : undefined;
+
+  return StyleSheet.flatten([valueTextStyle, errorInputBorder, disabledInput, isWeb ? null : { paddingVertical: 10 }]);
+};
+
+const composePlaceholder = ({
+  baseStyles,
+  placeholderTextStyle,
+  isDisabled,
+}: {
+  baseStyles: NonNullable<ComponentProps<typeof RNPickerSelect>['style']>;
+  placeholderTextStyle: StyleProp<TextStyle> | undefined;
+  isDisabled: boolean;
+}) => {
+  return StyleSheet.flatten([
+    baseStyles.placeholder,
+    placeholderTextStyle,
+    isDisabled ? { color: color.white } : null,
+  ]);
+};
+
+const composeInput = (base: TextStyle, sharedInputStyles: StyleProp<TextStyle>) => {
+  return StyleSheet.flatten([base, sharedInputStyles]);
 };
 
 const buildValueChangeHandler = (
