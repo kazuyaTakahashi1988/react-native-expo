@@ -5,6 +5,10 @@ import { IconArrow } from '../../svg/icon';
 
 import type { TypeHeaderSub } from '../../../lib/types/typeComponents';
 
+/* -----------------------------------------------
+ * 共通ヘッダー（サブ用）
+ * ----------------------------------------------- */
+
 const HeaderSub: React.FC<TypeHeaderSub> = (props) => {
   const { navigation, route, options, goBack = false, rightItem } = props;
   const headerTitle = options.title ?? route.name;
