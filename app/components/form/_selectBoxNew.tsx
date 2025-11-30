@@ -1,5 +1,5 @@
 import React from 'react';
-import { Keyboard, Platform, StyleSheet, View } from 'react-native';
+import { Keyboard, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 
 import ErrorText from './_errorText';
@@ -31,10 +31,11 @@ const SelectBoxNew = <TFieldValues extends FieldValues>({
   rules,
   valueTextStyle,
 }: TypeSelectBox<TFieldValues>) => {
-  const pickerRef = React.useRef<RNPickerSelect | null>(null);
+  const pickerRef = React.useRef<any>(null);
   const { controller } = useRHFController({ control, name, rules });
 
   const isWeb = Platform.OS === 'web';
+  const isIOS = Platform.OS === 'ios';
 
   const selectedValue = getSelectedValue(controller.field.value);
   const hasError = Boolean(errorText);
@@ -68,20 +69,62 @@ const SelectBoxNew = <TFieldValues extends FieldValues>({
       ref={(ref) => {
         pickerRef.current = ref;
       }}
-      style={mergedPickerStyles}
+      style={isIOS ? iosHiddenPickerStyles : mergedPickerStyles}
       useNativeAndroidPickerStyle={false}
       value={toPickerValue(selectedValue)}
     />
   );
 
+  const handleOpenPicker = () => {
+    Keyboard.dismiss();
+    pickerRef.current?.togglePicker?.();
+  };
+
+  const displayedLabel = selectedOption?.label ?? placeholder;
+  const isPlaceholder = !selectedOption;
+  const textStyle = StyleSheet.flatten([
+    isPlaceholder ? mergedPickerStyles.placeholder : mergedPickerStyles.inputIOS,
+    valueTextStyle,
+    isPlaceholder ? placeholderTextStyle : null,
+    isDisabled ? { color: color.white } : null,
+  ]);
+
   return (
     <View style={containerStyle}>
       <Label {...{ label, rules }} />
-      {pickerElement}
+      {isIOS ? (
+        <View>
+          {pickerElement}
+          <Pressable
+            disabled={isDisabled}
+            onPress={handleOpenPicker}
+            style={mergedPickerStyles.inputIOS as StyleProp<ViewStyle>}
+          >
+            <Text style={textStyle}>{displayedLabel}</Text>
+          </Pressable>
+        </View>
+      ) : (
+        pickerElement
+      )}
       <ErrorText errorText={errorText} />
     </View>
   );
 };
+
+const iosHiddenPickerStyles = {
+  inputIOS: {
+    position: 'absolute',
+    opacity: 0,
+    width: 1,
+    height: 1,
+  },
+  viewContainer: {
+    position: 'absolute',
+    width: 1,
+    height: 1,
+  },
+  placeholder: { color: 'transparent' },
+} satisfies NonNullable<ComponentProps<typeof RNPickerSelect>['style']>;
 
 const baseNativeSelectStyles = {
   inputIOS: {
