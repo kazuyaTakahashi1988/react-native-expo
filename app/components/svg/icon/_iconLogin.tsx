@@ -6,7 +6,7 @@ import { color as mixinColor } from '../../../lib/mixin';
 import type { TypeIcon } from '../../../lib/types/typeComponents';
 import type React from 'react';
 
-const IconLogin: React.FC<TypeIcon> = ({ color = mixinColor.gray, size = 34 }) => {
+const IconLogin: React.FC<TypeIcon> = ({ color = mixinColor.gray, size = 24 }) => {
   const styles = StyleSheet.create({
     svgColor: {
       backgroundColor: mixinColor.white,

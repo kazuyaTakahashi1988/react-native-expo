@@ -27,7 +27,7 @@ const HeaderHome: React.FC<TypeHeaderHome> = (props) => {
             goToInfo();
           }}
         >
-          <IconLogin />
+          <IconLogin size={34} />
         </Pressable>
       </View>
     </View>

@@ -1,22 +1,23 @@
-import React from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
-import * as Icons from '../../app/components/svg/icon';
 import { styles as storyStyles } from '../../.storybook/styles';
+import * as Icons from '../../app/components/svg/icon';
+import { color } from '../../app/lib/mixin';
 
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite';
+import type React from 'react';
 
 const iconEntries = Object.entries(Icons).sort(([a], [b]) => a.localeCompare(b));
 
 const IconCatalog: React.FC = () => (
-  <ScrollView style={storyStyles.container} contentContainerStyle={catalogStyles.grid}>
+  <View style={[catalogStyles.grid, storyStyles.container]}>
     {iconEntries.map(([name, IconComponent]) => (
       <View key={name} style={catalogStyles.item}>
         <IconComponent />
         <Text style={catalogStyles.label}>{name}</Text>
       </View>
     ))}
-  </ScrollView>
+  </View>
 );
 
 const meta = {
@@ -43,24 +44,24 @@ export const Default: Story = {
 
 const catalogStyles = StyleSheet.create({
   grid: {
+    alignItems: 'center',
     flexDirection: 'row',
     flexWrap: 'wrap',
     padding: 8,
   },
   item: {
     alignItems: 'center',
-    backgroundColor: 'white',
-    borderRadius: 12,
-    margin: 8,
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    shadowColor: '#00000022',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.15,
+    backgroundColor: color.white,
+    margin: 1,
+    padding: 12,
+    shadowColor: color.black,
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
     shadowRadius: 4,
   },
   label: {
-    fontSize: 14,
+    color: color.black,
+    fontSize: 10,
     fontWeight: '600',
     marginTop: 8,
   },
