@@ -1,5 +1,5 @@
 import React from 'react';
-import { Keyboard, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Keyboard, Platform, StyleSheet, View } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 
 import ErrorText from './_errorText';
@@ -7,7 +7,7 @@ import Label from './_label';
 import { color } from '../../lib/mixin';
 import { useRHFController } from '../../services/formHelper';
 
-import type { TypeSelectBox, TypeSelectBoxOption } from '../../lib/types/typeComponents';
+import type { TypeSelectBox } from '../../lib/types/typeComponents';
 import type { ComponentProps } from 'react';
 import type { FieldValues } from 'react-hook-form';
 import type { StyleProp, TextStyle, ViewStyle } from 'react-native';
@@ -29,36 +29,17 @@ const SelectBoxNew = <TFieldValues extends FieldValues>({
   placeholder = '選択してください',
   placeholderTextStyle,
   rules,
-  triggerStyle,
   valueTextStyle,
 }: TypeSelectBox<TFieldValues>) => {
   const pickerRef = React.useRef<RNPickerSelect | null>(null);
-  const isWeb = Platform.OS === 'web';
   const { controller } = useRHFController({ control, name, rules });
+
+  const isWeb = Platform.OS === 'web';
 
   const selectedValue = getSelectedValue(controller.field.value);
   const hasError = Boolean(errorText);
   const isDisabled = isSelectDisabled(disabled);
-
   const selectedOption = options.find((option) => option.value === selectedValue);
-  const isPlaceholder = selectedOption == null;
-  const displayLabel = getDisplayLabel(selectedOption, placeholder);
-
-  const triggerStyles = React.useMemo(
-    () => buildTriggerStyles({ triggerStyle, hasError, isDisabled }),
-    [triggerStyle, hasError, isDisabled],
-  );
-
-  const triggerTextStyles = React.useMemo(
-    () =>
-      buildTriggerTextStyles({
-        isPlaceholder,
-        placeholderTextStyle,
-        valueTextStyle,
-        isDisabled,
-      }),
-    [isPlaceholder, placeholderTextStyle, valueTextStyle, isDisabled],
-  );
 
   const mergedPickerStyles = React.useMemo(
     () =>
@@ -75,12 +56,6 @@ const SelectBoxNew = <TFieldValues extends FieldValues>({
   );
 
   const handleValueChange = buildValueChangeHandler(controller.field.onChange);
-
-  const openPicker = () => {
-    if (isWeb) return;
-    Keyboard.dismiss();
-    pickerRef.current?.togglePicker(true);
-  };
 
   const pickerElement = (
     <RNPickerSelect
@@ -102,68 +77,45 @@ const SelectBoxNew = <TFieldValues extends FieldValues>({
   return (
     <View style={containerStyle}>
       <Label {...{ label, rules }} />
-
-      {isWeb ? (
-        pickerElement
-      ) : (
-        <>
-          <Pressable
-            accessibilityRole='button'
-            disabled={isDisabled}
-            onPress={openPicker}
-            style={triggerStyles}
-          >
-            <Text style={triggerTextStyles}>{displayLabel}</Text>
-          </Pressable>
-
-          {pickerElement}
-        </>
-      )}
-
+      {pickerElement}
       <ErrorText errorText={errorText} />
     </View>
   );
 };
 
-const baseTriggerStyle: ViewStyle = {
-  alignItems: 'center',
-  backgroundColor: color.white,
-  borderColor: color.gray100,
-  borderRadius: 8,
-  borderWidth: 1,
-  flexDirection: 'row',
-  minHeight: 44,
-  paddingHorizontal: 12,
-  paddingVertical: 10,
-};
-
-const baseValueTextStyle: TextStyle = {
-  color: color.black,
-  fontSize: 14,
-};
-
-const hiddenInput: TextStyle = {
-  height: 0,
-  opacity: 0,
-  padding: 0,
-};
-
 const baseNativeSelectStyles = {
-  inputIOS: hiddenInput,
-  inputAndroid: hiddenInput,
+  inputIOS: {
+    alignItems: 'center',
+    backgroundColor: color.white,
+    borderColor: color.gray100,
+    borderRadius: 8,
+    borderWidth: 1,
+    color: color.black,
+    flexDirection: 'row',
+    fontSize: 14,
+    minHeight: 44,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+  },
+  inputAndroid: {
+    alignItems: 'center',
+    backgroundColor: color.white,
+    borderColor: color.gray100,
+    borderRadius: 8,
+    borderWidth: 1,
+    color: color.black,
+    flexDirection: 'row',
+    fontSize: 14,
+    minHeight: 44,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+  },
   placeholder: {
     color: color.gray100,
     fontSize: 14,
   },
   viewContainer: {
-    height: '100%',
     width: '100%',
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    pointerEvents: 'none',
   },
   modalViewMiddle: {
     backgroundColor: color.white,
@@ -180,7 +132,17 @@ const baseNativeSelectStyles = {
 
 const baseWebSelectStyles = {
   inputWeb: {
-    ...baseTriggerStyle,
+    alignItems: 'center',
+    backgroundColor: color.white,
+    borderColor: color.gray100,
+    borderRadius: 8,
+    borderWidth: 1,
+    color: color.black,
+    flexDirection: 'row',
+    fontSize: 14,
+    minHeight: 44,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
     outlineStyle: 'none',
   },
   placeholder: {
@@ -225,13 +187,13 @@ const buildPickerStyles = ({
   isDisabled: boolean;
   isWeb: boolean;
 }): NonNullable<ComponentProps<typeof RNPickerSelect>['style']> => {
-  const errorInputBorder: ViewStyle | undefined = hasError && isWeb ? { borderColor: color.red } : undefined;
-  const disabledInput: ViewStyle | TextStyle | undefined = isDisabled && isWeb
+  const errorInputBorder: ViewStyle | undefined = hasError ? { borderColor: color.red } : undefined;
+  const disabledInput: ViewStyle | TextStyle | undefined = isDisabled
     ? { backgroundColor: color.gray100, color: color.white }
     : undefined;
 
-  const mergedWebInput = (base: TextStyle) =>
-    StyleSheet.flatten([base, valueTextStyle, errorInputBorder, disabledInput]);
+  const mergedInput = (base: TextStyle) =>
+    StyleSheet.flatten([base, valueTextStyle, errorInputBorder, disabledInput, isWeb ? null : { paddingVertical: 10 }]);
 
   const mergedPlaceholder = StyleSheet.flatten([
     baseStyles.placeholder,
@@ -240,12 +202,12 @@ const buildPickerStyles = ({
   ]);
 
   return {
-    inputIOS: StyleSheet.flatten([baseStyles.inputIOS as TextStyle, pickerSelectStyles?.inputIOS]),
+    inputIOS: StyleSheet.flatten([mergedInput(baseStyles.inputIOS as TextStyle), pickerSelectStyles?.inputIOS]),
     inputAndroid: StyleSheet.flatten([
-      baseStyles.inputAndroid as TextStyle,
+      mergedInput(baseStyles.inputAndroid as TextStyle),
       pickerSelectStyles?.inputAndroid,
     ]),
-    inputWeb: StyleSheet.flatten([mergedWebInput(baseStyles.inputWeb as TextStyle), pickerSelectStyles?.inputWeb]),
+    inputWeb: StyleSheet.flatten([mergedInput(baseStyles.inputWeb as TextStyle), pickerSelectStyles?.inputWeb]),
     placeholder: mergedPlaceholder,
     viewContainer: StyleSheet.flatten([baseStyles.viewContainer, pickerSelectStyles?.viewContainer]),
     iconContainer: StyleSheet.flatten([baseStyles.iconContainer, pickerSelectStyles?.iconContainer]),
@@ -272,79 +234,6 @@ const getSelectedValue = (rawValue: unknown): string => {
 
 const isSelectDisabled = (disabled: boolean): boolean => {
   return disabled;
-};
-
-const buildTriggerStyles = ({
-  triggerStyle,
-  hasError,
-  isDisabled,
-}: {
-  triggerStyle: StyleProp<ViewStyle> | undefined;
-  hasError: boolean;
-  isDisabled: boolean;
-}): StyleProp<ViewStyle>[] => {
-  const styles: StyleProp<ViewStyle>[] = [baseTriggerStyle];
-
-  if (triggerStyle != null) {
-    styles.push(triggerStyle);
-  }
-
-  if (hasError) {
-    styles.push({ borderColor: color.red });
-  }
-
-  if (isDisabled) {
-    styles.push({ backgroundColor: color.gray100 });
-  }
-
-  return styles;
-};
-
-const buildTriggerTextStyles = ({
-  isPlaceholder,
-  placeholderTextStyle,
-  valueTextStyle,
-  isDisabled,
-}: {
-  isPlaceholder: boolean;
-  placeholderTextStyle: StyleProp<TextStyle> | undefined;
-  valueTextStyle: StyleProp<TextStyle> | undefined;
-  isDisabled: boolean;
-}): StyleProp<TextStyle>[] => {
-  const styles: StyleProp<TextStyle>[] = [];
-
-  if (isPlaceholder) {
-    styles.push({ ...baseValueTextStyle, color: color.gray100 });
-    if (placeholderTextStyle != null) {
-      styles.push(placeholderTextStyle);
-    }
-    if (isDisabled) {
-      styles.push({ color: color.white });
-    }
-    return styles;
-  }
-
-  styles.push(baseValueTextStyle);
-
-  if (valueTextStyle != null) {
-    styles.push(valueTextStyle);
-  }
-
-  if (isDisabled) {
-    styles.push({ color: color.white });
-  }
-
-  return styles;
-};
-
-const getDisplayLabel = (
-  selectedOption: TypeSelectBoxOption | undefined,
-  placeholder: string,
-): string => {
-  if (selectedOption == null) {
-    return placeholder;
-  }
-  return selectedOption.label ?? placeholder;
 };
 
 const ensureString = (rawValue: unknown): string => {
