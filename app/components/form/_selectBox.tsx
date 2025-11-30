@@ -1,5 +1,5 @@
 import React from 'react';
-import { Keyboard, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Keyboard, Pressable, StyleSheet, Text, View } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 
 import ErrorText from './_errorText';
@@ -53,10 +53,7 @@ const SelectBox = <TFieldValues extends FieldValues>({
 
   const openPicker = () => {
     Keyboard.dismiss();
-    setTimeout(() => {
-      pickerRef.current?.togglePicker?.(true);
-      pickerRef.current?.focus?.();
-    }, 0);
+    pickerRef.current?.togglePicker(true);
   };
 
   const handleValueChange = buildValueChangeHandler(controller.field.onChange);
@@ -65,30 +62,28 @@ const SelectBox = <TFieldValues extends FieldValues>({
     <View style={containerStyle}>
       <Label {...{ label, rules }} />
 
-      <View style={styles.triggerWrapper}>
-        <RNPickerSelect
-          disabled={isDisabled}
-          doneText={doneText}
-          items={options}
-          onValueChange={handleValueChange}
-          placeholder={{ label: placeholder, value: '' }}
-          ref={(ref) => {
-            pickerRef.current = ref;
-          }}
-          style={pickerSelectStyles ?? baseSelectStyles}
-          useNativeAndroidPickerStyle={false}
-          value={toPickerValue(selectedValue)}
-        />
+      <Pressable
+        accessibilityRole='button'
+        disabled={isDisabled}
+        onPress={openPicker}
+        style={triggerStyles}
+      >
+        <Text style={triggerTextStyles}>{displayLabel}</Text>
+      </Pressable>
 
-        <Pressable
-          accessibilityRole='button'
-          disabled={isDisabled}
-          onPress={openPicker}
-          style={triggerStyles}
-        >
-          <Text style={triggerTextStyles}>{displayLabel}</Text>
-        </Pressable>
-      </View>
+      <RNPickerSelect
+        disabled={isDisabled}
+        doneText={doneText}
+        items={options}
+        onValueChange={handleValueChange}
+        placeholder={{ label: placeholder, value: '' }}
+        ref={(ref) => {
+          pickerRef.current = ref;
+        }}
+        style={pickerSelectStyles ?? baseSelectStyles}
+        useNativeAndroidPickerStyle={false}
+        value={toPickerValue(selectedValue)}
+      />
 
       <ErrorText errorText={errorText} />
     </View>
@@ -96,9 +91,6 @@ const SelectBox = <TFieldValues extends FieldValues>({
 };
 
 const styles = StyleSheet.create({
-  triggerWrapper: {
-    position: 'relative',
-  },
   selectTrigger: {
     alignItems: 'center',
     backgroundColor: color.white,
@@ -136,12 +128,9 @@ const baseSelectStyles = {
     padding: 0,
   },
   inputAndroid: {
-    backgroundColor: 'transparent',
-    height: '100%',
+    height: 0,
     opacity: 0,
     padding: 0,
-    position: 'absolute',
-    width: '100%',
   },
   inputWeb: {
     height: '100%',
@@ -152,16 +141,13 @@ const baseSelectStyles = {
   placeholder: {
     color: color.gray100,
   },
-  viewContainer: Platform.select({
-    android: {
-      ...StyleSheet.absoluteFillObject,
-      pointerEvents: 'none',
-    },
-    default: {
-      ...StyleSheet.absoluteFillObject,
-      pointerEvents: 'box-none',
-    },
-  }),
+  viewContainer: {
+    height: '100%',
+    width: '100%',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+  },
   modalViewMiddle: {
     backgroundColor: color.white,
   },
