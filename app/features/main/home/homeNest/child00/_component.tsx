@@ -16,21 +16,19 @@ export const ResultArea: React.FC<TypeResultArea> = (formValues) => {
   }
 
   const { name, genres, inquiry, payment, theme, address, description } = formValues;
-  const resultList = [
-    { label: 'お名前', value: name },
-    { label: 'よく視聴するジャンル', value: genres },
-    { label: 'お問い合わせ方法', value: inquiry },
-    { label: 'お支払い方法', value: payment },
-    { label: 'テーマ色の選択', value: theme },
-    { label: '都道府県', value: address },
-    { label: 'ご相談の内容', value: description },
-  ];
 
   return (
     <View style={styles.result}>
       <Text style={styles.resultTitle}>Submitted values</Text>
-
-      {resultList.map((elm, i) => (
+      {[
+        { label: 'お名前', value: name },
+        { label: 'よく視聴するジャンル', value: genres },
+        { label: 'お問い合わせ方法', value: inquiry },
+        { label: 'お支払い方法', value: payment },
+        { label: 'テーマ色の選択', value: theme },
+        { label: '都道府県', value: address },
+        { label: 'ご相談の内容', value: description },
+      ].map((elm, i) => (
         <View key={i} style={styles.resultRow}>
           <Text>{elm.label}</Text>
           <Text style={styles.resultRowValue}>

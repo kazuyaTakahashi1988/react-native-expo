@@ -1,6 +1,5 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import React from 'react';
 
 import NavHomeNest from './_navHomeNest';
 import { HeaderHome, HeaderSub } from '../components/layouts/header';
@@ -11,6 +10,7 @@ import { color, useSafeAreaConst } from '../lib/mixin';
 
 import type { TypeRootList } from '../lib/types/typeNavigation';
 import type { BottomTabNavigationOptions } from '@react-navigation/bottom-tabs';
+import type React from 'react';
 
 /* -----------------------------------------------
  * メイン 各画面追加
@@ -22,21 +22,15 @@ const NativeStack = createNativeStackNavigator<TypeRootList>();
 const NavMain: React.FC = () => {
   const { safeAreaBottom } = useSafeAreaConst(); // デバイス固有のセーフエリアBottom値
 
-  /*
-   * BottomTabスタイル 呼び出し
-   */
-  const bottomTabStyles = React.useMemo(
-    () => bottomTabStylesCalled(safeAreaBottom),
-    [safeAreaBottom],
-  );
-
   /* ---------------------------------------------
    * メイン 各画面
    * --------------------------------------------- */
   return (
     <BottomTab.Navigator
       screenOptions={() => ({
-        ...bottomTabStyles, // BottomTabスタイル
+        // BottomTabスタイル
+        ...bottomTabStyles,
+        tabBarStyle: [bottomTabStyles.tabBarStyle, { height: safeAreaBottom + 50 }],
       })}
     >
       {/* Home 画面 */}
@@ -111,32 +105,27 @@ const NavMain: React.FC = () => {
 };
 
 /*
- * BottomTabスタイル
+ * bottomTabスタイル
  */
-const bottomTabStylesCalled = (safeAreaBottom: number): BottomTabNavigationOptions => {
-  return {
-    // アイコンアクティブカラー
-    tabBarActiveTintColor: color.primary,
-    // アイコン非アクティブカラー
-    tabBarInactiveTintColor: color.white,
-    // BottomTabのViewラッパースタイル（全体背景色など）
-    tabBarStyle: {
-      backgroundColor: color.black,
-      borderTopColor: color.black,
-      borderTopWidth: 1,
-      elevation: 12,
-      height: 50 + safeAreaBottom,
-      paddingBottom: 8,
-      paddingTop: 6,
-    },
-    // BottomTabのTextラッパースタイル
-    tabBarItemStyle: {
-      borderRightColor: color.white,
-      borderRightWidth: 1,
-    },
-    // BottomTabのTextスタイル
-    tabBarLabelStyle: { fontSize: 12, fontWeight: '600' },
-  };
+const bottomTabStyles: BottomTabNavigationOptions = {
+  // アクティブカラー
+  tabBarActiveTintColor: color.primary,
+  // 非アクティブカラー
+  tabBarInactiveTintColor: color.white,
+  // タブバーのViewラッパースタイル（全体背景色など）
+  tabBarStyle: {
+    backgroundColor: color.black,
+    elevation: 12,
+    paddingBottom: 0,
+    paddingTop: 6,
+  },
+  // タブバーのTextラッパースタイル
+  tabBarItemStyle: {
+    borderRightColor: color.white,
+    borderRightWidth: 1,
+  },
+  // タブバーのTextスタイル
+  tabBarLabelStyle: { fontSize: 12, fontWeight: '600' },
 };
 
 export default NavMain;

@@ -19,7 +19,7 @@ export const Layout: FC<TypeLayout> = (props) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: color.gray,
+    backgroundColor: color.gray200,
     flex: 1,
     flexDirection: 'column',
     width: '100%',

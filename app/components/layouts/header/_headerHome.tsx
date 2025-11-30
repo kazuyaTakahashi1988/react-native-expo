@@ -36,12 +36,11 @@ const HeaderHome: React.FC<TypeHeaderHome> = (props) => {
 
 const styles = StyleSheet.create({
   header: {
-    backgroundColor: color.red,
+    backgroundColor: color.primary,
     paddingTop: 0,
   },
   headerInner: {
     alignItems: 'center',
-    backgroundColor: color.red,
     flexDirection: 'row',
     height: 50,
     justifyContent: 'space-between',
