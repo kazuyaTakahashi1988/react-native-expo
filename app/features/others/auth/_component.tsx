@@ -60,7 +60,14 @@ export const SignInForm: React.FC<TypeAuthForm<TypeSignInValues>> = ({
 
       {/* submit & resetボタン */}
       <Button onPress={onSubmit} style={styles.submit} title='Sign In' />
-      <Button onPress={form.reset} pattern='secondary' style={styles.reset} title='Reset' />
+      <Button
+        onPress={() => {
+          form.reset();
+        }}
+        pattern='secondary'
+        style={styles.reset}
+        title='Reset'
+      />
     </View>
   );
 };
@@ -104,7 +111,14 @@ export const SignUpForm: React.FC<TypeAuthForm<TypeSignUpValues>> = ({
 
       {/* submit & resetボタン */}
       <Button onPress={onSubmit} style={styles.submit} title='Sign Up' />
-      <Button onPress={form.reset} pattern='secondary' style={styles.reset} title='Reset' />
+      <Button
+        onPress={() => {
+          form.reset();
+        }}
+        pattern='secondary'
+        style={styles.reset}
+        title='Reset'
+      />
     </View>
   );
 };
@@ -148,7 +162,14 @@ export const VerifyForm: React.FC<TypeAuthForm<TypeVerifyValues>> = ({
 
       {/* submit & resetボタン */}
       <Button onPress={onSubmit} style={styles.submit} title='Verify' />
-      <Button onPress={form.reset} pattern='secondary' style={styles.reset} title='Reset' />
+      <Button
+        onPress={() => {
+          form.reset();
+        }}
+        pattern='secondary'
+        style={styles.reset}
+        title='Reset'
+      />
     </View>
   );
 };
