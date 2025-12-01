@@ -103,12 +103,14 @@ export const signOut = async (): Promise<void> => {
 };
 
 /*
- * ログインフラグ 更新・取得処理
+ * Auth情報 取得・更新処理
+ * " fetchAuthSession() " だけで accessToken(bearerToken) も取得・格納可
+ * " fetchUserAttributes() " なら userName / ID など取得・格納可
  */
 export const useAuthSession = () => {
-  const [isAuth, setIsAuth] = React.useState(false);
+  const [isAuth, setIsAuth] = React.useState(false); // Authフラグ
 
-  const refreshAuthSession = React.useCallback(async () => {
+  const fetchAuth = React.useCallback(async () => {
     try {
       const session = await fetchAuthSession();
       setIsAuth(Boolean(session.tokens));
@@ -118,8 +120,8 @@ export const useAuthSession = () => {
   }, []);
 
   React.useEffect(() => {
-    void refreshAuthSession();
-  }, [refreshAuthSession]);
+    void fetchAuth();
+  }, [fetchAuth]);
 
-  return { isAuth, refreshAuthSession };
+  return { isAuth, fetchAuth };
 };
