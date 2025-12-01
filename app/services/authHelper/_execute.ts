@@ -5,12 +5,15 @@ import {
   signUp as cognitoSignUp,
   confirmSignUp,
   fetchAuthSession,
+  fetchUserAttributes,
+  getCurrentUser,
 } from 'aws-amplify/auth';
 import React from 'react';
 
 import type {
   TypeAmplifyClient,
   TypeAuthConfig,
+  TypeAuthUser,
   TypeSignInResult,
   TypeSignInValues,
   TypeSignUpResult,
@@ -107,13 +110,39 @@ export const signOut = async (): Promise<void> => {
  */
 export const useAuthSession = () => {
   const [isAuth, setIsAuth] = React.useState(false);
+  const [user, setUser] = React.useState<TypeAuthUser | null>(null);
 
   const fetchAuth = React.useCallback(async () => {
     try {
       const session = await fetchAuthSession();
-      setIsAuth(Boolean(session.tokens));
+      const hasSession = Boolean(session.tokens);
+
+      setIsAuth(hasSession);
+
+      if (!hasSession) {
+        setUser(null);
+        return;
+      }
+
+      const attributes = await fetchUserAttributes();
+      const attributeUserId = attributes.sub;
+      const attributeUsername =
+        attributes.preferred_username ?? attributes.email ?? attributes.name ?? attributes.sub;
+
+      const currentUser =
+        attributeUserId && attributeUsername
+          ? undefined
+          : await getCurrentUser().catch(() => undefined);
+
+      setUser({
+        userId: attributeUserId ?? currentUser?.userId ?? '',
+        username: attributeUsername ?? currentUser?.username ?? '',
+        ...(currentUser?.signInDetails && { signInDetails: currentUser.signInDetails }),
+        attributes,
+      });
     } catch {
       setIsAuth(false);
+      setUser(null);
     }
   }, []);
 
@@ -121,5 +150,5 @@ export const useAuthSession = () => {
     void fetchAuth();
   }, [fetchAuth]);
 
-  return { isAuth, fetchAuth };
+  return { isAuth, fetchAuth, user };
 };

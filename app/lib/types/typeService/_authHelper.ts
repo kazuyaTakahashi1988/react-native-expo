@@ -51,3 +51,10 @@ export type TypeVerifyValues = {
   email: string;
   verificationCode: string;
 };
+
+export type TypeAuthUser = {
+  userId: string;
+  username: string;
+  signInDetails?: Record<string, unknown>;
+  attributes?: Record<string, string>;
+};
