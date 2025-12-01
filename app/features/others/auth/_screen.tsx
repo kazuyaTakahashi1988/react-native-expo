@@ -24,7 +24,7 @@ import type {
 const AuthScreen: React.FC = () => {
   const [tabKey, setTabKey] = React.useState<TypeTabKey>('signIn');
   const [result, setResult] = React.useState<TypeResult>({});
-  const { isAuth, fetchAuth } = useAuthSession(); // ログインフラグ
+  const { isAuth, fetchAuth } = useAuthSession(); // Auth情報 取得・更新処理
 
   /*
    * Sign In の RHForm 使用設定
@@ -49,7 +49,7 @@ const AuthScreen: React.FC = () => {
             : 'Sign In にはまだ追加手順（Verify）が必要だよ！';
           setResult({ type: 'success', message });
           signInForm.reset();
-          void fetchAuth(); // ログインフラグ 更新処理
+          void fetchAuth(); // Auth情報 取得・更新処理
         })
         .catch((err: unknown) => {
           const message = err instanceof Error ? err.message : 'Sign In に失敗したよ...';
@@ -130,7 +130,7 @@ const AuthScreen: React.FC = () => {
     signOut()
       .then(() => {
         setResult({ type: 'success', message: '正常に Sign Out したよ！' });
-        void fetchAuth(); // ログインフラグ 更新処理
+        void fetchAuth(); // Auth情報 取得・更新処理
       })
       .catch((err: unknown) => {
         const message = err instanceof Error ? err.message : 'Sign Out に失敗したよ...';
