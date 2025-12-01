@@ -1,5 +1,5 @@
 import React from 'react';
-import { Keyboard, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Keyboard, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 
 import ErrorText from './_errorText';
@@ -62,28 +62,30 @@ const SelectBox = <TFieldValues extends FieldValues>({
     <View style={containerStyle}>
       <Label {...{ label, rules }} />
 
-      <Pressable
-        accessibilityRole='button'
-        disabled={isDisabled}
-        onPress={openPicker}
-        style={triggerStyles}
-      >
-        <Text style={triggerTextStyles}>{displayLabel}</Text>
-      </Pressable>
+      <View style={styles.innerStyle}>
+        <Pressable
+          accessibilityRole='button'
+          disabled={isDisabled}
+          onPress={openPicker}
+          style={triggerStyles}
+        >
+          <Text style={triggerTextStyles}>{displayLabel}</Text>
+        </Pressable>
 
-      <RNPickerSelect
-        disabled={isDisabled}
-        doneText={doneText}
-        items={options}
-        onValueChange={handleValueChange}
-        placeholder={{ label: placeholder, value: '' }}
-        ref={(ref) => {
-          pickerRef.current = ref;
-        }}
-        style={pickerSelectStyles ?? baseSelectStyles}
-        useNativeAndroidPickerStyle={false}
-        value={toPickerValue(selectedValue)}
-      />
+        <RNPickerSelect
+          disabled={isDisabled}
+          doneText={doneText}
+          items={options}
+          onValueChange={handleValueChange}
+          placeholder={{ label: placeholder, value: '' }}
+          ref={(ref) => {
+            pickerRef.current = ref;
+          }}
+          style={pickerSelectStyles ?? baseSelectStyles}
+          useNativeAndroidPickerStyle={false}
+          value={toPickerValue(selectedValue)}
+        />
+      </View>
 
       <ErrorText errorText={errorText} />
     </View>
@@ -91,17 +93,39 @@ const SelectBox = <TFieldValues extends FieldValues>({
 };
 
 const styles = StyleSheet.create({
-  selectTrigger: {
-    alignItems: 'center',
-    backgroundColor: color.white,
-    borderColor: color.gray100,
-    borderRadius: 8,
-    borderWidth: 1,
-    flexDirection: 'row',
-    minHeight: 44,
-    paddingHorizontal: 12,
-    paddingVertical: 10,
+  innerStyle: {
+    position: 'relative',
   },
+  selectTrigger: Platform.select({
+    android: {
+      alignItems: 'center',
+      backgroundColor: color.white,
+      borderColor: color.gray100,
+      borderRadius: 8,
+      borderWidth: 1,
+      flexDirection: 'row',
+      left: 0,
+      minHeight: 44,
+      paddingHorizontal: 12,
+      paddingVertical: 10,
+      position: 'absolute',
+      top: 0,
+      width: '100%',
+      pointerEvents: 'none',
+    },
+    default: {
+      alignItems: 'center',
+      backgroundColor: color.white,
+      borderColor: color.gray100,
+      borderRadius: 8,
+      borderWidth: 1,
+      flexDirection: 'row',
+      minHeight: 44,
+      paddingHorizontal: 12,
+      paddingVertical: 10,
+      width: '100%',
+    },
+  }),
   selectTriggerDisabled: {
     backgroundColor: color.gray100,
   },
@@ -127,11 +151,14 @@ const baseSelectStyles = {
     opacity: 0,
     padding: 0,
   },
-  inputAndroid: {
-    height: 0,
-    opacity: 0,
-    padding: 0,
-  },
+  inputAndroid: [
+    styles.selectTrigger,
+    {
+      pointerEvents: 'auto',
+      position: 'static',
+      opacity: 0,
+    },
+  ],
   inputWeb: {
     height: '100%',
     width: '100%',
