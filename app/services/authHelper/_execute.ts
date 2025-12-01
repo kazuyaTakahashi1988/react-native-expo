@@ -108,7 +108,7 @@ export const signOut = async (): Promise<void> => {
 export const useAuthSession = () => {
   const [isAuth, setIsAuth] = React.useState(false);
 
-  const refreshAuthSession = React.useCallback(async () => {
+  const fetchAuth = React.useCallback(async () => {
     try {
       const session = await fetchAuthSession();
       setIsAuth(Boolean(session.tokens));
@@ -118,8 +118,8 @@ export const useAuthSession = () => {
   }, []);
 
   React.useEffect(() => {
-    void refreshAuthSession();
-  }, [refreshAuthSession]);
+    void fetchAuth();
+  }, [fetchAuth]);
 
-  return { isAuth, refreshAuthSession };
+  return { isAuth, fetchAuth };
 };

@@ -16,20 +16,20 @@ import type { NavigationProp, ParamListBase } from '@react-navigation/native';
 const HeaderHome: React.FC<TypeHeaderHome> = (props) => {
   const { navigation } = props;
   const { safeAreaTop } = useSafeAreaConst(); // デバイス固有のセーフエリアTop値
-  const { isAuth, refreshAuthSession } = useAuthSession(); // ログインフラグ
+  const { isAuth, fetchAuth } = useAuthSession(); // ログインフラグ
 
   /*
    * ログインフラグ 更新・取得処理
    */
   React.useEffect(() => {
     const unsubscribe = (navigation as NavigationProp<ParamListBase>).addListener('focus', () => {
-      void refreshAuthSession();
+      void fetchAuth();
     });
 
     return () => {
       unsubscribe();
     };
-  }, [navigation, refreshAuthSession]);
+  }, [navigation, fetchAuth]);
 
   /*
    * Auth画面遷移 処理
