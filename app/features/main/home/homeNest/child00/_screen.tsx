@@ -73,7 +73,6 @@ const Child00Screen: React.FC = () => {
 
       {/* インプット項目 */}
       <Input
-        autoCapitalize='words'
         containerStyle={styles.container}
         control={form.control}
         errorText={getErrorText('name')}

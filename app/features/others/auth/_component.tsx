@@ -39,33 +39,35 @@ export const SignInForm: React.FC<TypeAuthForm<TypeSignInValues>> = ({
 
       {/* メールアドレス項目 */}
       <Input
-        autoCapitalize='none'
         containerStyle={styles.input}
         control={form.control}
         errorText={form.formState.errors.email?.message}
-        keyboardType='ascii-capable'
         label='emailを入力してください'
         name='email'
-        placeholder='○○○○＠○○○○.com'
         rules={rules}
       />
 
       {/* パスワード項目 */}
       <Input
-        autoCapitalize='none'
         containerStyle={styles.input}
         control={form.control}
         errorText={form.formState.errors.password?.message}
         label='passwordを入力してください'
         name='password'
-        placeholder='○○○○○○○○'
         rules={{ required: '必須項目です。' }}
         secureTextEntry
       />
 
       {/* submit & resetボタン */}
       <Button onPress={onSubmit} style={styles.submit} title='Sign In' />
-      <Button onPress={form.reset} pattern='secondary' style={styles.reset} title='Reset' />
+      <Button
+        onPress={() => {
+          form.reset();
+        }}
+        pattern='secondary'
+        style={styles.reset}
+        title='Reset'
+      />
     </View>
   );
 };
@@ -88,33 +90,35 @@ export const SignUpForm: React.FC<TypeAuthForm<TypeSignUpValues>> = ({
 
       {/* メールアドレス項目 */}
       <Input
-        autoCapitalize='none'
         containerStyle={styles.input}
         control={form.control}
         errorText={form.formState.errors.email?.message}
-        keyboardType='ascii-capable'
         label='emailを入力してください'
         name='email'
-        placeholder='○○○○＠○○○○.com'
         rules={rules}
       />
 
       {/* パスワード項目 */}
       <Input
-        autoCapitalize='none'
         containerStyle={styles.input}
         control={form.control}
         errorText={form.formState.errors.password?.message}
         label='passwordを入力してください'
         name='password'
-        placeholder='○○○○○○○○'
         rules={{ required: '必須項目です。' }}
         secureTextEntry
       />
 
       {/* submit & resetボタン */}
       <Button onPress={onSubmit} style={styles.submit} title='Sign Up' />
-      <Button onPress={form.reset} pattern='secondary' style={styles.reset} title='Reset' />
+      <Button
+        onPress={() => {
+          form.reset();
+        }}
+        pattern='secondary'
+        style={styles.reset}
+        title='Reset'
+      />
     </View>
   );
 };
@@ -137,33 +141,35 @@ export const VerifyForm: React.FC<TypeAuthForm<TypeVerifyValues>> = ({
 
       {/* verificationCode項目 */}
       <Input
-        autoCapitalize='none'
         containerStyle={styles.input}
         control={form.control}
         errorText={form.formState.errors.verificationCode?.message}
         label='verificationCodeを入力してください'
         name='verificationCode'
-        placeholder='○○○○○○○○'
         rules={{ required: '必須項目です。' }}
         secureTextEntry
       />
 
       {/* メールアドレス項目 */}
       <Input
-        autoCapitalize='none'
         containerStyle={styles.input}
         control={form.control}
         errorText={form.formState.errors.email?.message}
-        keyboardType='ascii-capable'
         label='emailを入力してください'
         name='email'
-        placeholder='○○○○＠○○○○.com'
         rules={rules}
       />
 
       {/* submit & resetボタン */}
       <Button onPress={onSubmit} style={styles.submit} title='Verify' />
-      <Button onPress={form.reset} pattern='secondary' style={styles.reset} title='Reset' />
+      <Button
+        onPress={() => {
+          form.reset();
+        }}
+        pattern='secondary'
+        style={styles.reset}
+        title='Reset'
+      />
     </View>
   );
 };
