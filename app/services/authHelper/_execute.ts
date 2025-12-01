@@ -105,7 +105,7 @@ export const signOut = async (): Promise<void> => {
 /*
  * Auth情報 取得・更新処理
  * " fetchAuthSession() " だけで accessToken(bearerToken) も取得・格納可
- * " fetchUserAttributes() " なら userName / ID など取得・格納可
+ * " fetchUserAttributes() " なら userName / email なども取得・格納可
  */
 export const useAuthSession = () => {
   const [isAuth, setIsAuth] = React.useState(false); // Authフラグ

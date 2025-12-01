@@ -72,11 +72,12 @@ const request = async <TResponse = unknown, TRequest = unknown>(
   apiPath: string,
   options: Omit<TypeOptions<TRequest>, 'apiPath' | 'method'> = {},
 ): Promise<AxiosResponse<TResponse>> =>
+  // APIリクエスト 実行処理
   execute<TResponse, TRequest>({
     method,
     apiPath,
     ...options,
-  }); // APIリクエスト 実行処理
+  });
 
 /* -----------------------------------------------
  * 各 APIリクエスト
