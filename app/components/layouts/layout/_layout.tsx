@@ -1,23 +1,29 @@
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet } from 'react-native';
 
-import { color } from '../../../lib/mixin';
+import { color, useSafeAreaConst } from '../../../lib/mixin';
 
 import type { TypeLayout } from '../../../lib/types/typeComponents';
-import type { FC } from 'react';
+import type React from 'react';
 
 /* -----------------------------------------------
  * 共通レイアウト
  * ----------------------------------------------- */
 
-export const Layout: FC<TypeLayout> = (props) => {
+export const Layout: React.FC<TypeLayout> = (props) => {
   const { children } = props;
+  const { safeAreaTop } = useSafeAreaConst();
+  const isIOS = Platform.OS === 'ios';
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView
+      behavior={isIOS ? 'padding' : 'height'}
+      keyboardVerticalOffset={isIOS ? safeAreaTop : 0}
+      style={styles.container}
+    >
       <ScrollView contentContainerStyle={styles.children} keyboardShouldPersistTaps='handled'>
         {children}
       </ScrollView>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 
