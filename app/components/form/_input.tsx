@@ -23,6 +23,7 @@ const Input = <TFieldValues extends FieldValues>({
   name,
   rules,
   style,
+  autoCapitalize = 'none',
   ...textInputProps
 }: TypeInput<TFieldValues>) => {
   const { controller } = useRHFController({ control, name, rules });
@@ -40,6 +41,7 @@ const Input = <TFieldValues extends FieldValues>({
       <Label {...{ label, rules }} />
       <TextInput
         {...textInputProps}
+        autoCapitalize={autoCapitalize}
         editable={!disabled}
         placeholderTextColor={color.gray100}
         style={[styles.input, ...trackAnimatedStyle, style]}

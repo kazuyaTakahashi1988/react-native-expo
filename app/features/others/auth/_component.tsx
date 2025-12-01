@@ -39,25 +39,21 @@ export const SignInForm: React.FC<TypeAuthForm<TypeSignInValues>> = ({
 
       {/* メールアドレス項目 */}
       <Input
-        autoCapitalize='none'
         containerStyle={styles.input}
         control={form.control}
         errorText={form.formState.errors.email?.message}
         label='emailを入力してください'
         name='email'
-        placeholder='○○○○＠○○○○.com'
         rules={rules}
       />
 
       {/* パスワード項目 */}
       <Input
-        autoCapitalize='none'
         containerStyle={styles.input}
         control={form.control}
         errorText={form.formState.errors.password?.message}
         label='passwordを入力してください'
         name='password'
-        placeholder='○○○○○○○○'
         rules={{ required: '必須項目です。' }}
         secureTextEntry
       />
@@ -87,25 +83,21 @@ export const SignUpForm: React.FC<TypeAuthForm<TypeSignUpValues>> = ({
 
       {/* メールアドレス項目 */}
       <Input
-        autoCapitalize='none'
         containerStyle={styles.input}
         control={form.control}
         errorText={form.formState.errors.email?.message}
         label='emailを入力してください'
         name='email'
-        placeholder='○○○○＠○○○○.com'
         rules={rules}
       />
 
       {/* パスワード項目 */}
       <Input
-        autoCapitalize='none'
         containerStyle={styles.input}
         control={form.control}
         errorText={form.formState.errors.password?.message}
         label='passwordを入力してください'
         name='password'
-        placeholder='○○○○○○○○'
         rules={{ required: '必須項目です。' }}
         secureTextEntry
       />
@@ -135,26 +127,22 @@ export const VerifyForm: React.FC<TypeAuthForm<TypeVerifyValues>> = ({
 
       {/* verificationCode項目 */}
       <Input
-        autoCapitalize='none'
         containerStyle={styles.input}
         control={form.control}
         errorText={form.formState.errors.verificationCode?.message}
         label='verificationCodeを入力してください'
         name='verificationCode'
-        placeholder='○○○○○○○○'
         rules={{ required: '必須項目です。' }}
         secureTextEntry
       />
 
       {/* メールアドレス項目 */}
       <Input
-        autoCapitalize='none'
         containerStyle={styles.input}
         control={form.control}
         errorText={form.formState.errors.email?.message}
         label='emailを入力してください'
         name='email'
-        placeholder='○○○○＠○○○○.com'
         rules={rules}
       />
 
