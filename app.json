@@ -28,7 +28,8 @@
       },
       "edgeToEdgeEnabled": true,
       "resourceClass": "medium",
-      "softwareKeyboardLayoutMode": "pan"
+      "softwareKeyboardLayoutMode": "pan",
+      "package": "com.kazuya631130.reactnativeexpo"
     },
     "web": {
       "favicon": "./app/assets/images/appInfo/favicon.png"
