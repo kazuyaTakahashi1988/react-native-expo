@@ -1,5 +1,6 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { Platform } from 'react-native';
 
 import NavHomeNest from './_navHomeNest';
 import { HeaderHome, HeaderSub } from '../components/layouts/header';
@@ -20,7 +21,9 @@ const BottomTab = createBottomTabNavigator<TypeRootList>();
 const NativeStack = createNativeStackNavigator<TypeRootList>();
 
 const NavMain: React.FC = () => {
-  const { safeAreaBottom } = useSafeAreaConst(); // デバイス固有のセーフエリアBottom値
+  // デバイス固有のセーフエリアBottom値
+  const { safeAreaBottom } = useSafeAreaConst();
+  const bottomTabHeight = safeAreaBottom + (Platform.OS === 'ios' ? 50 : 70);
 
   /* ---------------------------------------------
    * メイン 各画面
@@ -30,7 +33,7 @@ const NavMain: React.FC = () => {
       screenOptions={() => ({
         // BottomTabスタイル
         ...bottomTabStyles,
-        tabBarStyle: [bottomTabStyles.tabBarStyle, { height: safeAreaBottom + 50 }],
+        tabBarStyle: [bottomTabStyles.tabBarStyle, { height: bottomTabHeight }],
       })}
     >
       {/* Home 画面 */}
@@ -81,7 +84,7 @@ const NavMain: React.FC = () => {
           header: (props) => <HeaderSub {...props} />, // 共通ヘッダー（サブ用）
           tabBarIcon: ({ color }) => <IconWork color={color} />,
           tabBarBadge: undefined,
-          tabBarItemStyle: { borderRightWidth: 0 }, // last-childに対するスタイル
+          tabBarItemStyle: tabBarItemStyleLastChild, // last-childに対するスタイル
         }}
       >
         {(props) => <WorkScreen {...props} />}
@@ -95,7 +98,7 @@ const NavMain: React.FC = () => {
           header: (props) => <HeaderSub {...props} />, // 共通ヘッダー（サブ用）
           tabBarIcon: ({ color }) => <IconXxxx color={color} />,
           tabBarBadge: undefined,
-          tabBarItemStyle: { borderRightWidth: 0 }, // last-childに対するスタイル
+          tabBarItemStyle: tabBarItemStyleLastChild, // last-childに対するスタイル
         }}
       >
         {(props) => <XxxxScreen {...props} />}
@@ -123,9 +126,12 @@ const bottomTabStyles: BottomTabNavigationOptions = {
   tabBarItemStyle: {
     borderRightColor: color.white,
     borderRightWidth: 1,
+    minHeight: 90,
   },
   // タブバーのTextスタイル
   tabBarLabelStyle: { fontSize: 12, fontWeight: '600' },
 };
+// last-childに対するスタイル
+const tabBarItemStyleLastChild = [bottomTabStyles.tabBarItemStyle, { borderRightWidth: 0 }];
 
 export default NavMain;
