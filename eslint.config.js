@@ -10,6 +10,82 @@ import reactNative from 'eslint-plugin-react-native';
 import sonarjs from 'eslint-plugin-sonarjs';
 import tseslint from 'typescript-eslint';
 
+const restrictedImportPaths = [
+  {
+    name: 'react-native',
+    importNames: ['Button'],
+    message: 'Use app/components/button/_button.tsx instead of react-native Button.',
+  },
+  {
+    name: 'react-native',
+    importNames: ['TextInput'],
+    message: 'Use app/components/form/_input.tsx instead of react-native TextInput.',
+  },
+  {
+    name: 'axios',
+    importNames: ['default'],
+    message: 'Use app/services/apiHelper/_execute.ts instead of importing axios directly.',
+  },
+];
+
+const baseRestrictedImportPatterns = [
+  {
+    group: ['**/features/**', '!**/features/**/', '!**/features/**/index.*'],
+    message:
+      'Screenパスの末尾には /（スラッシュ）を付与してください。また features 配下の実装は index.{tsx/ts} しか、features 外に import できません',
+  },
+  {
+    group: ['**/_*', '!./_*'],
+    message:
+      '先頭にハイフンが付くファイル（例：_iconXXXX.tsx）はそのファイルと同階層ディレクトリでのみ import 可能です。',
+  },
+];
+
+const featureIndexRestrictedPatterns = [
+  ...baseRestrictedImportPatterns,
+  {
+    group: ['./*', '../*', '!./_screen', '!./_screen.*'],
+    message: 'features 配下の index.{tsx/ts} は ./_screen しか export できません。',
+  },
+];
+
+const restrictedImportPathsWithoutButton = restrictedImportPaths.filter(
+  (restriction) => !(restriction.name === 'react-native' && restriction.importNames?.includes('Button')),
+);
+
+const restrictedImportPathsWithoutTextInput = restrictedImportPaths.filter(
+  (restriction) => !(restriction.name === 'react-native' && restriction.importNames?.includes('TextInput')),
+);
+
+const restrictedImportPathsWithoutAxios = restrictedImportPaths.filter(
+  (restriction) => restriction.name !== 'axios',
+);
+
+const baseRestrictedImportOptions = {
+  paths: restrictedImportPaths,
+  patterns: baseRestrictedImportPatterns,
+};
+
+const featureIndexRestrictedImportOptions = {
+  paths: restrictedImportPaths,
+  patterns: featureIndexRestrictedPatterns,
+};
+
+const restrictedImportOptionsWithoutButton = {
+  paths: restrictedImportPathsWithoutButton,
+  patterns: baseRestrictedImportPatterns,
+};
+
+const restrictedImportOptionsWithoutTextInput = {
+  paths: restrictedImportPathsWithoutTextInput,
+  patterns: baseRestrictedImportPatterns,
+};
+
+const restrictedImportOptionsWithoutAxios = {
+  paths: restrictedImportPathsWithoutAxios,
+  patterns: baseRestrictedImportPatterns,
+};
+
 /** @type {import('eslint').ESLint.Plugin} */
 const reactPlugin = react;
 /** @type {import('eslint').ESLint.Plugin} */
@@ -172,20 +248,7 @@ export default [
     rules: {
       'no-restricted-imports': [
         'error',
-        {
-          patterns: [
-            {
-              group: ['**/features/**', '!**/features/**/', '!**/features/**/index.*'],
-              message:
-                'Screenパスの末尾には /（スラッシュ）を付与してください。また features 配下の実装は index.{tsx/ts} しか、features 外に import できません',
-            },
-            {
-              group: ['**/_*', '!./_*'],
-              message:
-                '先頭にハイフンが付くファイル（例：_iconXXXX.tsx）はそのファイルと同階層ディレクトリでのみ import 可能です。',
-            },
-          ],
-        },
+        baseRestrictedImportOptions,
       ],
     },
   },
@@ -194,15 +257,7 @@ export default [
     rules: {
       'no-restricted-imports': [
         'error',
-        {
-          patterns: [
-            {
-              group: ['**/_*', '!./_*'],
-              message:
-                '先頭にハイフンが付くファイル（例：_iconXXXX.tsx）はそのファイルと同階層ディレクトリでのみ import 可能です。',
-            },
-          ],
-        },
+        baseRestrictedImportOptions,
       ],
     },
   },
@@ -211,19 +266,34 @@ export default [
     rules: {
       'no-restricted-imports': [
         'error',
-        {
-          patterns: [
-            {
-              group: ['**/_*', '!./_*'],
-              message:
-                '先頭にハイフンが付くファイル（例：_iconXXXX.tsx）はそのファイルと同階層ディレクトリでのみ import 可能です。',
-            },
-            {
-              group: ['./*', '../*', '!./_screen', '!./_screen.*'],
-              message: 'features 配下の index.{tsx/ts} は ./_screen しか export できません。',
-            },
-          ],
-        },
+        featureIndexRestrictedImportOptions,
+      ],
+    },
+  },
+  {
+    files: ['app/components/button/**/*.ts', 'app/components/button/**/*.tsx'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        restrictedImportOptionsWithoutButton,
+      ],
+    },
+  },
+  {
+    files: ['app/components/form/**/*.ts', 'app/components/form/**/*.tsx'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        restrictedImportOptionsWithoutTextInput,
+      ],
+    },
+  },
+  {
+    files: ['app/services/apiHelper/**/*.ts', 'app/services/apiHelper/**/*.tsx'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        restrictedImportOptionsWithoutAxios,
       ],
     },
   },
