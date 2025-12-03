@@ -32,9 +32,10 @@ Open <a href="http://localhost:6006" target="_blank">http://localhost:6006</a> i
 <br>
 
 ```
-$ yarn build-storybook // ↓↓↓↓ ビルド成果物
+$ yarn build-storybook // ビルドコマンド
 ```
-
+↓↓↓↓ ビルド成果物（GitHub Actionsでビルド・ホスティングしたもの）<br>
+<br>
 Open <a href="http://storybook-for-expo.empty-service.com" target="_blank">http://storybook-for-expo.empty-service.com</a><br>
 <br>
 
