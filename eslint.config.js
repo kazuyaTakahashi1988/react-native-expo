@@ -9,92 +9,6 @@ import reactNative from 'eslint-plugin-react-native';
 import sonarjs from 'eslint-plugin-sonarjs';
 import tseslint from 'typescript-eslint';
 
-/* -------------------------------------------------------------
- * import 規制の設定一覧
- * ------------------------------------------------------------- */
-
-const restrictedImportPaths = [
-  {
-    name: 'react-native',
-    importNames: ['Button'],
-    message: 'Button は app/components/button/ 配下のを使用してください。',
-  },
-  {
-    name: 'react-native',
-    importNames: ['TextInput'],
-    message: 'TextInput は app/components/form 配下のを使用してください。',
-  },
-  {
-    name: 'axios',
-    importNames: ['default'],
-    message: 'axios は app/services/apiHelper 配下のを使用してください。',
-  },
-];
-
-const baseRestrictedImportPatterns = [
-  {
-    group: ['**/features/**', '!**/features/**/', '!**/features/**/index.*'],
-    message:
-      'features 配下の実装（Screen）はパスの末尾に /（スラッシュ）を付与、かつ index.{tsx/ts} ファイルのみ import 可能です。',
-  },
-  {
-    group: ['**/_*', '!./_*'],
-    message:
-      '先頭にハイフンが付くファイル（例：_iconXXXX.tsx）はそのファイルと同階層ディレクトリでのみ import 可能です。',
-  },
-];
-
-const featureIndexRestrictedPatterns = [
-  ...baseRestrictedImportPatterns,
-  {
-    group: ['./*', '../*', '!./_screen', '!./_screen.*'],
-    message: 'features 配下の index.{tsx/ts} は ./_screen のみ export 可能です。',
-  },
-];
-
-const restrictedImportPathsWithoutButton = restrictedImportPaths.filter(
-  (restriction) =>
-    !(restriction.name === 'react-native' && restriction.importNames?.includes('Button')),
-);
-
-const restrictedImportPathsWithoutTextInput = restrictedImportPaths.filter(
-  (restriction) =>
-    !(restriction.name === 'react-native' && restriction.importNames?.includes('TextInput')),
-);
-
-const restrictedImportPathsWithoutAxios = restrictedImportPaths.filter(
-  (restriction) => restriction.name !== 'axios',
-);
-
-const baseRestrictedImportOptions = {
-  paths: restrictedImportPaths,
-  patterns: baseRestrictedImportPatterns,
-};
-
-const featureIndexRestrictedImportOptions = {
-  paths: restrictedImportPaths,
-  patterns: featureIndexRestrictedPatterns,
-};
-
-const restrictedImportOptionsWithoutButton = {
-  paths: restrictedImportPathsWithoutButton,
-  patterns: baseRestrictedImportPatterns,
-};
-
-const restrictedImportOptionsWithoutTextInput = {
-  paths: restrictedImportPathsWithoutTextInput,
-  patterns: baseRestrictedImportPatterns,
-};
-
-const restrictedImportOptionsWithoutAxios = {
-  paths: restrictedImportPathsWithoutAxios,
-  patterns: baseRestrictedImportPatterns,
-};
-
-/* -------------------------------------------------------------
- * ESLint 設定
- * ------------------------------------------------------------- */
-
 /** @type {import('eslint').ESLint.Plugin} */
 const reactPlugin = react;
 /** @type {import('eslint').ESLint.Plugin} */
@@ -175,9 +89,10 @@ export default [
           allowNumber: false,
         },
       ],
+
       /* -------------------------------------------------------
-       * import並び順、自動補正
-       * ------------------------------------------------------- */
+      import並び順、自動補正
+    ---------------------------------------------------------- */
       'import/order': [
         'error',
         {
@@ -224,8 +139,8 @@ export default [
       ],
 
       /* -------------------------------------------------------
-       * 認知的複雑度（sonarjs / total-functions / ESLintコア
-       * ------------------------------------------------------- */
+      認知的複雑度（sonarjs / total-functions / ESLintコア
+    ---------------------------------------------------------- */
       'sonarjs/cognitive-complexity': ['error', 10],
       'sonarjs/no-small-switch': ['error'],
       complexity: ['error', { max: 5 }],
@@ -233,9 +148,9 @@ export default [
       'no-else-return': ['error'],
 
       /* -------------------------------------------------------
-       * 'total-functions/no-unsafe-type-assertion': 'error'
-       * が最新のESlintに対応してないため以下にて代替
-       * ------------------------------------------------------- */
+      'total-functions/no-unsafe-type-assertion': 'error'
+      が最新のESlintに対応してないため以下にて代替
+    ---------------------------------------------------------- */
       /* <Type> スタイルは警告、object literal の場合は許容 */
       '@typescript-eslint/consistent-type-assertions': [
         'warn',
@@ -246,42 +161,69 @@ export default [
     },
   },
   /* -----------------------------------------------------------
-   * import 規制
-   * ----------------------------------------------------------- */
+  ・features 配下の実装は index.{tsx/ts} しか、features 外に import できない設定
+  ・features 配下にある index.{tsx/ts} は _screen.tsx しか export できない設定
+  ・先頭にハイフンが付くファイル（例：_iconXXXX.tsx）はそのファイルと同階層ディレクトリでしか import できない設定
+  ※ 以下に重複記述があるのは override（上書き設定）を防ぐため
+  -------------------------------------------------------------- */
   {
     files: ['app/**/*.ts', 'app/**/*.tsx', 'index.ts'],
     rules: {
-      'no-restricted-imports': ['error', baseRestrictedImportOptions],
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              group: ['**/features/**', '!**/features/**/', '!**/features/**/index.*'],
+              message:
+                'Screenパスの末尾には /（スラッシュ）を付与してください。また features 配下の実装は index.{tsx/ts} しか、features 外に import できません',
+            },
+            {
+              group: ['**/_*', '!./_*'],
+              message:
+                '先頭にハイフンが付くファイル（例：_iconXXXX.tsx）はそのファイルと同階層ディレクトリでのみ import 可能です。',
+            },
+          ],
+        },
+      ],
     },
   },
   {
     files: ['app/features/**/*.ts', 'app/features/**/*.tsx'],
     rules: {
-      'no-restricted-imports': ['error', baseRestrictedImportOptions],
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              group: ['**/_*', '!./_*'],
+              message:
+                '先頭にハイフンが付くファイル（例：_iconXXXX.tsx）はそのファイルと同階層ディレクトリでのみ import 可能です。',
+            },
+          ],
+        },
+      ],
     },
   },
   {
     files: ['app/features/**/index.tsx', 'app/features/**/index.ts'],
     rules: {
-      'no-restricted-imports': ['error', featureIndexRestrictedImportOptions],
-    },
-  },
-  {
-    files: ['app/components/button/**/*.ts', 'app/components/button/**/*.tsx'],
-    rules: {
-      'no-restricted-imports': ['error', restrictedImportOptionsWithoutButton],
-    },
-  },
-  {
-    files: ['app/components/form/**/*.ts', 'app/components/form/**/*.tsx'],
-    rules: {
-      'no-restricted-imports': ['error', restrictedImportOptionsWithoutTextInput],
-    },
-  },
-  {
-    files: ['app/services/apiHelper/**/*.ts', 'app/services/apiHelper/**/*.tsx'],
-    rules: {
-      'no-restricted-imports': ['error', restrictedImportOptionsWithoutAxios],
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              group: ['**/_*', '!./_*'],
+              message:
+                '先頭にハイフンが付くファイル（例：_iconXXXX.tsx）はそのファイルと同階層ディレクトリでのみ import 可能です。',
+            },
+            {
+              group: ['./*', '../*', '!./_screen', '!./_screen.*'],
+              message: 'features 配下の index.{tsx/ts} は ./_screen しか export できません。',
+            },
+          ],
+        },
+      ],
     },
   },
   {
