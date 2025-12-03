@@ -57,7 +57,7 @@ const meta = {
     },
     triggerStyle: {
       control: { type: 'object' },
-      description: 'SelectBox のスタイル \n\n Set 例： { "padding": 20, "borderRadius": 50 }',
+      description: 'SelectBox のスタイル \n\n Set 例： { "height": 200, "borderRadius": 50 }',
     },
     valueTextStyle: {
       control: { type: 'object' },
@@ -68,10 +68,6 @@ const meta = {
       control: { type: 'object' },
       description:
         'プレイスホルダーテキストのスタイル \n\n Set 例： { "color": "red", "fontWeight": "bold" }',
-    },
-    pickerSelectStyles: {
-      control: { type: 'object' },
-      description: '基本使わない \n\n (web/スマホアプリ間でデザイン差を埋める際に使用 )',
     },
     disabled: {
       control: { type: 'boolean' },

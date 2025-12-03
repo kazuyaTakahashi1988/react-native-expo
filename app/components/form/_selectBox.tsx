@@ -25,7 +25,6 @@ const SelectBox = <TFieldValues extends FieldValues>({
   label,
   name,
   options,
-  pickerSelectStyles,
   placeholder = '選択してください',
   placeholderTextStyle,
   rules,
@@ -81,7 +80,7 @@ const SelectBox = <TFieldValues extends FieldValues>({
           ref={(ref) => {
             pickerRef.current = ref;
           }}
-          style={pickerSelectStyles ?? baseSelectStyles}
+          style={baseSelectStyles(triggerStyles)}
           useNativeAndroidPickerStyle={false}
           value={toPickerValue(selectedValue)}
         />
@@ -145,48 +144,51 @@ const styles = StyleSheet.create({
   },
 });
 
-const baseSelectStyles = {
-  inputIOS: {
-    height: 0,
-    opacity: 0,
-    padding: 0,
-  },
-  inputAndroid: [
-    styles.selectTrigger,
-    {
-      pointerEvents: 'auto',
-      position: 'static',
+const baseSelectStyles = (triggerStyles: StyleProp<ViewStyle>) => {
+  return {
+    inputIOS: {
+      height: 0,
+      opacity: 0,
+      padding: 0,
+    },
+    inputAndroid: [
+      styles.selectTrigger,
+      triggerStyles,
+      {
+        pointerEvents: 'auto',
+        position: 'static',
+        opacity: 0,
+      },
+    ],
+    inputWeb: {
+      height: '100%',
+      width: '100%',
+      borderRadius: 8,
       opacity: 0,
     },
-  ],
-  inputWeb: {
-    height: '100%',
-    width: '100%',
-    borderRadius: 8,
-    opacity: 0,
-  },
-  placeholder: {
-    color: color.gray100,
-  },
-  viewContainer: {
-    height: '100%',
-    width: '100%',
-    position: 'absolute',
-    top: 0,
-    left: 0,
-  },
-  modalViewMiddle: {
-    backgroundColor: color.white,
-  },
-  modalViewBottom: {
-    backgroundColor: color.white,
-  },
-  done: {
-    color: color.primary,
-    fontSize: 16,
-    fontWeight: '600',
-  },
-} satisfies NonNullable<ComponentProps<typeof RNPickerSelect>['style']>;
+    placeholder: {
+      color: color.gray100,
+    },
+    viewContainer: {
+      height: '100%',
+      width: '100%',
+      position: 'absolute',
+      top: 0,
+      left: 0,
+    },
+    modalViewMiddle: {
+      backgroundColor: color.white,
+    },
+    modalViewBottom: {
+      backgroundColor: color.white,
+    },
+    done: {
+      color: color.primary,
+      fontSize: 16,
+      fontWeight: '600',
+    },
+  } satisfies NonNullable<ComponentProps<typeof RNPickerSelect>['style']>;
+};
 
 const buildValueChangeHandler = (
   onChange: ((value: string) => void) | undefined,
