@@ -156,7 +156,6 @@ export type TypeSelectBox<TFieldValues extends FieldValues> = {
   placeholder?: string;
   doneText?: string;
   containerStyle?: StyleProp<ViewStyle>;
-  labelStyle?: StyleProp<TextStyle>;
   triggerStyle?: StyleProp<ViewStyle>;
   valueTextStyle?: StyleProp<TextStyle>;
   placeholderTextStyle?: StyleProp<TextStyle>;
