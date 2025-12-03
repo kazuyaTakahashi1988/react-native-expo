@@ -1,7 +1,8 @@
 import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { color, useSafeAreaConst } from '../../../lib/mixin';
+import { color } from '../../../lib/mixin';
 import { useAuthSession } from '../../../services/authHelper';
 import { IconLogin } from '../../svg/icon';
 import { Logo } from '../../svg/logo';
@@ -15,7 +16,7 @@ import type { NavigationProp, ParamListBase } from '@react-navigation/native';
 
 const HeaderHome: React.FC<TypeHeaderHome> = (props) => {
   const { navigation } = props;
-  const { safeAreaTop } = useSafeAreaConst(); // デバイス固有のセーフエリアTop値
+  const { top } = useSafeAreaInsets(); // デバイス固有のセーフエリアTop値
   const { isAuth, fetchAuth } = useAuthSession(); // Auth情報 取得・更新処理
 
   /*
@@ -41,7 +42,7 @@ const HeaderHome: React.FC<TypeHeaderHome> = (props) => {
   };
 
   return (
-    <View style={[styles.header, { paddingTop: safeAreaTop }]}>
+    <View style={[styles.header, { paddingTop: top }]}>
       <View style={styles.headerInner}>
         <Text>
           <Logo />

@@ -1,13 +1,14 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Platform } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import NavHomeNest from './_navHomeNest';
 import { HeaderHome, HeaderSub } from '../components/layouts/header';
 import { IconAbout, IconHome, IconWork } from '../components/svg/icon';
 import { AboutScreen } from '../features/main/about/';
 import { WorkScreen } from '../features/main/work/';
-import { color, useSafeAreaConst } from '../lib/mixin';
+import { color } from '../lib/mixin';
 
 import type { TypeRootList } from '../lib/types/typeNavigation';
 import type { BottomTabNavigationOptions } from '@react-navigation/bottom-tabs';
@@ -22,8 +23,8 @@ const NativeStack = createNativeStackNavigator<TypeRootList>();
 
 const NavMain: React.FC = () => {
   // デバイス固有のセーフエリアBottom値
-  const { safeAreaBottom } = useSafeAreaConst();
-  const bottomTabHeight = safeAreaBottom + (Platform.OS === 'ios' ? 50 : 70);
+  const { bottom } = useSafeAreaInsets();
+  const bottomTabHeight = bottom + (Platform.OS === 'ios' ? 50 : 70);
 
   /* ---------------------------------------------
    * メイン 各画面

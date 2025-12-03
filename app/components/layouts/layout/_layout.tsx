@@ -1,6 +1,7 @@
 import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { color, useSafeAreaConst } from '../../../lib/mixin';
+import { color } from '../../../lib/mixin';
 
 import type { TypeLayout } from '../../../lib/types/typeComponents';
 import type React from 'react';
@@ -9,15 +10,15 @@ import type React from 'react';
  * 共通レイアウト
  * ----------------------------------------------- */
 
-export const Layout: React.FC<TypeLayout> = (props) => {
+const Layout: React.FC<TypeLayout> = (props) => {
   const { children } = props;
-  const { safeAreaTop } = useSafeAreaConst();
+  const { top } = useSafeAreaInsets();
   const isIOS = Platform.OS === 'ios';
 
   return (
     <KeyboardAvoidingView
       behavior={isIOS ? 'padding' : 'height'}
-      keyboardVerticalOffset={isIOS ? safeAreaTop : 0}
+      keyboardVerticalOffset={isIOS ? top : 0}
       style={styles.container}
     >
       <ScrollView contentContainerStyle={styles.children} keyboardShouldPersistTaps='handled'>
