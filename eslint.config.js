@@ -1,4 +1,3 @@
-// For more info, see https://github.com/storybookjs/eslint-plugin-storybook#configuration-flat-config-format
 import storybook from 'eslint-plugin-storybook';
 
 import js from '@eslint/js';
@@ -227,9 +226,9 @@ export default [
       ],
     },
   },
-  prettier, // ←prettierはこの位置（最後尾近く）に置いておくこと
   {
     ignores: ['node_modules', '.expo', 'ios', 'android', 'eslint.config.js'],
   },
   ...storybook.configs['flat/recommended'],
+  prettier, // ←prettierはこの位置（最後尾近く）に置いておくこと
 ];
