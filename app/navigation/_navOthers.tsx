@@ -36,7 +36,7 @@ const NavOthers: React.FC = () => {
                 <IconInfo />
               </Pressable>
             );
-            return <HeaderSub {...props} goBack='戻る' {...rightItem} />; // 共通ヘッダー（サブ用）
+            return <HeaderSub {...props} goBack='戻る' rightItem={rightItem} />; // 共通ヘッダー（サブ用）
           },
         }}
       >
