@@ -1,6 +1,6 @@
 import type { Control, FieldValues, Path, RegisterOptions } from 'react-hook-form';
 import type { PressableProps, StyleProp, TextInputProps, TextStyle, ViewStyle } from 'react-native';
-import type { Item, PickerStyle } from 'react-native-picker-select';
+import type { Item } from 'react-native-picker-select';
 
 /* -----------------------------------------------
  * [ app/components/form ] 用 type
@@ -160,7 +160,6 @@ export type TypeSelectBox<TFieldValues extends FieldValues> = {
   triggerStyle?: StyleProp<ViewStyle>;
   valueTextStyle?: StyleProp<TextStyle>;
   placeholderTextStyle?: StyleProp<TextStyle>;
-  pickerSelectStyles?: PickerStyle;
 };
 
 /*
