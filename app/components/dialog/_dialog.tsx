@@ -1,6 +1,19 @@
 import React from 'react';
-import { Modal, Pressable, ScrollView, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
-import Animated, { interpolate, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
+import {
+  Modal,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  useWindowDimensions,
+  View,
+} from 'react-native';
+import Animated, {
+  interpolate,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
 
 import { color } from '../../lib/mixin';
 
@@ -10,10 +23,7 @@ import type { TypeDialog } from '../../lib/types/typeComponents';
  * ダイアログ
  * ----------------------------------------------- */
 // eslint-disable-next-line complexity
-const DialogHeader = ({
-  title,
-  description,
-}: Pick<TypeDialog, 'title' | 'description'>) => {
+const DialogHeader = ({ title, description }: Pick<TypeDialog, 'title' | 'description'>) => {
   const hasTitle = typeof title === 'string' && title.length > 0;
   const hasDescription = typeof description === 'string' && description.length > 0;
 
@@ -44,11 +54,18 @@ const DialogContent = ({ children }: Pick<TypeDialog, 'children'>) => {
 const DialogCancelButton = ({
   closeText,
   onClose,
-}: { closeText: string; onClose?: TypeDialog['onClose'] }) => {
+}: {
+  closeText: string;
+  onClose?: TypeDialog['onClose'];
+}) => {
   if (!onClose) return null;
 
   return (
-    <Pressable accessibilityRole='button' onPress={onClose} style={[styles.button, styles.outlineButton]}>
+    <Pressable
+      accessibilityRole='button'
+      onPress={onClose}
+      style={[styles.button, styles.outlineButton]}
+    >
       <Text style={[styles.buttonText, styles.outlineButtonText]}>{closeText}</Text>
     </Pressable>
   );
@@ -66,22 +83,27 @@ const Dialog = ({
   onClose,
   children,
 }: TypeDialog) => {
-  const { cardStyle, hasHeader, maxCardHeight, overlayStyle, showCloseButton, showEventButton } = useDialogLayout({
-    closeText,
-    description,
-    eventText,
-    onEvent,
-    onClose,
-    title,
-    visible,
-  });
+  const { cardStyle, hasHeader, maxCardHeight, overlayStyle, showCloseButton, showEventButton } =
+    useDialogLayout({
+      closeText,
+      description,
+      eventText,
+      onEvent,
+      onClose,
+      title,
+      visible,
+    });
 
   const handleBackdropPress = closeOnBackdropPress ? onClose : undefined;
 
   return (
     <Modal animationType='none' onRequestClose={onClose} transparent visible={visible}>
       <View style={styles.container}>
-        <Pressable accessibilityLabel='閉じる' onPress={handleBackdropPress} style={styles.backdropPressable}>
+        <Pressable
+          accessibilityLabel='閉じる'
+          onPress={handleBackdropPress}
+          style={styles.backdropPressable}
+        >
           <Animated.View style={[styles.backdrop, overlayStyle]} />
         </Pressable>
         <View style={styles.center}>
@@ -129,7 +151,11 @@ const DialogActions = ({
   <View style={styles.actions}>
     {showCloseButton ? <DialogCancelButton closeText={closeText} onClose={onClose} /> : null}
     {showEventButton ? (
-      <Pressable accessibilityRole='button' onPress={onEvent} style={[styles.button, styles.fillButton]}>
+      <Pressable
+        accessibilityRole='button'
+        onPress={onEvent}
+        style={[styles.button, styles.fillButton]}
+      >
         <Text style={[styles.buttonText, styles.fillButtonText]}>{eventText}</Text>
       </Pressable>
     ) : null}
@@ -155,7 +181,10 @@ const useDialogLayout = ({
   onClose,
   title,
   visible,
-}: Pick<TypeDialog, 'closeText' | 'description' | 'eventText' | 'onClose' | 'onEvent' | 'title' | 'visible'>) => {
+}: Pick<
+  TypeDialog,
+  'closeText' | 'description' | 'eventText' | 'onClose' | 'onEvent' | 'title' | 'visible'
+>) => {
   const { height } = useWindowDimensions();
   const opacity = useDialogOpacity(visible);
 
@@ -210,7 +239,7 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     elevation: 10,
     gap: 16,
-    maxWidth: 420,
+    minWidth: '100%',
     overflow: 'hidden',
     padding: 20,
     shadowColor: color.black,
@@ -247,7 +276,7 @@ const styles = StyleSheet.create({
   actions: {
     flexDirection: 'row',
     gap: 12,
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
   },
   button: {
     alignItems: 'center',
