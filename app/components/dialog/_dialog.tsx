@@ -70,6 +70,7 @@ const Dialog = ({
     closeText,
     description,
     eventText,
+    onEvent,
     onClose,
     title,
     visible,
@@ -121,7 +122,7 @@ const DialogActions = ({
   closeText: string;
   eventText: string;
   onClose?: TypeDialog['onClose'];
-  onEvent: TypeDialog['onEvent'];
+  onEvent?: TypeDialog['onEvent'];
   showCloseButton: boolean;
   showEventButton: boolean;
 }) => (
@@ -150,10 +151,11 @@ const useDialogLayout = ({
   closeText,
   description,
   eventText,
+  onEvent,
   onClose,
   title,
   visible,
-}: Pick<TypeDialog, 'closeText' | 'description' | 'eventText' | 'onClose' | 'title' | 'visible'>) => {
+}: Pick<TypeDialog, 'closeText' | 'description' | 'eventText' | 'onClose' | 'onEvent' | 'title' | 'visible'>) => {
   const { height } = useWindowDimensions();
   const opacity = useDialogOpacity(visible);
 
@@ -172,7 +174,7 @@ const useDialogLayout = ({
 
   const maxCardHeight = height - 120;
   const showCloseButton = Boolean(closeText) && Boolean(onClose);
-  const showEventButton = Boolean(eventText);
+  const showEventButton = Boolean(eventText) && Boolean(onEvent);
   const hasHeader = (title?.length ?? 0) > 0 || (description?.length ?? 0) > 0;
 
   return {
