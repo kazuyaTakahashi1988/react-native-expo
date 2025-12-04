@@ -4,6 +4,7 @@ import { Alert, StyleSheet, Text, View } from 'react-native';
 import { Button } from '../../../components/button';
 import { Dialog } from '../../../components/dialog';
 import { Layout } from '../../../components/layouts/layout';
+import { color } from '../../../lib/mixin';
 
 import type { TypeAboutScreen } from './_type';
 
@@ -91,24 +92,24 @@ const AboutScreen: React.FC<TypeAboutScreen> = (props) => {
 
       <Dialog
         description='この内容で実行しますか？この操作は元に戻すことができないため、十分にご注意ください。'
-        onCancel={closeDialog}
-        onConfirm={handleConfirm('基本ダイアログを確認しました')}
+        onClose={closeDialog}
+        onEvent={handleConfirm('基本ダイアログを確認しました')}
         title='Dialog タイトル'
         visible={visibleDialog === 'basic'}
       />
 
       <Dialog
+        closeText=''
         description='確認のみのケースに使用します。'
-        hideCancelButton
-        onCancel={closeDialog}
-        onConfirm={handleConfirm('確認のみのダイアログです')}
+        onClose={closeDialog}
+        onEvent={handleConfirm('確認のみのダイアログです')}
         title='キャンセルを表示しない例'
         visible={visibleDialog === 'withoutCancel'}
       />
 
       <Dialog
-        onCancel={closeDialog}
-        onConfirm={handleConfirm('チェック項目を確認しました')}
+        onClose={closeDialog}
+        onEvent={handleConfirm('チェック項目を確認しました')}
         title='カスタムコンテンツ'
         visible={visibleDialog === 'customContent'}
       >
@@ -130,12 +131,12 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   description: {
-    color: '#555',
+    color: color.gray50,
     lineHeight: 20,
     marginBottom: 16,
   },
   section: {
-    backgroundColor: '#fff',
+    backgroundColor: color.white,
     borderRadius: 12,
     gap: 8,
     padding: 16,

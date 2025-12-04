@@ -4,10 +4,9 @@ export type TypeDialog = {
   visible: boolean;
   title?: string;
   description?: string;
-  confirmText?: string;
-  cancelText?: string;
-  onConfirm: () => void;
-  onCancel?: () => void;
+  eventText?: string;
+  closeText?: string;
+  onEvent: () => void;
+  onClose?: () => void;
   children?: ReactNode;
-  hideCancelButton?: boolean;
 };

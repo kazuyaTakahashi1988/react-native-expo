@@ -25,14 +25,11 @@ const meta = {
     description: {
       description: '本文テキスト',
     },
-    confirmText: {
-      description: '確定ボタン文言',
+    eventText: {
+      description: 'イベントボタン文言',
     },
-    cancelText: {
-      description: 'キャンセルボタン文言',
-    },
-    hideCancelButton: {
-      description: 'キャンセルボタンの表示/非表示を切り替える',
+    closeText: {
+      description: 'クローズボタン文言。空または未指定で非表示',
     },
   },
 } satisfies Meta<typeof Dialog>;
@@ -52,8 +49,8 @@ const dialogPreviewStyles = StyleSheet.create({
 });
 
 const baseArgs = {
-  onCancel: () => {},
-  onConfirm: () => {},
+  onClose: () => {},
+  onEvent: () => {},
   visible: false,
 };
 
@@ -70,10 +67,10 @@ const DialogPreview = (args: Story['args']) => {
       />
       <Dialog
         {...args}
-        onCancel={() => {
+        onClose={() => {
           setVisible(false);
         }}
-        onConfirm={() => {
+        onEvent={() => {
           alert('確認しました');
           setVisible(false);
         }}
@@ -89,6 +86,8 @@ export const Basic: Story = {
     title: 'Dialog タイトル',
     description:
       'この内容で実行しますか？この操作は元に戻すことができないため、十分にご注意ください。',
+    eventText: 'OK',
+    closeText: 'キャンセル',
   },
   render: (args) => <DialogPreview {...args} />,
 };
@@ -98,7 +97,8 @@ export const WithoutCancel: Story = {
     ...baseArgs,
     title: 'キャンセルを表示しない例',
     description: '確認のみのケースに使用します。',
-    hideCancelButton: true,
+    closeText: '',
+    eventText: 'OK',
   },
   render: (args) => <DialogPreview {...args} />,
 };
@@ -107,6 +107,8 @@ export const CustomContent: Story = {
   args: {
     ...baseArgs,
     title: 'カスタムコンテンツ',
+    eventText: 'OK',
+    closeText: 'キャンセル',
     children: (
       <View style={dialogPreviewStyles.customContent}>
         <Text>・チェック項目１</Text>

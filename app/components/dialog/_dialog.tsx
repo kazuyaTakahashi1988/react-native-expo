@@ -32,14 +32,14 @@ const DialogContent = ({ children }: Pick<TypeDialog, 'children'>) => {
 };
 
 const DialogCancelButton = ({
-  cancelText,
-  onCancel,
-}: { cancelText: string; onCancel?: TypeDialog['onCancel'] }) => {
-  if (!onCancel) return null;
+  closeText,
+  onClose,
+}: { closeText: string; onClose?: TypeDialog['onClose'] }) => {
+  if (!onClose) return null;
 
   return (
-    <Pressable accessibilityRole='button' onPress={onCancel} style={[styles.button, styles.outlineButton]}>
-      <Text style={[styles.buttonText, styles.outlineButtonText]}>{cancelText}</Text>
+    <Pressable accessibilityRole='button' onPress={onClose} style={[styles.button, styles.outlineButton]}>
+      <Text style={[styles.buttonText, styles.outlineButtonText]}>{closeText}</Text>
     </Pressable>
   );
 };
@@ -48,15 +48,15 @@ const Dialog = ({
   visible,
   title,
   description,
-  confirmText = 'OK',
-  cancelText = 'キャンセル',
-  onConfirm,
-  onCancel,
+  eventText = 'OK',
+  closeText = 'キャンセル',
+  onEvent,
+  onClose,
   children,
-  hideCancelButton = false,
 }: TypeDialog) => {
   const opacity = useDialogOpacity(visible);
-  const showCancelButton = Boolean(onCancel) && !hideCancelButton;
+  const showCloseButton = Boolean(closeText) && Boolean(onClose);
+  const showEventButton = Boolean(eventText);
 
   const overlayStyle = useAnimatedStyle(() => ({
     opacity: opacity.value,
@@ -72,9 +72,9 @@ const Dialog = ({
   }));
 
     return (
-      <Modal animationType='none' onRequestClose={onCancel} transparent visible={visible}>
+      <Modal animationType='none' onRequestClose={onClose} transparent visible={visible}>
         <View style={styles.container}>
-          <Pressable accessibilityLabel='閉じる' onPress={onCancel} style={styles.backdropPressable}>
+          <Pressable accessibilityLabel='閉じる' onPress={onClose} style={styles.backdropPressable}>
             <Animated.View style={[styles.backdrop, overlayStyle]} />
           </Pressable>
           <View style={styles.center}>
@@ -83,11 +83,12 @@ const Dialog = ({
               <DialogDescription description={description} />
               <DialogContent>{children}</DialogContent>
               <DialogActions
-                cancelText={cancelText}
-                confirmText={confirmText}
-                onCancel={onCancel}
-                onConfirm={onConfirm}
-                showCancelButton={showCancelButton}
+                closeText={closeText}
+                eventText={eventText}
+                onClose={onClose}
+                onEvent={onEvent}
+                showCloseButton={showCloseButton}
+                showEventButton={showEventButton}
               />
             </Animated.View>
           </View>
@@ -97,23 +98,27 @@ const Dialog = ({
   };
 
 const DialogActions = ({
-  cancelText,
-  confirmText,
-  onCancel,
-  onConfirm,
-  showCancelButton,
+  closeText,
+  eventText,
+  onClose,
+  onEvent,
+  showCloseButton,
+  showEventButton,
 }: {
-  cancelText: string;
-  confirmText: string;
-  onCancel?: TypeDialog['onCancel'];
-  onConfirm: TypeDialog['onConfirm'];
-  showCancelButton: boolean;
+  closeText: string;
+  eventText: string;
+  onClose?: TypeDialog['onClose'];
+  onEvent: TypeDialog['onEvent'];
+  showCloseButton: boolean;
+  showEventButton: boolean;
 }) => (
   <View style={styles.actions}>
-    {showCancelButton ? <DialogCancelButton cancelText={cancelText} onCancel={onCancel} /> : null}
-    <Pressable accessibilityRole='button' onPress={onConfirm} style={[styles.button, styles.fillButton]}>
-      <Text style={[styles.buttonText, styles.fillButtonText]}>{confirmText}</Text>
-    </Pressable>
+    {showCloseButton ? <DialogCancelButton closeText={closeText} onClose={onClose} /> : null}
+    {showEventButton ? (
+      <Pressable accessibilityRole='button' onPress={onEvent} style={[styles.button, styles.fillButton]}>
+        <Text style={[styles.buttonText, styles.fillButtonText]}>{eventText}</Text>
+      </Pressable>
+    ) : null}
   </View>
 );
 
