@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Modal, Pressable, ScrollView, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
 import Animated, { interpolate, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 
 import { color } from '../../lib/mixin';
@@ -54,9 +54,11 @@ const Dialog = ({
   onClose,
   children,
 }: TypeDialog) => {
+  const { height } = useWindowDimensions();
   const opacity = useDialogOpacity(visible);
   const showCloseButton = Boolean(closeText) && Boolean(onClose);
   const showEventButton = Boolean(eventText);
+  const maxCardHeight = height - 120;
 
   const overlayStyle = useAnimatedStyle(() => ({
     opacity: opacity.value,
@@ -71,30 +73,37 @@ const Dialog = ({
     ],
   }));
 
-    return (
-      <Modal animationType='none' onRequestClose={onClose} transparent visible={visible}>
-        <View style={styles.container}>
-          <Pressable accessibilityLabel='閉じる' onPress={onClose} style={styles.backdropPressable}>
-            <Animated.View style={[styles.backdrop, overlayStyle]} />
-          </Pressable>
-          <View style={styles.center}>
-            <Animated.View style={[styles.card, cardStyle]}>
+  return (
+    <Modal animationType='none' onRequestClose={onClose} transparent visible={visible}>
+      <View style={styles.container}>
+        <Pressable accessibilityLabel='閉じる' onPress={onClose} style={styles.backdropPressable}>
+          <Animated.View style={[styles.backdrop, overlayStyle]} />
+        </Pressable>
+        <View style={styles.center}>
+          <Animated.View style={[styles.card, { maxHeight: maxCardHeight }, cardStyle]}>
+            <ScrollView
+              bounces={false}
+              contentContainerStyle={styles.body}
+              showsVerticalScrollIndicator={false}
+              style={styles.bodyScroll}
+            >
               <DialogTitle title={title} />
               <DialogDescription description={description} />
               <DialogContent>{children}</DialogContent>
-              <DialogActions
-                closeText={closeText}
-                eventText={eventText}
-                onClose={onClose}
-                onEvent={onEvent}
-                showCloseButton={showCloseButton}
-                showEventButton={showEventButton}
-              />
-            </Animated.View>
-          </View>
+            </ScrollView>
+            <DialogActions
+              closeText={closeText}
+              eventText={eventText}
+              onClose={onClose}
+              onEvent={onEvent}
+              showCloseButton={showCloseButton}
+              showEventButton={showEventButton}
+            />
+          </Animated.View>
         </View>
-      </Modal>
-    );
+      </View>
+    </Modal>
+  );
   };
 
 const DialogActions = ({
@@ -156,12 +165,20 @@ const styles = StyleSheet.create({
     elevation: 10,
     gap: 16,
     maxWidth: 420,
+    overflow: 'hidden',
     padding: 20,
     shadowColor: color.black,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.2,
     shadowRadius: 12,
     width: '100%',
+  },
+  bodyScroll: {
+    flexShrink: 1,
+  },
+  body: {
+    gap: 16,
+    paddingBottom: 8,
   },
   title: {
     color: color.black,
