@@ -9,7 +9,7 @@ import type { TypeRootList } from '../lib/types/typeNavigation';
 import type React from 'react';
 
 /* -----------------------------------------------
- * Navigation & 共通レイアウト 設定
+ * Navigation & 共通ヘッダー・フッター（BottomTab） 設定
  * ----------------------------------------------- */
 
 const NativeStack = createNativeStackNavigator<TypeRootList>();
