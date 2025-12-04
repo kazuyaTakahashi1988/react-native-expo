@@ -55,7 +55,7 @@ const DialogCancelButton = ({
   closeText,
   onClose,
 }: {
-  closeText: string;
+  closeText?: string;
   onClose?: TypeDialog['onClose'];
 }) => {
   if (!onClose) return null;
@@ -71,14 +71,13 @@ const DialogCancelButton = ({
   );
 };
 
-// eslint-disable-next-line complexity
 const Dialog = ({
   visible,
   title,
   description,
   closeOnBackdropPress = true,
-  eventText = 'OK',
-  closeText = 'キャンセル',
+  eventText,
+  closeText,
   onEvent,
   onClose,
   children,
@@ -141,8 +140,8 @@ const DialogActions = ({
   showCloseButton,
   showEventButton,
 }: {
-  closeText: string;
-  eventText: string;
+  closeText?: string;
+  eventText?: string;
   onClose?: TypeDialog['onClose'];
   onEvent?: TypeDialog['onEvent'];
   showCloseButton: boolean;

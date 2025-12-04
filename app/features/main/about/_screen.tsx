@@ -6,13 +6,15 @@ import { Dialog } from '../../../components/dialog';
 import { Layout } from '../../../components/layouts/layout';
 import { color } from '../../../lib/mixin';
 
-import type { TypeAboutScreen } from './_type';
+import type { TypeAboutScreen, TypeDialogPattern } from './_type';
 
-type DialogPattern = 'basic' | 'withoutCancel' | 'customContent';
+/* -----------------------------------------------
+ * About 画面
+ * ----------------------------------------------- */
 
 const AboutScreen: React.FC<TypeAboutScreen> = (props) => {
   const { navigation } = props;
-  const [visibleDialog, setVisibleDialog] = React.useState<DialogPattern | null>(null);
+  const [visibleDialog, setVisibleDialog] = React.useState<TypeDialogPattern>(null);
 
   const goToHome = () => {
     navigation.navigate('home');
@@ -31,13 +33,13 @@ const AboutScreen: React.FC<TypeAboutScreen> = (props) => {
     setVisibleDialog(null);
   }, []);
 
-  const openDialog = React.useCallback((pattern: DialogPattern) => {
+  const openDialog = React.useCallback((pattern: TypeDialogPattern) => {
     setVisibleDialog(pattern);
   }, []);
 
   const handleConfirm = React.useCallback(
     (message: string) => () => {
-      Alert.alert('Dialog', message);
+      Alert.alert('Thanks to Tap', message);
       closeDialog();
     },
     [closeDialog],
@@ -62,62 +64,110 @@ const AboutScreen: React.FC<TypeAboutScreen> = (props) => {
         />
       </View>
 
+      {/*
+       * Dialog パターン
+       */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Dialog パターン</Text>
         <Text style={styles.description}>Storybook で用意したパターンを画面上で確認できます。</Text>
 
         <View style={styles.dialogActions}>
+          {/* Basic Dialog ボタン */}
           <Button
             containerStyle={styles.buttonSpacing}
             onPress={() => {
               openDialog('basic');
             }}
-            title='基本ダイアログ'
+            title='Basic Dialog'
           />
+
+          {/* WithOut Close Button ボタン */}
           <Button
             containerStyle={styles.buttonSpacing}
             onPress={() => {
-              openDialog('withoutCancel');
+              openDialog('withoutClose');
             }}
-            title='キャンセルなし'
+            title='WithOut Close Button'
           />
+
+          {/* WithOut Event & Close Button ボタン */}
+          <Button
+            containerStyle={styles.buttonSpacing}
+            onPress={() => {
+              openDialog('withoutEventAndClose');
+            }}
+            title='WithOut Event & Close Button'
+          />
+
+          {/* Custom Contents（ScrollView） ボタン */}
           <Button
             onPress={() => {
               openDialog('customContent');
             }}
-            title='カスタムコンテンツ'
+            title='Custom Contents（ScrollView）'
           />
         </View>
       </View>
 
+      {/* Basic Dialog ダイアログ */}
       <Dialog
-        description='この内容で実行しますか？この操作は元に戻すことができないため、十分にご注意ください。'
+        closeText='Close Button'
+        description='description：Dummy Text。----------------------------------------------------------------'
+        eventText='Event Button'
         onClose={closeDialog}
-        onEvent={handleConfirm('基本ダイアログを確認しました')}
-        title='Dialog タイトル'
+        onEvent={handleConfirm('EventButton Tapped!!')}
+        title='Basic Dialog'
         visible={visibleDialog === 'basic'}
       />
 
+      {/* WithOut Close ダイアログ */}
       <Dialog
         closeOnBackdropPress={false}
-        closeText=''
-        description='確認のみのケースに使用します。'
+        description='OKボタンを押さないと閉じれません。'
+        eventText='OK'
         onClose={closeDialog}
-        onEvent={handleConfirm('確認のみのダイアログです')}
-        title='キャンセルを表示しない例'
-        visible={visibleDialog === 'withoutCancel'}
+        onEvent={handleConfirm('EventButton Tapped!!')}
+        title='Close Buttonを表示しない例'
+        visible={visibleDialog === 'withoutClose'}
       />
 
+      {/* WithOut Event & Close ダイアログ */}
       <Dialog
+        description='背景を押さないと閉じれません。'
         onClose={closeDialog}
-        onEvent={handleConfirm('チェック項目を確認しました')}
-        title='カスタムコンテンツ'
+        onEvent={handleConfirm('EventButton Tapped!!')}
+        title='Event & Close Buttonを表示しない例'
+        visible={visibleDialog === 'withoutEventAndClose'}
+      />
+
+      {/* Custom Contents（ScrollView）ダイアログ */}
+      <Dialog
+        closeText='Close Button'
+        eventText='Event Button'
+        onClose={closeDialog}
+        onEvent={handleConfirm('Dummy Textを確認しました')}
+        title='Custom Contents（ScrollView）'
         visible={visibleDialog === 'customContent'}
       >
         <View style={styles.customContent}>
-          <Text>・チェック項目１</Text>
-          <Text>・チェック項目２</Text>
-          <Text>・チェック項目３</Text>
+          <Text>
+            ・Dummy Text１
+            {[...Array(30).keys()].map((i) => (
+              <Text key={i}>----- {'\n'}</Text>
+            ))}
+          </Text>
+          <Text>
+            ・Dummy Text２
+            {[...Array(30).keys()].map((i) => (
+              <Text key={i}>----- {'\n'}</Text>
+            ))}
+          </Text>
+          <Text>
+            ・Dummy Text３
+            {[...Array(30).keys()].map((i) => (
+              <Text key={i}>----- {'\n'}</Text>
+            ))}
+          </Text>
         </View>
       </Dialog>
     </Layout>

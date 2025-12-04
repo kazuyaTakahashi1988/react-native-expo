@@ -68,7 +68,7 @@ const Dialog = (args: Story['args']) => {
         onPress={() => {
           setVisible(true);
         }}
-        title='Dialog を開く'
+        title='Dialog Open'
       />
       <DialogComponent
         {...args}
@@ -76,7 +76,7 @@ const Dialog = (args: Story['args']) => {
           setVisible(false);
         }}
         onEvent={() => {
-          alert('確認しました');
+          alert('Thanks to Tap');
           setVisible(false);
         }}
         visible={visible}
@@ -85,41 +85,64 @@ const Dialog = (args: Story['args']) => {
   );
 };
 
-export const Basic: Story = {
+export const BasicDialog: Story = {
   args: {
     ...baseArgs,
-    title: 'Dialog タイトル',
+    title: 'Basic Dialog',
     description:
-      'この内容で実行しますか？この操作は元に戻すことができないため、十分にご注意ください。',
-    eventText: 'OK',
-    closeText: 'キャンセル',
+      'description：Dummy Text。----------------------------------------------------------------',
+    eventText: 'Event Button',
+    closeText: 'Close Button',
   },
   render: (args) => <Dialog {...args} />,
 };
 
-export const WithoutCancel: Story = {
+export const WithoutCloseButton: Story = {
   args: {
     ...baseArgs,
-    title: 'キャンセルを表示しない例',
-    description: '確認のみのケースに使用します。',
-    closeText: '',
+    title: 'Close Buttonを表示しない例',
+    description: 'OKボタンを押さないと閉じれません。',
     eventText: 'OK',
     closeOnBackdropPress: false,
   },
   render: (args) => <Dialog {...args} />,
 };
 
-export const CustomContent: Story = {
+export const WithoutEventAndCloseButton: Story = {
   args: {
     ...baseArgs,
-    title: 'カスタムコンテンツ',
-    eventText: 'OK',
-    closeText: 'キャンセル',
+    title: 'Event & Close Buttonを表示しない例',
+    description: '背景を押さないと閉じれません。',
+  },
+  render: (args) => <Dialog {...args} />,
+};
+
+export const CustomContentScrollView: Story = {
+  args: {
+    ...baseArgs,
+    title: 'Custom Contents（ScrollView）',
+    eventText: 'Event Button',
+    closeText: 'Close Button',
     children: (
       <View style={dialogStyles.customContent}>
-        <Text>・チェック項目１</Text>
-        <Text>・チェック項目２</Text>
-        <Text>・チェック項目３</Text>
+        <Text>
+          ・Dummy Text１
+          {[...Array(30).keys()].map((i) => (
+            <Text key={i}>----- {'\n'}</Text>
+          ))}
+        </Text>
+        <Text>
+          ・Dummy Text２
+          {[...Array(30).keys()].map((i) => (
+            <Text key={i}>----- {'\n'}</Text>
+          ))}
+        </Text>
+        <Text>
+          ・Dummy Text３
+          {[...Array(30).keys()].map((i) => (
+            <Text key={i}>----- {'\n'}</Text>
+          ))}
+        </Text>
       </View>
     ),
   },
