@@ -9,20 +9,30 @@ import type { TypeDialog } from '../../lib/types/typeComponents';
 /* -----------------------------------------------
  * ダイアログ
  * ----------------------------------------------- */
-const DialogTitle = ({ title }: Pick<TypeDialog, 'title'>) => {
+// eslint-disable-next-line complexity
+const DialogHeader = ({
+  title,
+  description,
+}: Pick<TypeDialog, 'title' | 'description'>) => {
   const hasTitle = typeof title === 'string' && title.length > 0;
-
-  if (!hasTitle) return null;
-
-  return <Text style={styles.title}>{title}</Text>;
-};
-
-const DialogDescription = ({ description }: Pick<TypeDialog, 'description'>) => {
   const hasDescription = typeof description === 'string' && description.length > 0;
 
-  if (!hasDescription) return null;
+  const headerItems = [
+    hasTitle ? (
+      <Text key='dialog-title' style={styles.title}>
+        {title}
+      </Text>
+    ) : null,
+    hasDescription ? (
+      <Text key='dialog-description' style={styles.description}>
+        {description}
+      </Text>
+    ) : null,
+  ].filter(Boolean);
 
-  return <Text style={styles.description}>{description}</Text>;
+  if (headerItems.length === 0) return null;
+
+  return <View style={styles.header}>{headerItems}</View>;
 };
 
 const DialogContent = ({ children }: Pick<TypeDialog, 'children'>) => {
@@ -54,24 +64,14 @@ const Dialog = ({
   onClose,
   children,
 }: TypeDialog) => {
-  const { height } = useWindowDimensions();
-  const opacity = useDialogOpacity(visible);
-  const showCloseButton = Boolean(closeText) && Boolean(onClose);
-  const showEventButton = Boolean(eventText);
-  const maxCardHeight = height - 120;
-
-  const overlayStyle = useAnimatedStyle(() => ({
-    opacity: opacity.value,
-  }));
-
-  const cardStyle = useAnimatedStyle(() => ({
-    opacity: opacity.value,
-    transform: [
-      {
-        scale: interpolate(opacity.value, [0, 1], [0.96, 1]),
-      },
-    ],
-  }));
+  const { cardStyle, hasHeader, maxCardHeight, overlayStyle, showCloseButton, showEventButton } = useDialogLayout({
+    closeText,
+    description,
+    eventText,
+    onClose,
+    title,
+    visible,
+  });
 
   return (
     <Modal animationType='none' onRequestClose={onClose} transparent visible={visible}>
@@ -85,10 +85,10 @@ const Dialog = ({
               bounces={false}
               contentContainerStyle={styles.body}
               showsVerticalScrollIndicator={false}
+              stickyHeaderIndices={hasHeader ? [0] : undefined}
               style={styles.bodyScroll}
             >
-              <DialogTitle title={title} />
-              <DialogDescription description={description} />
+              {hasHeader ? <DialogHeader description={description} title={title} /> : null}
               <DialogContent>{children}</DialogContent>
             </ScrollView>
             <DialogActions
@@ -104,7 +104,7 @@ const Dialog = ({
       </View>
     </Modal>
   );
-  };
+};
 
 const DialogActions = ({
   closeText,
@@ -139,6 +139,46 @@ const useDialogOpacity = (visible: boolean) => {
   }, [opacity, visible]);
 
   return opacity;
+};
+
+// eslint-disable-next-line complexity
+const useDialogLayout = ({
+  closeText,
+  description,
+  eventText,
+  onClose,
+  title,
+  visible,
+}: Pick<TypeDialog, 'closeText' | 'description' | 'eventText' | 'onClose' | 'title' | 'visible'>) => {
+  const { height } = useWindowDimensions();
+  const opacity = useDialogOpacity(visible);
+
+  const overlayStyle = useAnimatedStyle(() => ({
+    opacity: opacity.value,
+  }));
+
+  const cardStyle = useAnimatedStyle(() => ({
+    opacity: opacity.value,
+    transform: [
+      {
+        scale: interpolate(opacity.value, [0, 1], [0.96, 1]),
+      },
+    ],
+  }));
+
+  const maxCardHeight = height - 120;
+  const showCloseButton = Boolean(closeText) && Boolean(onClose);
+  const showEventButton = Boolean(eventText);
+  const hasHeader = (title?.length ?? 0) > 0 || (description?.length ?? 0) > 0;
+
+  return {
+    cardStyle,
+    hasHeader,
+    maxCardHeight,
+    overlayStyle,
+    showCloseButton,
+    showEventButton,
+  };
 };
 
 const styles = StyleSheet.create({
@@ -179,6 +219,11 @@ const styles = StyleSheet.create({
   body: {
     gap: 16,
     paddingBottom: 8,
+  },
+  header: {
+    backgroundColor: color.white,
+    paddingBottom: 4,
+    paddingTop: 4,
   },
   title: {
     color: color.black,
