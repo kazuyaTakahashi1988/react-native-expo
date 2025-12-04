@@ -185,13 +185,13 @@ const AuthScreen: React.FC = () => {
       {!isAuth ? (
         <>
           {/* Sign In フォーム */}
-          <SignInForm form={signInForm} onSubmit={onSignInSubmit} visibled={isActive('signIn')} />
+          <SignInForm form={signInForm} onSubmit={onSignInSubmit} visible={isActive('signIn')} />
 
           {/* Sign Up フォーム */}
-          <SignUpForm form={signUpForm} onSubmit={onSignUpSubmit} visibled={isActive('signUp')} />
+          <SignUpForm form={signUpForm} onSubmit={onSignUpSubmit} visible={isActive('signUp')} />
 
           {/* Verify フォーム */}
-          <VerifyForm form={verifyForm} onSubmit={onVerifySubmit} visibled={isActive('verify')} />
+          <VerifyForm form={verifyForm} onSubmit={onVerifySubmit} visible={isActive('verify')} />
         </>
       ) : (
         <>

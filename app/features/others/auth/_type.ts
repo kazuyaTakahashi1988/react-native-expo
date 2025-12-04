@@ -9,5 +9,5 @@ export type TypeResult = {
 export type TypeAuthForm<T extends FieldValues> = {
   form: UseFormReturn<T>;
   onSubmit: () => void;
-  visibled: boolean;
+  visible: boolean;
 };

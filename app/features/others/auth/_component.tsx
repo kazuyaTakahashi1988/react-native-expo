@@ -27,9 +27,9 @@ const rules = {
 export const SignInForm: React.FC<TypeAuthForm<TypeSignInValues>> = ({
   form,
   onSubmit,
-  visibled,
+  visible,
 }) => {
-  if (!visibled) {
+  if (!visible) {
     return null;
   }
 
@@ -78,9 +78,9 @@ export const SignInForm: React.FC<TypeAuthForm<TypeSignInValues>> = ({
 export const SignUpForm: React.FC<TypeAuthForm<TypeSignUpValues>> = ({
   form,
   onSubmit,
-  visibled,
+  visible,
 }) => {
-  if (!visibled) {
+  if (!visible) {
     return null;
   }
 
@@ -129,9 +129,9 @@ export const SignUpForm: React.FC<TypeAuthForm<TypeSignUpValues>> = ({
 export const VerifyForm: React.FC<TypeAuthForm<TypeVerifyValues>> = ({
   form,
   onSubmit,
-  visibled,
+  visible,
 }) => {
-  if (!visibled) {
+  if (!visible) {
     return null;
   }
 
