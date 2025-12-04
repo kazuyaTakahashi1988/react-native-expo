@@ -3,13 +3,13 @@ import { StyleSheet, Text, View } from 'react-native';
 
 import { styles } from '../../.storybook/styles.ts';
 import Button from '../../app/components/button/_button.tsx';
-import Dialog from '../../app/components/dialog/_dialog.tsx';
+import { Dialog as DialogComponent } from '../../app/components/dialog';
 
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite';
 
 const meta = {
   title: 'Dialog/Dialog',
-  component: Dialog,
+  component: DialogComponent,
   decorators: [
     (Story) => (
       <View style={[styles.container, styles.center]}>
@@ -36,13 +36,13 @@ const meta = {
       description: 'クローズボタン文言。空または未指定で非表示',
     },
   },
-} satisfies Meta<typeof Dialog>;
+} satisfies Meta<typeof DialogComponent>;
 
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-const dialogPreviewStyles = StyleSheet.create({
+const dialogStyles = StyleSheet.create({
   customContent: {
     gap: 6,
   },
@@ -59,18 +59,18 @@ const baseArgs = {
   visible: false,
 };
 
-const DialogPreview = (args: Story['args']) => {
+const Dialog = (args: Story['args']) => {
   const [visible, setVisible] = React.useState(false);
 
   return (
-    <View style={dialogPreviewStyles.preview}>
+    <View style={dialogStyles.preview}>
       <Button
         onPress={() => {
           setVisible(true);
         }}
         title='Dialog を開く'
       />
-      <Dialog
+      <DialogComponent
         {...args}
         onClose={() => {
           setVisible(false);
@@ -94,7 +94,7 @@ export const Basic: Story = {
     eventText: 'OK',
     closeText: 'キャンセル',
   },
-  render: (args) => <DialogPreview {...args} />,
+  render: (args) => <Dialog {...args} />,
 };
 
 export const WithoutCancel: Story = {
@@ -106,7 +106,7 @@ export const WithoutCancel: Story = {
     eventText: 'OK',
     closeOnBackdropPress: false,
   },
-  render: (args) => <DialogPreview {...args} />,
+  render: (args) => <Dialog {...args} />,
 };
 
 export const CustomContent: Story = {
@@ -116,12 +116,12 @@ export const CustomContent: Story = {
     eventText: 'OK',
     closeText: 'キャンセル',
     children: (
-      <View style={dialogPreviewStyles.customContent}>
+      <View style={dialogStyles.customContent}>
         <Text>・チェック項目１</Text>
         <Text>・チェック項目２</Text>
         <Text>・チェック項目３</Text>
       </View>
     ),
   },
-  render: (args) => <DialogPreview {...args} />,
+  render: (args) => <Dialog {...args} />,
 };
