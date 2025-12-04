@@ -54,10 +54,12 @@ const DialogCancelButton = ({
   );
 };
 
+// eslint-disable-next-line complexity
 const Dialog = ({
   visible,
   title,
   description,
+  closeOnBackdropPress = true,
   eventText = 'OK',
   closeText = 'キャンセル',
   onEvent,
@@ -73,10 +75,12 @@ const Dialog = ({
     visible,
   });
 
+  const handleBackdropPress = closeOnBackdropPress ? onClose : undefined;
+
   return (
     <Modal animationType='none' onRequestClose={onClose} transparent visible={visible}>
       <View style={styles.container}>
-        <Pressable accessibilityLabel='閉じる' onPress={onClose} style={styles.backdropPressable}>
+        <Pressable accessibilityLabel='閉じる' onPress={handleBackdropPress} style={styles.backdropPressable}>
           <Animated.View style={[styles.backdrop, overlayStyle]} />
         </Pressable>
         <View style={styles.center}>

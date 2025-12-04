@@ -25,6 +25,10 @@ const meta = {
     description: {
       description: '本文テキスト',
     },
+    closeOnBackdropPress: {
+      description: '背景タップで閉じるかどうか',
+      control: 'boolean',
+    },
     eventText: {
       description: 'イベントボタン文言',
     },
@@ -51,6 +55,7 @@ const dialogPreviewStyles = StyleSheet.create({
 const baseArgs = {
   onClose: () => {},
   onEvent: () => {},
+  closeOnBackdropPress: true,
   visible: false,
 };
 
@@ -99,6 +104,7 @@ export const WithoutCancel: Story = {
     description: '確認のみのケースに使用します。',
     closeText: '',
     eventText: 'OK',
+    closeOnBackdropPress: false,
   },
   render: (args) => <DialogPreview {...args} />,
 };

@@ -99,6 +99,7 @@ const AboutScreen: React.FC<TypeAboutScreen> = (props) => {
       />
 
       <Dialog
+        closeOnBackdropPress={false}
         closeText=''
         description='確認のみのケースに使用します。'
         onClose={closeDialog}
