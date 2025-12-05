@@ -14,9 +14,9 @@ const ErrorText: React.FC<{ errorText?: TypeErrorText }> = ({ errorText }) => {
     return null;
   }
 
-  return <Text style={errorStyles.text}>{errorText}</Text>;
+  return <Text style={styles.text}>{errorText}</Text>;
 };
-const errorStyles = StyleSheet.create({
+const styles = StyleSheet.create({
   text: {
     color: color.red,
     fontSize: 12,
