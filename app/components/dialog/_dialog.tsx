@@ -37,7 +37,7 @@ const DialogBackGround = ({
 
   return (
     <Pressable onPress={onClose} style={styles.dialogBackGround}>
-      <Animated.View style={styles.backGround} />
+      <View style={styles.backGround} />
     </Pressable>
   );
 };
@@ -131,20 +131,20 @@ const Dialog = ({
     opacity: opacity.value,
     transform: [
       {
-        scale: interpolate(opacity.value, [0, 1], [0.96, 1]),
+        scale: interpolate(opacity.value, [0, 1], [0.98, 1]),
       },
     ],
   }));
 
   return (
     <Modal animationType='none' onRequestClose={onClose} transparent visible={visible}>
-      <View style={styles.container}>
+      <Animated.View style={[styles.container, animatedStyle]}>
         {/*
          * 透過背景
          */}
         <DialogBackGround {...{ closeOnBackGround, onClose }} />
         <View style={styles.dialog}>
-          <Animated.View style={[styles.dialogCard, { maxHeight: height - 120 }, animatedStyle]}>
+          <View style={[styles.dialogCard, { maxHeight: height - 120 }]}>
             {/*
              * タイトル
              */}
@@ -157,9 +157,9 @@ const Dialog = ({
              * ボトム（ボタン）
              */}
             <DialogBottom {...{ closeText, eventText, onClose, onEvent }} />
-          </Animated.View>
+          </View>
         </View>
-      </View>
+      </Animated.View>
     </Modal>
   );
 };
