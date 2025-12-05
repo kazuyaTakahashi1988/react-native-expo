@@ -129,16 +129,11 @@ const CheckBoxCustom = <TFieldValues extends FieldValues>({
     allDisabled: boolean,
   ): boolean => optionDisabled === true || allDisabled;
 
-  const handleToggleOption = (
-    optionValue: string,
-    currentSelectedValues: string[],
-    onChange: (value: string[]) => void,
-  ) => {
-    if (currentSelectedValues.includes(optionValue)) {
-      onChange(currentSelectedValues.filter((selected) => selected !== optionValue));
-      return;
+  const getToggleOption = (optionValue: string) => {
+    if (selectedValues.includes(optionValue)) {
+      return selectedValues.filter((selected) => selected !== optionValue);
     }
-    onChange([...currentSelectedValues, optionValue]);
+    return [...selectedValues, optionValue];
   };
 
   return (
@@ -160,7 +155,8 @@ const CheckBoxCustom = <TFieldValues extends FieldValues>({
               key={option.key ?? option.value}
               label={option.label}
               onToggle={() => {
-                handleToggleOption(option.value, selectedValues, controller.field.onChange);
+                const toggleOption = getToggleOption(option.value);
+                controller.field.onChange(toggleOption);
               }}
               optionRowStyle={optionRowStyle}
               value={option.value}

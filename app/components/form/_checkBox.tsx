@@ -39,16 +39,11 @@ const CheckBox = <TFieldValues extends FieldValues>({
     return optionDisabled === true || disabled;
   };
 
-  const handleToggleOption = (
-    optionValue: string,
-    selectedValues: string[],
-    onChange: (value: string[]) => void,
-  ) => {
+  const getToggleOption = (optionValue: string) => {
     if (selectedValues.includes(optionValue)) {
-      onChange(selectedValues.filter((selected) => selected !== optionValue));
-      return;
+      return selectedValues.filter((selected) => selected !== optionValue);
     }
-    onChange([...selectedValues, optionValue]);
+    return [...selectedValues, optionValue];
   };
 
   /*
@@ -82,7 +77,8 @@ const CheckBox = <TFieldValues extends FieldValues>({
               disabled={isDisabled}
               key={option.key ?? option.value}
               onPress={() => {
-                handleToggleOption(option.value, selectedValues, controller.field.onChange);
+                const toggleOption = getToggleOption(option.value);
+                controller.field.onChange(toggleOption);
               }}
               style={[styles.checkBoxRow, optionRowStyle]}
             >
