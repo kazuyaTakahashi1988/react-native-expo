@@ -9,9 +9,11 @@ import type { TypeErrorText } from '../../lib/types/typeComponents';
  * ----------------------------------------------- */
 
 const ErrorText: React.FC<{ errorText?: TypeErrorText }> = ({ errorText }) => {
-  if (errorText == null) {
+  const isErrorText = Boolean(errorText);
+  if (!isErrorText) {
     return null;
   }
+
   return <Text style={errorStyles.text}>{errorText}</Text>;
 };
 const errorStyles = StyleSheet.create({

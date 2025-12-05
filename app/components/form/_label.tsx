@@ -11,7 +11,9 @@ import type { FieldValues } from 'react-hook-form';
 
 const Label = <TFieldValues extends FieldValues>({ label, rules }: TypeLabel<TFieldValues>) => {
   const isLabel = Boolean(label);
-  if (!isLabel) return;
+  if (!isLabel) {
+    return null;
+  }
 
   const isRequired = Boolean(rules?.required);
 
