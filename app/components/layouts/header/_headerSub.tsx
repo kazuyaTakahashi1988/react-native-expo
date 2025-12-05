@@ -13,16 +13,13 @@ import type { TypeHeaderSub } from '../../../lib/types/typeComponents';
 const HeaderSub: React.FC<TypeHeaderSub> = (props) => {
   const { navigation, route, options, goBack = false, rightItem } = props;
   const headerTitle = options.title ?? route.name;
+  const isGoBack = Boolean(goBack);
   const { top } = useSafeAreaInsets(); // デバイス固有のセーフエリアTop値
-
-  const isGoBack = () => {
-    return goBack === true || (typeof goBack === 'string' && goBack.trim() !== '');
-  };
 
   return (
     <View style={[styles.header, { paddingTop: top }]}>
       <View style={styles.headerInner}>
-        {isGoBack() && (
+        {isGoBack ? (
           <Pressable
             onPress={() => {
               navigation.goBack();
@@ -30,9 +27,11 @@ const HeaderSub: React.FC<TypeHeaderSub> = (props) => {
             style={styles.headerLeft}
           >
             <IconArrow />
-            {typeof goBack === 'string' && <Text style={styles.headerLeftLabel}>{goBack}</Text>}
+            {typeof goBack === 'string' ? (
+              <Text style={styles.headerLeftLabel}>{goBack}</Text>
+            ) : null}
           </Pressable>
-        )}
+        ) : null}
         <Text style={styles.headerItem}>{headerTitle}</Text>
         <Text style={[styles.headerItem, styles.headerRight]}>{rightItem}</Text>
       </View>

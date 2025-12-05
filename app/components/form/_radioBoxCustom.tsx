@@ -1,7 +1,6 @@
-import React from 'react';
+import { useEffect } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import Animated, {
-  interpolate,
   interpolateColor,
   useAnimatedStyle,
   useSharedValue,
@@ -13,217 +12,200 @@ import Label from './_label';
 import { color } from '../../lib/mixin';
 import { useRHFController } from '../../services/formHelper';
 
-import type { TypeRadioBoxCustom, TypeToggleRadioOption } from '../../lib/types/typeComponents';
+import type { TypeBoxCustomOption, TypeRadioBoxCustom } from '../../lib/types/typeComponents';
+import type React from 'react';
 import type { FieldValues } from 'react-hook-form';
-import type { SharedValue } from 'react-native-reanimated';
+
+const AnimatedView = Animated.createAnimatedComponent(View);
 
 /* -----------------------------------------------
- * ラヂオボックスカスタム項目
+ * オプション行（Reanimated付き）
  * ----------------------------------------------- */
 
-const TRACK_WIDTH = 48;
-const TRACK_HEIGHT = 28;
-const KNOB_SIZE = 22;
-const KNOB_MARGIN = (TRACK_HEIGHT - KNOB_SIZE) / 2;
-
-const ERROR_COLOR = color.red;
-const DISABLED_COLOR = color.gray100;
-const KNOB_MAX_TRANSLATE = TRACK_WIDTH - KNOB_SIZE - KNOB_MARGIN;
-
-const ToggleRadioOption = ({
+const OptionRow: React.FC<TypeBoxCustomOption> = ({
   label,
-  disabled = false,
   isSelected,
-  onPress,
-  accessibilityState,
+  isDisabled,
   hasError,
-  activeColor,
-  inactiveColor,
-  knobColor,
   optionRowStyle,
-  optionLabelStyle,
-  trackStyle,
-  knobStyle,
-}: TypeToggleRadioOption) => {
-  const progress: SharedValue<number> = useSharedValue<number>(isSelected ? 1 : 0);
-  const isDisabled = disabled;
+  onToggle,
+}) => {
+  const progress = useSharedValue(isSelected ? 1 : 0);
 
-  React.useEffect(() => {
-    progress.value = withTiming(isSelected ? 1 : 0, { duration: 200 });
+  useEffect(() => {
+    progress.value = withTiming(isSelected ? 1 : 0, {
+      duration: 200,
+    });
   }, [isSelected, progress]);
 
-  const trackAnimatedStyle = useAnimatedStyle(
-    (): { backgroundColor: string } => ({
-      backgroundColor: isDisabled
-        ? DISABLED_COLOR
-        : String(interpolateColor(progress.value, [0, 1], [inactiveColor, activeColor])),
-    }),
-    [activeColor, inactiveColor, isDisabled],
-  );
+  // 背景色アニメーション（OFF: gray, ON: primary）
+  const animatedBaseStyle = useAnimatedStyle(() => {
+    // disabled のときは静的スタイルを優先
+    if (isDisabled) {
+      return {};
+    }
 
-  const knobAnimatedStyle = useAnimatedStyle(
-    (): { transform: { translateX: number }[] } => ({
-      transform: [
-        {
-          translateX: interpolate(progress.value, [0, 1], [KNOB_MARGIN, KNOB_MAX_TRANSLATE]),
-        },
-      ],
-    }),
-    [],
-  );
+    const backgroundColor = interpolateColor(progress.value, [0, 1], [color.gray, color.primary]);
+
+    return {
+      backgroundColor,
+    };
+  });
+
+  // ノブの位置アニメーション
+  const animatedKnobStyle = useAnimatedStyle(() => {
+    const translateX = progress.value * 18; // 18px 移動
+    return {
+      transform: [{ translateX }],
+    };
+  });
+
+  const getOptionLabelStyle = (disabled: boolean) => {
+    if (!disabled) {
+      return null;
+    }
+    return styles.radioBoxTextDisabled;
+  };
 
   return (
     <Pressable
       accessibilityRole='radio'
-      accessibilityState={accessibilityState}
+      accessibilityState={{ selected: isSelected, disabled: isDisabled }}
       disabled={isDisabled}
-      onPress={onPress}
-      style={[styles.optionRow, optionRowStyle]}
+      onPress={onToggle}
+      style={[styles.radioRow, optionRowStyle]}
     >
-      <Animated.View
+      <AnimatedView
         style={[
-          styles.track,
-          hasError ? styles.trackError : styles.trackDefault,
-          trackAnimatedStyle,
-          trackStyle,
+          styles.radioBoxBase,
+          animatedBaseStyle,
+          hasError ? styles.radioBoxError : null,
+          isDisabled ? styles.radioBoxDisabled : null,
         ]}
       >
-        <Animated.View
-          style={[styles.knob, { backgroundColor: knobColor }, knobAnimatedStyle, knobStyle]}
+        <AnimatedView
+          style={[
+            styles.radioBoxKnob,
+            animatedKnobStyle,
+            isDisabled ? styles.radioBoxKnobDisabled : null,
+          ]}
         />
-      </Animated.View>
-      <Text
-        style={[
-          styles.optionLabel,
-          optionLabelStyle,
-          isDisabled ? styles.optionLabelDisabled : null,
-        ]}
-      >
-        {label}
-      </Text>
+      </AnimatedView>
+      <Text style={getOptionLabelStyle(isDisabled)}>{label}</Text>
     </Pressable>
   );
 };
 
+/* -----------------------------------------------
+ * ラヂオボックスカスタム項目（親コンポーネント）
+ * ----------------------------------------------- */
+
 const RadioBoxCustom = <TFieldValues extends FieldValues>({
-  activeColor: activeColorProp,
   containerStyle,
   control,
-  disabled,
+  disabled = false,
   errorText,
-  inactiveColor: inactiveColorProp,
-  knobColor: knobColorProp,
   label,
   name,
   optionListStyle,
   optionRowStyle,
-  optionLabelStyle,
   options,
   rules,
-  trackStyle,
-  knobStyle,
 }: TypeRadioBoxCustom<TFieldValues>) => {
   const { controller } = useRHFController({ control, name, rules });
-  const controllerValue = controller.field.value;
-
-  const selectedValue = React.useMemo(() => getSelectedValue(controllerValue), [controllerValue]);
-
   const hasError = Boolean(errorText);
 
-  const activeColor = activeColorProp ?? color.primary;
-  const inactiveColor = inactiveColorProp ?? '#d1d5db';
-  const knobColor = knobColorProp ?? color.white;
+  const getSelectedValue = (value: unknown): string => {
+    if (typeof value !== 'string') {
+      return '';
+    }
+    return value;
+  };
+  const selectedValue = getSelectedValue(controller.field.value);
+
+  const getIsOptionDisabled = (
+    optionDisabled: boolean | undefined,
+    allDisabled: boolean,
+  ): boolean => optionDisabled === true || allDisabled;
+
+  const handleSelectOption = (optionValue: string, onChange: (value: string) => void) => {
+    onChange(optionValue);
+  };
 
   return (
     <View style={containerStyle}>
       <Label {...{ label, rules }} />
-      <View style={[styles.optionList, optionListStyle]}>
+      <View style={[styles.radioGroup, optionListStyle]}>
         {options.map((option) => {
           const isSelected = selectedValue === option.value;
           const isDisabled = getIsOptionDisabled(option.disabled, disabled);
+
+          /*
+           * オプション行（Reanimated付き）
+           */
           return (
-            <ToggleRadioOption
-              accessibilityState={{ selected: isSelected }}
-              activeColor={activeColor}
-              disabled={isDisabled}
+            <OptionRow
               hasError={hasError}
-              inactiveColor={inactiveColor}
+              isDisabled={isDisabled}
               isSelected={isSelected}
               key={option.key ?? option.value}
-              knobColor={knobColor}
-              knobStyle={knobStyle}
               label={option.label}
-              onPress={() => {
+              onToggle={() => {
                 handleSelectOption(option.value, controller.field.onChange);
               }}
-              optionLabelStyle={optionLabelStyle}
               optionRowStyle={optionRowStyle}
-              trackStyle={trackStyle}
+              value={option.value}
             />
           );
         })}
       </View>
-      <ErrorText errorText={errorText} />
+      <ErrorText {...{ errorText }} />
     </View>
   );
 };
 
-const getSelectedValue = (value: unknown): string => {
-  if (typeof value !== 'string') {
-    return '';
-  }
-  return value;
-};
-
-const getIsOptionDisabled = (
-  optionDisabled: boolean | undefined,
-  disabled: boolean | undefined,
-): boolean => {
-  return optionDisabled === true || disabled === true;
-};
-
-const handleSelectOption = (optionValue: string, onChange: (value: string) => void) => {
-  onChange(optionValue);
-};
-
 const styles = StyleSheet.create({
-  optionList: {
+  radioGroup: {
     rowGap: 12,
   },
-  optionRow: {
+  radioRow: {
     alignItems: 'center',
     columnGap: 12,
     flexDirection: 'row',
   },
-  track: {
-    borderRadius: TRACK_HEIGHT / 2,
+  radioBoxBase: {
+    backgroundColor: color.gray,
+    borderColor: color.gray,
+    borderRadius: 20,
     borderWidth: 1,
-    height: TRACK_HEIGHT,
+    height: 30,
     justifyContent: 'center',
-    paddingHorizontal: KNOB_MARGIN,
-    width: TRACK_WIDTH,
+    width: 50,
   },
-  trackDefault: {
-    borderColor: color.transparent,
+  radioBoxTextDisabled: {
+    color: color.gray100,
   },
-  trackError: {
-    borderColor: ERROR_COLOR,
-  },
-  knob: {
-    borderRadius: KNOB_SIZE / 2,
-    elevation: 2,
-    height: KNOB_SIZE,
+  radioBoxKnob: {
+    backgroundColor: color.white,
+    borderRadius: 22,
+    height: 22,
+    left: 5,
     shadowColor: color.black,
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.2,
     shadowRadius: 1.41,
-    width: KNOB_SIZE,
+    width: 22,
   },
-  optionLabel: {
-    fontSize: 14,
+  radioBoxKnobDisabled: {
+    backgroundColor: color.white,
+    opacity: 0.7,
   },
-  optionLabelDisabled: {
-    color: color.gray100,
+  radioBoxError: {
+    borderColor: color.red,
+  },
+  radioBoxDisabled: {
+    backgroundColor: color.gray100,
+    borderColor: color.gray100,
   },
 });
 

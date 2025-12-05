@@ -16,182 +16,118 @@ import Animated, {
 } from 'react-native-reanimated';
 
 import { color } from '../../lib/mixin';
+import { Button } from '../button';
 
 import type { TypeDialog } from '../../lib/types/typeComponents';
 
 /* -----------------------------------------------
- * ダイアログ
+ * ダイアログ 各パーツ
  * ----------------------------------------------- */
-// eslint-disable-next-line complexity
-const DialogHeader = ({ title, description }: Pick<TypeDialog, 'title' | 'description'>) => {
-  const hasTitle = typeof title === 'string' && title.length > 0;
-  const hasDescription = typeof description === 'string' && description.length > 0;
 
-  const headerItems = [
-    hasTitle ? (
-      <Text key='dialog-title' style={styles.title}>
-        {title}
-      </Text>
-    ) : null,
-    hasDescription ? (
-      <Text key='dialog-description' style={styles.description}>
-        {description}
-      </Text>
-    ) : null,
-  ].filter(Boolean);
-
-  if (headerItems.length === 0) return null;
-
-  return <View style={styles.header}>{headerItems}</View>;
-};
-
-const DialogContent = ({ children }: Pick<TypeDialog, 'children'>) => {
-  if (children === null || children === undefined) return null;
-
-  return <View style={styles.content}>{children}</View>;
-};
-
-const DialogCancelButton = ({
-  closeText,
+/*
+ * 透過背景
+ */
+const DialogBackGround = ({
   onClose,
-}: {
-  closeText?: string;
-  onClose?: TypeDialog['onClose'];
-}) => {
-  if (!onClose) return null;
+  closeOnBackGround,
+}: Pick<TypeDialog, 'onClose' | 'closeOnBackGround'>) => {
+  if (closeOnBackGround !== true) {
+    return null;
+  }
 
   return (
-    <Pressable
-      accessibilityRole='button'
-      onPress={onClose}
-      style={[styles.button, styles.outlineButton]}
-    >
-      <Text style={[styles.buttonText, styles.outlineButtonText]}>{closeText}</Text>
+    <Pressable onPress={onClose} style={styles.dialogBackGround}>
+      <Animated.View style={styles.backGround} />
     </Pressable>
   );
 };
 
+/*
+ * タイトル
+ */
+const DialogTitle = ({ title }: Pick<TypeDialog, 'title'>) => {
+  const istitle = Boolean(title);
+  if (!istitle) {
+    return null;
+  }
+
+  return (
+    <View style={styles.dialogTitle}>
+      <Text style={styles.dialogTitleText}>{title}</Text>
+    </View>
+  );
+};
+
+/*
+ * チャイルドコンテンツ
+ */
+const DialogChildren = ({ children }: Pick<TypeDialog, 'children'>) => {
+  const ischildren = Boolean(children);
+  if (!ischildren) {
+    return null;
+  }
+
+  return (
+    <ScrollView
+      bounces={false}
+      contentContainerStyle={styles.dialogChildren}
+      showsVerticalScrollIndicator={false}
+      style={styles.scrollView}
+    >
+      <View style={styles.children}>{children}</View>
+    </ScrollView>
+  );
+};
+
+/*
+ * ボトム（ボタン）
+ */
+const DialogBottom = ({
+  closeText,
+  eventText,
+  onClose,
+  onEvent,
+}: Pick<TypeDialog, 'closeText' | 'eventText' | 'onClose' | 'onEvent'>) => {
+  const isCloseText = Boolean(closeText);
+  const isEventText = Boolean(eventText);
+  if (!isCloseText && !isEventText) {
+    return null;
+  }
+
+  return (
+    <View style={styles.dialogBottom}>
+      {isCloseText ? <Button onPress={onClose} pattern='secondary' title={closeText} /> : null}
+      {isEventText ? <Button onPress={onEvent} title={eventText} /> : null}
+    </View>
+  );
+};
+
+/* -----------------------------------------------
+ * ダイアログ（親コンポーネント）
+ * ----------------------------------------------- */
+
 const Dialog = ({
   visible,
   title,
-  description,
-  closeOnBackdropPress = true,
+  closeOnBackGround = true,
   eventText,
   closeText,
   onEvent,
   onClose,
   children,
 }: TypeDialog) => {
-  const { cardStyle, hasHeader, maxCardHeight, overlayStyle, showCloseButton, showEventButton } =
-    useDialogLayout({
-      closeText,
-      description,
-      eventText,
-      onEvent,
-      onClose,
-      title,
-      visible,
-    });
+  const { height } = useWindowDimensions();
 
-  const handleBackdropPress = closeOnBackdropPress ? onClose : undefined;
-
-  return (
-    <Modal animationType='none' onRequestClose={onClose} transparent visible={visible}>
-      <View style={styles.container}>
-        <Pressable
-          accessibilityLabel='閉じる'
-          onPress={handleBackdropPress}
-          style={styles.backdropPressable}
-        >
-          <Animated.View style={[styles.backdrop, overlayStyle]} />
-        </Pressable>
-        <View style={styles.center}>
-          <Animated.View style={[styles.card, { maxHeight: maxCardHeight }, cardStyle]}>
-            <ScrollView
-              bounces={false}
-              contentContainerStyle={styles.body}
-              showsVerticalScrollIndicator={false}
-              stickyHeaderIndices={hasHeader ? [0] : undefined}
-              style={styles.bodyScroll}
-            >
-              {hasHeader ? <DialogHeader description={description} title={title} /> : null}
-              <DialogContent>{children}</DialogContent>
-            </ScrollView>
-            <DialogActions
-              closeText={closeText}
-              eventText={eventText}
-              onClose={onClose}
-              onEvent={onEvent}
-              showCloseButton={showCloseButton}
-              showEventButton={showEventButton}
-            />
-          </Animated.View>
-        </View>
-      </View>
-    </Modal>
-  );
-};
-
-const DialogActions = ({
-  closeText,
-  eventText,
-  onClose,
-  onEvent,
-  showCloseButton,
-  showEventButton,
-}: {
-  closeText?: string;
-  eventText?: string;
-  onClose?: TypeDialog['onClose'];
-  onEvent?: TypeDialog['onEvent'];
-  showCloseButton: boolean;
-  showEventButton: boolean;
-}) => (
-  <View style={styles.actions}>
-    {showCloseButton ? <DialogCancelButton closeText={closeText} onClose={onClose} /> : null}
-    {showEventButton ? (
-      <Pressable
-        accessibilityRole='button'
-        onPress={onEvent}
-        style={[styles.button, styles.fillButton]}
-      >
-        <Text style={[styles.buttonText, styles.fillButtonText]}>{eventText}</Text>
-      </Pressable>
-    ) : null}
-  </View>
-);
-
-const useDialogOpacity = (visible: boolean) => {
+  /*
+   * アニメーション設定
+   */
   const opacity = useSharedValue(0);
 
   React.useEffect(() => {
     opacity.value = visible ? withTiming(1, { duration: 250 }) : 0;
   }, [opacity, visible]);
 
-  return opacity;
-};
-
-// eslint-disable-next-line complexity
-const useDialogLayout = ({
-  closeText,
-  description,
-  eventText,
-  onEvent,
-  onClose,
-  title,
-  visible,
-}: Pick<
-  TypeDialog,
-  'closeText' | 'description' | 'eventText' | 'onClose' | 'onEvent' | 'title' | 'visible'
->) => {
-  const { height } = useWindowDimensions();
-  const opacity = useDialogOpacity(visible);
-
-  const overlayStyle = useAnimatedStyle(() => ({
-    opacity: opacity.value,
-  }));
-
-  const cardStyle = useAnimatedStyle(() => ({
+  const animatedStyle = useAnimatedStyle(() => ({
     opacity: opacity.value,
     transform: [
       {
@@ -200,41 +136,51 @@ const useDialogLayout = ({
     ],
   }));
 
-  const maxCardHeight = height - 120;
-  const showCloseButton = Boolean(closeText) && Boolean(onClose);
-  const showEventButton = Boolean(eventText) && Boolean(onEvent);
-  const hasHeader = (title?.length ?? 0) > 0 || (description?.length ?? 0) > 0;
-
-  return {
-    cardStyle,
-    hasHeader,
-    maxCardHeight,
-    overlayStyle,
-    showCloseButton,
-    showEventButton,
-  };
+  return (
+    <Modal animationType='none' onRequestClose={onClose} transparent visible={visible}>
+      <View style={styles.container}>
+        {/* 透過背景 */}
+        <DialogBackGround closeOnBackGround={closeOnBackGround} onClose={onClose} />
+        <View style={styles.dialog}>
+          <Animated.View style={[styles.dialogCard, { maxHeight: height - 120 }, animatedStyle]}>
+            {/* タイトル */}
+            <DialogTitle title={title} />
+            {/* チャイルドコンテンツ */}
+            <DialogChildren>{children}</DialogChildren>
+            {/* ボトム（ボタン） */}
+            <DialogBottom
+              closeText={closeText}
+              eventText={eventText}
+              onClose={onClose}
+              onEvent={onEvent}
+            />
+          </Animated.View>
+        </View>
+      </View>
+    </Modal>
+  );
 };
 
 const styles = StyleSheet.create({
   container: {
     ...StyleSheet.absoluteFillObject,
     alignItems: 'center',
+    backgroundColor: color.backdrop,
     justifyContent: 'center',
   },
-  backdropPressable: {
+  dialogBackGround: {
     ...StyleSheet.absoluteFillObject,
   },
-  backdrop: {
+  backGround: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: color.backdrop,
   },
-  center: {
+  dialog: {
     alignItems: 'center',
     justifyContent: 'center',
     padding: 24,
     width: '100%',
   },
-  card: {
+  dialogCard: {
     backgroundColor: color.white,
     borderRadius: 16,
     elevation: 10,
@@ -247,64 +193,29 @@ const styles = StyleSheet.create({
     shadowRadius: 12,
     width: '100%',
   },
-  bodyScroll: {
+  scrollView: {
     flexShrink: 1,
   },
-  body: {
+  dialogChildren: {
     gap: 16,
     paddingBottom: 8,
   },
-  header: {
-    backgroundColor: color.white,
+  children: {
+    gap: 8,
+  },
+  dialogTitle: {
     paddingBottom: 4,
     paddingTop: 4,
   },
-  title: {
+  dialogTitleText: {
     color: color.black,
     fontSize: 18,
     fontWeight: '600',
   },
-  description: {
-    color: color.gray50,
-    fontSize: 14,
-    lineHeight: 20,
-  },
-  content: {
-    gap: 8,
-  },
-  actions: {
+  dialogBottom: {
     flexDirection: 'row',
     gap: 12,
     justifyContent: 'center',
-  },
-  button: {
-    alignItems: 'center',
-    borderRadius: 12,
-    flexDirection: 'row',
-    gap: 8,
-    justifyContent: 'center',
-    minWidth: 120,
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-  },
-  outlineButton: {
-    backgroundColor: color.white,
-    borderColor: color.gray100,
-    borderWidth: 1,
-  },
-  outlineButtonText: {
-    color: color.gray50,
-    fontWeight: '600',
-  },
-  fillButton: {
-    backgroundColor: color.primary,
-  },
-  fillButtonText: {
-    color: color.white,
-    fontWeight: '700',
-  },
-  buttonText: {
-    fontSize: 14,
   },
 });
 

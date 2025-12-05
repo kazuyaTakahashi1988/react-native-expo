@@ -1,7 +1,6 @@
-import React from 'react';
+import { useEffect } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import Animated, {
-  interpolate,
   interpolateColor,
   useAnimatedStyle,
   useSharedValue,
@@ -13,225 +12,209 @@ import Label from './_label';
 import { color } from '../../lib/mixin';
 import { useRHFController } from '../../services/formHelper';
 
-import type { TypeCheckBoxCustom, TypeToggleCheckOption } from '../../lib/types/typeComponents';
+import type { TypeBoxCustomOption, TypeCheckBoxCustom } from '../../lib/types/typeComponents';
+import type React from 'react';
 import type { FieldValues } from 'react-hook-form';
-import type { SharedValue } from 'react-native-reanimated';
+
+const AnimatedView = Animated.createAnimatedComponent(View);
 
 /* -----------------------------------------------
- * チェックボックスカスタム項目
+ * オプション行（Reanimated付き）
  * ----------------------------------------------- */
 
-const TRACK_WIDTH = 48;
-const TRACK_HEIGHT = 28;
-const KNOB_SIZE = 22;
-const KNOB_MARGIN = (TRACK_HEIGHT - KNOB_SIZE) / 2;
-
-const ERROR_COLOR = color.red;
-const DISABLED_COLOR = color.gray100;
-const KNOB_MAX_TRANSLATE = TRACK_WIDTH - KNOB_SIZE - KNOB_MARGIN;
-
-const ToggleCheckOption = ({
+const OptionRow: React.FC<TypeBoxCustomOption> = ({
   label,
-  disabled = false,
   isSelected,
-  onPress,
-  accessibilityState,
+  isDisabled,
   hasError,
-  activeColor,
-  inactiveColor,
-  knobColor,
   optionRowStyle,
-  optionLabelStyle,
-  trackStyle,
-  knobStyle,
-}: TypeToggleCheckOption) => {
-  const progress: SharedValue<number> = useSharedValue<number>(isSelected ? 1 : 0);
-  const isDisabled = disabled;
+  onToggle,
+}) => {
+  const progress = useSharedValue(isSelected ? 1 : 0);
 
-  React.useEffect(() => {
-    progress.value = withTiming(isSelected ? 1 : 0, { duration: 200 });
+  useEffect(() => {
+    progress.value = withTiming(isSelected ? 1 : 0, {
+      duration: 200,
+    });
   }, [isSelected, progress]);
 
-  const trackAnimatedStyle = useAnimatedStyle(
-    (): { backgroundColor: string } => ({
-      backgroundColor: isDisabled
-        ? DISABLED_COLOR
-        : String(interpolateColor(progress.value, [0, 1], [inactiveColor, activeColor])),
-    }),
-    [activeColor, inactiveColor, isDisabled],
-  );
+  // 背景色アニメーション（OFF: gray, ON: primary）
+  const animatedBaseStyle = useAnimatedStyle(() => {
+    // disabled のときは静的スタイルを優先
+    if (isDisabled) {
+      return {};
+    }
 
-  const knobAnimatedStyle = useAnimatedStyle(
-    (): { transform: { translateX: number }[] } => ({
-      transform: [
-        {
-          translateX: interpolate(progress.value, [0, 1], [KNOB_MARGIN, KNOB_MAX_TRANSLATE]),
-        },
-      ],
-    }),
-    [],
-  );
+    const backgroundColor = interpolateColor(progress.value, [0, 1], [color.gray, color.primary]);
+
+    return {
+      backgroundColor,
+    };
+  });
+
+  // ノブの位置アニメーション
+  const animatedKnobStyle = useAnimatedStyle(() => {
+    const translateX = progress.value * 18; // 18px 移動
+    return {
+      transform: [{ translateX }],
+    };
+  });
+
+  const getOptionLabelStyle = (disabled: boolean) => {
+    if (!disabled) {
+      return null;
+    }
+    return styles.checkBoxTextDisabled;
+  };
 
   return (
     <Pressable
       accessibilityRole='checkbox'
-      accessibilityState={accessibilityState}
+      accessibilityState={{ checked: isSelected, disabled: isDisabled }}
       disabled={isDisabled}
-      onPress={onPress}
-      style={[styles.optionRow, optionRowStyle]}
+      onPress={onToggle}
+      style={[styles.checkBoxRow, optionRowStyle]}
     >
-      <Animated.View
+      <AnimatedView
         style={[
-          styles.track,
-          hasError ? styles.trackError : styles.trackDefault,
-          trackAnimatedStyle,
-          trackStyle,
+          styles.checkBoxBase,
+          animatedBaseStyle,
+          hasError ? styles.checkBoxError : null,
+          isDisabled ? styles.checkBoxDisabled : null,
         ]}
       >
-        <Animated.View
-          style={[styles.knob, { backgroundColor: knobColor }, knobAnimatedStyle, knobStyle]}
+        <AnimatedView
+          style={[
+            styles.checkBoxKnob,
+            animatedKnobStyle,
+            isDisabled ? styles.checkBoxKnobDisabled : null,
+          ]}
         />
-      </Animated.View>
-      <Text
-        style={[
-          styles.optionLabel,
-          optionLabelStyle,
-          isDisabled ? styles.optionLabelDisabled : null,
-        ]}
-      >
-        {label}
-      </Text>
+      </AnimatedView>
+
+      <Text style={getOptionLabelStyle(isDisabled)}>{label}</Text>
     </Pressable>
   );
 };
 
+/* -----------------------------------------------
+ * チェックボックスカスタム項目（親コンポーネント）
+ * ----------------------------------------------- */
+
 const CheckBoxCustom = <TFieldValues extends FieldValues>({
-  activeColor: activeColorProp,
   containerStyle,
   control,
-  disabled,
+  disabled = false,
   errorText,
-  inactiveColor: inactiveColorProp,
-  knobColor: knobColorProp,
   label,
   name,
   optionListStyle,
   optionRowStyle,
-  optionLabelStyle,
   options,
   rules,
-  trackStyle,
-  knobStyle,
 }: TypeCheckBoxCustom<TFieldValues>) => {
   const { controller } = useRHFController({ control, name, rules });
-  const controllerValue = controller.field.value;
-
-  const selectedValues = React.useMemo(() => getSelectedValues(controllerValue), [controllerValue]);
-
   const hasError = Boolean(errorText);
 
-  const activeColor = activeColorProp ?? color.primary;
-  const inactiveColor = inactiveColorProp ?? '#d1d5db';
-  const knobColor = knobColorProp ?? color.white;
+  const getSelectedValues = (value: unknown): string[] => {
+    if (!Array.isArray(value)) {
+      return [];
+    }
+    return value as string[];
+  };
+  const selectedValues = getSelectedValues(controller.field.value);
+
+  const getIsOptionDisabled = (
+    optionDisabled: boolean | undefined,
+    allDisabled: boolean,
+  ): boolean => optionDisabled === true || allDisabled;
+
+  const handleToggleOption = (
+    optionValue: string,
+    currentSelectedValues: string[],
+    onChange: (value: string[]) => void,
+  ) => {
+    if (currentSelectedValues.includes(optionValue)) {
+      onChange(currentSelectedValues.filter((selected) => selected !== optionValue));
+      return;
+    }
+    onChange([...currentSelectedValues, optionValue]);
+  };
 
   return (
     <View style={containerStyle}>
       <Label {...{ label, rules }} />
-      <View style={[styles.optionList, optionListStyle]}>
+      <View style={[styles.checkBoxGroup, optionListStyle]}>
         {options.map((option) => {
           const isSelected = selectedValues.includes(option.value);
           const isDisabled = getIsOptionDisabled(option.disabled, disabled);
+
+          /*
+           * オプション行（Reanimated付き）
+           */
           return (
-            <ToggleCheckOption
-              accessibilityState={{ checked: isSelected }}
-              activeColor={activeColor}
-              disabled={isDisabled}
+            <OptionRow
               hasError={hasError}
-              inactiveColor={inactiveColor}
+              isDisabled={isDisabled}
               isSelected={isSelected}
               key={option.key ?? option.value}
-              knobColor={knobColor}
-              knobStyle={knobStyle}
               label={option.label}
-              onPress={() => {
+              onToggle={() => {
                 handleToggleOption(option.value, selectedValues, controller.field.onChange);
               }}
-              optionLabelStyle={optionLabelStyle}
               optionRowStyle={optionRowStyle}
-              trackStyle={trackStyle}
+              value={option.value}
             />
           );
         })}
       </View>
-      <ErrorText errorText={errorText} />
+      <ErrorText {...{ errorText }} />
     </View>
   );
 };
 
-const getSelectedValues = (value: unknown): string[] => {
-  if (!Array.isArray(value)) {
-    return [];
-  }
-  return value as string[];
-};
-
-const getIsOptionDisabled = (
-  optionDisabled: boolean | undefined,
-  disabled: boolean | undefined,
-): boolean => {
-  return optionDisabled === true || disabled === true;
-};
-
-const handleToggleOption = (
-  optionValue: string,
-  selectedValues: string[],
-  onChange: (value: string[]) => void,
-) => {
-  if (selectedValues.includes(optionValue)) {
-    onChange(selectedValues.filter((selected) => selected !== optionValue));
-    return;
-  }
-  onChange([...selectedValues, optionValue]);
-};
-
 const styles = StyleSheet.create({
-  optionList: {
+  checkBoxGroup: {
     rowGap: 12,
   },
-  optionRow: {
+  checkBoxRow: {
     alignItems: 'center',
     columnGap: 12,
     flexDirection: 'row',
   },
-  track: {
-    borderRadius: TRACK_HEIGHT / 2,
+  checkBoxBase: {
+    backgroundColor: color.gray,
+    borderColor: color.gray,
+    borderRadius: 20,
     borderWidth: 1,
-    height: TRACK_HEIGHT,
+    height: 30,
     justifyContent: 'center',
-    paddingHorizontal: KNOB_MARGIN,
-    width: TRACK_WIDTH,
+    width: 50,
   },
-  trackDefault: {
-    borderColor: color.transparent,
+  checkBoxTextDisabled: {
+    color: color.gray100,
   },
-  trackError: {
-    borderColor: ERROR_COLOR,
-  },
-  knob: {
-    borderRadius: KNOB_SIZE / 2,
-    elevation: 2,
-    height: KNOB_SIZE,
+  checkBoxKnob: {
+    backgroundColor: color.white,
+    borderRadius: 22,
+    height: 22,
+    left: 5,
     shadowColor: color.black,
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.2,
     shadowRadius: 1.41,
-    width: KNOB_SIZE,
+    width: 22,
   },
-  optionLabel: {
-    fontSize: 14,
+  checkBoxKnobDisabled: {
+    backgroundColor: color.white,
+    opacity: 0.7,
   },
-  optionLabelDisabled: {
-    color: color.gray100,
+  checkBoxError: {
+    borderColor: color.red,
+  },
+  checkBoxDisabled: {
+    backgroundColor: color.gray100,
+    borderColor: color.gray100,
   },
 });
 

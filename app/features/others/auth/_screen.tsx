@@ -176,11 +176,11 @@ const AuthScreen: React.FC = () => {
       </View>
 
       {/* 成功 or エラーメッセージ表示 */}
-      {result.message !== '' && (
+      {result.message !== '' ? (
         <Text style={result.type === 'success' ? styles.success : styles.error}>
           {result.message}
         </Text>
-      )}
+      ) : null}
 
       {!isAuth ? (
         <>

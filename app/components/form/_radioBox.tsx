@@ -25,9 +25,40 @@ const RadioBox = <TFieldValues extends FieldValues>({
   rules,
 }: TypeRadioBox<TFieldValues>) => {
   const { controller } = useRHFController({ control, name, rules });
-
-  const selectedValue = getSelectedValue(controller.field.value);
   const hasError = Boolean(errorText);
+
+  const getSelectedValue = (value: unknown): string => {
+    if (typeof value !== 'string') {
+      return '';
+    }
+    return value;
+  };
+  const selectedValue = getSelectedValue(controller.field.value);
+
+  const getIsOptionDisabled = (optionDisabled: boolean | undefined, disabled: boolean): boolean => {
+    return optionDisabled === true || disabled;
+  };
+
+  const handleSelectOption = (optionValue: string, onChange: (value: string) => void) => {
+    onChange(optionValue);
+  };
+
+  /*
+   * 適用スタイル
+   */
+  const getOptionLabelStyle = (disabled: boolean) => {
+    if (!disabled) {
+      return null;
+    }
+    return styles.radioBoxTextDisabled;
+  };
+
+  const getOptionInnerStyle = (disabled: boolean) => {
+    if (disabled) {
+      return styles.radioInnerDisabled;
+    }
+    return styles.radioInner;
+  };
 
   return (
     <View style={containerStyle}>
@@ -50,9 +81,8 @@ const RadioBox = <TFieldValues extends FieldValues>({
               <View
                 style={[
                   styles.radioOuter,
-                  isSelected ? styles.radioOuterSelected : null,
                   hasError ? styles.radioOuterError : null,
-                  getOptionOuterStyle(isDisabled),
+                  isDisabled ? styles.radioBoxDisabled : null,
                 ]}
               >
                 {isSelected ? <View style={getOptionInnerStyle(isDisabled)} /> : null}
@@ -62,45 +92,9 @@ const RadioBox = <TFieldValues extends FieldValues>({
           );
         })}
       </View>
-      <ErrorText errorText={errorText} />
+      <ErrorText {...{ errorText }} />
     </View>
   );
-};
-
-const getSelectedValue = (value: unknown): string => {
-  if (typeof value !== 'string') {
-    return '';
-  }
-  return value;
-};
-
-const getIsOptionDisabled = (optionDisabled: boolean | undefined, disabled: boolean): boolean => {
-  return optionDisabled === true || disabled;
-};
-
-const handleSelectOption = (optionValue: string, onChange: (value: string) => void) => {
-  onChange(optionValue);
-};
-
-const getOptionLabelStyle = (disabled: boolean) => {
-  if (!disabled) {
-    return null;
-  }
-  return styles.radioBoxTextDisabled;
-};
-
-const getOptionOuterStyle = (disabled: boolean) => {
-  if (!disabled) {
-    return null;
-  }
-  return styles.radioBoxDisabled;
-};
-
-const getOptionInnerStyle = (disabled: boolean) => {
-  if (disabled) {
-    return styles.radioInnerDisabled;
-  }
-  return styles.radioInner;
 };
 
 const styles = StyleSheet.create({
@@ -123,9 +117,6 @@ const styles = StyleSheet.create({
   },
   radioBoxTextDisabled: {
     color: color.gray100,
-  },
-  radioOuterSelected: {
-    borderColor: color.primary,
   },
   radioInner: {
     backgroundColor: color.primary,

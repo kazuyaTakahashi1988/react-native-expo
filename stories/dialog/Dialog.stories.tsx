@@ -22,10 +22,7 @@ const meta = {
     title: {
       description: 'ダイアログタイトル',
     },
-    description: {
-      description: '本文テキスト',
-    },
-    closeOnBackdropPress: {
+    closeOnBackGround: {
       description: '背景タップで閉じるかどうか',
       control: 'boolean',
     },
@@ -55,7 +52,7 @@ const dialogStyles = StyleSheet.create({
 const baseArgs = {
   onClose: () => {},
   onEvent: () => {},
-  closeOnBackdropPress: true,
+  closeOnBackGround: true,
   visible: false,
 };
 
@@ -89,8 +86,11 @@ export const BasicDialog: Story = {
   args: {
     ...baseArgs,
     title: 'Basic Dialog',
-    description:
-      'description：Dummy Text。----------------------------------------------------------------',
+    children: (
+      <Text>
+        description：Dummy Text。----------------------------------------------------------------
+      </Text>
+    ),
     eventText: 'Event Button',
     closeText: 'Close Button',
   },
@@ -101,9 +101,9 @@ export const WithoutCloseButton: Story = {
   args: {
     ...baseArgs,
     title: 'Close Buttonを表示しない例',
-    description: 'OKボタンを押さないと閉じれません。',
+    children: <Text>OKボタンを押さないと閉じれません。</Text>,
     eventText: 'OK',
-    closeOnBackdropPress: false,
+    closeOnBackGround: false,
   },
   render: (args) => <Dialog {...args} />,
 };
@@ -112,7 +112,7 @@ export const WithoutEventAndCloseButton: Story = {
   args: {
     ...baseArgs,
     title: 'Event & Close Buttonを表示しない例',
-    description: '背景を押さないと閉じれません。',
+    children: <Text>背景を押さないと閉じれません。</Text>,
   },
   render: (args) => <Dialog {...args} />,
 };

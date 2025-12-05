@@ -112,33 +112,54 @@ const AboutScreen: React.FC<TypeAboutScreen> = (props) => {
       {/* Basic Dialog ダイアログ */}
       <Dialog
         closeText='Close Button'
-        description='description：Dummy Text。----------------------------------------------------------------'
         eventText='Event Button'
         onClose={closeDialog}
         onEvent={handleConfirm('EventButton Tapped!!')}
         title='Basic Dialog'
         visible={visibleDialog === 'basic'}
-      />
+      >
+        <Text>
+          description：Dummy Text。----------------------------------------------------------------
+        </Text>
+      </Dialog>
 
       {/* WithOut Close ダイアログ */}
       <Dialog
-        closeOnBackdropPress={false}
-        description='OKボタンを押さないと閉じれません。'
+        closeOnBackGround={false}
         eventText='OK'
         onClose={closeDialog}
         onEvent={handleConfirm('EventButton Tapped!!')}
         title='Close Buttonを表示しない例'
         visible={visibleDialog === 'withoutClose'}
-      />
+      >
+        <Text>OKボタンを押さないと閉じれません。</Text>
+      </Dialog>
 
       {/* WithOut Event & Close ダイアログ */}
       <Dialog
-        description='背景を押さないと閉じれません。'
         onClose={closeDialog}
         onEvent={handleConfirm('EventButton Tapped!!')}
-        title='Event & Close Buttonを表示しない例'
         visible={visibleDialog === 'withoutEventAndClose'}
-      />
+      >
+        <Text>
+          ・Dummy Text１
+          {[...Array(30).keys()].map((i) => (
+            <Text key={i}>----- {'\n'}</Text>
+          ))}
+        </Text>
+        <Text>
+          ・Dummy Text２
+          {[...Array(30).keys()].map((i) => (
+            <Text key={i}>----- {'\n'}</Text>
+          ))}
+        </Text>
+        <Text>
+          ・Dummy Text３
+          {[...Array(30).keys()].map((i) => (
+            <Text key={i}>----- {'\n'}</Text>
+          ))}
+        </Text>
+      </Dialog>
 
       {/* Custom Contents（ScrollView）ダイアログ */}
       <Dialog

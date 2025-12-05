@@ -1,5 +1,5 @@
 import type { Control, FieldValues, Path, RegisterOptions } from 'react-hook-form';
-import type { PressableProps, StyleProp, TextInputProps, TextStyle, ViewStyle } from 'react-native';
+import type { StyleProp, TextInputProps, TextStyle, ViewStyle } from 'react-native';
 import type { Item } from 'react-native-picker-select';
 
 /* -----------------------------------------------
@@ -7,7 +7,7 @@ import type { Item } from 'react-native-picker-select';
  * ----------------------------------------------- */
 
 /*
- * type チェック・ラヂオボックス項目 共通
+ * type チェック・ラヂオ（カスタム含む）ボックス項目 共通
  */
 export type TypeBoxOption = {
   disabled?: boolean;
@@ -16,23 +16,14 @@ export type TypeBoxOption = {
   key?: string | number;
 };
 
-type TypeToggleCustomBase<TFieldValues extends FieldValues> = {
+export type TypeBoxCustomOption = {
   label?: string;
-  control?: Control<TFieldValues>;
-  disabled?: boolean;
-  name?: Path<TFieldValues>;
-  options: TypeBoxOption[];
-  rules?: RegisterOptions<TFieldValues, Path<TFieldValues>>;
-  errorText?: TypeErrorText;
-  containerStyle?: StyleProp<ViewStyle>;
-  optionListStyle?: StyleProp<ViewStyle>;
+  value: string;
+  isSelected: boolean;
+  isDisabled: boolean;
+  hasError: boolean;
   optionRowStyle?: StyleProp<ViewStyle>;
-  optionLabelStyle?: StyleProp<TextStyle>;
-  trackStyle?: StyleProp<ViewStyle>;
-  knobStyle?: StyleProp<ViewStyle>;
-  activeColor?: string;
-  inactiveColor?: string;
-  knobColor?: string;
+  onToggle: () => void;
 };
 
 /*
@@ -54,24 +45,7 @@ export type TypeCheckBox<TFieldValues extends FieldValues> = {
 /*
  * type チェックボックスカスタム項目
  */
-export type TypeCheckBoxCustom<TFieldValues extends FieldValues> =
-  TypeToggleCustomBase<TFieldValues>;
-
-export type TypeToggleCheckOption = {
-  label?: string;
-  disabled?: boolean;
-  isSelected: boolean;
-  onPress: () => void;
-  accessibilityState: PressableProps['accessibilityState'];
-  hasError: boolean;
-  activeColor: string;
-  inactiveColor: string;
-  knobColor: string;
-  optionRowStyle: TypeCheckBoxCustom<FieldValues>['optionRowStyle'];
-  optionLabelStyle: TypeCheckBoxCustom<FieldValues>['optionLabelStyle'];
-  trackStyle: TypeCheckBoxCustom<FieldValues>['trackStyle'];
-  knobStyle: TypeCheckBoxCustom<FieldValues>['knobStyle'];
-};
+export type TypeCheckBoxCustom<TFieldValues extends FieldValues> = TypeCheckBox<TFieldValues>;
 
 /*
  * type エラーテキスト
@@ -119,24 +93,7 @@ export type TypeRadioBox<TFieldValues extends FieldValues> = {
 /*
  * type ラヂオボックスカスタム項目
  */
-export type TypeRadioBoxCustom<TFieldValues extends FieldValues> =
-  TypeToggleCustomBase<TFieldValues>;
-
-export type TypeToggleRadioOption = {
-  label?: string;
-  disabled?: boolean;
-  isSelected: boolean;
-  onPress: () => void;
-  accessibilityState: PressableProps['accessibilityState'];
-  hasError: boolean;
-  activeColor: string;
-  inactiveColor: string;
-  knobColor: string;
-  optionRowStyle: TypeRadioBoxCustom<FieldValues>['optionRowStyle'];
-  optionLabelStyle: TypeRadioBoxCustom<FieldValues>['optionLabelStyle'];
-  trackStyle: TypeRadioBoxCustom<FieldValues>['trackStyle'];
-  knobStyle: TypeRadioBoxCustom<FieldValues>['knobStyle'];
-};
+export type TypeRadioBoxCustom<TFieldValues extends FieldValues> = TypeRadioBox<TFieldValues>;
 
 /*
  * type セレクトボックス項目
