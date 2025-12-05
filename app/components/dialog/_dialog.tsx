@@ -23,22 +23,25 @@ import type { TypeDialog } from '../../lib/types/typeComponents';
  * ダイアログ
  * ----------------------------------------------- */
 const DialogHeader = ({ title, description }: Pick<TypeDialog, 'title' | 'description'>) => {
-  const headerItems = [
-    Boolean(title?.length) ? (
-      <Text key='dialog-title' style={styles.title}>
-        {title}
-      </Text>
-    ) : null,
-    Boolean(description?.length) ? (
-      <Text key='dialog-description' style={styles.description}>
-        {description}
-      </Text>
-    ) : null,
-  ].filter(Boolean);
+  const hasTitle = !!title?.length;
+  const hasDescription = !!description?.length;
 
-  if (headerItems.length === 0) return null;
+  if (!hasTitle && !hasDescription) return null;
 
-  return <View style={styles.header}>{headerItems}</View>;
+  return (
+    <View style={styles.header}>
+      {hasTitle ? (
+        <Text key='dialog-title' style={styles.title}>
+          {title}
+        </Text>
+      ) : null}
+      {hasDescription ? (
+        <Text key='dialog-description' style={styles.description}>
+          {description}
+        </Text>
+      ) : null}
+    </View>
+  );
 };
 
 const DialogContent = ({ children }: Pick<TypeDialog, 'children'>) => {
@@ -227,12 +230,12 @@ const getDialogActionVisibility = ({
   TypeDialog,
   'closeText' | 'eventText' | 'onClose' | 'onEvent'
 >) => ({
-  showCloseButton: Boolean(closeText) && Boolean(onClose),
-  showEventButton: Boolean(eventText) && Boolean(onEvent),
+  showCloseButton: !!closeText && !!onClose,
+  showEventButton: !!eventText && !!onEvent,
 });
 
 const hasDialogHeader = (title?: string, description?: string) =>
-  Boolean(title?.length) || Boolean(description?.length);
+  !!title?.length || !!description?.length;
 
 const styles = StyleSheet.create({
   container: {
