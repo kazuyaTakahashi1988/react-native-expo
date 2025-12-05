@@ -42,13 +42,14 @@ const DialogBackGround = ({
  * タイトル
  */
 const DialogTitle = ({ title }: Pick<TypeDialog, 'title'>) => {
-  if (title === undefined) {
+  const istitle = Boolean(title);
+  if (!istitle) {
     return null;
   }
 
   return (
     <View style={styles.dialogTitle}>
-      {Number(title.length) > 0 ? <Text style={styles.dialogTitleText}>{title}</Text> : null}
+      <Text style={styles.dialogTitleText}>{title}</Text>
     </View>
   );
 };
@@ -57,7 +58,8 @@ const DialogTitle = ({ title }: Pick<TypeDialog, 'title'>) => {
  * チャイルドコンテンツ
  */
 const DialogChildren = ({ children }: Pick<TypeDialog, 'children'>) => {
-  if (children === null || children === undefined) {
+  const ischildren = Boolean(children);
+  if (!ischildren) {
     return null;
   }
 
@@ -82,12 +84,16 @@ const DialogBottom = ({
   onClose,
   onEvent,
 }: Pick<TypeDialog, 'closeText' | 'eventText' | 'onClose' | 'onEvent'>) => {
+  const isCloseText = Boolean(closeText);
+  const isEventText = Boolean(eventText);
+  if (!isCloseText && isEventText) {
+    return null;
+  }
+
   return (
     <View style={styles.dialogBottom}>
-      {Number(closeText?.length) > 0 ? (
-        <Button onPress={onClose} pattern='secondary' title={closeText} />
-      ) : null}
-      {Number(eventText?.length) > 0 ? <Button onPress={onEvent} title={eventText} /> : null}
+      {isCloseText ? <Button onPress={onClose} pattern='secondary' title={closeText} /> : null}
+      {isEventText ? <Button onPress={onEvent} title={eventText} /> : null}
     </View>
   );
 };
@@ -107,7 +113,6 @@ const Dialog = ({
   children,
 }: TypeDialog) => {
   const { height } = useWindowDimensions();
-  const isBottom = Boolean(closeText) || Boolean(eventText);
 
   /*
    * アニメーション設定
@@ -139,14 +144,12 @@ const Dialog = ({
             {/* チャイルドコンテンツ */}
             <DialogChildren>{children}</DialogChildren>
             {/* ボトム（ボタン） */}
-            {isBottom ? (
-              <DialogBottom
-                closeText={closeText}
-                eventText={eventText}
-                onClose={onClose}
-                onEvent={onEvent}
-              />
-            ) : null}
+            <DialogBottom
+              closeText={closeText}
+              eventText={eventText}
+              onClose={onClose}
+              onEvent={onEvent}
+            />
           </Animated.View>
         </View>
       </View>
