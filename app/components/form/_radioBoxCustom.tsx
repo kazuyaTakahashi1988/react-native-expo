@@ -163,7 +163,7 @@ const RadioBoxCustom = <TFieldValues extends FieldValues>({
           );
         })}
       </View>
-      <ErrorText errorText={errorText} />
+      <ErrorText {...{ errorText }} />
     </View>
   );
 };

@@ -127,35 +127,36 @@ const Child02Screen: React.FC = () => {
 
       {/* 記事一覧の表示 */}
       <Text style={styles.container}>取得件数：{articles?.length}</Text>
-      {articles &&
-        articles.map((elm) => (
-          <View key={elm.id} style={styles.article}>
-            <Text>記事ID: {elm.id}</Text>
-            <Text style={styles.articleTitle}>{elm.getTheTitle}</Text>
+      {articles
+        ? articles.map((elm) => (
+            <View key={elm.id} style={styles.article}>
+              <Text>記事ID: {elm.id}</Text>
+              <Text style={styles.articleTitle}>{elm.getTheTitle}</Text>
 
-            <View style={styles.articleCategories}>
-              {elm.getTaxCategory01.map((_elm, _i) => (
-                <Text key={_i}>・{_elm.name}</Text>
-              ))}
-              {elm.getTaxCategory02.map((_elm, _i) => (
-                <Text key={_i}>・{_elm.name}</Text>
-              ))}
-              {elm.getTaxCategory03.map((_elm, _i) => (
-                <Text key={_i}>・{_elm.name}</Text>
-              ))}
+              <View style={styles.articleCategories}>
+                {elm.getTaxCategory01.map((_elm, _i) => (
+                  <Text key={_i}>・{_elm.name}</Text>
+                ))}
+                {elm.getTaxCategory02.map((_elm, _i) => (
+                  <Text key={_i}>・{_elm.name}</Text>
+                ))}
+                {elm.getTaxCategory03.map((_elm, _i) => (
+                  <Text key={_i}>・{_elm.name}</Text>
+                ))}
+              </View>
+
+              <Button
+                onPress={() => {
+                  void Linking.openURL(elm.getPermalink);
+                }}
+                pattern='secondary'
+                size='small'
+                style={styles.articleButton}
+                title='- 記事へ飛ぶ -'
+              />
             </View>
-
-            <Button
-              onPress={() => {
-                void Linking.openURL(elm.getPermalink);
-              }}
-              pattern='secondary'
-              size='small'
-              style={styles.articleButton}
-              title='- 記事へ飛ぶ -'
-            />
-          </View>
-        ))}
+          ))
+        : null}
 
       {/* reset ボタン */}
       <Button onPress={onReset} pattern='secondary' style={styles.button} title='Reset' />

@@ -25,8 +25,48 @@ const CheckBox = <TFieldValues extends FieldValues>({
   rules,
 }: TypeCheckBox<TFieldValues>) => {
   const { controller } = useRHFController({ control, name, rules });
-  const selectedValues = getSelectedValues(controller.field.value);
   const hasError = Boolean(errorText);
+
+  const getSelectedValues = (value: unknown): string[] => {
+    if (!Array.isArray(value)) {
+      return [];
+    }
+    return value as string[];
+  };
+  const selectedValues = getSelectedValues(controller.field.value);
+
+  const getIsOptionDisabled = (optionDisabled: boolean | undefined, disabled: boolean): boolean => {
+    return optionDisabled === true || disabled;
+  };
+
+  const handleToggleOption = (
+    optionValue: string,
+    selectedValues: string[],
+    onChange: (value: string[]) => void,
+  ) => {
+    if (selectedValues.includes(optionValue)) {
+      onChange(selectedValues.filter((selected) => selected !== optionValue));
+      return;
+    }
+    onChange([...selectedValues, optionValue]);
+  };
+
+  /*
+   * 適用スタイル
+   */
+  const getOptionLabelStyle = (disabled: boolean) => {
+    if (!disabled) {
+      return null;
+    }
+    return styles.checkBoxTextDisabled;
+  };
+
+  const getSelectedStyle = (disabled: boolean) => {
+    if (!disabled) {
+      return null;
+    }
+    return (styles.checkBoxSelected, styles.checkBoxSelectedDisabled);
+  };
 
   return (
     <View style={containerStyle}>
@@ -53,9 +93,9 @@ const CheckBox = <TFieldValues extends FieldValues>({
                   isDisabled ? styles.checkBoxDisabled : null,
                 ]}
               >
-                {isSelected && (
+                {isSelected ? (
                   <View style={[styles.checkBoxSelected, getSelectedStyle(isDisabled)]} />
-                )}
+                ) : null}
               </View>
 
               <Text style={getOptionLabelStyle(isDisabled)}>{option.label}</Text>
@@ -63,46 +103,9 @@ const CheckBox = <TFieldValues extends FieldValues>({
           );
         })}
       </View>
-      <ErrorText errorText={errorText} />
+      <ErrorText {...{ errorText }} />
     </View>
   );
-};
-
-const getSelectedValues = (value: unknown): string[] => {
-  if (!Array.isArray(value)) {
-    return [];
-  }
-  return value as string[];
-};
-
-const getIsOptionDisabled = (optionDisabled: boolean | undefined, disabled: boolean): boolean => {
-  return optionDisabled === true || disabled;
-};
-
-const handleToggleOption = (
-  optionValue: string,
-  selectedValues: string[],
-  onChange: (value: string[]) => void,
-) => {
-  if (selectedValues.includes(optionValue)) {
-    onChange(selectedValues.filter((selected) => selected !== optionValue));
-    return;
-  }
-  onChange([...selectedValues, optionValue]);
-};
-
-const getOptionLabelStyle = (disabled: boolean) => {
-  if (!disabled) {
-    return null;
-  }
-  return styles.checkBoxTextDisabled;
-};
-
-const getSelectedStyle = (disabled: boolean) => {
-  if (!disabled) {
-    return null;
-  }
-  return (styles.checkBoxSelected, styles.checkBoxSelectedDisabled);
 };
 
 const styles = StyleSheet.create({

@@ -54,7 +54,7 @@ const Child01Screen: React.FC = () => {
       />
 
       {/* 記事一覧の表示 */}
-      {articles && (
+      {articles ? (
         <View>
           {articles.map((elm) => (
             <View key={elm.id} style={styles.article}>
@@ -72,7 +72,7 @@ const Child01Screen: React.FC = () => {
             </View>
           ))}
         </View>
-      )}
+      ) : null}
     </Layout>
   );
 };

@@ -163,7 +163,7 @@ const CheckBoxCustom = <TFieldValues extends FieldValues>({
           );
         })}
       </View>
-      <ErrorText errorText={errorText} />
+      <ErrorText {...{ errorText }} />
     </View>
   );
 };

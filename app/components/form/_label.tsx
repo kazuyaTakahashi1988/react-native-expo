@@ -12,13 +12,11 @@ import type { FieldValues } from 'react-hook-form';
 const Label = <TFieldValues extends FieldValues>({ label, rules }: TypeLabel<TFieldValues>) => {
   if (label == null) return;
 
-  const isRequired = () => {
-    return rules?.required !== undefined && rules.required !== false;
-  };
+  const isRequired = Boolean(rules?.required);
 
   return (
     <Text style={styles.label}>
-      {label} {isRequired() && <Text style={styles.comma}>※</Text>}
+      {label} {isRequired ? <Text style={styles.comma}>※</Text> : null}
     </Text>
   );
 };
