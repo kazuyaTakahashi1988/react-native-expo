@@ -23,28 +23,20 @@ import type { TypeDialog } from '../../lib/types/typeComponents';
  * ダイアログ
  * ----------------------------------------------- */
 const DialogHeader = ({ title, description }: Pick<TypeDialog, 'title' | 'description'>) => {
-  const hasTitle = typeof title === 'string' && title.length > 0;
-  const hasDescription = typeof description === 'string' && description.length > 0;
-
-  if (!hasTitle && !hasDescription) return null;
-
-  const headerItems = [] as React.ReactNode[];
-
-  if (hasTitle) {
-    headerItems.push(
+  const headerItems = [
+    Boolean(title?.length) ? (
       <Text key='dialog-title' style={styles.title}>
         {title}
-      </Text>,
-    );
-  }
-
-  if (hasDescription) {
-    headerItems.push(
+      </Text>
+    ) : null,
+    Boolean(description?.length) ? (
       <Text key='dialog-description' style={styles.description}>
         {description}
-      </Text>,
-    );
-  }
+      </Text>
+    ) : null,
+  ].filter(Boolean);
+
+  if (headerItems.length === 0) return null;
 
   return <View style={styles.header}>{headerItems}</View>;
 };
@@ -240,7 +232,7 @@ const getDialogActionVisibility = ({
 });
 
 const hasDialogHeader = (title?: string, description?: string) =>
-  (title?.length ?? 0) > 0 || (description?.length ?? 0) > 0;
+  Boolean(title?.length) || Boolean(description?.length);
 
 const styles = StyleSheet.create({
   container: {
