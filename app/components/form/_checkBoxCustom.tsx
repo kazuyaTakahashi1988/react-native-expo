@@ -1,4 +1,11 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
+import Animated, {
+  interpolateColor,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
+import { useEffect, useMemo } from 'react';
 
 import ErrorText from './_errorText';
 import Label from './_label';
@@ -7,7 +14,7 @@ import { useRHFController } from '../../services/formHelper';
 
 import type { TypeCheckBoxCustom } from '../../lib/types/typeComponents';
 import type { FieldValues } from 'react-hook-form';
-import type { StyleProp, ViewStyle } from 'react-native';
+import type { StyleProp, TextStyle } from 'react-native';
 
 /* -----------------------------------------------
  * チェックボックスカスタム項目
@@ -62,18 +69,62 @@ const CheckBoxCustom = <TFieldValues extends FieldValues>({
     return styles.checkBoxTextDisabled;
   };
 
-  const getKnobStyle = (selected: boolean, disabled: boolean) => {
-    const buildStyles: StyleProp<ViewStyle>[] = [];
+  const knobOffsetRange = useMemo(
+    () => [styles.checkBoxKcob.left ?? 0, styles.checkBoxKcobSelected.left ?? 0],
+    [],
+  );
 
-    if (selected) {
-      buildStyles.push(styles.checkBoxKcobSelected);
-    }
+  const CheckBoxOptionRow = ({
+    isDisabled,
+    isSelected,
+    labelStyle,
+    onPress,
+    optionLabel,
+  }: {
+    isDisabled: boolean;
+    isSelected: boolean;
+    labelStyle: StyleProp<TextStyle>;
+    onPress: () => void;
+    optionLabel: string;
+  }) => {
+    const animation = useSharedValue(isSelected ? 1 : 0);
 
-    if (disabled) {
-      buildStyles.push(styles.checkBoxKnobDisabled);
-    }
+    useEffect(() => {
+      animation.value = withTiming(isSelected ? 1 : 0, { duration: 200 });
+    }, [animation, isSelected]);
 
-    return buildStyles;
+    const animatedBackgroundStyle = useAnimatedStyle(() => ({
+      backgroundColor: interpolateColor(animation.value, [0, 1], [color.gray, color.primary]),
+    }));
+
+    const animatedKnobStyle = useAnimatedStyle(() => ({
+      left: knobOffsetRange[0] + (knobOffsetRange[1] - knobOffsetRange[0]) * animation.value,
+    }));
+
+    return (
+      <Pressable
+        accessibilityRole='checkbox'
+        accessibilityState={{ checked: isSelected }}
+        disabled={isDisabled}
+        onPress={onPress}
+        style={[styles.checkBoxRow, optionRowStyle]}
+      >
+        <Animated.View
+          style={[
+            styles.checkBoxBase,
+            animatedBackgroundStyle,
+            hasError ? styles.checkBoxError : null,
+            isDisabled ? styles.checkBoxDisabled : null,
+          ]}
+        >
+          <Animated.View
+            style={[styles.checkBoxKcob, animatedKnobStyle, isDisabled ? styles.checkBoxKnobDisabled : null]}
+          />
+        </Animated.View>
+
+        <Text style={labelStyle}>{optionLabel}</Text>
+      </Pressable>
+    );
   };
 
   return (
@@ -84,29 +135,16 @@ const CheckBoxCustom = <TFieldValues extends FieldValues>({
           const isSelected = selectedValues.includes(option.value);
           const isDisabled = getIsOptionDisabled(option.disabled, disabled);
           return (
-            <Pressable
-              accessibilityRole='checkbox'
-              accessibilityState={{ checked: isSelected }}
-              disabled={isDisabled}
+            <CheckBoxOptionRow
+              isDisabled={isDisabled}
+              isSelected={isSelected}
               key={option.key ?? option.value}
+              labelStyle={getOptionLabelStyle(isDisabled)}
               onPress={() => {
                 handleToggleOption(option.value, selectedValues, controller.field.onChange);
               }}
-              style={[styles.checkBoxRow, optionRowStyle]}
-            >
-              <View
-                style={[
-                  styles.checkBoxBase,
-                  isSelected ? styles.checkBoxSelected : null,
-                  hasError ? styles.checkBoxError : null,
-                  isDisabled ? styles.checkBoxDisabled : null,
-                ]}
-              >
-                <View style={[styles.checkBoxKcob, getKnobStyle(isSelected, isDisabled)]} />
-              </View>
-
-              <Text style={getOptionLabelStyle(isDisabled)}>{option.label}</Text>
-            </Pressable>
+              optionLabel={option.label}
+            />
           );
         })}
       </View>

@@ -1,4 +1,11 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
+import Animated, {
+  interpolateColor,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
+import { useEffect, useMemo } from 'react';
 
 import ErrorText from './_errorText';
 import Label from './_label';
@@ -7,7 +14,7 @@ import { useRHFController } from '../../services/formHelper';
 
 import type { TypeRadioBoxCustom } from '../../lib/types/typeComponents';
 import type { FieldValues } from 'react-hook-form';
-import type { StyleProp, ViewStyle } from 'react-native';
+import type { StyleProp, TextStyle } from 'react-native';
 
 /* -----------------------------------------------
  * ラヂオボックスカスタム項目
@@ -54,18 +61,61 @@ const RadioBoxCustom = <TFieldValues extends FieldValues>({
     return styles.radioBoxTextDisabled;
   };
 
-  const getKnobStyle = (selected: boolean, disabled: boolean) => {
-    const buildStyles: StyleProp<ViewStyle>[] = [];
+  const knobOffsetRange = useMemo(
+    () => [styles.radioBoxKcob.left ?? 0, styles.checkBoxKcobSelected.left ?? 0],
+    [],
+  );
 
-    if (selected) {
-      buildStyles.push(styles.checkBoxKcobSelected);
-    }
+  const RadioBoxOptionRow = ({
+    isDisabled,
+    isSelected,
+    labelStyle,
+    onPress,
+    optionLabel,
+  }: {
+    isDisabled: boolean;
+    isSelected: boolean;
+    labelStyle: StyleProp<TextStyle>;
+    onPress: () => void;
+    optionLabel: string;
+  }) => {
+    const animation = useSharedValue(isSelected ? 1 : 0);
 
-    if (disabled) {
-      buildStyles.push(styles.checkBoxKcobDisabled);
-    }
+    useEffect(() => {
+      animation.value = withTiming(isSelected ? 1 : 0, { duration: 200 });
+    }, [animation, isSelected]);
 
-    return buildStyles;
+    const animatedBackgroundStyle = useAnimatedStyle(() => ({
+      backgroundColor: interpolateColor(animation.value, [0, 1], [color.gray, color.primary]),
+    }));
+
+    const animatedKnobStyle = useAnimatedStyle(() => ({
+      left: knobOffsetRange[0] + (knobOffsetRange[1] - knobOffsetRange[0]) * animation.value,
+    }));
+
+    return (
+      <Pressable
+        accessibilityRole='radio'
+        accessibilityState={{ selected: isSelected }}
+        disabled={isDisabled}
+        onPress={onPress}
+        style={[styles.radioRow, optionRowStyle]}
+      >
+        <Animated.View
+          style={[
+            styles.radioBoxBase,
+            animatedBackgroundStyle,
+            hasError ? styles.radioBoxError : null,
+            isDisabled ? styles.radioBoxDisabled : null,
+          ]}
+        >
+          <Animated.View
+            style={[styles.radioBoxKcob, animatedKnobStyle, isDisabled ? styles.checkBoxKcobDisabled : null]}
+          />
+        </Animated.View>
+        <Text style={labelStyle}>{optionLabel}</Text>
+      </Pressable>
+    );
   };
 
   return (
@@ -76,28 +126,16 @@ const RadioBoxCustom = <TFieldValues extends FieldValues>({
           const isSelected = selectedValue === option.value;
           const isDisabled = getIsOptionDisabled(option.disabled, disabled);
           return (
-            <Pressable
-              accessibilityRole='radio'
-              accessibilityState={{ selected: isSelected }}
-              disabled={isDisabled}
+            <RadioBoxOptionRow
+              isDisabled={isDisabled}
+              isSelected={isSelected}
               key={option.key ?? option.value}
+              labelStyle={getOptionLabelStyle(isDisabled)}
               onPress={() => {
                 handleSelectOption(option.value, controller.field.onChange);
               }}
-              style={[styles.radioRow, optionRowStyle]}
-            >
-              <View
-                style={[
-                  styles.radioBoxBase,
-                  isSelected ? styles.checkBoxSelected : null,
-                  hasError ? styles.radioBoxError : null,
-                  isDisabled ? styles.radioBoxDisabled : null,
-                ]}
-              >
-                <View style={[styles.radioBoxKcob, getKnobStyle(isSelected, isDisabled)]} />
-              </View>
-              <Text style={getOptionLabelStyle(isDisabled)}>{option.label}</Text>
-            </Pressable>
+              optionLabel={option.label}
+            />
           );
         })}
       </View>
