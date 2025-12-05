@@ -128,10 +128,6 @@ const RadioBoxCustom = <TFieldValues extends FieldValues>({
     allDisabled: boolean,
   ): boolean => optionDisabled === true || allDisabled;
 
-  const handleSelectOption = (optionValue: string, onChange: (value: string) => void) => {
-    onChange(optionValue);
-  };
-
   return (
     <View style={containerStyle}>
       <Label {...{ label, rules }} />
@@ -151,7 +147,7 @@ const RadioBoxCustom = <TFieldValues extends FieldValues>({
               key={option.key ?? option.value}
               label={option.label}
               onToggle={() => {
-                handleSelectOption(option.value, controller.field.onChange);
+                controller.field.onChange(option.value);
               }}
               optionRowStyle={optionRowStyle}
               value={option.value}

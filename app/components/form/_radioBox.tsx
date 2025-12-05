@@ -39,10 +39,6 @@ const RadioBox = <TFieldValues extends FieldValues>({
     return optionDisabled === true || disabled;
   };
 
-  const handleSelectOption = (optionValue: string, onChange: (value: string) => void) => {
-    onChange(optionValue);
-  };
-
   /*
    * 適用スタイル
    */
@@ -74,7 +70,7 @@ const RadioBox = <TFieldValues extends FieldValues>({
               disabled={isDisabled}
               key={option.key ?? option.value}
               onPress={() => {
-                handleSelectOption(option.value, controller.field.onChange);
+                controller.field.onChange(option.value);
               }}
               style={[styles.radioRow, optionRowStyle]}
             >
