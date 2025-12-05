@@ -22,25 +22,29 @@ import type { TypeDialog } from '../../lib/types/typeComponents';
 /* -----------------------------------------------
  * ダイアログ
  * ----------------------------------------------- */
-// eslint-disable-next-line complexity
 const DialogHeader = ({ title, description }: Pick<TypeDialog, 'title' | 'description'>) => {
   const hasTitle = typeof title === 'string' && title.length > 0;
   const hasDescription = typeof description === 'string' && description.length > 0;
 
-  const headerItems = [
-    hasTitle ? (
+  if (!hasTitle && !hasDescription) return null;
+
+  const headerItems = [] as React.ReactNode[];
+
+  if (hasTitle) {
+    headerItems.push(
       <Text key='dialog-title' style={styles.title}>
         {title}
-      </Text>
-    ) : null,
-    hasDescription ? (
+      </Text>,
+    );
+  }
+
+  if (hasDescription) {
+    headerItems.push(
       <Text key='dialog-description' style={styles.description}>
         {description}
-      </Text>
-    ) : null,
-  ].filter(Boolean);
-
-  if (headerItems.length === 0) return null;
+      </Text>,
+    );
+  }
 
   return <View style={styles.header}>{headerItems}</View>;
 };
@@ -171,7 +175,6 @@ const useDialogOpacity = (visible: boolean) => {
   return opacity;
 };
 
-// eslint-disable-next-line complexity
 const useDialogLayout = ({
   closeText,
   description,
@@ -187,23 +190,16 @@ const useDialogLayout = ({
   const { height } = useWindowDimensions();
   const opacity = useDialogOpacity(visible);
 
-  const overlayStyle = useAnimatedStyle(() => ({
-    opacity: opacity.value,
-  }));
-
-  const cardStyle = useAnimatedStyle(() => ({
-    opacity: opacity.value,
-    transform: [
-      {
-        scale: interpolate(opacity.value, [0, 1], [0.96, 1]),
-      },
-    ],
-  }));
-
+  const overlayStyle = useDialogOverlayStyle(opacity);
+  const cardStyle = useDialogCardStyle(opacity);
+  const { showCloseButton, showEventButton } = getDialogActionVisibility({
+    closeText,
+    eventText,
+    onClose,
+    onEvent,
+  });
+  const hasHeader = hasDialogHeader(title, description);
   const maxCardHeight = height - 120;
-  const showCloseButton = Boolean(closeText) && Boolean(onClose);
-  const showEventButton = Boolean(eventText) && Boolean(onEvent);
-  const hasHeader = (title?.length ?? 0) > 0 || (description?.length ?? 0) > 0;
 
   return {
     cardStyle,
@@ -214,6 +210,37 @@ const useDialogLayout = ({
     showEventButton,
   };
 };
+
+const useDialogOverlayStyle = (opacity: Animated.SharedValue<number>) =>
+  useAnimatedStyle(() => ({
+    opacity: opacity.value,
+  }));
+
+const useDialogCardStyle = (opacity: Animated.SharedValue<number>) =>
+  useAnimatedStyle(() => ({
+    opacity: opacity.value,
+    transform: [
+      {
+        scale: interpolate(opacity.value, [0, 1], [0.96, 1]),
+      },
+    ],
+  }));
+
+const getDialogActionVisibility = ({
+  closeText,
+  eventText,
+  onClose,
+  onEvent,
+}: Pick<
+  TypeDialog,
+  'closeText' | 'eventText' | 'onClose' | 'onEvent'
+>) => ({
+  showCloseButton: Boolean(closeText) && Boolean(onClose),
+  showEventButton: Boolean(eventText) && Boolean(onEvent),
+});
+
+const hasDialogHeader = (title?: string, description?: string) =>
+  (title?.length ?? 0) > 0 || (description?.length ?? 0) > 0;
 
 const styles = StyleSheet.create({
   container: {
