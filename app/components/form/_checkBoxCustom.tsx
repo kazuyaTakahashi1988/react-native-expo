@@ -5,7 +5,7 @@ import Label from './_label';
 import { color } from '../../lib/mixin';
 import { useRHFController } from '../../services/formHelper';
 
-import type { TypeCheckBox } from '../../lib/types/typeComponents';
+import type { TypeCheckBoxCustom } from '../../lib/types/typeComponents';
 import type { FieldValues } from 'react-hook-form';
 import type { StyleProp, ViewStyle } from 'react-native';
 
@@ -24,7 +24,7 @@ const CheckBoxCustom = <TFieldValues extends FieldValues>({
   optionRowStyle,
   options,
   rules,
-}: TypeCheckBox<TFieldValues>) => {
+}: TypeCheckBoxCustom<TFieldValues>) => {
   const { controller } = useRHFController({ control, name, rules });
   const hasError = Boolean(errorText);
 
@@ -126,8 +126,8 @@ const styles = StyleSheet.create({
   },
   checkBoxBase: {
     backgroundColor: color.gray,
-    borderColor: color.white,
-    borderRadius: 15,
+    borderColor: color.gray,
+    borderRadius: 20,
     borderWidth: 1,
     height: 30,
     justifyContent: 'center',
