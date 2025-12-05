@@ -86,7 +86,7 @@ const DialogBottom = ({
 }: Pick<TypeDialog, 'closeText' | 'eventText' | 'onClose' | 'onEvent'>) => {
   const isCloseText = Boolean(closeText);
   const isEventText = Boolean(eventText);
-  if (!isCloseText && isEventText) {
+  if (!isCloseText && !isEventText) {
     return null;
   }
 
