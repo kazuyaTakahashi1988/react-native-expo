@@ -140,20 +140,15 @@ const Dialog = ({
     <Modal animationType='none' onRequestClose={onClose} transparent visible={visible}>
       <View style={styles.container}>
         {/* 透過背景 */}
-        <DialogBackGround closeOnBackGround={closeOnBackGround} onClose={onClose} />
+        <DialogBackGround {...{ closeOnBackGround, onClose }} />
         <View style={styles.dialog}>
           <Animated.View style={[styles.dialogCard, { maxHeight: height - 120 }, animatedStyle]}>
             {/* タイトル */}
-            <DialogTitle title={title} />
+            <DialogTitle {...{ title }} />
             {/* チャイルドコンテンツ */}
-            <DialogChildren>{children}</DialogChildren>
+            <DialogChildren {...{ children }} />
             {/* ボトム（ボタン） */}
-            <DialogBottom
-              closeText={closeText}
-              eventText={eventText}
-              onClose={onClose}
-              onEvent={onEvent}
-            />
+            <DialogBottom {...{ closeText, eventText, onClose, onEvent }} />
           </Animated.View>
         </View>
       </View>
