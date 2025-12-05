@@ -1,12 +1,5 @@
 import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import Animated, {
-  interpolate,
-  interpolateColor,
-  useAnimatedStyle,
-  useSharedValue,
-  withTiming,
-} from 'react-native-reanimated';
 
 import ErrorText from './_errorText';
 import Label from './_label';
@@ -15,7 +8,6 @@ import { useRHFController } from '../../services/formHelper';
 
 import type { TypeRadioBoxCustom, TypeToggleRadioOption } from '../../lib/types/typeComponents';
 import type { FieldValues } from 'react-hook-form';
-import type { SharedValue } from 'react-native-reanimated';
 
 /* -----------------------------------------------
  * ラヂオボックスカスタム項目
@@ -45,32 +37,15 @@ const ToggleRadioOption = ({
   trackStyle,
   knobStyle,
 }: TypeToggleRadioOption) => {
-  const progress: SharedValue<number> = useSharedValue<number>(isSelected ? 1 : 0);
   const isDisabled = disabled;
 
-  React.useEffect(() => {
-    progress.value = withTiming(isSelected ? 1 : 0, { duration: 200 });
-  }, [isSelected, progress]);
+  const trackBackgroundColor = isDisabled
+    ? DISABLED_COLOR
+    : isSelected
+      ? activeColor
+      : inactiveColor;
 
-  const trackAnimatedStyle = useAnimatedStyle(
-    (): { backgroundColor: string } => ({
-      backgroundColor: isDisabled
-        ? DISABLED_COLOR
-        : String(interpolateColor(progress.value, [0, 1], [inactiveColor, activeColor])),
-    }),
-    [activeColor, inactiveColor, isDisabled],
-  );
-
-  const knobAnimatedStyle = useAnimatedStyle(
-    (): { transform: { translateX: number }[] } => ({
-      transform: [
-        {
-          translateX: interpolate(progress.value, [0, 1], [KNOB_MARGIN, KNOB_MAX_TRANSLATE]),
-        },
-      ],
-    }),
-    [],
-  );
+  const knobTranslation = isSelected ? KNOB_MAX_TRANSLATE : KNOB_MARGIN;
 
   return (
     <Pressable
@@ -80,18 +55,23 @@ const ToggleRadioOption = ({
       onPress={onPress}
       style={[styles.optionRow, optionRowStyle]}
     >
-      <Animated.View
+      <View
         style={[
           styles.track,
           hasError ? styles.trackError : styles.trackDefault,
-          trackAnimatedStyle,
+          { backgroundColor: trackBackgroundColor },
           trackStyle,
         ]}
       >
-        <Animated.View
-          style={[styles.knob, { backgroundColor: knobColor }, knobAnimatedStyle, knobStyle]}
+        <View
+          style={[
+            styles.knob,
+            { backgroundColor: knobColor },
+            { transform: [{ translateX: knobTranslation }] },
+            knobStyle,
+          ]}
         />
-      </Animated.View>
+      </View>
       <Text
         style={[
           styles.optionLabel,
