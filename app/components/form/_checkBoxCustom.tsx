@@ -74,58 +74,62 @@ const CheckBoxCustom = <TFieldValues extends FieldValues>({
     [],
   );
 
-  const CheckBoxOptionRow = ({
-    isDisabled,
-    isSelected,
-    labelStyle,
-    onPress,
-    optionLabel,
-  }: {
-    isDisabled: boolean;
-    isSelected: boolean;
-    labelStyle: StyleProp<TextStyle>;
-    onPress: () => void;
-    optionLabel: string;
-  }) => {
-    const animation = useSharedValue(isSelected ? 1 : 0);
+  const CheckBoxOptionRow = useMemo(
+    () =>
+      ({
+        isDisabled,
+        isSelected,
+        labelStyle,
+        onPress,
+        optionLabel,
+      }: {
+        isDisabled: boolean;
+        isSelected: boolean;
+        labelStyle: StyleProp<TextStyle>;
+        onPress: () => void;
+        optionLabel: string;
+      }) => {
+        const animation = useSharedValue(isSelected ? 1 : 0);
 
-    useEffect(() => {
-      animation.value = withTiming(isSelected ? 1 : 0, { duration: 200 });
-    }, [animation, isSelected]);
+        useEffect(() => {
+          animation.value = withTiming(isSelected ? 1 : 0, { duration: 200 });
+        }, [animation, isSelected]);
 
-    const animatedBackgroundStyle = useAnimatedStyle(() => ({
-      backgroundColor: interpolateColor(animation.value, [0, 1], [color.gray, color.primary]),
-    }));
+        const animatedBackgroundStyle = useAnimatedStyle(() => ({
+          backgroundColor: interpolateColor(animation.value, [0, 1], [color.gray, color.primary]),
+        }));
 
-    const animatedKnobStyle = useAnimatedStyle(() => ({
-      left: knobOffsetRange[0] + (knobOffsetRange[1] - knobOffsetRange[0]) * animation.value,
-    }));
+        const animatedKnobStyle = useAnimatedStyle(() => ({
+          left: knobOffsetRange[0] + (knobOffsetRange[1] - knobOffsetRange[0]) * animation.value,
+        }));
 
-    return (
-      <Pressable
-        accessibilityRole='checkbox'
-        accessibilityState={{ checked: isSelected }}
-        disabled={isDisabled}
-        onPress={onPress}
-        style={[styles.checkBoxRow, optionRowStyle]}
-      >
-        <Animated.View
-          style={[
-            styles.checkBoxBase,
-            animatedBackgroundStyle,
-            hasError ? styles.checkBoxError : null,
-            isDisabled ? styles.checkBoxDisabled : null,
-          ]}
-        >
-          <Animated.View
-            style={[styles.checkBoxKcob, animatedKnobStyle, isDisabled ? styles.checkBoxKnobDisabled : null]}
-          />
-        </Animated.View>
+        return (
+          <Pressable
+            accessibilityRole='checkbox'
+            accessibilityState={{ checked: isSelected }}
+            disabled={isDisabled}
+            onPress={onPress}
+            style={[styles.checkBoxRow, optionRowStyle]}
+          >
+            <Animated.View
+              style={[
+                styles.checkBoxBase,
+                animatedBackgroundStyle,
+                hasError ? styles.checkBoxError : null,
+                isDisabled ? styles.checkBoxDisabled : null,
+              ]}
+            >
+              <Animated.View
+                style={[styles.checkBoxKcob, animatedKnobStyle, isDisabled ? styles.checkBoxKnobDisabled : null]}
+              />
+            </Animated.View>
 
-        <Text style={labelStyle}>{optionLabel}</Text>
-      </Pressable>
-    );
-  };
+            <Text style={labelStyle}>{optionLabel}</Text>
+          </Pressable>
+        );
+      },
+    [hasError, knobOffsetRange, optionRowStyle],
+  );
 
   return (
     <View style={containerStyle}>

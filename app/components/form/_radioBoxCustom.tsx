@@ -66,57 +66,61 @@ const RadioBoxCustom = <TFieldValues extends FieldValues>({
     [],
   );
 
-  const RadioBoxOptionRow = ({
-    isDisabled,
-    isSelected,
-    labelStyle,
-    onPress,
-    optionLabel,
-  }: {
-    isDisabled: boolean;
-    isSelected: boolean;
-    labelStyle: StyleProp<TextStyle>;
-    onPress: () => void;
-    optionLabel: string;
-  }) => {
-    const animation = useSharedValue(isSelected ? 1 : 0);
+  const RadioBoxOptionRow = useMemo(
+    () =>
+      ({
+        isDisabled,
+        isSelected,
+        labelStyle,
+        onPress,
+        optionLabel,
+      }: {
+        isDisabled: boolean;
+        isSelected: boolean;
+        labelStyle: StyleProp<TextStyle>;
+        onPress: () => void;
+        optionLabel: string;
+      }) => {
+        const animation = useSharedValue(isSelected ? 1 : 0);
 
-    useEffect(() => {
-      animation.value = withTiming(isSelected ? 1 : 0, { duration: 200 });
-    }, [animation, isSelected]);
+        useEffect(() => {
+          animation.value = withTiming(isSelected ? 1 : 0, { duration: 200 });
+        }, [animation, isSelected]);
 
-    const animatedBackgroundStyle = useAnimatedStyle(() => ({
-      backgroundColor: interpolateColor(animation.value, [0, 1], [color.gray, color.primary]),
-    }));
+        const animatedBackgroundStyle = useAnimatedStyle(() => ({
+          backgroundColor: interpolateColor(animation.value, [0, 1], [color.gray, color.primary]),
+        }));
 
-    const animatedKnobStyle = useAnimatedStyle(() => ({
-      left: knobOffsetRange[0] + (knobOffsetRange[1] - knobOffsetRange[0]) * animation.value,
-    }));
+        const animatedKnobStyle = useAnimatedStyle(() => ({
+          left: knobOffsetRange[0] + (knobOffsetRange[1] - knobOffsetRange[0]) * animation.value,
+        }));
 
-    return (
-      <Pressable
-        accessibilityRole='radio'
-        accessibilityState={{ selected: isSelected }}
-        disabled={isDisabled}
-        onPress={onPress}
-        style={[styles.radioRow, optionRowStyle]}
-      >
-        <Animated.View
-          style={[
-            styles.radioBoxBase,
-            animatedBackgroundStyle,
-            hasError ? styles.radioBoxError : null,
-            isDisabled ? styles.radioBoxDisabled : null,
-          ]}
-        >
-          <Animated.View
-            style={[styles.radioBoxKcob, animatedKnobStyle, isDisabled ? styles.checkBoxKcobDisabled : null]}
-          />
-        </Animated.View>
-        <Text style={labelStyle}>{optionLabel}</Text>
-      </Pressable>
-    );
-  };
+        return (
+          <Pressable
+            accessibilityRole='radio'
+            accessibilityState={{ selected: isSelected }}
+            disabled={isDisabled}
+            onPress={onPress}
+            style={[styles.radioRow, optionRowStyle]}
+          >
+            <Animated.View
+              style={[
+                styles.radioBoxBase,
+                animatedBackgroundStyle,
+                hasError ? styles.radioBoxError : null,
+                isDisabled ? styles.radioBoxDisabled : null,
+              ]}
+            >
+              <Animated.View
+                style={[styles.radioBoxKcob, animatedKnobStyle, isDisabled ? styles.checkBoxKcobDisabled : null]}
+              />
+            </Animated.View>
+            <Text style={labelStyle}>{optionLabel}</Text>
+          </Pressable>
+        );
+      },
+    [hasError, knobOffsetRange, optionRowStyle],
+  );
 
   return (
     <View style={containerStyle}>
