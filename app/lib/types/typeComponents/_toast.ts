@@ -17,3 +17,7 @@ export type TypeVariantStyle = Record<NonNullable<TypeToast['variant']>, ViewSty
 
 export type TypeToastUpdate = Partial<TypeToastOptions> & { visible: boolean };
 export type TypeToastOptions = Pick<TypeToast, 'message' | 'position' | 'variant' | 'duration'>;
+
+export type TypeToastState = Pick<TypeToast, 'message' | 'position' | 'variant' | 'duration'> & {
+  visible: boolean;
+};
