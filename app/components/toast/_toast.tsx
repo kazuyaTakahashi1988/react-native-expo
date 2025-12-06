@@ -9,15 +9,19 @@ import Animated, {
 
 import { color } from '../../lib/mixin';
 
-import type { TypeToast } from '../../lib/types/typeComponents';
-import type { ViewStyle } from 'react-native';
+import type {
+  TypeOffsetOption,
+  TypePositionStyle,
+  TypeToast,
+  TypeVariantStyle,
+} from '../../lib/types/typeComponents';
 
 /* -----------------------------------------------
  * Toast 各パーツ & 関数
  * ----------------------------------------------- */
 
 /*
- * 補助コンポーネント：メッセージ表示
+ * メッセージ箇所
  */
 const ToastMessage = ({ message }: Pick<TypeToast, 'message'>) => {
   const isMessage = Boolean(message);
@@ -25,17 +29,20 @@ const ToastMessage = ({ message }: Pick<TypeToast, 'message'>) => {
     return null;
   }
 
-  if (typeof message === 'string') {
-    return <Text style={styles.toastText}>{message}</Text>;
-  }
-
-  return <View>{message}</View>;
+  const isTypeString = typeof message === 'string';
+  return <Text {...(isTypeString && { style: styles.toastText })}>{message}</Text>;
 };
 
 /*
- * カスタムフック：表示状態 & アニメーション制御
+ * アニメーション & 表示位置を制御する関数
  */
 const animationDuration = 250;
+const offsetOption = {
+  top: -6,
+  center: 0,
+  bottom: 6,
+} satisfies TypeOffsetOption;
+
 const useToastController = ({
   visible,
   duration = 2000,
@@ -48,6 +55,8 @@ const useToastController = ({
 
   const onHideRef = React.useRef(onHide);
   const onShowRef = React.useRef(onShow);
+
+  const offset = React.useMemo(() => offsetOption[position], [position]);
 
   React.useEffect(() => {
     onHideRef.current = onHide;
@@ -88,14 +97,12 @@ const useToastController = ({
     };
   }, [duration, mounted, opacity, visible]);
 
-  const startOffset = React.useMemo(() => getStartOffset(position), [position]);
-
   const animatedStyle = useAnimatedStyle(() => {
     return {
       opacity: opacity.value,
       transform: [
         {
-          translateY: interpolate(opacity.value, [0, 1], [startOffset, 0]),
+          translateY: interpolate(opacity.value, [0, 1], [offset, 0]),
         },
       ],
     };
@@ -116,6 +123,9 @@ const Toast = ({
   onShow,
   variant = 'default',
 }: TypeToast) => {
+  /*
+   * アニメーション & 表示位置を制御する関数
+   */
   const { mounted, animatedStyle } = useToastController({
     visible,
     duration,
@@ -128,48 +138,33 @@ const Toast = ({
     return null;
   }
 
+  /*
+   * 適用スタイル
+   */
+  const positionStyle = {
+    top: styles.top,
+    center: styles.center,
+    bottom: styles.bottom,
+  } as const satisfies TypePositionStyle;
+
+  const variantStyle = {
+    default: undefined,
+    success: styles.success,
+    error: styles.error,
+  } as const satisfies TypeVariantStyle;
+
   return (
     <View pointerEvents='none' style={[StyleSheet.absoluteFillObject, styles.container]}>
-      <View style={[styles.positionBase, getPositionStyle(position)]}>
-        <Animated.View style={[styles.toast, getVariantStyle(variant), animatedStyle]}>
+      <View style={[styles.positionBase, positionStyle[position]]}>
+        <Animated.View style={[styles.toast, variantStyle[variant], animatedStyle]}>
+          {/*
+           * メッセージ箇所
+           */}
           <ToastMessage message={message} />
         </Animated.View>
       </View>
     </View>
   );
-};
-
-// position 用スタイル
-const getPositionStyle = (position: NonNullable<TypeToast['position']> = 'bottom') => {
-  const positionStyle = {
-    top: styles.top,
-    center: styles.center,
-    bottom: styles.bottom,
-  } satisfies Record<NonNullable<TypeToast['position']>, ViewStyle>;
-
-  return positionStyle[position];
-};
-
-// variant 用スタイル
-const getVariantStyle = (variant: NonNullable<TypeToast['variant']> = 'default') => {
-  const variantStyle = {
-    default: undefined,
-    success: styles.success,
-    error: styles.error,
-  } satisfies Record<NonNullable<TypeToast['variant']>, ViewStyle | undefined>;
-
-  return variantStyle[variant] ?? null;
-};
-
-// position に応じた開始オフセットスタイル
-const getStartOffset = (position: NonNullable<TypeToast['position']> = 'bottom'): number => {
-  const startOffset = {
-    top: -6,
-    center: 0,
-    bottom: 6,
-  } satisfies Record<NonNullable<TypeToast['position']>, number>;
-
-  return startOffset[position];
 };
 
 const styles = StyleSheet.create({
