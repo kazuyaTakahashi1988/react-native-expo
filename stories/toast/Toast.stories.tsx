@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import { styles } from '../../.storybook/styles.ts';
 import Button from '../../app/components/button/_button.tsx';
@@ -54,7 +54,7 @@ const ToastPreview = (args: Story['args']) => {
   const [visible, setVisible] = React.useState(false);
 
   return (
-    <View style={{ gap: 12, width: '100%' }}>
+    <View style={gapStyles.gap}>
       <Button
         onPress={() => {
           setVisible(true);
@@ -115,3 +115,7 @@ export const ErrorToast: Story = {
   },
   render: (args) => <ToastPreview {...args} />,
 };
+
+const gapStyles = StyleSheet.create({
+  gap: { gap: 12, width: '100%' },
+});

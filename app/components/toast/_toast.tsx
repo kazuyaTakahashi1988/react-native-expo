@@ -17,8 +17,13 @@ import type { TypeToast } from '../../lib/types/typeComponents';
 
 const animationDuration = 250;
 
+/* -----------------------------------------------
+ * 補助コンポーネント：メッセージ表示
+ * ----------------------------------------------- */
+
 const ToastMessage = ({ message }: Pick<TypeToast, 'message'>) => {
-  if (!message) {
+  const isMessage = Boolean(message);
+  if (!isMessage) {
     return null;
   }
 
@@ -26,8 +31,123 @@ const ToastMessage = ({ message }: Pick<TypeToast, 'message'>) => {
     return <Text style={styles.toastText}>{message}</Text>;
   }
 
-  return message;
+  return <View>{message}</View>;
 };
+
+/* -----------------------------------------------
+ * 補助関数：位置ごとの開始オフセット
+ * （ネスト三項演算子を排除）
+ * ----------------------------------------------- */
+
+const getStartOffset = (position: TypeToast['position'] = 'bottom'): number => {
+  switch (position) {
+    case 'top':
+      return -6;
+    case 'center':
+      return 0;
+    case 'bottom':
+    default:
+      return 6;
+  }
+};
+
+/* -----------------------------------------------
+ * 補助関数：position 用スタイル
+ * ----------------------------------------------- */
+
+const getPositionStyle = (position: TypeToast['position'] = 'bottom') => {
+  switch (position) {
+    case 'top':
+      return styles.top;
+    case 'center':
+      return styles.center;
+    case 'bottom':
+    default:
+      return styles.bottom;
+  }
+};
+
+/* -----------------------------------------------
+ * 補助関数：variant 用スタイル
+ * ----------------------------------------------- */
+
+const getVariantStyle = (variant: TypeToast['variant'] = 'default') => {
+  switch (variant) {
+    case 'success':
+      return styles.success;
+    case 'error':
+      return styles.error;
+    case 'default':
+    default:
+      return null;
+  }
+};
+
+/* -----------------------------------------------
+ * カスタムフック：表示状態 & アニメーション制御
+ * ----------------------------------------------- */
+
+type UseToastControllerProps = Pick<
+  TypeToast,
+  'visible' | 'duration' | 'onHide' | 'onShow' | 'position'
+>;
+
+const useToastController = ({
+  visible,
+  duration = 2000,
+  onHide,
+  onShow,
+  position = 'bottom',
+}: UseToastControllerProps) => {
+  const opacity = useSharedValue(0);
+  const [mounted, setMounted] = React.useState(visible);
+
+  React.useEffect(() => {
+    let timer: NodeJS.Timeout | undefined;
+
+    if (visible) {
+      setMounted(true);
+      onShow?.();
+      opacity.value = withTiming(1, { duration: animationDuration });
+
+      timer = setTimeout(() => {
+        onHide?.();
+      }, duration);
+    } else {
+      opacity.value = withTiming(0, { duration: animationDuration });
+
+      timer = setTimeout(() => {
+        setMounted(false);
+      }, animationDuration);
+    }
+
+    return () => {
+      const isTimer = Boolean(timer);
+      if (isTimer) {
+        clearTimeout(timer);
+      }
+    };
+  }, [duration, onHide, onShow, opacity, visible]);
+
+  const animatedStyle = useAnimatedStyle(() => {
+    const startOffset = getStartOffset(position);
+
+    return {
+      opacity: opacity.value,
+      transform: [
+        {
+          translateY: interpolate(opacity.value, [0, 1], [startOffset, 0]),
+        },
+      ],
+    };
+  });
+
+  return { mounted, animatedStyle };
+};
+
+/* -----------------------------------------------
+ * Toast 本体
+ * ----------------------------------------------- */
 
 const Toast = ({
   visible,
@@ -38,45 +158,13 @@ const Toast = ({
   onShow,
   variant = 'default',
 }: TypeToast) => {
-  const opacity = useSharedValue(0);
-  const [mounted, setMounted] = React.useState(visible);
-
-  React.useEffect(() => {
-    if (visible) {
-      setMounted(true);
-      onShow?.();
-      opacity.value = withTiming(1, { duration: animationDuration });
-      const timer = setTimeout(() => {
-        onHide?.();
-      }, duration);
-
-      return () => {
-        clearTimeout(timer);
-      };
-    }
-
-    opacity.value = withTiming(0, { duration: animationDuration });
-    const timer = setTimeout(() => {
-      setMounted(false);
-    }, animationDuration);
-
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [duration, onHide, onShow, opacity, visible]);
-
-  const animatedStyle = useAnimatedStyle(() => ({
-    opacity: opacity.value,
-    transform: [
-      {
-        translateY: interpolate(
-          opacity.value,
-          [0, 1],
-          [position === 'top' ? -6 : position === 'bottom' ? 6 : 0, 0],
-        ),
-      },
-    ],
-  }));
+  const { mounted, animatedStyle } = useToastController({
+    visible,
+    duration,
+    onHide,
+    onShow,
+    position,
+  });
 
   if (!mounted) {
     return null;
@@ -84,24 +172,9 @@ const Toast = ({
 
   return (
     <View pointerEvents='box-none' style={[StyleSheet.absoluteFillObject, styles.container]}>
-      <View
-        pointerEvents='box-none'
-        style={[
-          styles.position,
-          position === 'top' && styles.top,
-          position === 'center' && styles.center,
-          position === 'bottom' && styles.bottom,
-        ]}
-      >
-        <Animated.View
-          style={[
-            styles.toast,
-            variant === 'success' && styles.success,
-            variant === 'error' && styles.error,
-            animatedStyle,
-          ]}
-        >
-          <ToastMessage {...{ message }} />
+      <View pointerEvents='box-none' style={[styles.position, getPositionStyle(position)]}>
+        <Animated.View style={[styles.toast, getVariantStyle(variant), animatedStyle]}>
+          <ToastMessage message={message} />
         </Animated.View>
       </View>
     </View>
@@ -113,9 +186,9 @@ const styles = StyleSheet.create({
     zIndex: 999,
   },
   position: {
+    alignItems: 'center',
     flex: 1,
     width: '100%',
-    alignItems: 'center',
   },
   top: {
     justifyContent: 'flex-start',
@@ -133,7 +206,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   toast: {
-    backgroundColor: 'rgba(0, 0, 0, 0.85)',
+    backgroundColor: color.backdrop,
     borderRadius: 12,
     elevation: 6,
     maxWidth: 320,
