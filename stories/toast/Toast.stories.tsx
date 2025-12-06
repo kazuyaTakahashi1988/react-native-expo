@@ -8,15 +8,21 @@ import { showToast } from '../../app/components/toast/_toastService.ts';
 import type { TypeToastOptions } from '../../app/lib/types/typeComponents';
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite';
 
-const escapeSingleQuotes = (text: string) => text.replaceAll("'", "\\'");
+const escapeSingleQuotes = (text: unknown): string => {
+  if (typeof text !== 'string') {
+    return '';
+  }
 
-const formatToastOptions = (args: Partial<TypeToastOptions>) => {
-  const { message, position, variant, duration } = args;
+  return text.replaceAll("'", "\\'");
+};
+
+const formatToastOptions = (args: Partial<TypeToastOptions> | undefined): string => {
+  const { message, position, variant, duration } = args ?? {};
 
   const normalizedMessage =
     typeof message === 'string' ? escapeSingleQuotes(message) : '';
-  const normalizedPosition = position ?? 'bottom';
-  const normalizedVariant = variant ?? 'default';
+  const normalizedPosition = typeof position === 'string' ? position : 'bottom';
+  const normalizedVariant = typeof variant === 'string' ? variant : 'default';
 
   const options = [
     `message: '${normalizedMessage}'`,
@@ -25,7 +31,7 @@ const formatToastOptions = (args: Partial<TypeToastOptions>) => {
   ];
 
   if (typeof duration === 'number') {
-    options.push(`duration: ${duration}`);
+    options.push(`duration: ${duration.toString()}`);
   }
 
   return options.join(', ');
@@ -35,8 +41,8 @@ type DocsTransformContext = {
   args?: Partial<TypeToastOptions>;
 };
 
-const transformSource = (_: string, context: DocsTransformContext) => {
-  const options = formatToastOptions(context.args ?? {});
+const transformSource = (_: string, context: DocsTransformContext): string => {
+  const options = formatToastOptions(context.args);
 
   return `
 <Button
