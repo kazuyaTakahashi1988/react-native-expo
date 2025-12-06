@@ -103,20 +103,35 @@ const meta = {
   argTypes: {
     message: {
       description: 'トーストに表示するメッセージ',
+      type: {
+        name: 'string',
+        required: true,
+      },
     },
     duration: {
       description: '表示継続時間（ms）',
       control: { type: 'number', min: 1000, step: 500 },
+      type: {
+        name: 'number',
+      },
     },
     position: {
       control: 'radio',
       options: ['top', 'center', 'bottom'],
       description: '表示位置',
+      type: {
+        name: 'string',
+        required: true,
+      },
     },
     variant: {
       control: 'radio',
       options: ['default', 'success', 'error'],
       description: 'バリエーション',
+      type: {
+        name: 'string',
+        required: true,
+      },
     },
   },
 } satisfies Meta<typeof ToastPreview>;
