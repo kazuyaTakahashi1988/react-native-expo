@@ -1,9 +1,10 @@
-import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 import { Button } from '../../../../../components/button';
 import { Layout } from '../../../../../components/layouts/layout';
 import { showToast } from '../../../../../components/toast';
+
+import type React from 'react';
 
 /* -----------------------------------------------
  * About > Child01 画面

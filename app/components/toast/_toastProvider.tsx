@@ -1,12 +1,13 @@
 import React from 'react';
 
 import Toast from './_toast';
-import { subscribeToast } from './toastService';
+import { subscribeToast } from './_toastService';
 
-import type { ToastUpdate } from './toastService';
-import type { TypeToast } from '../../lib/types/typeComponents';
+import type { TypeToast, TypeToastUpdate } from '../../lib/types/typeComponents';
 
-type ToastState = Pick<TypeToast, 'message' | 'position' | 'variant' | 'duration'> & { visible: boolean };
+type ToastState = Pick<TypeToast, 'message' | 'position' | 'variant' | 'duration'> & {
+  visible: boolean;
+};
 
 const defaultToastState: ToastState = {
   visible: false,
@@ -20,7 +21,7 @@ const ToastProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
   const [toastState, setToastState] = React.useState<ToastState>(defaultToastState);
 
   React.useEffect(() => {
-    const unsubscribe = subscribeToast((options: ToastUpdate) => {
+    const unsubscribe = subscribeToast((options: TypeToastUpdate) => {
       setToastState((prev) => ({
         ...prev,
         ...options,
