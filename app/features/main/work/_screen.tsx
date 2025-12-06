@@ -5,6 +5,10 @@ import { Layout } from '../../../components/layouts/layout';
 
 import type { TypeWorkScreen } from './_type';
 
+/* -----------------------------------------------
+ * Work 画面
+ * ----------------------------------------------- */
+
 const WorkScreen: React.FC<TypeWorkScreen> = (props) => {
   const { navigation } = props;
 
