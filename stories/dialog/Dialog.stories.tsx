@@ -26,7 +26,7 @@ const meta = {
       description: 'コンテンツ',
     },
     notBackGroundPress: {
-      description: '背景タップで閉じるかどうか',
+      description: '背景タップを無効にできるフラグ',
       control: 'boolean',
     },
     closeText: {
@@ -39,7 +39,7 @@ const meta = {
       description: 'イベントボタンテキスト。',
     },
     onClose: {
-      description: 'クローズボタン & 背景タップ処理 ',
+      description: 'クローズボタン処理 （および背景タップ時の処理）',
     },
   },
 } satisfies Meta<typeof DialogComponent>;
@@ -104,17 +104,19 @@ export const Basic: Story = {
   render: (args) => <Dialog {...args} />,
 };
 
-export const WithoutClose: Story = {
+export const NotBackGroundPress: Story = {
   args: {
-    title: 'WithOut Close ダイアログ',
+    title: 'Not BackGroundPress ダイアログ',
     children: (
       <Text>
-        閉じるボタンなし ＆ 背景タップでも閉じれないダイアログです。{'\n'}
+        背景タップで閉じれないダイアログです。{'\n'}
         {'\n'}
-        イベントボタンを押して閉じてください。
+        ボタンを押して閉じてください。
       </Text>
     ),
     eventText: 'イベントボタン',
+    closeText: '閉じるボタン',
+    onClose: () => {},
     onEvent: () => {},
     notBackGroundPress: true,
     visible: true,

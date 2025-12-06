@@ -40,13 +40,13 @@ const Child00Screen: React.FC = () => {
         title='Basic ダイアログを開く'
       />
 
-      {/* WithOut Close ボタン */}
+      {/* Not BackGroundPress ボタン */}
       <Button
         containerStyle={styles.buttonSpacing}
         onPress={() => {
-          setVisibleDialog('withoutClose');
+          setVisibleDialog('notBackGroundPress');
         }}
-        title='WithOut Close ダイアログを開く'
+        title='Not BackGroundPress ダイアログを開く'
       />
 
       {/* Long Contents ボタン */}
@@ -87,18 +87,20 @@ const Child00Screen: React.FC = () => {
         </Text>
       </Dialog>
 
-      {/* WithOut Close ダイアログ */}
+      {/* Not BackGroundPress ダイアログ */}
       <Dialog
+        closeText='閉じるボタン'
         eventText='イベントボタン'
-        notBackGroundPress={false}
+        notBackGroundPress={true}
+        onClose={onClose}
         onEvent={onEvent}
-        title='WithOut Close ダイアログ'
-        visible={visibleDialog === 'withoutClose'}
+        title='Not BackGroundPress ダイアログ'
+        visible={visibleDialog === 'notBackGroundPress'}
       >
         <Text>
-          閉じるボタンなし ＆ 背景タップでも閉じれないダイアログです。{'\n'}
+          背景タップで閉じれないダイアログです。{'\n'}
           {'\n'}
-          イベントボタンを押して閉じてください。
+          ボタンを押して閉じてください。
         </Text>
       </Dialog>
 

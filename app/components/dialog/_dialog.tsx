@@ -170,6 +170,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: color.backdrop,
     justifyContent: 'center',
+    padding: 24,
   },
   dialogBackGround: {
     ...StyleSheet.absoluteFillObject,
@@ -180,7 +181,6 @@ const styles = StyleSheet.create({
   dialog: {
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 24,
     width: '100%',
   },
   dialogCard: {
