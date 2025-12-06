@@ -7,8 +7,8 @@ import { showToast, ToastProvider } from '../../app/components/toast';
 import type { TypeToastOptions } from '../../app/lib/types/typeComponents';
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite';
 
-const escapeSingleQuotes = (text: string | undefined | null): string => {
-  const isText = text === 'string' && Boolean(text);
+const escapeSingleQuotes = (text: string): string => {
+  const isText = Boolean(text);
   if (!isText) {
     return '';
   }
