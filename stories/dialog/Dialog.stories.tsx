@@ -84,6 +84,8 @@ const Dialog = (args: Story['args']) => {
   );
 };
 
+Dialog.displayName = 'Dialog';
+
 export const Basic: Story = {
   args: {
     title: 'Basic ダイアログ',
