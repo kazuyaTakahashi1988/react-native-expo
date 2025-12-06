@@ -8,21 +8,35 @@ import { showToast } from '../../app/components/toast/_toastService.ts';
 import type { TypeToastOptions } from '../../app/lib/types/typeComponents';
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite';
 
-const escapeSingleQuotes = (text: unknown): string => {
-  if (typeof text !== 'string') {
+const escapeSingleQuotes = (text: string | undefined | null): string => {
+  if (!text) {
     return '';
   }
 
   return text.replaceAll("'", "\\'");
 };
 
-const formatToastOptions = (args: Partial<TypeToastOptions> | undefined): string => {
-  const { message, position, variant, duration } = args ?? {};
+const normalizeStringOption = (
+  value: string | undefined,
+  fallback: string,
+): string => (typeof value === 'string' ? value : fallback);
 
-  const normalizedMessage =
-    typeof message === 'string' ? escapeSingleQuotes(message) : '';
-  const normalizedPosition = typeof position === 'string' ? position : 'bottom';
-  const normalizedVariant = typeof variant === 'string' ? variant : 'default';
+const normalizeDuration = (value: number | undefined): string | null => {
+  if (typeof value !== 'number') {
+    return null;
+  }
+
+  return value.toString();
+};
+
+const formatToastOptions = (args: Partial<TypeToastOptions> | undefined): string => {
+  const safeArgs = args ?? {};
+  const normalizedMessage = escapeSingleQuotes(
+    normalizeStringOption(safeArgs.message, ''),
+  );
+  const normalizedPosition = normalizeStringOption(safeArgs.position, 'bottom');
+  const normalizedVariant = normalizeStringOption(safeArgs.variant, 'default');
+  const normalizedDuration = normalizeDuration(safeArgs.duration);
 
   const options = [
     `message: '${normalizedMessage}'`,
@@ -30,8 +44,8 @@ const formatToastOptions = (args: Partial<TypeToastOptions> | undefined): string
     `variant: '${normalizedVariant}'`,
   ];
 
-  if (typeof duration === 'number') {
-    options.push(`duration: ${duration.toString()}`);
+  if (normalizedDuration) {
+    options.push(`duration: ${normalizedDuration}`);
   }
 
   return options.join(', ');
