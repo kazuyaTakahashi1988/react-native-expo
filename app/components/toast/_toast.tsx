@@ -1,5 +1,5 @@
 import React from 'react';
-import { Animated, Modal, Platform, StyleSheet, Text, View } from 'react-native';
+import { Animated, StyleSheet, Text, View } from 'react-native';
 
 import { color } from '../../lib/mixin';
 
@@ -95,7 +95,6 @@ const useToastController = ({
 }: UseToastControllerProps) => {
   const opacity = React.useRef(new Animated.Value(0)).current;
   const [mounted, setMounted] = React.useState(visible);
-  const [modalVisible, setModalVisible] = React.useState(visible);
 
   const onHideRef = React.useRef(onHide);
   const onShowRef = React.useRef(onShow);
@@ -112,7 +111,6 @@ const useToastController = ({
     let timer: NodeJS.Timeout | undefined;
 
     if (visible) {
-      setModalVisible(true);
       setMounted(true);
       onShowRef.current?.();
       Animated.timing(opacity, {
@@ -133,7 +131,6 @@ const useToastController = ({
 
       timer = setTimeout(() => {
         setMounted(false);
-        setModalVisible(false);
       }, animationDuration);
     }
 
@@ -157,7 +154,7 @@ const useToastController = ({
     ],
   };
 
-  return { mounted, animatedStyle, modalVisible };
+  return { mounted, animatedStyle };
 };
 
 /* -----------------------------------------------
@@ -173,7 +170,7 @@ const Toast = ({
   onShow,
   variant = 'default',
 }: TypeToast) => {
-  const { mounted, animatedStyle, modalVisible } = useToastController({
+  const { mounted, animatedStyle } = useToastController({
     visible,
     duration,
     onHide,
@@ -181,36 +178,21 @@ const Toast = ({
     position,
   });
 
-  const handleRequestClose = React.useCallback(() => {
-    onHide?.();
-  }, [onHide]);
-
   if (!mounted) {
     return null;
   }
 
-  const isAndroid = Platform.OS === 'android';
-
   return (
-    <Modal
-      animationType='none'
-      onRequestClose={handleRequestClose}
-      presentationStyle='overFullScreen'
-      statusBarTranslucent={isAndroid}
-      transparent
-      visible={modalVisible}
-    >
-      <View
-        pointerEvents='box-none'
-        style={[StyleSheet.absoluteFillObject, styles.container]}
-      >
-        <View pointerEvents='box-none' style={[styles.position, getPositionStyle(position)]}>
-          <Animated.View style={[styles.toast, getVariantStyle(variant), animatedStyle]}>
-            <ToastMessage message={message} />
-          </Animated.View>
-        </View>
+    <View pointerEvents='box-none' style={[StyleSheet.absoluteFillObject, styles.container]}>
+      <View pointerEvents='box-none' style={[styles.position, getPositionStyle(position)]}>
+        <Animated.View
+          pointerEvents='none'
+          style={[styles.toast, getVariantStyle(variant), animatedStyle]}
+        >
+          <ToastMessage message={message} />
+        </Animated.View>
       </View>
-    </Modal>
+    </View>
   );
 };
 
