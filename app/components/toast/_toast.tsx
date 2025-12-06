@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import type { StyleProp, ViewStyle } from 'react-native';
 import Animated, {
   interpolate,
   useAnimatedStyle,
@@ -35,53 +36,45 @@ const ToastMessage = ({ message }: Pick<TypeToast, 'message'>) => {
 };
 
 /* -----------------------------------------------
- * 補助関数：position 用スタイル
- * （ここは worklet から呼ばないので普通の関数でOK）
+ * 補助関数：position / variant 用スタイルと開始オフセット
  * ----------------------------------------------- */
 
-const getPositionStyle = (position: TypeToast['position'] = 'bottom') => {
-  switch (position) {
-    case 'top':
-      return styles.top;
-    case 'center':
-      return styles.center;
-    case 'bottom':
-    default:
-      return styles.bottom;
-  }
-};
+const toastStyleMap = {
+  top: {
+    positionStyle: styles.top,
+    startOffset: -6,
+  },
+  center: {
+    positionStyle: styles.center,
+    startOffset: 0,
+  },
+  bottom: {
+    positionStyle: styles.bottom,
+    startOffset: 6,
+  },
+} satisfies Record<
+  TypeToast['position'],
+  { positionStyle: StyleProp<ViewStyle>; startOffset: number }
+>;
 
-/* -----------------------------------------------
- * 補助関数：variant 用スタイル
- * ----------------------------------------------- */
+const toastVariantMap = {
+  default: null,
+  success: styles.success,
+  error: styles.error,
+} satisfies Record<TypeToast['variant'], StyleProp<ViewStyle> | null>;
 
-const getVariantStyle = (variant: TypeToast['variant'] = 'default') => {
-  switch (variant) {
-    case 'success':
-      return styles.success;
-    case 'error':
-      return styles.error;
-    case 'default':
-    default:
-      return null;
-  }
-};
+const getToastStyleConfig = ({
+  position = 'bottom',
+  variant = 'default',
+}: Partial<Pick<TypeToast, 'position' | 'variant'>>) => {
+  const { positionStyle, startOffset } =
+    toastStyleMap[position] ?? toastStyleMap.bottom;
 
-/* -----------------------------------------------
- * position に応じた開始オフセット計算
- * （JS 側で計算して数値だけ worklet に渡す）
- * ----------------------------------------------- */
-
-const getStartOffset = (position: TypeToast['position'] = 'bottom'): number => {
-  switch (position) {
-    case 'top':
-      return -6;
-    case 'center':
-      return 0;
-    case 'bottom':
-    default:
-      return 6;
-  }
+  return {
+    positionStyle,
+    startOffset,
+    variantStyle: toastVariantMap[variant] ?? toastVariantMap.default,
+  };
 };
 
 /* -----------------------------------------------
@@ -146,7 +139,10 @@ const useToastController = ({
   }, [duration, mounted, opacity, visible]);
 
   // position → startOffset は JS 側で計算して数値として渡す
-  const startOffset = React.useMemo(() => getStartOffset(position), [position]);
+  const startOffset = React.useMemo(
+    () => getToastStyleConfig({ position }).startOffset,
+    [position],
+  );
 
   const animatedStyle = useAnimatedStyle(() => {
     // ここは worklet（自動で 'worklet' 付く）だが、
@@ -185,6 +181,11 @@ const Toast = ({
     position,
   });
 
+  const { positionStyle, variantStyle } = React.useMemo(
+    () => getToastStyleConfig({ position, variant }),
+    [position, variant],
+  );
+
   if (!mounted) {
     return null;
   }
@@ -195,8 +196,8 @@ const Toast = ({
       pointerEvents='none'
       style={[StyleSheet.absoluteFillObject, styles.container]}
     >
-      <View style={[styles.position, getPositionStyle(position)]}>
-        <Animated.View style={[styles.toast, getVariantStyle(variant), animatedStyle]}>
+      <View style={[styles.position, positionStyle]}>
+        <Animated.View style={[styles.toast, variantStyle, animatedStyle]}>
           <ToastMessage message={message} />
         </Animated.View>
       </View>
