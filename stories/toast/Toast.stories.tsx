@@ -6,7 +6,36 @@ import ToastProvider from '../../app/components/toast/_toastProvider.tsx';
 import { showToast } from '../../app/components/toast/_toastService.ts';
 
 import type { TypeToastOptions } from '../../app/lib/types/typeComponents';
-import type { Meta, StoryObj } from '@storybook/react-native-web-vite';
+import type { Meta, StoryObj, StoryContext } from '@storybook/react-native-web-vite';
+
+const escapeSingleQuotes = (text: string) => text.replaceAll("'", "\\'");
+
+const formatToastOptions = (args: TypeToastOptions) => {
+  const { message, position, variant = 'default', duration } = args;
+  const options = [
+    `message: '${escapeSingleQuotes(message ?? '')}'`,
+    `position: '${position ?? 'bottom'}'`,
+    `variant: '${variant}'`,
+  ];
+
+  if (duration !== undefined) {
+    options.push(`duration: ${duration}`);
+  }
+
+  return options.join(', ');
+};
+
+const transformSource = (_: string, context: StoryContext<typeof ToastPreview>) => {
+  const options = formatToastOptions(context.args);
+
+  return `
+<Button
+  onPress={() => {
+    showToast({ ${options} });
+  }}
+  title='Show Toast'
+/>`;
+};
 
 const ToastPreview = (args: TypeToastOptions) => {
   const handleShowToast = () => {
@@ -33,6 +62,13 @@ const meta = {
     ),
   ],
   tags: ['autodocs'],
+  parameters: {
+    docs: {
+      source: {
+        transform: transformSource,
+      },
+    },
+  },
   argTypes: {
     message: {
       description: 'トーストに表示するメッセージ',
