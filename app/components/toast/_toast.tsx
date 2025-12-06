@@ -181,13 +181,13 @@ const Toast = ({
     position,
   });
 
-  if (!mounted) {
-    return null;
-  }
-
   const handleRequestClose = React.useCallback(() => {
     onHide?.();
   }, [onHide]);
+
+  if (!mounted) {
+    return null;
+  }
 
   const isAndroid = Platform.OS === 'android';
 
