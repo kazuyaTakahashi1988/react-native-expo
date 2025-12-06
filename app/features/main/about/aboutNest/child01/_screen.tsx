@@ -17,22 +17,25 @@ const Child01Screen: React.FC = () => {
       <View style={styles.buttons}>
         <Button
           onPress={() => {
-            showToast({ message: 'Bottom Toast', position: 'bottom', variant: 'default' });
+            showToast({ message: 'Default Top トースト', position: 'top', variant: 'default' });
           }}
-          title='Show Bottom Toast'
+          title='Default Top トーストを表示'
         />
         <Button
           onPress={() => {
-            showToast({ message: 'Top Toast', position: 'top', variant: 'success' });
+            showToast({
+              message: 'Success Center トースト',
+              position: 'center',
+              variant: 'success',
+            });
           }}
-          pattern='secondary'
-          title='Show Top Success Toast'
+          title='Success Center トーストを表示'
         />
         <Button
           onPress={() => {
-            showToast({ message: 'Center Error Toast', position: 'center', variant: 'error' });
+            showToast({ message: 'Error Bottom トースト', position: 'bottom', variant: 'error' });
           }}
-          title='Show Center Error Toast'
+          title='Error Bottom トーストを表示'
         />
       </View>
     </Layout>

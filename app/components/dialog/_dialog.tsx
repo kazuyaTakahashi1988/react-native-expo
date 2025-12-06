@@ -29,9 +29,9 @@ import type { TypeDialog } from '../../lib/types/typeComponents';
  */
 const DialogBackGround = ({
   onClose,
-  closeOnBackGround,
-}: Pick<TypeDialog, 'onClose' | 'closeOnBackGround'>) => {
-  if (closeOnBackGround !== true) {
+  notBackGroundPress,
+}: Pick<TypeDialog, 'onClose' | 'notBackGroundPress'>) => {
+  if (notBackGroundPress !== false) {
     return null;
   }
 
@@ -109,7 +109,7 @@ const DialogBottom = ({
 const Dialog = ({
   visible,
   title,
-  closeOnBackGround = true,
+  notBackGroundPress = false,
   eventText,
   closeText,
   onEvent,
@@ -142,7 +142,7 @@ const Dialog = ({
         {/*
          * 透過背景
          */}
-        <DialogBackGround {...{ closeOnBackGround, onClose }} />
+        <DialogBackGround {...{ notBackGroundPress, onClose }} />
         <View style={styles.dialog}>
           <View style={[styles.dialogCard, { maxHeight: height - 120 }]}>
             {/*
@@ -170,6 +170,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: color.backdrop,
     justifyContent: 'center',
+    padding: 24,
   },
   dialogBackGround: {
     ...StyleSheet.absoluteFillObject,
@@ -180,7 +181,6 @@ const styles = StyleSheet.create({
   dialog: {
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 24,
     width: '100%',
   },
   dialogCard: {

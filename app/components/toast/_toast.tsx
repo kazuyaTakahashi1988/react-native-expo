@@ -48,7 +48,7 @@ const useToastController = ({
   duration = 2000,
   onHide,
   onShow,
-  position = 'bottom',
+  position = 'top',
 }: Pick<TypeToast, 'visible' | 'duration' | 'onHide' | 'onShow' | 'position'>) => {
   const opacity = useSharedValue(0);
   const [mounted, setMounted] = React.useState(visible);
@@ -118,7 +118,7 @@ const Toast = ({
   visible,
   message,
   duration = 2000,
-  position = 'bottom',
+  position = 'top',
   onHide,
   onShow,
   variant = 'default',
