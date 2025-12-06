@@ -39,41 +39,39 @@ const ToastMessage = ({ message }: Pick<TypeToast, 'message'>) => {
  * 補助関数：position / variant 用スタイルと開始オフセット
  * ----------------------------------------------- */
 
-const toastStyleMap = {
-  top: {
-    positionStyle: styles.top,
-    startOffset: -6,
-  },
-  center: {
-    positionStyle: styles.center,
-    startOffset: 0,
-  },
-  bottom: {
-    positionStyle: styles.bottom,
-    startOffset: 6,
-  },
-} satisfies Record<
-  TypeToast['position'],
-  { positionStyle: StyleProp<ViewStyle>; startOffset: number }
->;
-
-const toastVariantMap = {
-  default: null,
-  success: styles.success,
-  error: styles.error,
-} satisfies Record<TypeToast['variant'], StyleProp<ViewStyle> | null>;
+const toastLookup = {
+  position: {
+    top: () => styles.top,
+    center: () => styles.center,
+    bottom: () => styles.bottom,
+  } satisfies Record<TypeToast['position'], () => StyleProp<ViewStyle>>,
+  variant: {
+    default: () => null,
+    success: () => styles.success,
+    error: () => styles.error,
+  } satisfies Record<TypeToast['variant'], () => StyleProp<ViewStyle> | null>,
+  startOffset: {
+    top: () => -6,
+    center: () => 0,
+    bottom: () => 6,
+  } satisfies Record<TypeToast['position'], () => number>,
+};
 
 const getToastStyleConfig = ({
   position = 'bottom',
   variant = 'default',
 }: Partial<Pick<TypeToast, 'position' | 'variant'>>) => {
-  const { positionStyle, startOffset } =
-    toastStyleMap[position] ?? toastStyleMap.bottom;
+  const getPositionStyle =
+    toastLookup.position[position] ?? toastLookup.position.bottom;
+  const getStartOffset =
+    toastLookup.startOffset[position] ?? toastLookup.startOffset.bottom;
+  const getVariantStyle =
+    toastLookup.variant[variant] ?? toastLookup.variant.default;
 
   return {
-    positionStyle,
-    startOffset,
-    variantStyle: toastVariantMap[variant] ?? toastVariantMap.default,
+    positionStyle: getPositionStyle(),
+    startOffset: getStartOffset(),
+    variantStyle: getVariantStyle(),
   };
 };
 
