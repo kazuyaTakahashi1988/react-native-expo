@@ -58,7 +58,7 @@ const transformSource = (_: string, context: DocsTransformContext): string => {
   const options = formatToastOptions(context.args);
 
   return `
-import { showToast } from '../../app/components/toast/_toastService.ts';
+import { showToast } from '../../app/components/toast';
 
 <Button
   onPress={() => {
