@@ -1,12 +1,11 @@
-import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import { styles } from '../../.storybook/styles.ts';
 import Button from '../../app/components/button/_button.tsx';
 import ToastProvider from '../../app/components/toast/_toastProvider.tsx';
 import { showToast } from '../../app/components/toast/_toastService.ts';
-import type { TypeToastOptions } from '../../app/lib/types/typeComponents';
 
+import type { TypeToastOptions } from '../../app/lib/types/typeComponents';
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite';
 
 const ToastPreview = (args: TypeToastOptions) => {
@@ -16,7 +15,7 @@ const ToastPreview = (args: TypeToastOptions) => {
 
   return (
     <ToastProvider>
-      <View style={gapStyles.gap}>
+      <View style={buttonStyle.container}>
         <Button onPress={handleShowToast} title='Show Toast' />
       </View>
     </ToastProvider>
@@ -109,6 +108,12 @@ export const ErrorToast: Story = {
   render: (args) => <ToastPreview {...args} />,
 };
 
-const gapStyles = StyleSheet.create({
-  gap: { gap: 12, width: '100%' },
+const buttonStyle = StyleSheet.create({
+  container: {
+    alignItems: 'center',
+    gap: 12,
+    height: 300,
+    justifyContent: 'center',
+    width: '100%',
+  },
 });
