@@ -10,17 +10,15 @@ import Animated, {
 import { color } from '../../lib/mixin';
 
 import type { TypeToast } from '../../lib/types/typeComponents';
+import type { ViewStyle } from 'react-native';
 
 /* -----------------------------------------------
- * Toast（RootToast ライク）
+ * Toast 各パーツ & 関数
  * ----------------------------------------------- */
 
-const animationDuration = 250;
-
-/* -----------------------------------------------
+/*
  * 補助コンポーネント：メッセージ表示
- * ----------------------------------------------- */
-
+ */
 const ToastMessage = ({ message }: Pick<TypeToast, 'message'>) => {
   const isMessage = Boolean(message);
   if (!isMessage) {
@@ -34,72 +32,56 @@ const ToastMessage = ({ message }: Pick<TypeToast, 'message'>) => {
   return <View>{message}</View>;
 };
 
-/* -----------------------------------------------
+/*
  * 補助関数：position 用スタイル
- * （ここは worklet から呼ばないので普通の関数でOK）
- * ----------------------------------------------- */
+ */
+const getPositionStyle = (position: NonNullable<TypeToast['position']> = 'bottom') => {
+  const positionStyle = {
+    top: styles.top,
+    center: styles.center,
+    bottom: styles.bottom,
+  } satisfies Record<NonNullable<TypeToast['position']>, ViewStyle>;
 
-const getPositionStyle = (position: TypeToast['position'] = 'bottom') => {
-  switch (position) {
-    case 'top':
-      return styles.top;
-    case 'center':
-      return styles.center;
-    case 'bottom':
-    default:
-      return styles.bottom;
-  }
+  return positionStyle[position];
 };
 
-/* -----------------------------------------------
+/*
  * 補助関数：variant 用スタイル
- * ----------------------------------------------- */
+ */
+const getVariantStyle = (variant: NonNullable<TypeToast['variant']> = 'default') => {
+  const variantStyle = {
+    default: undefined,
+    success: styles.success,
+    error: styles.error,
+  } satisfies Record<NonNullable<TypeToast['variant']>, ViewStyle | undefined>;
 
-const getVariantStyle = (variant: TypeToast['variant'] = 'default') => {
-  switch (variant) {
-    case 'success':
-      return styles.success;
-    case 'error':
-      return styles.error;
-    case 'default':
-    default:
-      return null;
-  }
+  return variantStyle[variant] ?? null;
 };
 
-/* -----------------------------------------------
+/*
  * position に応じた開始オフセット計算
- * （JS 側で計算して数値だけ worklet に渡す）
- * ----------------------------------------------- */
+ */
+const getStartOffset = (position: NonNullable<TypeToast['position']> = 'bottom'): number => {
+  const startOffset = {
+    top: -6,
+    center: 0,
+    bottom: 6,
+  } satisfies Record<NonNullable<TypeToast['position']>, number>;
 
-const getStartOffset = (position: TypeToast['position'] = 'bottom'): number => {
-  switch (position) {
-    case 'top':
-      return -6;
-    case 'center':
-      return 0;
-    case 'bottom':
-    default:
-      return 6;
-  }
+  return startOffset[position];
 };
 
-/* -----------------------------------------------
- * カスタムフック：表示状態 & アニメーション制御（reanimated版）
- * ----------------------------------------------- */
-
-type UseToastControllerProps = Pick<
-  TypeToast,
-  'visible' | 'duration' | 'onHide' | 'onShow' | 'position'
->;
-
+/*
+ * カスタムフック：表示状態 & アニメーション制御
+ */
+const animationDuration = 250;
 const useToastController = ({
   visible,
   duration = 2000,
   onHide,
   onShow,
   position = 'bottom',
-}: UseToastControllerProps) => {
+}: Pick<TypeToast, 'visible' | 'duration' | 'onHide' | 'onShow' | 'position'>) => {
   const opacity = useSharedValue(0);
   const [mounted, setMounted] = React.useState(visible);
 
@@ -145,12 +127,9 @@ const useToastController = ({
     };
   }, [duration, mounted, opacity, visible]);
 
-  // position → startOffset は JS 側で計算して数値として渡す
   const startOffset = React.useMemo(() => getStartOffset(position), [position]);
 
   const animatedStyle = useAnimatedStyle(() => {
-    // ここは worklet（自動で 'worklet' 付く）だが、
-    // 参照しているのは primitive な startOffset と shared value だけ。
     return {
       opacity: opacity.value,
       transform: [
@@ -165,9 +144,8 @@ const useToastController = ({
 };
 
 /* -----------------------------------------------
- * Toast 本体
+ * Toast（親コンポーネント）
  * ----------------------------------------------- */
-
 const Toast = ({
   visible,
   message,
@@ -190,11 +168,7 @@ const Toast = ({
   }
 
   return (
-    <View
-      // Toast 全体をタップ透過
-      pointerEvents='none'
-      style={[StyleSheet.absoluteFillObject, styles.container]}
-    >
+    <View pointerEvents='none' style={[StyleSheet.absoluteFillObject, styles.container]}>
       <View style={[styles.position, getPositionStyle(position)]}>
         <Animated.View style={[styles.toast, getVariantStyle(variant), animatedStyle]}>
           <ToastMessage message={message} />
