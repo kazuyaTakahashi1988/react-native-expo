@@ -35,24 +35,8 @@ const ToastMessage = ({ message }: Pick<TypeToast, 'message'>) => {
 };
 
 /* -----------------------------------------------
- * 補助関数：位置ごとの開始オフセット
- * （ネスト三項演算子を排除）
- * ----------------------------------------------- */
-
-const getStartOffset = (position: TypeToast['position'] = 'bottom'): number => {
-  switch (position) {
-    case 'top':
-      return -6;
-    case 'center':
-      return 0;
-    case 'bottom':
-    default:
-      return 6;
-  }
-};
-
-/* -----------------------------------------------
  * 補助関数：position 用スタイル
+ * （ここは worklet から呼ばないので普通の関数でOK）
  * ----------------------------------------------- */
 
 const getPositionStyle = (position: TypeToast['position'] = 'bottom') => {
@@ -84,7 +68,24 @@ const getVariantStyle = (variant: TypeToast['variant'] = 'default') => {
 };
 
 /* -----------------------------------------------
- * カスタムフック：表示状態 & アニメーション制御
+ * position に応じた開始オフセット計算
+ * （JS 側で計算して数値だけ worklet に渡す）
+ * ----------------------------------------------- */
+
+const getStartOffset = (position: TypeToast['position'] = 'bottom'): number => {
+  switch (position) {
+    case 'top':
+      return -6;
+    case 'center':
+      return 0;
+    case 'bottom':
+    default:
+      return 6;
+  }
+};
+
+/* -----------------------------------------------
+ * カスタムフック：表示状態 & アニメーション制御（reanimated版）
  * ----------------------------------------------- */
 
 type UseToastControllerProps = Pick<
@@ -102,19 +103,35 @@ const useToastController = ({
   const opacity = useSharedValue(0);
   const [mounted, setMounted] = React.useState(visible);
 
+  const onHideRef = React.useRef(onHide);
+  const onShowRef = React.useRef(onShow);
+
   React.useEffect(() => {
-    let timer: NodeJS.Timeout | undefined;
+    onHideRef.current = onHide;
+  }, [onHide]);
+
+  React.useEffect(() => {
+    onShowRef.current = onShow;
+  }, [onShow]);
+
+  React.useEffect(() => {
+    let timer: ReturnType<typeof setTimeout> | undefined;
 
     if (visible) {
       setMounted(true);
-      onShow?.();
-      opacity.value = withTiming(1, { duration: animationDuration });
+      onShowRef.current?.();
+
+      opacity.value = withTiming(1, {
+        duration: animationDuration,
+      });
 
       timer = setTimeout(() => {
-        onHide?.();
+        onHideRef.current?.();
       }, duration);
-    } else {
-      opacity.value = withTiming(0, { duration: animationDuration });
+    } else if (mounted) {
+      opacity.value = withTiming(0, {
+        duration: animationDuration,
+      });
 
       timer = setTimeout(() => {
         setMounted(false);
@@ -122,16 +139,18 @@ const useToastController = ({
     }
 
     return () => {
-      const isTimer = Boolean(timer);
-      if (isTimer) {
+      if (timer) {
         clearTimeout(timer);
       }
     };
-  }, [duration, onHide, onShow, opacity, visible]);
+  }, [duration, mounted, opacity, visible]);
+
+  // position → startOffset は JS 側で計算して数値として渡す
+  const startOffset = React.useMemo(() => getStartOffset(position), [position]);
 
   const animatedStyle = useAnimatedStyle(() => {
-    const startOffset = getStartOffset(position);
-
+    // ここは worklet（自動で 'worklet' 付く）だが、
+    // 参照しているのは primitive な startOffset と shared value だけ。
     return {
       opacity: opacity.value,
       transform: [
@@ -171,8 +190,12 @@ const Toast = ({
   }
 
   return (
-    <View pointerEvents='box-none' style={[StyleSheet.absoluteFillObject, styles.container]}>
-      <View pointerEvents='box-none' style={[styles.position, getPositionStyle(position)]}>
+    <View
+      // Toast 全体をタップ透過
+      pointerEvents='none'
+      style={[StyleSheet.absoluteFillObject, styles.container]}
+    >
+      <View style={[styles.position, getPositionStyle(position)]}>
         <Animated.View style={[styles.toast, getVariantStyle(variant), animatedStyle]}>
           <ToastMessage message={message} />
         </Animated.View>
