@@ -1,4 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { enableScreens } from 'react-native-screens';
 
@@ -10,10 +11,12 @@ enableScreens(); // App起動前に呼び出す
 
 const App: React.FC = () => {
   return (
-    <SafeAreaProvider>
-      <Navigation />
-      <StatusBar style='auto' />
-    </SafeAreaProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <SafeAreaProvider>
+        <Navigation />
+        <StatusBar style='auto' />
+      </SafeAreaProvider>
+    </GestureHandlerRootView>
   );
 };
 
