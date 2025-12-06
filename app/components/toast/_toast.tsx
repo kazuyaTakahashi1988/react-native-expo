@@ -33,45 +33,6 @@ const ToastMessage = ({ message }: Pick<TypeToast, 'message'>) => {
 };
 
 /*
- * 補助関数：position 用スタイル
- */
-const getPositionStyle = (position: NonNullable<TypeToast['position']> = 'bottom') => {
-  const positionStyle = {
-    top: styles.top,
-    center: styles.center,
-    bottom: styles.bottom,
-  } satisfies Record<NonNullable<TypeToast['position']>, ViewStyle>;
-
-  return positionStyle[position];
-};
-
-/*
- * 補助関数：variant 用スタイル
- */
-const getVariantStyle = (variant: NonNullable<TypeToast['variant']> = 'default') => {
-  const variantStyle = {
-    default: undefined,
-    success: styles.success,
-    error: styles.error,
-  } satisfies Record<NonNullable<TypeToast['variant']>, ViewStyle | undefined>;
-
-  return variantStyle[variant] ?? null;
-};
-
-/*
- * position に応じた開始オフセット計算
- */
-const getStartOffset = (position: NonNullable<TypeToast['position']> = 'bottom'): number => {
-  const startOffset = {
-    top: -6,
-    center: 0,
-    bottom: 6,
-  } satisfies Record<NonNullable<TypeToast['position']>, number>;
-
-  return startOffset[position];
-};
-
-/*
  * カスタムフック：表示状態 & アニメーション制御
  */
 const animationDuration = 250;
@@ -169,7 +130,7 @@ const Toast = ({
 
   return (
     <View pointerEvents='none' style={[StyleSheet.absoluteFillObject, styles.container]}>
-      <View style={[styles.position, getPositionStyle(position)]}>
+      <View style={[styles.positionBase, getPositionStyle(position)]}>
         <Animated.View style={[styles.toast, getVariantStyle(variant), animatedStyle]}>
           <ToastMessage message={message} />
         </Animated.View>
@@ -178,11 +139,44 @@ const Toast = ({
   );
 };
 
+// position 用スタイル
+const getPositionStyle = (position: NonNullable<TypeToast['position']> = 'bottom') => {
+  const positionStyle = {
+    top: styles.top,
+    center: styles.center,
+    bottom: styles.bottom,
+  } satisfies Record<NonNullable<TypeToast['position']>, ViewStyle>;
+
+  return positionStyle[position];
+};
+
+// variant 用スタイル
+const getVariantStyle = (variant: NonNullable<TypeToast['variant']> = 'default') => {
+  const variantStyle = {
+    default: undefined,
+    success: styles.success,
+    error: styles.error,
+  } satisfies Record<NonNullable<TypeToast['variant']>, ViewStyle | undefined>;
+
+  return variantStyle[variant] ?? null;
+};
+
+// position に応じた開始オフセットスタイル
+const getStartOffset = (position: NonNullable<TypeToast['position']> = 'bottom'): number => {
+  const startOffset = {
+    top: -6,
+    center: 0,
+    bottom: 6,
+  } satisfies Record<NonNullable<TypeToast['position']>, number>;
+
+  return startOffset[position];
+};
+
 const styles = StyleSheet.create({
   container: {
     zIndex: 999,
   },
-  position: {
+  positionBase: {
     alignItems: 'center',
     flex: 1,
     width: '100%',
