@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, StyleSheet, Text, View } from 'react-native';
+import { Modal, Platform, StyleSheet, Text, View } from 'react-native';
 import Animated, {
   interpolate,
   useAnimatedStyle,
@@ -170,8 +170,21 @@ const Toast = ({
     return null;
   }
 
+  const handleRequestClose = React.useCallback(() => {
+    onHide?.();
+  }, [onHide]);
+
+  const isAndroid = Platform.OS === 'android';
+
   return (
-    <Modal transparent statusBarTranslucent visible>
+    <Modal
+      animationType='none'
+      onRequestClose={handleRequestClose}
+      presentationStyle='overFullScreen'
+      statusBarTranslucent={isAndroid}
+      transparent
+      visible={mounted}
+    >
       <View
         pointerEvents='box-none'
         style={[StyleSheet.absoluteFillObject, styles.container]}
