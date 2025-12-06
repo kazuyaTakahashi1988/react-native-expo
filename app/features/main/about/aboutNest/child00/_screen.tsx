@@ -14,21 +14,14 @@ import type { TypeDialogPattern } from './_type';
 const Child00Screen: React.FC = () => {
   const [visibleDialog, setVisibleDialog] = React.useState<TypeDialogPattern>(null);
 
-  const closeDialog = React.useCallback(() => {
+  const onClose = React.useCallback(() => {
     setVisibleDialog(null);
   }, []);
 
-  const openDialog = React.useCallback((pattern: TypeDialogPattern) => {
-    setVisibleDialog(pattern);
-  }, []);
-
-  const handleConfirm = React.useCallback(
-    (message: string) => () => {
-      Alert.alert('Thanks to Tap', message);
-      closeDialog();
-    },
-    [closeDialog],
-  );
+  const onEvent = React.useCallback(() => {
+    Alert.alert('Thanks to Tap', 'EventButton Tapped!!');
+    onClose();
+  }, [onClose]);
 
   return (
     <Layout>
@@ -38,122 +31,126 @@ const Child00Screen: React.FC = () => {
        * Dialog ボタン
        * ----------------------------------------- */}
 
-      {/* Basic Dialog ボタン */}
+      {/* Basic ボタン */}
       <Button
         containerStyle={styles.buttonSpacing}
         onPress={() => {
-          openDialog('basic');
+          setVisibleDialog('basic');
         }}
-        title='Basic Dialog'
+        title='Basic ダイアログを開く'
       />
 
-      {/* WithOut Close Button ボタン */}
+      {/* WithOut Close ボタン */}
       <Button
         containerStyle={styles.buttonSpacing}
         onPress={() => {
-          openDialog('withoutClose');
+          setVisibleDialog('withoutClose');
         }}
-        title='WithOut Close Button'
+        title='WithOut Close ダイアログを開く'
       />
 
-      {/* WithOut Event & Close（ScrollView）Button ボタン */}
+      {/* Long Contents ボタン */}
       <Button
         containerStyle={styles.buttonSpacing}
         onPress={() => {
-          openDialog('withoutEventAndClose');
+          setVisibleDialog('longContent');
         }}
-        title='WithOut Event & Close（ScrollView） Button'
+        title='Long Contents ダイアログを開く'
       />
 
-      {/* Custom Contents（ScrollView）ボタン */}
+      {/* Long Contents Only ボタン */}
       <Button
         onPress={() => {
-          openDialog('customContent');
+          setVisibleDialog('longContentsOnly');
         }}
-        title='Custom Contents（ScrollView）'
+        title='Long Contents Only ダイアログを開く'
       />
 
       {/* ----------------------------------------
        * Dialog
        * ----------------------------------------- */}
 
-      {/* Basic Dialog */}
+      {/* Basic ダイアログ */}
       <Dialog
-        closeText='Close Button'
-        eventText='Event Button'
-        onClose={closeDialog}
-        onEvent={handleConfirm('EventButton Tapped!!')}
-        title='Basic Dialog'
+        closeText='閉じるボタン'
+        eventText='イベントボタン'
+        onClose={onClose}
+        onEvent={onEvent}
+        title='Basic ダイアログ'
         visible={visibleDialog === 'basic'}
       >
         <Text>
-          description：Dummy Text。----------------------------------------------------------------
+          ダミーテキスト{'\n'}
+          ------------{'\n'}
+          ------------{'\n'}
+          ------------{'\n'}
         </Text>
       </Dialog>
 
-      {/* WithOut Close */}
+      {/* WithOut Close ダイアログ */}
       <Dialog
-        closeOnBackGround={false}
-        eventText='OK'
-        onClose={closeDialog}
-        onEvent={handleConfirm('EventButton Tapped!!')}
-        title='Close Buttonを表示しない例'
+        eventText='イベントボタン'
+        notBackGroundPress={false}
+        onEvent={onEvent}
+        title='WithOut Close ダイアログ'
         visible={visibleDialog === 'withoutClose'}
       >
-        <Text>OKボタンを押さないと閉じれません。</Text>
-      </Dialog>
-
-      {/* WithOut Event & Close（ScrollView） */}
-      <Dialog
-        onClose={closeDialog}
-        onEvent={handleConfirm('EventButton Tapped!!')}
-        visible={visibleDialog === 'withoutEventAndClose'}
-      >
         <Text>
-          ・Dummy Text１
-          {[...Array(30).keys()].map((i) => (
-            <Text key={i}>----- {'\n'}</Text>
-          ))}
-        </Text>
-        <Text>
-          ・Dummy Text２
-          {[...Array(30).keys()].map((i) => (
-            <Text key={i}>----- {'\n'}</Text>
-          ))}
-        </Text>
-        <Text>
-          ・Dummy Text３
-          {[...Array(30).keys()].map((i) => (
-            <Text key={i}>----- {'\n'}</Text>
-          ))}
+          閉じるボタンなし ＆ 背景タップでも閉じれないダイアログです。{'\n'}
+          {'\n'}
+          イベントボタンを押して閉じてください。
         </Text>
       </Dialog>
 
-      {/* Custom Contents（ScrollView） */}
+      {/* Long Contents ダイアログ */}
       <Dialog
-        closeText='Close Button'
-        eventText='Event Button'
-        onClose={closeDialog}
-        onEvent={handleConfirm('Dummy Textを確認しました')}
-        title='Custom Contents（ScrollView）'
-        visible={visibleDialog === 'customContent'}
+        closeText='閉じるボタン'
+        eventText='イベントボタン'
+        onClose={onClose}
+        onEvent={onEvent}
+        title={'Long Contents ダイアログ'}
+        visible={visibleDialog === 'longContent'}
       >
         <Text>
-          ・Dummy Text１
+          ・スクロールできます。
           {[...Array(30).keys()].map((i) => (
-            <Text key={i}>----- {'\n'}</Text>
+            <Text key={i}>{'\n'} -----</Text>
           ))}
         </Text>
         <Text>
-          ・Dummy Text２
+          ・ダミーテキスト
           {[...Array(30).keys()].map((i) => (
-            <Text key={i}>----- {'\n'}</Text>
+            <Text key={i}>{'\n'} -----</Text>
           ))}
         </Text>
         <Text>
-          ・Dummy Text３
+          ・ダミーテキスト
           {[...Array(30).keys()].map((i) => (
-            <Text key={i}>----- {'\n'}</Text>
+            <Text key={i}>{'\n'} -----</Text>
+          ))}
+        </Text>
+      </Dialog>
+
+      {/* Long Contents Only ダイアログ */}
+      <Dialog onClose={onClose} visible={visibleDialog === 'longContentsOnly'}>
+        <Text>
+          ・Long Contents Only ダイアログ{'\n'}
+          ・ロングコンテンツのみのダイアログです。{'\n'}
+          ・スクロールできます。
+          {[...Array(30).keys()].map((i) => (
+            <Text key={i}>{'\n'} -----</Text>
+          ))}
+        </Text>
+        <Text>
+          ・ダミーテキスト２
+          {[...Array(30).keys()].map((i) => (
+            <Text key={i}>{'\n'} -----</Text>
+          ))}
+        </Text>
+        <Text>
+          ・ダミーテキスト３
+          {[...Array(30).keys()].map((i) => (
+            <Text key={i}>{'\n'} -----</Text>
           ))}
         </Text>
       </Dialog>

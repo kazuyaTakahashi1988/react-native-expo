@@ -22,15 +22,24 @@ const meta = {
     title: {
       description: 'ダイアログタイトル',
     },
-    closeOnBackGround: {
+    children: {
+      description: 'コンテンツ',
+    },
+    notBackGroundPress: {
       description: '背景タップで閉じるかどうか',
       control: 'boolean',
     },
-    eventText: {
-      description: 'イベントボタン文言',
-    },
     closeText: {
-      description: 'クローズボタン文言。空または未指定で非表示',
+      description: 'クローズボタンテキスト',
+    },
+    onEvent: {
+      description: 'イベントボタン処理',
+    },
+    eventText: {
+      description: 'イベントボタンテキスト。',
+    },
+    onClose: {
+      description: 'クローズボタン & 背景タップ処理 ',
     },
   },
 } satisfies Meta<typeof DialogComponent>;
@@ -40,21 +49,14 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const dialogStyles = StyleSheet.create({
-  customContent: {
-    gap: 6,
-  },
   preview: {
     rowGap: 12,
     width: '100%',
   },
+  longHeight: {
+    height: 600,
+  },
 });
-
-const baseArgs = {
-  onClose: () => {},
-  onEvent: () => {},
-  closeOnBackGround: true,
-  visible: false,
-};
 
 const Dialog = (args: Story['args']) => {
   const [visible, setVisible] = React.useState(false);
@@ -65,7 +67,7 @@ const Dialog = (args: Story['args']) => {
         onPress={() => {
           setVisible(true);
         }}
-        title='Dialog Open'
+        title='ダイアログを開く'
       />
       <DialogComponent
         {...args}
@@ -73,7 +75,7 @@ const Dialog = (args: Story['args']) => {
           setVisible(false);
         }}
         onEvent={() => {
-          alert('Thanks to Tap');
+          alert('Thanks to Tap!!');
           setVisible(false);
         }}
         visible={visible}
@@ -82,69 +84,78 @@ const Dialog = (args: Story['args']) => {
   );
 };
 
-export const BasicDialog: Story = {
+export const Basic: Story = {
   args: {
-    ...baseArgs,
-    title: 'Basic Dialog',
+    title: 'Basic ダイアログ',
     children: (
       <Text>
-        description：Dummy Text。----------------------------------------------------------------
+        ダミーテキスト{'\n'}
+        ------------{'\n'}
+        ------------{'\n'}
+        ------------{'\n'}
       </Text>
     ),
-    eventText: 'Event Button',
-    closeText: 'Close Button',
+    eventText: 'イベントボタン',
+    closeText: '閉じるボタン',
+    onClose: () => {},
+    onEvent: () => {},
+    visible: true,
   },
   render: (args) => <Dialog {...args} />,
 };
 
-export const WithoutCloseButton: Story = {
+export const WithoutClose: Story = {
   args: {
-    ...baseArgs,
-    title: 'Close Buttonを表示しない例',
-    children: <Text>OKボタンを押さないと閉じれません。</Text>,
-    eventText: 'OK',
-    closeOnBackGround: false,
-  },
-  render: (args) => <Dialog {...args} />,
-};
-
-export const WithoutEventAndCloseButton: Story = {
-  args: {
-    ...baseArgs,
-    title: 'Event & Close Buttonを表示しない例',
-    children: <Text>背景を押さないと閉じれません。</Text>,
-  },
-  render: (args) => <Dialog {...args} />,
-};
-
-export const CustomContentScrollView: Story = {
-  args: {
-    ...baseArgs,
-    title: 'Custom Contents（ScrollView）',
-    eventText: 'Event Button',
-    closeText: 'Close Button',
+    title: 'WithOut Close ダイアログ',
     children: (
-      <View style={dialogStyles.customContent}>
-        <Text>
-          ・Dummy Text１
-          {[...Array(30).keys()].map((i) => (
-            <Text key={i}>----- {'\n'}</Text>
-          ))}
-        </Text>
-        <Text>
-          ・Dummy Text２
-          {[...Array(30).keys()].map((i) => (
-            <Text key={i}>----- {'\n'}</Text>
-          ))}
-        </Text>
-        <Text>
-          ・Dummy Text３
-          {[...Array(30).keys()].map((i) => (
-            <Text key={i}>----- {'\n'}</Text>
-          ))}
-        </Text>
+      <Text>
+        閉じるボタンなし ＆ 背景タップでも閉じれないダイアログです。{'\n'}
+        {'\n'}
+        イベントボタンを押して閉じてください。
+      </Text>
+    ),
+    eventText: 'イベントボタン',
+    onEvent: () => {},
+    notBackGroundPress: true,
+    visible: true,
+  },
+  render: (args) => <Dialog {...args} />,
+};
+
+export const LongContents: Story = {
+  args: {
+    title: 'Long Contents ダイアログ',
+    eventText: 'イベントボタン',
+    closeText: '閉じるボタン',
+    onClose: () => {},
+    onEvent: () => {},
+    children: (
+      <View>
+        <Text style={dialogStyles.longHeight}>・スクロールできます。</Text>
+        <Text style={dialogStyles.longHeight}>・ダミーテキスト</Text>
+        <Text style={dialogStyles.longHeight}>・ダミーテキスト</Text>
       </View>
     ),
+    visible: true,
+  },
+  render: (args) => <Dialog {...args} />,
+};
+
+export const LongContentsOnly: Story = {
+  args: {
+    onClose: () => {},
+    children: (
+      <View>
+        <Text style={dialogStyles.longHeight}>
+          ・Long Contents Only ダイアログ{'\n'}
+          ・ロングコンテンツのみのダイアログです。{'\n'}
+          ・スクロールできます。
+        </Text>
+        <Text style={dialogStyles.longHeight}>・ダミーテキスト</Text>
+        <Text style={dialogStyles.longHeight}>・ダミーテキスト</Text>
+      </View>
+    ),
+    visible: true,
   },
   render: (args) => <Dialog {...args} />,
 };

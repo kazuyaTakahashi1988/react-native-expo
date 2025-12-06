@@ -1,6 +1,6 @@
 export type TypeDialogPattern =
   | 'basic'
   | 'withoutClose'
-  | 'withoutEventAndClose'
-  | 'customContent'
+  | 'longContent'
+  | 'longContentsOnly'
   | null;

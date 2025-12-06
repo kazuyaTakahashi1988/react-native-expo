@@ -5,7 +5,7 @@ export type TypeDialog = {
   title?: string;
   eventText?: string | React.ReactNode;
   closeText?: string | React.ReactNode;
-  closeOnBackGround?: boolean;
+  notBackGroundPress?: boolean;
   onEvent?: () => void;
   onClose?: () => void;
   children?: ReactNode;
