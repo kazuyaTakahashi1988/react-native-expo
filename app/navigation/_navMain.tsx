@@ -3,10 +3,10 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Platform } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import NavAboutNest from './_navAboutNest';
 import NavHomeNest from './_navHomeNest';
 import { HeaderHome, HeaderSub } from '../components/layouts/header';
 import { IconAbout, IconHome, IconWork } from '../components/svg/icon';
-import { AboutScreen } from '../features/main/about/';
 import { WorkScreen } from '../features/main/work/';
 import { color } from '../lib/mixin';
 
@@ -74,7 +74,21 @@ const NavMain: React.FC = () => {
           tabBarBadge: 3,
         }}
       >
-        {(props) => <AboutScreen {...props} />}
+        {
+          /* -------------------------------------
+           * aboutNest（About配下） 各画面追加
+           * ------------------------------------- */
+          () => (
+            <NativeStack.Navigator>
+              <NativeStack.Screen name='aboutNest' options={{ headerShown: false }}>
+                {
+                  /* aboutNest（About配下） 各画面 */
+                  () => <NavAboutNest />
+                }
+              </NativeStack.Screen>
+            </NativeStack.Navigator>
+          )
+        }
       </BottomTab.Screen>
 
       {/* Work 画面 */}

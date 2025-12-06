@@ -33,7 +33,17 @@ const linking: LinkingOptions<{
               },
             },
           },
-          about: 'about',
+          about: {
+            path: 'about',
+            screens: {
+              aboutNest: {
+                screens: {
+                  child00: '',
+                  child01: 'child01',
+                },
+              },
+            },
+          },
           work: 'work',
         },
       } as PathConfig<ParamListBase>,
