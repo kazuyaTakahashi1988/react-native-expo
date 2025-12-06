@@ -3,32 +3,13 @@ import { StyleSheet, Text, View } from 'react-native';
 
 import { Button } from '../../../../../components/button';
 import { Layout } from '../../../../../components/layouts/layout';
-import { Toast } from '../../../../../components/toast';
-
-import type { TypeToast } from '../../../../../lib/types/typeComponents';
+import { showToast } from '../../../../../components/toast';
 
 /* -----------------------------------------------
  * About > Child01 画面
  * ----------------------------------------------- */
 
 const Child01Screen: React.FC = () => {
-  const [toastState, setToastState] = React.useState<
-    Pick<TypeToast, 'visible' | 'message' | 'position' | 'variant'>
-  >({
-    visible: false,
-    message: '',
-    position: 'bottom',
-    variant: 'default',
-  });
-
-  const showToast = (options: Pick<TypeToast, 'message' | 'position' | 'variant'>) => {
-    setToastState((prev) => ({
-      ...prev,
-      ...options,
-      visible: true,
-    }));
-  };
-
   return (
     <Layout>
       <Text style={styles.title}>Toast Example</Text>
@@ -53,13 +34,6 @@ const Child01Screen: React.FC = () => {
           title='Show Center Error Toast'
         />
       </View>
-
-      <Toast
-        {...toastState}
-        onHide={() => {
-          setToastState((prev) => ({ ...prev, visible: false }));
-        }}
-      />
     </Layout>
   );
 };

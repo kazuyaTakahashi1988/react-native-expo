@@ -5,6 +5,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { enableScreens } from 'react-native-screens';
 
 import { Navigation } from './navigation';
+import { ToastProvider } from './components/toast';
 
 import type React from 'react';
 
@@ -14,8 +15,10 @@ const App: React.FC = () => {
   return (
     <GestureHandlerRootView style={styles.container}>
       <SafeAreaProvider>
-        <Navigation />
-        <StatusBar style='auto' />
+        <ToastProvider>
+          <Navigation />
+          <StatusBar style='auto' />
+        </ToastProvider>
       </SafeAreaProvider>
     </GestureHandlerRootView>
   );
