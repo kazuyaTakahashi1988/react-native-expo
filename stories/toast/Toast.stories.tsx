@@ -3,13 +3,29 @@ import { StyleSheet, View } from 'react-native';
 
 import { styles } from '../../.storybook/styles.ts';
 import Button from '../../app/components/button/_button.tsx';
-import ToastComponent from '../../app/components/toast/_toast.tsx';
+import ToastProvider from '../../app/components/toast/_toastProvider.tsx';
+import { showToast } from '../../app/components/toast/_toastService.ts';
+import type { TypeToastOptions } from '../../app/lib/types/typeComponents';
 
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite';
 
+const ToastPreview = (args: TypeToastOptions) => {
+  const handleShowToast = () => {
+    showToast({ ...args });
+  };
+
+  return (
+    <ToastProvider>
+      <View style={gapStyles.gap}>
+        <Button onPress={handleShowToast} title='Show Toast' />
+      </View>
+    </ToastProvider>
+  );
+};
+
 const meta = {
   title: 'Toast/Toast',
-  component: ToastComponent,
+  component: ToastPreview,
   decorators: [
     (Story) => (
       <View style={[styles.container, styles.center]}>
@@ -37,39 +53,16 @@ const meta = {
       description: 'バリエーション',
     },
   },
-} satisfies Meta<typeof ToastComponent>;
+} satisfies Meta<typeof ToastPreview>;
 
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 
 const baseArgs = {
-  visible: false,
   message: 'Toast Message',
   position: 'bottom' as const,
   duration: 2000,
-};
-
-const ToastPreview = (args: Story['args']) => {
-  const [visible, setVisible] = React.useState(false);
-
-  return (
-    <View style={gapStyles.gap}>
-      <Button
-        onPress={() => {
-          setVisible(true);
-        }}
-        title='Show Toast'
-      />
-      <ToastComponent
-        {...args}
-        onHide={() => {
-          setVisible(false);
-        }}
-        visible={visible}
-      />
-    </View>
-  );
 };
 
 export const BasicToast: Story = {
