@@ -18,7 +18,7 @@ import { Layout } from '../../../../../components/layouts/layout';
 import type { TypeFormValues } from './_type';
 
 /* -----------------------------------------------
- * Child00 画面
+ * Home > Child00 画面
  * ----------------------------------------------- */
 
 const Child00Screen: React.FC = () => {

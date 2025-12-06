@@ -9,7 +9,7 @@ import { getArticleApi } from '../../../../../services/apiHelper';
 import type { TypeArticle } from './_type';
 
 /* -----------------------------------------------
- * Child01 画面
+ * Home > Child01 画面
  * ----------------------------------------------- */
 
 const Child01Screen: React.FC = () => {

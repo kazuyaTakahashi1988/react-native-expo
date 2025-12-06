@@ -11,7 +11,7 @@ import { getCategorizedArticleApi } from '../../../../../services/apiHelper';
 import type { TypeArticle, TypeFormValues } from './_type';
 
 /* -----------------------------------------------
- * Child02 画面
+ * Home > Child02 画面
  * ----------------------------------------------- */
 
 const Child02Screen: React.FC = () => {
