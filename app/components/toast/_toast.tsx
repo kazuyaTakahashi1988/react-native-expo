@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Modal, StyleSheet, Text, View } from 'react-native';
 import Animated, {
   interpolate,
   useAnimatedStyle,
@@ -171,13 +171,18 @@ const Toast = ({
   }
 
   return (
-    <View pointerEvents='box-none' style={[StyleSheet.absoluteFillObject, styles.container]}>
-      <View pointerEvents='box-none' style={[styles.position, getPositionStyle(position)]}>
-        <Animated.View style={[styles.toast, getVariantStyle(variant), animatedStyle]}>
-          <ToastMessage message={message} />
-        </Animated.View>
+    <Modal transparent statusBarTranslucent visible>
+      <View
+        pointerEvents='box-none'
+        style={[StyleSheet.absoluteFillObject, styles.container]}
+      >
+        <View pointerEvents='box-none' style={[styles.position, getPositionStyle(position)]}>
+          <Animated.View style={[styles.toast, getVariantStyle(variant), animatedStyle]}>
+            <ToastMessage message={message} />
+          </Animated.View>
+        </View>
       </View>
-    </View>
+    </Modal>
   );
 };
 
