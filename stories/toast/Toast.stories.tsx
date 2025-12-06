@@ -2,24 +2,22 @@ import { StyleSheet, View } from 'react-native';
 
 import { styles } from '../../.storybook/styles.ts';
 import Button from '../../app/components/button/_button.tsx';
-import ToastProvider from '../../app/components/toast/_toastProvider.tsx';
-import { showToast } from '../../app/components/toast/_toastService.ts';
+import { showToast, ToastProvider } from '../../app/components/toast';
 
 import type { TypeToastOptions } from '../../app/lib/types/typeComponents';
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite';
 
 const escapeSingleQuotes = (text: string | undefined | null): string => {
-  if (!text) {
+  const isText = text === 'string' && Boolean(text);
+  if (!isText) {
     return '';
   }
 
-  return text.replaceAll("'", "\\'");
+  return text.replace("'", "\\'");
 };
 
-const normalizeStringOption = (
-  value: string | undefined,
-  fallback: string,
-): string => (typeof value === 'string' ? value : fallback);
+const normalizeStringOption = (value: string | undefined, fallback: string): string =>
+  typeof value === 'string' ? value : fallback;
 
 const normalizeDuration = (value: number | undefined): string | null => {
   if (typeof value !== 'number') {
@@ -31,9 +29,8 @@ const normalizeDuration = (value: number | undefined): string | null => {
 
 const formatToastOptions = (args: Partial<TypeToastOptions> | undefined): string => {
   const safeArgs = args ?? {};
-  const normalizedMessage = escapeSingleQuotes(
-    normalizeStringOption(safeArgs.message, ''),
-  );
+  const safeArgsMessage = typeof safeArgs.message === 'string' ? safeArgs.message : '<></>';
+  const normalizedMessage = escapeSingleQuotes(normalizeStringOption(safeArgsMessage, ''));
   const normalizedPosition = normalizeStringOption(safeArgs.position, 'bottom');
   const normalizedVariant = normalizeStringOption(safeArgs.variant, 'default');
   const normalizedDuration = normalizeDuration(safeArgs.duration);
@@ -44,8 +41,10 @@ const formatToastOptions = (args: Partial<TypeToastOptions> | undefined): string
     `variant: '${normalizedVariant}'`,
   ];
 
-  if (normalizedDuration) {
-    options.push(`duration: ${normalizedDuration}`);
+  const isNormalizedDuration = Boolean(normalizedDuration);
+
+  if (isNormalizedDuration) {
+    options.push(`duration: ${normalizedDuration ?? ''}`);
   }
 
   return options.join(', ');
@@ -59,6 +58,8 @@ const transformSource = (_: string, context: DocsTransformContext): string => {
   const options = formatToastOptions(context.args);
 
   return `
+import { showToast } from '../../app/components/toast/_toastService.ts';
+
 <Button
   onPress={() => {
     showToast({ ${options} });
