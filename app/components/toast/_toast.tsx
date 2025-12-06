@@ -101,33 +101,46 @@ const useToastController = ({
 }: UseToastControllerProps) => {
   const opacity = useSharedValue(0);
   const [mounted, setMounted] = React.useState(visible);
+  const [modalVisible, setModalVisible] = React.useState(visible);
+
+  const onHideRef = React.useRef(onHide);
+  const onShowRef = React.useRef(onShow);
+
+  React.useEffect(() => {
+    onHideRef.current = onHide;
+  }, [onHide]);
+
+  React.useEffect(() => {
+    onShowRef.current = onShow;
+  }, [onShow]);
 
   React.useEffect(() => {
     let timer: NodeJS.Timeout | undefined;
 
     if (visible) {
+      setModalVisible(true);
       setMounted(true);
-      onShow?.();
+      onShowRef.current?.();
       opacity.value = withTiming(1, { duration: animationDuration });
 
       timer = setTimeout(() => {
-        onHide?.();
+        onHideRef.current?.();
       }, duration);
-    } else {
+    } else if (mounted) {
       opacity.value = withTiming(0, { duration: animationDuration });
 
       timer = setTimeout(() => {
         setMounted(false);
+        setModalVisible(false);
       }, animationDuration);
     }
 
     return () => {
-      const isTimer = Boolean(timer);
-      if (isTimer) {
+      if (timer) {
         clearTimeout(timer);
       }
     };
-  }, [duration, onHide, onShow, opacity, visible]);
+  }, [duration, mounted, opacity, visible]);
 
   const animatedStyle = useAnimatedStyle(() => {
     const startOffset = getStartOffset(position);
@@ -142,7 +155,7 @@ const useToastController = ({
     };
   });
 
-  return { mounted, animatedStyle };
+  return { mounted, animatedStyle, modalVisible };
 };
 
 /* -----------------------------------------------
@@ -158,7 +171,7 @@ const Toast = ({
   onShow,
   variant = 'default',
 }: TypeToast) => {
-  const { mounted, animatedStyle } = useToastController({
+  const { mounted, animatedStyle, modalVisible } = useToastController({
     visible,
     duration,
     onHide,
@@ -183,7 +196,7 @@ const Toast = ({
       presentationStyle='overFullScreen'
       statusBarTranslucent={isAndroid}
       transparent
-      visible={mounted}
+      visible={modalVisible}
     >
       <View
         pointerEvents='box-none'
