@@ -1,5 +1,11 @@
 import React from 'react';
-import { Animated, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
+import Animated, {
+  interpolate,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
 
 import { color } from '../../lib/mixin';
 
@@ -29,24 +35,8 @@ const ToastMessage = ({ message }: Pick<TypeToast, 'message'>) => {
 };
 
 /* -----------------------------------------------
- * 補助関数：位置ごとの開始オフセット
- * （ネスト三項演算子を排除）
- * ----------------------------------------------- */
-
-const getStartOffset = (position: TypeToast['position'] = 'bottom'): number => {
-  switch (position) {
-    case 'top':
-      return -6;
-    case 'center':
-      return 0;
-    case 'bottom':
-    default:
-      return 6;
-  }
-};
-
-/* -----------------------------------------------
  * 補助関数：position 用スタイル
+ * （ここは worklet から呼ばないので普通の関数でOK）
  * ----------------------------------------------- */
 
 const getPositionStyle = (position: TypeToast['position'] = 'bottom') => {
@@ -78,7 +68,24 @@ const getVariantStyle = (variant: TypeToast['variant'] = 'default') => {
 };
 
 /* -----------------------------------------------
- * カスタムフック：表示状態 & アニメーション制御
+ * position に応じた開始オフセット計算
+ * （JS 側で計算して数値だけ worklet に渡す）
+ * ----------------------------------------------- */
+
+const getStartOffset = (position: TypeToast['position'] = 'bottom'): number => {
+  switch (position) {
+    case 'top':
+      return -6;
+    case 'center':
+      return 0;
+    case 'bottom':
+    default:
+      return 6;
+  }
+};
+
+/* -----------------------------------------------
+ * カスタムフック：表示状態 & アニメーション制御（reanimated版）
  * ----------------------------------------------- */
 
 type UseToastControllerProps = Pick<
@@ -93,7 +100,7 @@ const useToastController = ({
   onShow,
   position = 'bottom',
 }: UseToastControllerProps) => {
-  const opacity = React.useRef(new Animated.Value(0)).current;
+  const opacity = useSharedValue(0);
   const [mounted, setMounted] = React.useState(visible);
 
   const onHideRef = React.useRef(onHide);
@@ -108,26 +115,23 @@ const useToastController = ({
   }, [onShow]);
 
   React.useEffect(() => {
-    let timer: NodeJS.Timeout | undefined;
+    let timer: ReturnType<typeof setTimeout> | undefined;
 
     if (visible) {
       setMounted(true);
       onShowRef.current?.();
-      Animated.timing(opacity, {
-        toValue: 1,
+
+      opacity.value = withTiming(1, {
         duration: animationDuration,
-        useNativeDriver: true,
-      }).start();
+      });
 
       timer = setTimeout(() => {
         onHideRef.current?.();
       }, duration);
     } else if (mounted) {
-      Animated.timing(opacity, {
-        toValue: 0,
+      opacity.value = withTiming(0, {
         duration: animationDuration,
-        useNativeDriver: true,
-      }).start();
+      });
 
       timer = setTimeout(() => {
         setMounted(false);
@@ -141,18 +145,21 @@ const useToastController = ({
     };
   }, [duration, mounted, opacity, visible]);
 
-  const startOffset = getStartOffset(position);
-  const animatedStyle = {
-    opacity,
-    transform: [
-      {
-        translateY: opacity.interpolate({
-          inputRange: [0, 1],
-          outputRange: [startOffset, 0],
-        }),
-      },
-    ],
-  };
+  // position → startOffset は JS 側で計算して数値として渡す
+  const startOffset = React.useMemo(() => getStartOffset(position), [position]);
+
+  const animatedStyle = useAnimatedStyle(() => {
+    // ここは worklet（自動で 'worklet' 付く）だが、
+    // 参照しているのは primitive な startOffset と shared value だけ。
+    return {
+      opacity: opacity.value,
+      transform: [
+        {
+          translateY: interpolate(opacity.value, [0, 1], [startOffset, 0]),
+        },
+      ],
+    };
+  });
 
   return { mounted, animatedStyle };
 };
@@ -183,12 +190,13 @@ const Toast = ({
   }
 
   return (
-    <View pointerEvents='box-none' style={[StyleSheet.absoluteFillObject, styles.container]}>
-      <View pointerEvents='box-none' style={[styles.position, getPositionStyle(position)]}>
-        <Animated.View
-          pointerEvents='none'
-          style={[styles.toast, getVariantStyle(variant), animatedStyle]}
-        >
+    <View
+      // Toast 全体をタップ透過
+      pointerEvents='none'
+      style={[StyleSheet.absoluteFillObject, styles.container]}
+    >
+      <View style={[styles.position, getPositionStyle(position)]}>
+        <Animated.View style={[styles.toast, getVariantStyle(variant), animatedStyle]}>
           <ToastMessage message={message} />
         </Animated.View>
       </View>
