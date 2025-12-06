@@ -64,7 +64,7 @@ import { showToast } from '../../app/components/toast';
   onPress={() => {
     showToast({ ${options} });
   }}
-  title='Show Toast'
+  title='トーストを表示する'
 />`;
 };
 
@@ -76,7 +76,7 @@ const ToastPreview = (args: TypeToastOptions) => {
   return (
     <ToastProvider>
       <View style={buttonStyle.container}>
-        <Button onPress={handleShowToast} title='Show Toast' />
+        <Button onPress={handleShowToast} title='トーストを表示する' />
       </View>
     </ToastProvider>
   );
@@ -125,52 +125,29 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-const baseArgs = {
-  message: 'Toast Message',
-  position: 'bottom' as const,
-  duration: 2000,
-};
-
-export const BasicToast: Story = {
+export const DefaultTop: Story = {
   args: {
-    ...baseArgs,
-    message: 'Basic Toast',
-  },
-  render: (args) => <ToastPreview {...args} />,
-};
-
-export const TopToast: Story = {
-  args: {
-    ...baseArgs,
     position: 'top',
-    message: 'Top Toast',
+    message: 'Default Top トースト',
+    variant: 'default',
   },
   render: (args) => <ToastPreview {...args} />,
 };
 
-export const CenterToast: Story = {
+export const SuccessCenter: Story = {
   args: {
-    ...baseArgs,
     position: 'center',
-    message: 'Center Toast',
-  },
-  render: (args) => <ToastPreview {...args} />,
-};
-
-export const SuccessToast: Story = {
-  args: {
-    ...baseArgs,
+    message: 'Success Center トースト',
     variant: 'success',
-    message: 'Success Toast',
   },
   render: (args) => <ToastPreview {...args} />,
 };
 
-export const ErrorToast: Story = {
+export const ErrorBottom: Story = {
   args: {
-    ...baseArgs,
+    position: 'bottom',
+    message: 'Error Bottom トースト',
     variant: 'error',
-    message: 'Error Toast',
   },
   render: (args) => <ToastPreview {...args} />,
 };

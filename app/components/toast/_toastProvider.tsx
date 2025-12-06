@@ -12,7 +12,7 @@ type ToastState = Pick<TypeToast, 'message' | 'position' | 'variant' | 'duration
 const defaultToastState: ToastState = {
   visible: false,
   message: '',
-  position: 'bottom',
+  position: 'top',
   variant: 'default',
   duration: 2000,
 };

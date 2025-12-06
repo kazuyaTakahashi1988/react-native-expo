@@ -3,10 +3,10 @@ import type { ViewStyle } from 'react-native';
 
 export type TypeToast = {
   visible: boolean;
-  message?: string | React.ReactNode;
+  message: string | React.ReactNode;
   duration?: number;
-  position?: 'top' | 'center' | 'bottom';
-  variant?: 'default' | 'success' | 'error';
+  position: 'top' | 'center' | 'bottom';
+  variant: 'default' | 'success' | 'error';
   onHide?: () => void;
   onShow?: () => void;
 };
