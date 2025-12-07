@@ -58,7 +58,7 @@ const setHeaders = (
 
   return {
     Accept: 'application/json',
-    ContentType: 'application/json',
+    'Content-Type': 'application/json',
     ...(bearerToken != null ? { Authorization: `Bearer ${bearerToken}` } : {}),
     ...headers,
   };
