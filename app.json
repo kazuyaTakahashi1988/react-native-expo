@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "react-native-expo",
-    "slug": "react-native-expo",
-    "scheme": "react-native-expo",
+    "name": "empty-service",
+    "slug": "empty-service",
+    "scheme": "empty-service",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./app/assets/images/appInfo/icon.png",
@@ -11,7 +11,7 @@
     "splash": {
       "image": "./app/assets/images/appInfo/splash-icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#000000"
     },
     "ios": {
       "supportsTablet": true,
@@ -24,7 +24,7 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./app/assets/images/appInfo/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#000000"
       },
       "edgeToEdgeEnabled": true,
       "resourceClass": "medium",
