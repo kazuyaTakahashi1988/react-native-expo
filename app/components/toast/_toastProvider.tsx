@@ -3,7 +3,7 @@ import React from 'react';
 import Toast from './_toast';
 import { subscribeToast } from './_toastService';
 
-import type { TypeToastState, TypeToastUpdate } from '../../lib/types/typeComponents';
+import type { TypeToastState, TypeToastSubscribe } from '../../lib/types/typeComponents';
 
 const ToastProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
   const [toastState, setToastState] = React.useState<TypeToastState>({
@@ -15,7 +15,7 @@ const ToastProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
   });
 
   React.useEffect(() => {
-    const unsubscribe = subscribeToast((options: TypeToastUpdate) => {
+    const unsubscribe = subscribeToast((options: TypeToastSubscribe) => {
       setToastState((prev) => ({
         ...prev,
         ...options,
