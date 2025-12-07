@@ -12,12 +12,15 @@ export type TypeToast = {
 };
 
 export type TypeOffsetOption = Record<NonNullable<TypeToast['position']>, number>;
+
 export type TypePositionStyle = Record<NonNullable<TypeToast['position']>, ViewStyle>;
+
 export type TypeVariantStyle = Record<NonNullable<TypeToast['variant']>, ViewStyle | undefined>;
 
-export type TypeToastUpdate = Partial<TypeToastOptions> & { visible: boolean };
 export type TypeToastOptions = Pick<TypeToast, 'message' | 'position' | 'variant' | 'duration'>;
 
 export type TypeToastState = Pick<TypeToast, 'message' | 'position' | 'variant' | 'duration'> & {
   visible: boolean;
 };
+
+export type TypeToastSubscribe = Partial<TypeToastOptions> & { visible: boolean };
