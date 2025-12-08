@@ -49,6 +49,8 @@ Open <a href="http://storybook-for-expo.empty-service.com" target="_blank">http:
 <br>
 
 ```
+$ eas init // 自分のExpoアカウント用のプロジェクトを作成
+
 Iosの場合（Apple IDの認証など求められます）
 $ eas build --platform ios --profile development
 
