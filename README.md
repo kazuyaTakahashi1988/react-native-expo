@@ -37,7 +37,7 @@ $ yarn build-storybook // ビルドコマンド
 
 ↓↓↓↓ ビルド成果物（GitHub Actionsでビルド・ホスティングしたもの）<br>
 <br>
-Open <a href="http://storybook-for-expo.empty-service.com" target="_blank">http://storybook-for-expo.empty-service.com</a><br>
+Open <a href="https://storybook-for-expo.empty-service.com" target="_blank">https://storybook-for-expo.empty-service.com</a><br>
 <br>
 
 # ③ EAS Build する場合
