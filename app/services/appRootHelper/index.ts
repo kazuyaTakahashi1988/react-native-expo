@@ -1,1 +1,1 @@
-export { useSplashScreenMinimumDuration } from './_splashScreen';
+export * from './_splash';

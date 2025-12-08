@@ -6,14 +6,14 @@ import { enableScreens } from 'react-native-screens';
 
 import { ToastProvider } from './components/toast';
 import { Navigation } from './navigation';
-import { useSplashScreenMinimumDuration } from './services/appRootHelper';
+import { useSplashMinDuration } from './services/appRootHelper';
 
 import type React from 'react';
 
 enableScreens(); // App起動前に呼び出す
 
 const App: React.FC = () => {
-  useSplashScreenMinimumDuration(2000);
+  useSplashMinDuration(2000); // アプリ起動時、スプラッシュ画像を指定ミリ秒表示する処理
 
   return (
     <GestureHandlerRootView style={styles.container}>

@@ -1,6 +1,6 @@
 {
   "name": "empty-service",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "module",
   "main": "index.ts",
   "scripts": {
@@ -32,6 +32,7 @@
     "expo": "54.0.23",
     "expo-dev-client": "~6.0.17",
     "expo-linking": "~8.0.8",
+    "expo-splash-screen": "~31.0.12",
     "expo-status-bar": "~3.0.8",
     "react": "19.1.0",
     "react-hook-form": "^7.66.0",

@@ -1,10 +1,10 @@
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 
-/**
- * Keeps the Expo splash screen visible for at least the provided duration.
+/*
+ *  アプリ起動時、スプラッシュ画像を指定ミリ秒表示する処理
  */
-export const useSplashScreenMinimumDuration = (durationMs: number) => {
+export const useSplashMinDuration = (duration: number) => {
   useEffect(() => {
     let isMounted = true;
 
@@ -14,11 +14,11 @@ export const useSplashScreenMinimumDuration = (durationMs: number) => {
       if (isMounted) {
         void SplashScreen.hideAsync();
       }
-    }, durationMs);
+    }, duration);
 
     return () => {
       isMounted = false;
       clearTimeout(hideTimeout);
     };
-  }, [durationMs]);
+  }, [duration]);
 };
