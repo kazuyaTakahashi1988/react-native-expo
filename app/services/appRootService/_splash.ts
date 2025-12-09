@@ -1,9 +1,9 @@
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 
-/*
+/* -----------------------------------------------
  *  アプリ起動時、スプラッシュ画像を指定ミリ秒表示する処理
- */
+ * ----------------------------------------------- */
 export const useSplashMinDuration = (duration: number) => {
   useEffect(() => {
     let isMounted = true;

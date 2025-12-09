@@ -1,9 +1,5 @@
 import type { StyleProp, ViewStyle } from 'react-native';
 
-/* -----------------------------------------------
- * [ app/components/button ] 用 type
- * ----------------------------------------------- */
-
 /*
  * ボタン
  */

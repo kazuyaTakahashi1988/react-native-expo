@@ -2,10 +2,6 @@ import type { Control, FieldValues, Path, RegisterOptions } from 'react-hook-for
 import type { StyleProp, TextInputProps, TextStyle, ViewStyle } from 'react-native';
 import type { Item } from 'react-native-picker-select';
 
-/* -----------------------------------------------
- * [ app/components/form ] 用 type
- * ----------------------------------------------- */
-
 /*
  * type チェック・ラヂオ（カスタム含む）ボックス項目 共通
  */

@@ -6,7 +6,7 @@ import { Button } from '../../../../../components/button';
 import { CheckBox } from '../../../../../components/form';
 import { Layout } from '../../../../../components/layouts/layout';
 import { color } from '../../../../../lib/mixin';
-import { getCategorizedArticleApi } from '../../../../../services/apiHelper';
+import { getCategorizedArticleApi } from '../../../../../services/apiService';
 
 import type { TypeArticle, TypeFormValues } from './_type';
 

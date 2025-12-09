@@ -5,8 +5,8 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { enableScreens } from 'react-native-screens';
 
 import { Navigation } from './navigation';
-import { useSplashMinDuration } from './services/appRootHelper';
-import { ToastProvider } from './services/providerHelper';
+import { useSplashMinDuration } from './services/appRootService';
+import { ToastProvider } from './services/providerService';
 
 import type React from 'react';
 

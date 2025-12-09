@@ -4,7 +4,7 @@ import type { TypeOptions, TypeParams } from '../../lib/types/typeService';
 import type { AxiosError, AxiosRequestConfig, AxiosResponse, Method } from 'axios';
 
 /* -----------------------------------------------
- * APIヘルパー
+ * API 処理
  * ----------------------------------------------- */
 
 // デフォルトのベースURL
@@ -102,7 +102,7 @@ export const getCategorizedArticleApi = (params: TypeParams) => {
  * export const postXXXXApi = (params, baseURL, headers, requestData, accessToken) => {
  *  const options = {
  *    params // クエリパラム
- *    baseURL // DEFAULT_BASE_URL 使わない際のベースURL
+ *    baseURL // DEFAULT_BASE_URL を使わない際のベースURL
  *    headers // 追加ヘッダー情報を付与
  *    requestData // リクエストデータ（リクエストボディ）
  *    accessToken // アクセストークン

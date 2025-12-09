@@ -3,7 +3,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import ErrorText from './_errorText';
 import Label from './_label';
 import { color } from '../../lib/mixin';
-import { useRHFController } from '../../services/formHelper';
+import { useRHFController } from '../../services/formService';
 
 import type { TypeRadioBox } from '../../lib/types/typeComponents';
 import type { FieldValues } from 'react-hook-form';

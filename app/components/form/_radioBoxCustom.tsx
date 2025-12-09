@@ -10,7 +10,7 @@ import Animated, {
 import ErrorText from './_errorText';
 import Label from './_label';
 import { color } from '../../lib/mixin';
-import { useRHFController } from '../../services/formHelper';
+import { useRHFController } from '../../services/formService';
 
 import type { TypeBoxCustomOption, TypeRadioBoxCustom } from '../../lib/types/typeComponents';
 import type React from 'react';
