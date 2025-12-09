@@ -1,6 +1,5 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Platform } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import NavAboutNest from './_navAboutNest';
@@ -24,7 +23,6 @@ const NativeStack = createNativeStackNavigator<TypeRootList>();
 const NavMain: React.FC = () => {
   // デバイス固有のセーフエリアBottom値
   const { bottom } = useSafeAreaInsets();
-  const bottomTabHeight = bottom + (Platform.OS === 'ios' ? 50 : 70);
 
   /* ---------------------------------------------
    * メイン 各画面
@@ -34,7 +32,7 @@ const NavMain: React.FC = () => {
       screenOptions={() => ({
         // BottomTabスタイル
         ...bottomTabStyles,
-        tabBarStyle: [bottomTabStyles.tabBarStyle, { height: bottomTabHeight }],
+        tabBarStyle: [bottomTabStyles.tabBarStyle, { minHeight: bottom + 60 }],
       })}
     >
       {/* Home 画面 */}
@@ -141,7 +139,6 @@ const bottomTabStyles: BottomTabNavigationOptions = {
   tabBarItemStyle: {
     borderRightColor: color.white,
     borderRightWidth: 1,
-    minHeight: 90,
   },
   // タブバーのTextスタイル
   tabBarLabelStyle: { fontSize: 12, fontWeight: '600' },
