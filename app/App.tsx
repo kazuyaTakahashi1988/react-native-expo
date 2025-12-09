@@ -4,9 +4,9 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { enableScreens } from 'react-native-screens';
 
-import { ToastProvider } from './components/toast';
 import { Navigation } from './navigation';
-import { useSplashMinDuration } from './services/appRootHelper';
+import { useSplashMinDuration } from './services/appRootService';
+import { ToastProvider } from './services/providerService';
 
 import type React from 'react';
 

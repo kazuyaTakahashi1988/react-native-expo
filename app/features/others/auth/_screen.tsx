@@ -6,7 +6,7 @@ import { SignInForm, SignUpForm, VerifyForm } from './_component';
 import { Button } from '../../../components/button';
 import { Layout } from '../../../components/layouts/layout';
 import { color } from '../../../lib/mixin';
-import { signIn, signOut, signUp, useAuthSession, verify } from '../../../services/authHelper';
+import { signIn, signOut, signUp, useAuthSession, verify } from '../../../services/authService';
 
 import type { TypeResult, TypeTabKey } from './_type';
 import type {

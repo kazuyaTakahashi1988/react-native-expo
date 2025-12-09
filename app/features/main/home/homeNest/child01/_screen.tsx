@@ -4,7 +4,7 @@ import { Linking, StyleSheet, Text, View } from 'react-native';
 import { Button } from '../../../../../components/button';
 import { Layout } from '../../../../../components/layouts/layout';
 import { color } from '../../../../../lib/mixin';
-import { getArticleApi } from '../../../../../services/apiHelper';
+import { getArticleApi } from '../../../../../services/apiService';
 
 import type { TypeArticle } from './_type';
 
