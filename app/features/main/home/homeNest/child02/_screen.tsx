@@ -64,7 +64,7 @@ const Child02Screen: React.FC = () => {
 
   return (
     <Layout>
-      <Text style={styles.title}>API Helper & react-hook-form{`\n`}Example</Text>
+      <Text style={styles.title}>API Service & react-hook-form{`\n`}Example</Text>
 
       <View style={styles.category}>
         {/* taxCategory01 チェックボックス項目 */}

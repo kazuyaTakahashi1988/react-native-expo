@@ -41,7 +41,7 @@ const Child01Screen: React.FC = () => {
 
   return (
     <Layout>
-      <Text style={styles.title}>API Helper{`\n`}Example</Text>
+      <Text style={styles.title}>API Service{`\n`}Example</Text>
 
       {/* 記事取得 ボタン */}
       <Button
