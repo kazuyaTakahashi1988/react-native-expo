@@ -1,9 +1,12 @@
 import React from 'react';
 
-import Toast from './_toast';
-import { subscribeToast } from './_toastService';
+import { subscribeToast, Toast } from '../../components/toast';
 
 import type { TypeToastState, TypeToastSubscribe } from '../../lib/types/typeComponents';
+
+/* -----------------------------------------------
+ * Toast用 プロバイダー
+ * ----------------------------------------------- */
 
 const ToastProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
   const [toastState, setToastState] = React.useState<TypeToastState>({
