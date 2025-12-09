@@ -1,3 +1,8 @@
+※ Iosデバイスで、<a href="https://apps.apple.com/us/app/testflight/id899247664" target="_blank">TestFlight</a>アプリ（無料）インストール済みの方なら以下リンクからDL可<br>
+<br>
+Open <a href="https://testflight.apple.com/join/2nKnQhAD" target="_blank">https://testflight.apple.com/join/2nKnQhAD</a> in your Ios Device<br>
+<br>
+
 # ① node v22.x 下で yarn install & yarn start
 
 ```
