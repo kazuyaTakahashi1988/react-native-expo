@@ -1,6 +1,7 @@
 /* -----------------------------------------------
  * プロバイダー用の処理まとめ
- *（App.tsx が複雑になりそうならここにプロバイダーを纏める）
+ * AppRootで使うプロバイダーは AppRootProvider に纏める
  * ----------------------------------------------- */
 
+export { default as AppRootProvider } from './_appRootProvider';
 export { default as ToastProvider } from './_toastProvider';
