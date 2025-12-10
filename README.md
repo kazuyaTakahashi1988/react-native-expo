@@ -1,5 +1,10 @@
 ※ Iosデバイスにて<a href="https://apps.apple.com/us/app/testflight/id899247664" target="_blank">TestFlight</a>（無料アプリ）インストール済みの方は、こちらの<a href="https://testflight.apple.com/join/2nKnQhAD" target="_blank">リンク</a>からテストアプリDL可<br>
 <br>
+※ Androidデバイスは、こちらの<a href="https://kazuya631130.moo.jp/download/empty_service.apk" target="_blank">リンク</a>からテストアプリDL可<br>
+<sub>
+　Google Play ストア公認アプリではないため、提供元不明アプリのインストールを許可および承認しないとインストールできません<br>
+　また Google Play プロテクトが ON の方は、Play ストアアプリ内でOFFの設定をしないとインストールできません（<a href="https://support.google.com/googleplay/answer/2812853?hl=ja" target="_blank">OFFの設定方法</a>）</sub>
+<br>
 
 # ① node v22.x 下で yarn install & yarn start
 
@@ -14,7 +19,7 @@ $ yarn start
 › Press w │ open web
 ~~~
 
-※ EXPO GO （無料アプリ）インストール済なら 表示されたQRコード読み込みでスマホ確認可
+※ EXPO GO （無料アプリ）インストール済みの方は、表示されたQRコード読み込みでスマホ確認可
 ```
 
 ↓↓↓↓<br>
