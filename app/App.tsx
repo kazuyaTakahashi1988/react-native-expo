@@ -5,9 +5,13 @@ import { enableScreens } from 'react-native-screens';
 
 import { Navigation } from './navigation';
 import { useSplashMinDuration } from './services/appRootService';
-import { AppProvider } from './services/providerService';
+import { AppRootProvider } from './services/providerService';
 
 import type React from 'react';
+
+/* -----------------------------------------------
+ * AppRoot
+ * ----------------------------------------------- */
 
 enableScreens(); // App起動前に呼び出す
 
@@ -16,10 +20,10 @@ const App: React.FC = () => {
 
   return (
     <GestureHandlerRootView style={styles.container}>
-      <AppProvider>
+      <AppRootProvider>
         <Navigation />
         <StatusBar style='auto' />
-      </AppProvider>
+      </AppRootProvider>
     </GestureHandlerRootView>
   );
 };

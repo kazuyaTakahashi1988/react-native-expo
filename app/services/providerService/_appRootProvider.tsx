@@ -1,16 +1,17 @@
-import React from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import ToastProvider from './_toastProvider';
 
+import type React from 'react';
+
 /* -----------------------------------------------
- * アプリ全体のプロバイダーをまとめる
+ * AppRoot用のプロバイダーをまとめる
  * ----------------------------------------------- */
 
-const AppProvider: React.FC<React.PropsWithChildren> = ({ children }) => (
+const AppRootProvider: React.FC<React.PropsWithChildren> = ({ children }) => (
   <SafeAreaProvider>
     <ToastProvider>{children}</ToastProvider>
   </SafeAreaProvider>
 );
 
-export default AppProvider;
+export default AppRootProvider;
