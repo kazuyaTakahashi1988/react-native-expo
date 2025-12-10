@@ -1,6 +1,4 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet } from 'react-native';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { enableScreens } from 'react-native-screens';
 
 import { Navigation } from './navigation';
@@ -19,19 +17,11 @@ const App: React.FC = () => {
   useSplashMinDuration(2000); // アプリ起動時、スプラッシュ画像を指定ミリ秒表示する処理
 
   return (
-    <GestureHandlerRootView style={styles.container}>
-      <AppRootProvider>
-        <Navigation />
-        <StatusBar style='auto' />
-      </AppRootProvider>
-    </GestureHandlerRootView>
+    <AppRootProvider>
+      <Navigation />
+      <StatusBar style='auto' />
+    </AppRootProvider>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
 
 export default App;
