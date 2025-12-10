@@ -3,7 +3,7 @@
     "name": "empty-service",
     "slug": "empty-service",
     "scheme": "empty-service",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "orientation": "portrait",
     "icon": "./app/assets/images/appInfo/icon.png",
     "userInterfaceStyle": "light",
