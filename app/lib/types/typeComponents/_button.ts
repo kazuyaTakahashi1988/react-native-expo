@@ -1,8 +1,5 @@
 import type { StyleProp, ViewStyle } from 'react-native';
 
-/*
- * ボタン
- */
 export type TypeButton = {
   pattern?: 'primary' | 'secondary';
   size?: 'small' | 'medium' | 'large';
