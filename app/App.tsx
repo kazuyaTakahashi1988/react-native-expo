@@ -13,7 +13,7 @@ import type React from 'react';
  * AppRoot
  * ----------------------------------------------- */
 
-enableScreens(); // App起動前に呼び出す
+enableScreens(); // アプリ起動前に呼び出す
 
 const App: React.FC = () => {
   useSplashMinDuration(2000); // アプリ起動時、スプラッシュ画像を指定ミリ秒表示する処理
