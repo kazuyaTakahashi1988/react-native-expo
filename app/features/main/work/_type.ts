@@ -1,4 +1,4 @@
 import type { TypeRootList } from '../../../lib/types/typeNavigation';
-import type { MaterialTopTabScreenProps } from '@react-navigation/material-top-tabs';
+import type { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 
-export type TypeWorkScreen = MaterialTopTabScreenProps<TypeRootList>;
+export type TypeWorkScreen = BottomTabScreenProps<TypeRootList>;
