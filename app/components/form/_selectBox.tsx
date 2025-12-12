@@ -7,7 +7,7 @@ import Label from './_label';
 import { color } from '../../lib/mixin';
 import { useRHFController } from '../../services/formService';
 
-import type { TypeSelectBox, TypeSelectBoxOption } from '../../lib/types/typeComponents';
+import type { TypeSelectBox } from '../../lib/types/typeComponents';
 import type { ComponentProps } from 'react';
 import type { FieldValues } from 'react-hook-form';
 import type { StyleProp, TextStyle, ViewStyle } from 'react-native';
@@ -15,6 +15,79 @@ import type { StyleProp, TextStyle, ViewStyle } from 'react-native';
 /* -----------------------------------------------
  * セレクトボックス項目
  * ----------------------------------------------- */
+
+const normalizeSelectedValue = (rawValue: unknown): string => {
+  if (typeof rawValue === 'string') {
+    return rawValue;
+  }
+  return '';
+};
+
+const buildValueChangeHandler = (
+  onChange: ((value: string) => void) | undefined,
+): ((selected: string | null) => void) => {
+  if (!onChange) {
+    return () => undefined;
+  }
+  return (selected: string | null) => {
+    onChange(selected ?? '');
+  };
+};
+
+const toPickerValue = (value: string): string | null => {
+  if (value === '') {
+    return null;
+  }
+  return value;
+};
+
+const buildTriggerStyles = (
+  triggerStyle: StyleProp<ViewStyle> | undefined,
+  hasError: boolean,
+  disabled: boolean,
+): StyleProp<ViewStyle>[] => {
+  const buildStyles: StyleProp<ViewStyle>[] = [
+    styles.selectTrigger,
+    disabled ? styles.selectTriggerDisabled : null,
+  ];
+
+  if (triggerStyle != null) {
+    buildStyles.push(triggerStyle);
+  }
+
+  if (hasError) {
+    buildStyles.push(styles.inputError);
+  }
+
+  return buildStyles;
+};
+
+const buildTriggerTextStyles = (
+  isPlaceholder: boolean,
+  placeholderTextStyle: StyleProp<TextStyle> | undefined,
+  valueTextStyle: StyleProp<TextStyle> | undefined,
+  disabled: boolean,
+): StyleProp<TextStyle>[] => {
+  const buildStyles: StyleProp<TextStyle>[] = [];
+
+  if (isPlaceholder) {
+    buildStyles.push(styles.selectPlaceholderText);
+    if (placeholderTextStyle != null) {
+      buildStyles.push(placeholderTextStyle);
+    }
+    return buildStyles;
+  }
+
+  buildStyles.push(styles.selectValueText);
+  if (valueTextStyle != null) {
+    buildStyles.push(valueTextStyle);
+  }
+  if (disabled) {
+    buildStyles.push(styles.selectValueTextDisabled);
+  }
+
+  return buildStyles;
+};
 
 const SelectBox = <TFieldValues extends FieldValues>({
   containerStyle,
@@ -34,13 +107,13 @@ const SelectBox = <TFieldValues extends FieldValues>({
   const pickerRef = React.useRef<RNPickerSelect | null>(null);
   const { controller } = useRHFController({ control, name, rules });
 
-  const selectedValue = getSelectedValue(controller.field.value);
+  const selectedValue = normalizeSelectedValue(controller.field.value);
   const hasError = Boolean(errorText);
-  const isDisabled = isSelectDisabled(disabled);
+  const isDisabled = disabled;
 
   const selectedOption = options.find((option) => option.value === selectedValue);
   const isPlaceholder = selectedOption == null;
-  const displayLabel = getDisplayLabel(selectedOption, placeholder);
+  const displayLabel = selectedOption?.label ?? placeholder;
 
   const triggerStyles = buildTriggerStyles(triggerStyle, hasError, isDisabled);
   const triggerTextStyles = buildTriggerTextStyles(
@@ -50,12 +123,15 @@ const SelectBox = <TFieldValues extends FieldValues>({
     isDisabled,
   );
 
-  const openPicker = () => {
+  const openPicker = React.useCallback(() => {
     Keyboard.dismiss();
     pickerRef.current?.togglePicker(true);
-  };
+  }, []);
 
-  const handleValueChange = buildValueChangeHandler(controller.field.onChange);
+  const handleValueChange = React.useMemo(
+    () => buildValueChangeHandler(controller.field.onChange),
+    [controller.field.onChange],
+  );
 
   return (
     <View style={containerStyle}>
