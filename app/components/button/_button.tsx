@@ -34,15 +34,13 @@ const Button = ({
       text: styles.disabledText,
     },
   };
+  const stylePattern = disabled ? 'disabled' : pattern;
+
   const sizeOption = {
     small: styles.small,
     medium: styles.medium,
     large: styles.large,
   };
-
-  const stylePattern = disabled ? 'disabled' : pattern;
-  const buttonStyle = [styles.button, styleOption[stylePattern].button, style];
-  const textStyle = [styles.text, styleOption[stylePattern].text, sizeOption[size]];
 
   return (
     <View style={containerStyle}>
@@ -51,9 +49,9 @@ const Button = ({
         activeOpacity={0.6}
         disabled={disabled}
         onPress={onPress}
-        style={buttonStyle}
+        style={[styles.button, styleOption[stylePattern].button, style]}
       >
-        <Text style={textStyle}>{title}</Text>
+        <Text style={[styles.text, styleOption[stylePattern].text, sizeOption[size]]}>{title}</Text>
       </TouchableOpacity>
     </View>
   );
