@@ -23,6 +23,13 @@ const normalizeSelectedValue = (rawValue: unknown): string => {
   return '';
 };
 
+const toPickerValue = (value: string): string | null => {
+  if (value === '') {
+    return null;
+  }
+  return value;
+};
+
 const buildValueChangeHandler = (
   onChange: ((value: string) => void) | undefined,
 ): ((selected: string | null) => void) => {
@@ -32,61 +39,6 @@ const buildValueChangeHandler = (
   return (selected: string | null) => {
     onChange(selected ?? '');
   };
-};
-
-const toPickerValue = (value: string): string | null => {
-  if (value === '') {
-    return null;
-  }
-  return value;
-};
-
-const buildTriggerStyles = (
-  triggerStyle: StyleProp<ViewStyle> | undefined,
-  hasError: boolean,
-  disabled: boolean,
-): StyleProp<ViewStyle>[] => {
-  const buildStyles: StyleProp<ViewStyle>[] = [
-    styles.selectTrigger,
-    disabled ? styles.selectTriggerDisabled : null,
-  ];
-
-  if (triggerStyle != null) {
-    buildStyles.push(triggerStyle);
-  }
-
-  if (hasError) {
-    buildStyles.push(styles.inputError);
-  }
-
-  return buildStyles;
-};
-
-const buildTriggerTextStyles = (
-  isPlaceholder: boolean,
-  placeholderTextStyle: StyleProp<TextStyle> | undefined,
-  valueTextStyle: StyleProp<TextStyle> | undefined,
-  disabled: boolean,
-): StyleProp<TextStyle>[] => {
-  const buildStyles: StyleProp<TextStyle>[] = [];
-
-  if (isPlaceholder) {
-    buildStyles.push(styles.selectPlaceholderText);
-    if (placeholderTextStyle != null) {
-      buildStyles.push(placeholderTextStyle);
-    }
-    return buildStyles;
-  }
-
-  buildStyles.push(styles.selectValueText);
-  if (valueTextStyle != null) {
-    buildStyles.push(valueTextStyle);
-  }
-  if (disabled) {
-    buildStyles.push(styles.selectValueTextDisabled);
-  }
-
-  return buildStyles;
 };
 
 const SelectBox = <TFieldValues extends FieldValues>({
@@ -115,14 +67,6 @@ const SelectBox = <TFieldValues extends FieldValues>({
   const isPlaceholder = selectedOption == null;
   const displayLabel = selectedOption?.label ?? placeholder;
 
-  const triggerStyles = buildTriggerStyles(triggerStyle, hasError, isDisabled);
-  const triggerTextStyles = buildTriggerTextStyles(
-    isPlaceholder,
-    placeholderTextStyle,
-    valueTextStyle,
-    isDisabled,
-  );
-
   const openPicker = React.useCallback(() => {
     Keyboard.dismiss();
     pickerRef.current?.togglePicker(true);
@@ -131,6 +75,65 @@ const SelectBox = <TFieldValues extends FieldValues>({
   const handleValueChange = React.useMemo(
     () => buildValueChangeHandler(controller.field.onChange),
     [controller.field.onChange],
+  );
+
+  /*
+   * 適用スタイル
+   */
+  const buildTriggerStyles = (
+    triggerStyle: StyleProp<ViewStyle> | undefined,
+    hasError: boolean,
+    disabled: boolean,
+  ): StyleProp<ViewStyle>[] => {
+    const buildStyles: StyleProp<ViewStyle>[] = [
+      styles.selectTrigger,
+      disabled ? styles.selectTriggerDisabled : null,
+    ];
+
+    if (triggerStyle != null) {
+      buildStyles.push(triggerStyle);
+    }
+
+    if (hasError) {
+      buildStyles.push(styles.inputError);
+    }
+
+    return buildStyles;
+  };
+
+  const buildTriggerTextStyles = (
+    isPlaceholder: boolean,
+    placeholderTextStyle: StyleProp<TextStyle> | undefined,
+    valueTextStyle: StyleProp<TextStyle> | undefined,
+    disabled: boolean,
+  ): StyleProp<TextStyle>[] => {
+    const buildStyles: StyleProp<TextStyle>[] = [];
+
+    if (isPlaceholder) {
+      buildStyles.push(styles.selectPlaceholderText);
+      if (placeholderTextStyle != null) {
+        buildStyles.push(placeholderTextStyle);
+      }
+      return buildStyles;
+    }
+
+    buildStyles.push(styles.selectValueText);
+    if (valueTextStyle != null) {
+      buildStyles.push(valueTextStyle);
+    }
+    if (disabled) {
+      buildStyles.push(styles.selectValueTextDisabled);
+    }
+
+    return buildStyles;
+  };
+
+  const triggerStyles = buildTriggerStyles(triggerStyle, hasError, isDisabled);
+  const triggerTextStyles = buildTriggerTextStyles(
+    isPlaceholder,
+    placeholderTextStyle,
+    valueTextStyle,
+    isDisabled,
   );
 
   return (
