@@ -1,4 +1,4 @@
-import * as Linking from 'expo-linking';
+import * as ExpoLinking from 'expo-linking';
 
 import type {
   LinkingOptions,
@@ -11,11 +11,11 @@ import type {
  * ディープリンク設定
  * ----------------------------------------------- */
 
-const linking: LinkingOptions<{
+const Linking: LinkingOptions<{
   main: NavigatorScreenParams<ParamListBase>;
   others: NavigatorScreenParams<ParamListBase>;
 }> = {
-  prefixes: [Linking.createURL('/')],
+  prefixes: [ExpoLinking.createURL('/')],
   config: {
     initialRouteName: 'main',
     screens: {
@@ -57,4 +57,4 @@ const linking: LinkingOptions<{
   },
 };
 
-export default linking;
+export default Linking;
