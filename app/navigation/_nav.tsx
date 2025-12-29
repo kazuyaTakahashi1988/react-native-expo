@@ -1,7 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import linking from './_linking';
+import Linking from './_linking';
 import NavMain from './_navMain';
 import NavOthers from './_navOthers';
 
@@ -16,7 +16,7 @@ const NativeStack = createNativeStackNavigator<TypeRootList>();
 
 const Navigation: React.FC = () => {
   return (
-    <NavigationContainer linking={linking}>
+    <NavigationContainer linking={Linking}>
       <NativeStack.Navigator>
         {/* --------------------------------------
          * メイン 各画面追加
