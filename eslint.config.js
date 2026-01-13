@@ -91,8 +91,8 @@ export default [
       ],
 
       /* -------------------------------------------------------
-      import並び順、自動補正
-    ---------------------------------------------------------- */
+        import並び順、自動補正
+      ---------------------------------------------------------- */
       'import/order': [
         'error',
         {
@@ -139,8 +139,8 @@ export default [
       ],
 
       /* -------------------------------------------------------
-      認知的複雑度（sonarjs / total-functions / ESLintコア
-    ---------------------------------------------------------- */
+        認知的複雑度（sonarjs / total-functions / ESLintコア
+      ---------------------------------------------------------- */
       'sonarjs/cognitive-complexity': ['error', 10],
       'sonarjs/no-small-switch': ['error'],
       complexity: ['error', { max: 5 }],
@@ -148,9 +148,9 @@ export default [
       'no-else-return': ['error'],
 
       /* -------------------------------------------------------
-      'total-functions/no-unsafe-type-assertion': 'error'
-      が最新のESlintに対応してないため以下にて代替
-    ---------------------------------------------------------- */
+        'total-functions/no-unsafe-type-assertion': 'error'
+        が最新のESlintに対応してないため以下にて代替
+      ---------------------------------------------------------- */
       /* <Type> スタイルは警告、object literal の場合は許容 */
       '@typescript-eslint/consistent-type-assertions': [
         'warn',
@@ -161,10 +161,10 @@ export default [
     },
   },
   /* -----------------------------------------------------------
-  ・features 配下の実装は index.{tsx/ts} しか、features 外に import できない設定
-  ・features 配下にある index.{tsx/ts} は _screen.tsx しか export できない設定
-  ・先頭にハイフンが付くファイル（例：_iconXXXX.tsx）はそのファイルと同階層ディレクトリでしか import できない設定
-  ※ 以下に重複記述があるのは override（上書き設定）を防ぐため
+    ・features 配下の実装は index.{tsx/ts} しか、features 外に import できない設定
+    ・features 配下にある index.{tsx/ts} は _screen.tsx しか export できない設定
+    ・先頭にハイフンが付くファイル（例：_iconXXXX.tsx）はそのファイルと同階層ディレクトリでしか import できない設定
+    ※ 以下に重複記述があるのは override（上書き設定）を防ぐため
   -------------------------------------------------------------- */
   {
     files: ['app/**/*.ts', 'app/**/*.tsx', 'index.ts'],
@@ -195,6 +195,11 @@ export default [
         'error',
         {
           patterns: [
+            {
+              regex: '^\\./(?!(_|(\\.|$)))',
+              message:
+                'features 配下での同階層ディレクトリのimportは ./_*.{tsx/ts} のみ許可されています。',
+            },
             {
               group: ['**/_*', '!./_*'],
               message:
