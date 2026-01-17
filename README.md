@@ -4,7 +4,9 @@
 <sub>
 　Google Play ストア公認アプリではないため、提供元不明アプリのインストールを許可および承認しないとインストールできません<br>
 　また Google Play プロテクトが ON の方は、Play ストアアプリ内でOFFの設定をしないとインストールできません（<a href="https://support.google.com/googleplay/answer/2812853?hl=ja" target="_blank">OFFの設定方法</a>）</sub>
-<br>
+<br><br>
+<img width="25%" height="auto" alt="0x0ss-1" src="https://github.com/user-attachments/assets/0021d4e8-32d7-4ac3-bc38-5a46a98b47e1" />　<img width="25%" height="auto" alt="0x0ss" src="https://github.com/user-attachments/assets/4ac9773c-752c-4a10-be5e-d8ae9fc80361" />
+<br><br>
 
 # ① node v22.x 下で yarn install & yarn start
 
