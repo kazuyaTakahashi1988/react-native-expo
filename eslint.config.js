@@ -143,7 +143,7 @@ export default [
       ---------------------------------------------------------- */
       'sonarjs/cognitive-complexity': ['error', 10],
       'sonarjs/no-small-switch': ['error'],
-      complexity: ['error', { max: 10 }],
+      complexity: ['error', { max: 5 }],
       'max-depth': ['error', 5],
       'no-else-return': ['error'],
 
