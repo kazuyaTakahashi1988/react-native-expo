@@ -7,7 +7,7 @@ import ToastProvider from './_toastProvider';
 import type React from 'react';
 
 /* -----------------------------------------------
- * AppRoot用のプロバイダーをまとめる
+ * App.tsx（AppRoot）用のプロバイダーを纏める
  * ----------------------------------------------- */
 
 const AppRootProvider: React.FC<React.PropsWithChildren> = ({ children }) => (
