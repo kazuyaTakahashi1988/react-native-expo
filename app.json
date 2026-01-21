@@ -18,8 +18,7 @@
       "bundleIdentifier": "com.kazuya631130.reactnativeexpo",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
-      },
-      "resourceClass": "large"
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -27,7 +26,6 @@
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
-      "resourceClass": "medium",
       "softwareKeyboardLayoutMode": "pan",
       "package": "com.kazuya631130.reactnativeexpo"
     },
