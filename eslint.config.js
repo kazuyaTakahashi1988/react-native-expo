@@ -161,12 +161,12 @@ export default [
     },
   },
   /* -----------------------------------------------------------
-    app/features 配下の実装は app/navigation 配下でだけ import 可能です。
-    先頭にハイフンが付くファイル（例：_iconXXXX.tsx）はそのファイルと同階層ディレクトリでのみ import 可能です。
+    app/features 配下の実装は app/navigation 配下でのみ import 可能です。
+    先頭に _ が付くファイル（例：_type.ts）はそのファイルと同階層でのみ import 可能です。
     ※ 以下に重複記述があるのは override（上書き設定）を防ぐため
   -------------------------------------------------------------- */
   {
-    files: ['app/**', , 'index.ts'],
+    files: ['app/**', 'index.ts'],
     rules: {
       'no-restricted-imports': [
         'error',
@@ -175,7 +175,7 @@ export default [
             {
               group: ['**/_*', '!./_*'],
               message:
-                '先頭にハイフンが付くファイル（例：_iconXXXX.tsx）はそのファイルと同階層ディレクトリでのみ import 可能です。',
+                '先頭に _ が付くファイル（例：_type.ts）はそのファイルと同階層でのみ import 可能です。',
             },
           ],
         },
@@ -192,12 +192,12 @@ export default [
           patterns: [
             {
               group: ['**/features/**'],
-              message: 'app/features 配下の実装は app/navigation 配下でだけ import 可能です。',
+              message: 'app/features 配下の実装は app/navigation 配下でのみ import 可能です。',
             },
             {
               group: ['**/_*', '!./_*'],
               message:
-                '先頭にハイフンが付くファイル（例：_iconXXXX.tsx）はそのファイルと同階層ディレクトリでのみ import 可能です。',
+                '先頭に _ が付くファイル（例：_type.ts）はそのファイルと同階層でのみ import 可能です。',
             },
           ],
         },
