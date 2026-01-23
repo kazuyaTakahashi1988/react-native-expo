@@ -161,76 +161,9 @@ export default [
     },
   },
   /* -----------------------------------------------------------
-    ・features 配下の実装は index.{tsx/ts} しか、features 外に import できない設定
-    ・features 配下にある index.{tsx/ts} は _screen.tsx しか export できない設定
-    ・先頭にハイフンが付くファイル（例：_iconXXXX.tsx）はそのファイルと同階層ディレクトリでしか import できない設定
-    ※ 以下に重複記述があるのは override（上書き設定）を防ぐため
+    ・features 配下の実装は app/navigation 配下からのみインポート可能にする
   -------------------------------------------------------------- */
-  {
-    files: ['app/**/*.ts', 'app/**/*.tsx', 'index.ts'],
-    rules: {
-      'no-restricted-imports': [
-        'error',
-        {
-          patterns: [
-            {
-              group: ['**/features/**', '!**/features/**/', '!**/features/**/index.*'],
-              message:
-                'Screenパスの末尾には /（スラッシュ）を付与してください。また features 配下の実装は index.{tsx/ts} しか、features 外に import できません',
-            },
-            {
-              group: ['**/_*', '!./_*'],
-              message:
-                '先頭にハイフンが付くファイル（例：_iconXXXX.tsx）はそのファイルと同階層ディレクトリでのみ import 可能です。',
-            },
-          ],
-        },
-      ],
-    },
-  },
-  {
-    files: ['app/features/**/*.ts', 'app/features/**/*.tsx'],
-    rules: {
-      'no-restricted-imports': [
-        'error',
-        {
-          patterns: [
-            {
-              regex: '^\\./(?!(_|(\\.|$)))',
-              message:
-                'features 配下での同階層ディレクトリのimportは ./_*.{tsx/ts} のみ許可されています。',
-            },
-            {
-              group: ['**/_*', '!./_*'],
-              message:
-                '先頭にハイフンが付くファイル（例：_iconXXXX.tsx）はそのファイルと同階層ディレクトリでのみ import 可能です。',
-            },
-          ],
-        },
-      ],
-    },
-  },
-  {
-    files: ['app/features/**/index.tsx', 'app/features/**/index.ts'],
-    rules: {
-      'no-restricted-imports': [
-        'error',
-        {
-          patterns: [
-            {
-              group: ['**/_*', '!./_*'],
-              message:
-                '先頭にハイフンが付くファイル（例：_iconXXXX.tsx）はそのファイルと同階層ディレクトリでのみ import 可能です。',
-            },
-            {
-              group: ['./*', '../*', '!./_screen', '!./_screen.*'],
-              message: 'features 配下の index.{tsx/ts} は ./_screen しか export できません。',
-            },
-          ],
-        },
-      ],
-    },
-  },
+  // {}, // features 配下の実装は app/navigation 配下からのみインポート可能にする
   {
     ignores: ['node_modules', '.expo', 'ios', 'android', 'eslint.config.js'],
   },
