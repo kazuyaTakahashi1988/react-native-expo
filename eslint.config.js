@@ -139,7 +139,8 @@ export default [
       ],
 
       /* -------------------------------------------------------
-        認知的複雑度（sonarjs / total-functions / ESLintコア
+        認知的複雑度（sonarjs / total-functions / ESLintコア）
+        ※ プロジェクトメンバーと相談して適宜調整してください
       ---------------------------------------------------------- */
       'sonarjs/cognitive-complexity': ['error', 10],
       'sonarjs/no-small-switch': ['error'],
