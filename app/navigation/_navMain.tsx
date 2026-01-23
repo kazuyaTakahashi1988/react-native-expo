@@ -6,7 +6,7 @@ import NavAboutNest from './_navAboutNest';
 import NavHomeNest from './_navHomeNest';
 import { HeaderHome, HeaderSub } from '../components/layouts/header';
 import { IconAbout, IconHome, IconWork } from '../components/svg/icon';
-import { WorkScreen } from '../features/main/work/';
+import { WorkScreen } from '../features/main/work';
 import { color } from '../lib/mixin';
 
 import type { TypeRootList } from '../lib/types/typeNavigation';

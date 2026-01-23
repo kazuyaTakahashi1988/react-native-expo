@@ -3,8 +3,8 @@ import { Pressable } from 'react-native';
 
 import { HeaderSub } from '../components/layouts/header';
 import { IconInfo } from '../components/svg/icon';
-import { AuthScreen } from '../features/others/auth/';
-import { InformationScreen } from '../features/others/information/';
+import { AuthScreen } from '../features/others/auth';
+import { InformationScreen } from '../features/others/information';
 
 import type { TypeRootList } from '../lib/types/typeNavigation';
 import type React from 'react';

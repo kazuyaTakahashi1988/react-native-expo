@@ -161,9 +161,49 @@ export default [
     },
   },
   /* -----------------------------------------------------------
-    ・features 配下の実装は app/navigation 配下からのみインポート可能にする
+    app/features 配下の実装は app/navigation 配下でだけ import 可能です。
+    先頭にハイフンが付くファイル（例：_iconXXXX.tsx）はそのファイルと同階層ディレクトリでのみ import 可能です。
+    ※ 以下に重複記述があるのは override（上書き設定）を防ぐため
   -------------------------------------------------------------- */
-  // {}, // features 配下の実装は app/navigation 配下からのみインポート可能にする
+  {
+    files: ['app/**', , 'index.ts'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              group: ['**/_*', '!./_*'],
+              message:
+                '先頭にハイフンが付くファイル（例：_iconXXXX.tsx）はそのファイルと同階層ディレクトリでのみ import 可能です。',
+            },
+          ],
+        },
+      ],
+    },
+  },
+  {
+    files: ['app/**', 'index.ts'],
+    ignores: ['app/navigation/**'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              group: ['**/features/**'],
+              message: 'app/features 配下の実装は app/navigation 配下でだけ import 可能です。',
+            },
+            {
+              group: ['**/_*', '!./_*'],
+              message:
+                '先頭にハイフンが付くファイル（例：_iconXXXX.tsx）はそのファイルと同階層ディレクトリでのみ import 可能です。',
+            },
+          ],
+        },
+      ],
+    },
+  },
   {
     ignores: ['node_modules', '.expo', 'ios', 'android', 'eslint.config.js'],
   },

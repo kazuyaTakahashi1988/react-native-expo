@@ -1,8 +1,8 @@
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
-import { Child00Screen } from '../features/main/home/homeNest/child00/';
-import { Child01Screen } from '../features/main/home/homeNest/child01/';
-import { Child02Screen } from '../features/main/home/homeNest/child02/';
+import { Child00Screen } from '../features/main/home/homeNest/child00';
+import { Child01Screen } from '../features/main/home/homeNest/child01';
+import { Child02Screen } from '../features/main/home/homeNest/child02';
 
 import type { TypeRootList } from '../lib/types/typeNavigation';
 import type React from 'react';
