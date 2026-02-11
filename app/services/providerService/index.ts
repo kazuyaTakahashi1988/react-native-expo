@@ -1,6 +1,6 @@
 /* -----------------------------------------------
- * プロバイダー用の処理まとめ
- * App.tsx（AppRoot）用のプロバイダーは AppRootProvider に纏める
+ * App.tsx（AppRoot）用のプロバイダーまとめ
+ * （ _appRootProvider にまとめる）
  * ----------------------------------------------- */
 
 export { default as AppRootProvider } from './_appRootProvider';
