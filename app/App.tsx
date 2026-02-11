@@ -1,9 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
-import { enableScreens } from 'react-native-screens';
 
 import { Navigation } from './navigation';
-import { useSplashMinDuration } from './services/appRootService';
-import { AppRootProvider } from './services/providerService';
+import { appRootService } from './services/appRootService'; // App.tsx（AppRoot）用の処理まとめ
+import { AppRootProvider } from './services/providerService'; // App.tsx（AppRoot）用のプロバイダーまとめ
 
 import type React from 'react';
 
@@ -11,10 +10,10 @@ import type React from 'react';
  * AppRoot
  * ----------------------------------------------- */
 
-enableScreens(); // アプリ起動前に呼び出す
+appRootService.enableScreens(); // アプリ起動前に呼び出す
 
 const App: React.FC = () => {
-  useSplashMinDuration(2000); // アプリ起動時、スプラッシュ画像を指定ミリ秒表示する処理
+  appRootService.useSplashDuration(2000); // アプリ起動時、スプラッシュ画像を指定ミリ秒表示する処理
 
   return (
     <AppRootProvider>
