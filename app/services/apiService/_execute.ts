@@ -26,6 +26,25 @@ const execute = async <TResponse = unknown, TRequest = unknown>(
     accessToken,
   } = options;
 
+  // ヘッダー情報のセット
+  const setHeaders = (
+    accessToken?: string,
+    headers?: Record<string, string>,
+  ): Record<string, string> => {
+    const bearerToken =
+      accessToken ??
+      (typeof sessionStorage !== 'undefined'
+        ? (sessionStorage.getItem('access_token') ?? undefined)
+        : undefined);
+
+    return {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      ...(bearerToken != null ? { Authorization: `Bearer ${bearerToken}` } : {}),
+      ...headers,
+    };
+  };
+
   const requestConfig: AxiosRequestConfig = {
     method,
     url: `${baseURL}${apiPath}`,
@@ -43,25 +62,6 @@ const execute = async <TResponse = unknown, TRequest = unknown>(
     console.error('API request failed', message);
     throw axiosError;
   }
-};
-
-// ヘッダー情報のセット
-const setHeaders = (
-  accessToken?: string,
-  headers?: Record<string, string>,
-): Record<string, string> => {
-  const bearerToken =
-    accessToken ??
-    (typeof sessionStorage !== 'undefined'
-      ? (sessionStorage.getItem('access_token') ?? undefined)
-      : undefined);
-
-  return {
-    Accept: 'application/json',
-    'Content-Type': 'application/json',
-    ...(bearerToken != null ? { Authorization: `Bearer ${bearerToken}` } : {}),
-    ...headers,
-  };
 };
 
 /*
