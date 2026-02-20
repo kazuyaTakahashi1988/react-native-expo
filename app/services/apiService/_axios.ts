@@ -4,7 +4,7 @@ import type { TypeOptions, TypeParams } from '../../lib/types/typeService';
 import type { AxiosError, AxiosRequestConfig, AxiosResponse, Method } from 'axios';
 
 /* -----------------------------------------------
- * API 処理
+ * axios および API 処理
  * ----------------------------------------------- */
 
 // デフォルトのベースURL

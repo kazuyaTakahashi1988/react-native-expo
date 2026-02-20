@@ -1,1 +1,1 @@
-export * from './_execute';
+export * from './_amplify';

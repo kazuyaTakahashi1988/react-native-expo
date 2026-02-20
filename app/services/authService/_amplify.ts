@@ -28,7 +28,7 @@ const isSignUpResponse = (value: unknown): value is TypeSignUpResult =>
   isObject(value) && ('isSignUpComplete' in value || 'nextStep' in value || 'userId' in value);
 
 /* -----------------------------------------------
- * Cognito Auth 処理
+ * Amplify および Cognito Auth 処理
  * ----------------------------------------------- */
 
 /*
