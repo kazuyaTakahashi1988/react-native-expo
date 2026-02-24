@@ -13,10 +13,12 @@ import type {
 const FALLBACK_NAME = '__optional__';
 
 /* -----------------------------------------------
- * react-hook-form
- * useController 使用のための関数
+ * react-hook-form 処理
  * ----------------------------------------------- */
 
+/*
+ * useController 使用のための関数
+ */
 export const useRHFController = <TFieldValues extends FieldValues>(params: {
   control?: Control<TFieldValues>;
   name?: Path<TFieldValues>;
