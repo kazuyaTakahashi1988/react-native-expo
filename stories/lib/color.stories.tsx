@@ -1,12 +1,12 @@
 import { StyleSheet, Text, View } from 'react-native';
 
-import { styles as storyStyles } from '../../../.storybook/styles';
-import { color } from '../../../app/lib/mixin';
+import { styles as storyStyles } from '../../.storybook/styles';
+import { color } from '../../app/lib/mixin';
 
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite';
 import type React from 'react';
 
-const colorEntries = Object.entries(color).sort(([a], [b]) => a.localeCompare(b));
+const colorEntries = Object.entries(color);
 
 const colorUsageSnippet = `import { color } from '../../../app/lib/mixin';\n\n${colorEntries
   .map(([name, value]) => `color.${name}; // ${String(value)}`)
@@ -25,7 +25,7 @@ const ColorCatalog: React.FC = () => (
 );
 
 const meta = {
-  title: 'Lib/Mixin/Styles',
+  title: 'Lib/Color',
   component: ColorCatalog,
   decorators: [
     (Story) => (
@@ -77,13 +77,13 @@ const catalogStyles = StyleSheet.create({
   },
   name: {
     color: color.primary,
-    fontSize: 12,
+    fontSize: 14,
     fontWeight: '600',
     marginTop: 8,
   },
   value: {
     color: color.gray50,
-    fontSize: 11,
+    fontSize: 12,
     marginTop: 4,
   },
 });
