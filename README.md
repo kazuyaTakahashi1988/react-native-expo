@@ -67,6 +67,7 @@ $ eas build --platform ios --profile development
 Androidの場合
 $ eas build --platform android --profile development
 ```
+
 ## Project Structure
 
 ```
