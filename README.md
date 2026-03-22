@@ -67,3 +67,25 @@ $ eas build --platform ios --profile development
 Androidの場合
 $ eas build --platform android --profile development
 ```
+## Project Structure
+
+```
+react-native-expo/
+├── .github
+├── .husky
+├── .storybook
+├── .vscode
+├── app/             # アプリ本体
+│   ├── assets           # 静的なアセット
+│   ├── components       # 各コンポーネント
+│   ├── features         # 各画面（コロケーション）
+│   ├── lib              # 静的な値・処理
+│   ├── navigation       # ナビゲーション
+│   ├── services         # 動的な処理
+│   └── App.tsx          # アプリルートファイル
+├── stories          # ストーリーブック
+├── ...
+├── ...
+├── ...
+└── README.md        # This file
+```
