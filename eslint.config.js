@@ -7,6 +7,7 @@ import react from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
 import reactNative from 'eslint-plugin-react-native';
 import sonarjs from 'eslint-plugin-sonarjs';
+import totalFunctions from 'eslint-plugin-total-functions';
 import tseslint from 'typescript-eslint';
 
 /** @type {import('eslint').ESLint.Plugin} */
@@ -50,6 +51,7 @@ export default [
     plugins: {
       'react-native': reactNativePlugin,
       import: importPlugin,
+      'total-functions': totalFunctions,
     },
     settings: {
       react: {
@@ -148,15 +150,13 @@ export default [
       'max-depth': ['error', 5],
       'no-else-return': ['error'],
 
-      /* -------------------------------------------------------
-        'total-functions/no-unsafe-type-assertion': 'error'
-        が最新のESlintに対応してないため以下にて代替
-      ---------------------------------------------------------- */
       /* <Type> スタイルは警告、object literal の場合は許容 */
       '@typescript-eslint/consistent-type-assertions': [
         'warn',
         { assertionStyle: 'as', objectLiteralTypeAssertions: 'allow' },
       ],
+      /* 危険なasアサーションを禁止 */
+      'total-functions/no-unsafe-type-assertion': 'error',
       /* 型が"any"や"unknown"の値に対して、プロパティアクセスやメソッド呼び出しを行うと警告 */
       '@typescript-eslint/no-unsafe-member-access': 'error',
     },
