@@ -4,9 +4,10 @@ import {
   signOut as cognitoSignOut,
   signUp as cognitoSignUp,
   confirmSignUp,
-  fetchAuthSession,
 } from 'aws-amplify/auth';
 import React from 'react';
+
+import { AuthContext } from '../providerService';
 
 import type {
   TypeAmplifyClient,
@@ -47,6 +48,19 @@ const authConfig: TypeAuthConfig = {
 };
 
 amplifyClient.configure(authConfig);
+
+/*
+ * サインイン 済 or 未 フラグ
+ */
+export const useAuth = () => {
+  const context = React.useContext(AuthContext);
+
+  if (context === null) {
+    throw new Error('useAuth must be used within AuthProvider');
+  }
+
+  return context;
+};
 
 /*
  * Sign In 処理
@@ -100,28 +114,4 @@ export const verify = async (values: TypeVerifyValues): Promise<void> => {
  */
 export const signOut = async (): Promise<void> => {
   await cognitoSignOut();
-};
-
-/*
- * Auth情報 取得・更新処理
- * " fetchAuthSession() " だけで accessToken(bearerToken) も取得・格納可
- * " fetchUserAttributes() " なら userName / email なども取得・格納可
- */
-export const useAuthSession = () => {
-  const [isAuth, setIsAuth] = React.useState(false); // Authフラグ
-
-  const fetchAuth = React.useCallback(async () => {
-    try {
-      const session = await fetchAuthSession();
-      setIsAuth(Boolean(session.tokens));
-    } catch {
-      setIsAuth(false);
-    }
-  }, []);
-
-  React.useEffect(() => {
-    void fetchAuth();
-  }, [fetchAuth]);
-
-  return { isAuth, fetchAuth };
 };

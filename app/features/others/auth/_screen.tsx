@@ -6,7 +6,7 @@ import { SignInForm, SignUpForm, VerifyForm } from './_component';
 import { Button } from '../../../components/button';
 import { Layout } from '../../../components/layouts/layout';
 import { color } from '../../../lib/mixin';
-import { signIn, signOut, signUp, useAuthSession, verify } from '../../../services/authService';
+import { signIn, signOut, signUp, useAuth, verify } from '../../../services/authService';
 
 import type { TypeResult, TypeTabKey } from './_type';
 import type {
@@ -24,7 +24,7 @@ import type {
 const AuthScreen: React.FC = () => {
   const [tabKey, setTabKey] = React.useState<TypeTabKey>('signIn');
   const [result, setResult] = React.useState<TypeResult>({});
-  const { isAuth, fetchAuth } = useAuthSession(); // Auth情報 取得・更新処理
+  const { isAuth, fetchAuth } = useAuth(); // Auth情報 取得・更新処理
 
   /*
    * Sign In の RHForm 使用設定
