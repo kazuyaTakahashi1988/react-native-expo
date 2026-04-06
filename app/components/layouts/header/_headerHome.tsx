@@ -1,4 +1,3 @@
-import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -8,7 +7,7 @@ import { IconLogin } from '../../svg/icon';
 import { Logo } from '../../svg/logo';
 
 import type { TypeHeaderHome } from '../../../lib/types/typeComponents';
-import type { NavigationProp, ParamListBase } from '@react-navigation/native';
+import type React from 'react';
 
 /* -----------------------------------------------
  * 共通ヘッダー（Home用）
@@ -17,20 +16,7 @@ import type { NavigationProp, ParamListBase } from '@react-navigation/native';
 const HeaderHome: React.FC<TypeHeaderHome> = (props) => {
   const { navigation } = props;
   const { top } = useSafeAreaInsets(); // デバイス固有のセーフエリアTop値
-  const { isAuth, fetchAuth } = useAuthSession(); // Auth情報 取得・更新処理
-
-  /*
-   * Auth情報 取得・更新処理
-   */
-  React.useEffect(() => {
-    const unsubscribe = (navigation as NavigationProp<ParamListBase>).addListener('focus', () => {
-      void fetchAuth();
-    });
-
-    return () => {
-      unsubscribe();
-    };
-  }, [navigation, fetchAuth]);
+  const { isAuth } = useAuthSession(); // Auth状態
 
   /*
    * Auth画面遷移 処理
