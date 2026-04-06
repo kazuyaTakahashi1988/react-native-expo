@@ -16,7 +16,7 @@ import type React from 'react';
 const HeaderHome: React.FC<TypeHeaderHome> = (props) => {
   const { navigation } = props;
   const { top } = useSafeAreaInsets(); // デバイス固有のセーフエリアTop値
-  const { isAuth } = useAuth(); // Auth状態
+  const { isSignedIn } = useAuth(); // Auth状態
 
   /*
    * Auth画面遷移 処理
@@ -38,7 +38,7 @@ const HeaderHome: React.FC<TypeHeaderHome> = (props) => {
             goToAuth();
           }}
         >
-          <IconLogin {...(isAuth && { color: color.secondary })} size={34} />
+          <IconLogin {...(isSignedIn && { color: color.secondary })} size={34} />
         </Pressable>
       </View>
     </View>

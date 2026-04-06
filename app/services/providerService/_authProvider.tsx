@@ -1,39 +1,35 @@
 import { fetchAuthSession } from 'aws-amplify/auth';
 import React from 'react';
 
-type TypeAuthContext = {
-  isAuth: boolean;
-  fetchAuth: () => Promise<void>;
-};
-
-export const AuthContext = React.createContext<TypeAuthContext | null>(null);
+import type { TypeAuthContext } from '../../lib/types/typeService';
 
 /* -----------------------------------------------
  * Auth用 Provider
  * ----------------------------------------------- */
+export const AuthContext = React.createContext<TypeAuthContext | null>(null);
 
 export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
-  const [isAuth, setIsAuth] = React.useState(false); // Authフラグ
+  const [isSignedIn, setIsSignedIn] = React.useState(false); // Authフラグ
 
-  const fetchAuth = React.useCallback(async () => {
+  const refreshAuthState = React.useCallback(async () => {
     try {
       const session = await fetchAuthSession();
-      setIsAuth(Boolean(session.tokens));
+      setIsSignedIn(Boolean(session.tokens));
     } catch {
-      setIsAuth(false);
+      setIsSignedIn(false);
     }
   }, []);
 
   React.useEffect(() => {
-    void fetchAuth();
-  }, [fetchAuth]);
+    void refreshAuthState();
+  }, [refreshAuthState]);
 
   const value = React.useMemo(
     () => ({
-      isAuth,
-      fetchAuth,
+      isSignedIn,
+      refreshAuthState,
     }),
-    [fetchAuth, isAuth],
+    [refreshAuthState, isSignedIn],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

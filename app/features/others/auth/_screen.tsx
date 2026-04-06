@@ -24,7 +24,7 @@ import type {
 const AuthScreen: React.FC = () => {
   const [tabKey, setTabKey] = React.useState<TypeTabKey>('signIn');
   const [result, setResult] = React.useState<TypeResult>({});
-  const { isAuth, fetchAuth } = useAuth(); // Auth情報 取得・更新処理
+  const { isSignedIn, refreshAuthState } = useAuth(); // Auth情報 取得・更新処理
 
   /*
    * Sign In の RHForm 使用設定
@@ -49,14 +49,14 @@ const AuthScreen: React.FC = () => {
             : 'Sign In にはまだ追加手順（Verify）が必要だよ！';
           setResult({ type: 'success', message });
           signInForm.reset();
-          void fetchAuth(); // Auth情報 取得・更新処理
+          void refreshAuthState(); // Auth情報 取得・更新処理
         })
         .catch((err: unknown) => {
           const message = err instanceof Error ? err.message : 'Sign In に失敗したよ...';
           setResult({ type: 'error', message });
         });
     })();
-  }, [fetchAuth, signInForm]);
+  }, [refreshAuthState, signInForm]);
 
   /*
    * Sign Up の RHForm 使用設定
@@ -130,13 +130,13 @@ const AuthScreen: React.FC = () => {
     signOut()
       .then(() => {
         setResult({ type: 'success', message: '正常に Sign Out したよ！' });
-        void fetchAuth(); // Auth情報 取得・更新処理
+        void refreshAuthState(); // Auth情報 取得・更新処理
       })
       .catch((err: unknown) => {
         const message = err instanceof Error ? err.message : 'Sign Out に失敗したよ...';
         setResult({ type: 'error', message });
       });
-  }, [fetchAuth]);
+  }, [refreshAuthState]);
 
   /*
    * タブボタン 処理
@@ -169,7 +169,7 @@ const AuthScreen: React.FC = () => {
             }}
             {...(!isActive(elm.key) && { pattern: 'secondary' })}
             containerStyle={styles.tabButton}
-            disabled={isAuth}
+            disabled={isSignedIn}
             title={elm.title}
           />
         ))}
@@ -182,7 +182,7 @@ const AuthScreen: React.FC = () => {
         </Text>
       ) : null}
 
-      {!isAuth ? (
+      {!isSignedIn ? (
         <>
           {/* Sign In フォーム */}
           <SignInForm form={signInForm} onSubmit={onSignInSubmit} visible={isActive('signIn')} />
