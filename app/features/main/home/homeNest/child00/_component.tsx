@@ -5,9 +5,12 @@ import { color } from '../../../../../lib/mixin';
 import type { TypeResultArea } from './_type';
 
 /* -----------------------------------------------
- * 出力結果エリア
+ * 画面固有のコンポーネント
  * ----------------------------------------------- */
 
+/*
+ * 出力結果エリア
+ */
 export const ResultArea: React.FC<TypeResultArea> = (formValues) => {
   // formValues が空なら離脱
   const hasValues = Object.keys(formValues).length > 0;

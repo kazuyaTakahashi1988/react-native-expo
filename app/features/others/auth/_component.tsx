@@ -22,8 +22,12 @@ const rules = {
 };
 
 /* -----------------------------------------------
- * Sign In フォーム
+ * 画面固有のコンポーネント
  * ----------------------------------------------- */
+
+/*
+ * Sign In フォーム
+ */
 export const SignInForm: React.FC<TypeAuthForm<TypeSignInValues>> = ({
   form,
   onSubmit,
@@ -72,9 +76,9 @@ export const SignInForm: React.FC<TypeAuthForm<TypeSignInValues>> = ({
   );
 };
 
-/* -----------------------------------------------
+/*
  * Sign Up フォーム
- * ----------------------------------------------- */
+ */
 export const SignUpForm: React.FC<TypeAuthForm<TypeSignUpValues>> = ({
   form,
   onSubmit,
@@ -123,9 +127,9 @@ export const SignUpForm: React.FC<TypeAuthForm<TypeSignUpValues>> = ({
   );
 };
 
-/* -----------------------------------------------
+/*
  * Verify フォーム
- * ----------------------------------------------- */
+ */
 export const VerifyForm: React.FC<TypeAuthForm<TypeVerifyValues>> = ({
   form,
   onSubmit,
