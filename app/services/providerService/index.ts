@@ -4,5 +4,5 @@
  * ----------------------------------------------- */
 
 export { default as AppRootProvider } from './_appRootProvider';
-export { AuthProvider, useAuthSession } from './authProvider';
+export { default as AuthProvider, AuthContext } from './_authProvider';
 export { default as ToastProvider } from './_toastProvider';

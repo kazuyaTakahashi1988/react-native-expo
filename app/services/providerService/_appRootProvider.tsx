@@ -2,8 +2,8 @@ import { StyleSheet } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
+import AuthProvider from './_authProvider';
 import ToastProvider from './_toastProvider';
-import { AuthProvider } from './authProvider';
 
 import type React from 'react';
 

@@ -5,6 +5,9 @@ import {
   signUp as cognitoSignUp,
   confirmSignUp,
 } from 'aws-amplify/auth';
+import React from 'react';
+
+import { AuthContext } from '../providerService';
 
 import type {
   TypeAmplifyClient,
@@ -45,6 +48,19 @@ const authConfig: TypeAuthConfig = {
 };
 
 amplifyClient.configure(authConfig);
+
+/*
+ * サインイン 済 or 未 フラグ
+ */
+export const useAuth = () => {
+  const context = React.useContext(AuthContext);
+
+  if (context === null) {
+    throw new Error('useAuth must be used within AuthProvider');
+  }
+
+  return context;
+};
 
 /*
  * Sign In 処理

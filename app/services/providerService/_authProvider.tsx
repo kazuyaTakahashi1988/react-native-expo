@@ -1,18 +1,18 @@
 import { fetchAuthSession } from 'aws-amplify/auth';
 import React from 'react';
 
-type TypeAuthSessionContext = {
+type TypeAuthContext = {
   isAuth: boolean;
   fetchAuth: () => Promise<void>;
 };
 
-const AuthSessionContext = React.createContext<TypeAuthSessionContext | null>(null);
+export const AuthContext = React.createContext<TypeAuthContext | null>(null);
 
 /* -----------------------------------------------
  * Auth用 Provider
  * ----------------------------------------------- */
 
-const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
+export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
   const [isAuth, setIsAuth] = React.useState(false); // Authフラグ
 
   const fetchAuth = React.useCallback(async () => {
@@ -36,17 +36,7 @@ const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
     [fetchAuth, isAuth],
   );
 
-  return <AuthSessionContext.Provider value={value}>{children}</AuthSessionContext.Provider>;
-};
-
-export const useAuthSession = () => {
-  const context = React.useContext(AuthSessionContext);
-
-  if (context === null) {
-    throw new Error('useAuthSession must be used within AuthProvider');
-  }
-
-  return context;
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
 export default AuthProvider;

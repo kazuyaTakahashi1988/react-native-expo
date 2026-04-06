@@ -2,7 +2,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { color } from '../../../lib/mixin';
-import { useAuthSession } from '../../../services/authService';
+import { useAuth } from '../../../services/authService';
 import { IconLogin } from '../../svg/icon';
 import { Logo } from '../../svg/logo';
 
@@ -16,7 +16,7 @@ import type React from 'react';
 const HeaderHome: React.FC<TypeHeaderHome> = (props) => {
   const { navigation } = props;
   const { top } = useSafeAreaInsets(); // デバイス固有のセーフエリアTop値
-  const { isAuth } = useAuthSession(); // Auth状態
+  const { isAuth } = useAuth(); // Auth状態
 
   /*
    * Auth画面遷移 処理
