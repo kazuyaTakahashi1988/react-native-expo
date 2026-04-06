@@ -1,22 +1,21 @@
 import { View } from 'react-native';
 
-import { styles } from '../../.storybook/styles';
-import { CheckBox } from '../../app/components/form';
+import { styles } from '../../../.storybook/styles';
+import { RadioBoxCustom } from '../../../app/components/form';
 
-import type { TypeCheckBox } from '../../app/lib/types/typeComponents';
+import type { TypeRadioBoxCustom } from '../../../app/lib/types/typeComponents';
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite';
 
-type FormValues = { genres: string[] };
+type FormValues = { theme: string };
 
-const defaultOptions: TypeCheckBox<FormValues>['options'] = [
-  { label: 'アクション', value: 'action' },
-  { label: 'コメディ', value: 'comedy' },
-  { label: 'ドラマ', value: 'drama' },
+const defaultOptions: TypeRadioBoxCustom<FormValues>['options'] = [
+  { label: 'シアン', value: 'cyan' },
+  { label: 'マゼンタ', value: 'magenta' },
+  { label: 'イエロー', value: 'yellow' },
 ];
-
 const meta = {
-  title: 'Form/CheckBox',
-  component: CheckBox,
+  title: 'Components/Form/RadioBoxCustom',
+  component: RadioBoxCustom,
   decorators: [
     (Story) => (
       <View style={styles.container}>
@@ -70,7 +69,7 @@ const meta = {
       description: 'react-hook-form 用の props',
     },
   },
-} satisfies Meta<typeof CheckBox>;
+} satisfies Meta<typeof RadioBoxCustom>;
 
 export default meta;
 
@@ -85,14 +84,14 @@ export const Default: Story = {
 export const Label: Story = {
   args: {
     options: defaultOptions,
-    label: 'よく視聴するジャンル',
+    label: 'テーマ色の選択',
   },
 };
 
 export const Required: Story = {
   args: {
     options: defaultOptions,
-    label: 'よく視聴するジャンル',
+    label: 'テーマ色の選択',
     rules: { required: '必須項目です' },
   },
 };
@@ -100,7 +99,7 @@ export const Required: Story = {
 export const ErrorOccurred: Story = {
   args: {
     options: defaultOptions,
-    label: 'よく視聴するジャンル',
+    label: 'テーマ色の選択',
     rules: { required: '必須項目です' },
     errorText: '必須項目です',
   },

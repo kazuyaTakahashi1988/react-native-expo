@@ -1,14 +1,14 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-import { styles } from '../../.storybook/styles.ts';
-import Button from '../../app/components/button/_button.tsx';
-import { Dialog as DialogComponent } from '../../app/components/dialog';
+import { styles } from '../../../.storybook/styles.ts';
+import Button from '../../../app/components/button/_button.tsx';
+import { Dialog as DialogComponent } from '../../../app/components/dialog';
 
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite';
 
 const meta = {
-  title: 'Dialog/Dialog',
+  title: 'Components/Dialog/Dialog',
   component: DialogComponent,
   decorators: [
     (Story) => (

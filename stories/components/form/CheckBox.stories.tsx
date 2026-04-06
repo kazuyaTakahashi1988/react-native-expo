@@ -1,22 +1,22 @@
 import { View } from 'react-native';
 
-import { styles } from '../../.storybook/styles';
-import { CheckBoxCustom } from '../../app/components/form/';
+import { styles } from '../../../.storybook/styles';
+import { CheckBox } from '../../../app/components/form';
 
-import type { TypeCheckBoxCustom } from '../../app/lib/types/typeComponents';
+import type { TypeCheckBox } from '../../../app/lib/types/typeComponents';
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite';
 
-type FormValues = { inquiry: string[] };
+type FormValues = { genres: string[] };
 
-const defaultOptions: TypeCheckBoxCustom<FormValues>['options'] = [
-  { label: 'メール', value: 'email' },
-  { label: 'SMS', value: 'sms' },
-  { label: 'アプリ通知', value: 'push' },
+const defaultOptions: TypeCheckBox<FormValues>['options'] = [
+  { label: 'アクション', value: 'action' },
+  { label: 'コメディ', value: 'comedy' },
+  { label: 'ドラマ', value: 'drama' },
 ];
 
 const meta = {
-  title: 'Form/CheckBoxCustom',
-  component: CheckBoxCustom,
+  title: 'Components/Form/CheckBox',
+  component: CheckBox,
   decorators: [
     (Story) => (
       <View style={styles.container}>
@@ -70,7 +70,7 @@ const meta = {
       description: 'react-hook-form 用の props',
     },
   },
-} satisfies Meta<typeof CheckBoxCustom>;
+} satisfies Meta<typeof CheckBox>;
 
 export default meta;
 
@@ -85,14 +85,14 @@ export const Default: Story = {
 export const Label: Story = {
   args: {
     options: defaultOptions,
-    label: 'お問い合わせ方法',
+    label: 'よく視聴するジャンル',
   },
 };
 
 export const Required: Story = {
   args: {
     options: defaultOptions,
-    label: 'お問い合わせ方法',
+    label: 'よく視聴するジャンル',
     rules: { required: '必須項目です' },
   },
 };
@@ -100,7 +100,7 @@ export const Required: Story = {
 export const ErrorOccurred: Story = {
   args: {
     options: defaultOptions,
-    label: 'お問い合わせ方法',
+    label: 'よく視聴するジャンル',
     rules: { required: '必須項目です' },
     errorText: '必須項目です',
   },

@@ -1,11 +1,11 @@
 import { StyleSheet, View } from 'react-native';
 
-import { styles } from '../../.storybook/styles.ts';
-import Button from '../../app/components/button/_button.tsx';
-import { showToast } from '../../app/components/toast';
-import { ToastProvider } from '../../app/services/providerService/index.ts';
+import { styles } from '../../../.storybook/styles.ts';
+import Button from '../../../app/components/button/_button.tsx';
+import { showToast } from '../../../app/components/toast';
+import { ToastProvider } from '../../../app/services/providerService/index.ts';
 
-import type { TypeToastOptions } from '../../app/lib/types/typeComponents';
+import type { TypeToastOptions } from '../../../app/lib/types/typeComponents';
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite';
 
 const escapeSingleQuotes = (text: string): string => {
@@ -59,7 +59,7 @@ const transformSource = (_: string, context: DocsTransformContext): string => {
   const options = formatToastOptions(context.args);
 
   return `
-import { showToast } from '../../app/components/toast';
+import { showToast } from '../../../app/components/toast';
 
 <Button
   onPress={() => {
@@ -84,7 +84,7 @@ const ToastPreview = (args: TypeToastOptions) => {
 };
 
 const meta = {
-  title: 'Toast/Toast',
+  title: 'Components/Toast/Toast',
   component: ToastPreview,
   decorators: [
     (Story) => (

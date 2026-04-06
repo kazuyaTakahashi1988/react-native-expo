@@ -1,13 +1,22 @@
 import { View } from 'react-native';
 
-import { styles } from '../../.storybook/styles';
-import { TextArea } from '../../app/components/form';
+import { styles } from '../../../.storybook/styles';
+import { CheckBoxCustom } from '../../../app/components/form/';
 
+import type { TypeCheckBoxCustom } from '../../../app/lib/types/typeComponents';
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite';
 
+type FormValues = { inquiry: string[] };
+
+const defaultOptions: TypeCheckBoxCustom<FormValues>['options'] = [
+  { label: 'メール', value: 'email' },
+  { label: 'SMS', value: 'sms' },
+  { label: 'アプリ通知', value: 'push' },
+];
+
 const meta = {
-  title: 'Form/TextArea',
-  component: TextArea,
+  title: 'Components/Form/CheckBoxCustom',
+  component: CheckBoxCustom,
   decorators: [
     (Story) => (
       <View style={styles.container}>
@@ -20,10 +29,6 @@ const meta = {
     label: {
       control: { type: 'text' },
       description: 'ラベルテキスト',
-    },
-    placeholder: {
-      control: { type: 'text' },
-      description: 'プレイスホルダーテキスト',
     },
     errorText: {
       control: { type: 'text' },
@@ -40,54 +45,62 @@ const meta = {
     containerStyle: {
       control: { type: 'object' },
       description:
-        'TextArea を包むコンテナ（View）スタイル \n\n Set例：{ "padding": 20, "backgroundColor": "red" }',
+        'CheckBox を包むコンテナ（View）スタイル \n\n Set 例：{ "padding": 20, "backgroundColor": "red" }',
     },
-    style: {
+    optionListStyle: {
       control: { type: 'object' },
-      description: 'TextInput 自体のスタイル \n\n Set例：{ "padding": 20, "borderRadius": 50 }',
+      description:
+        'オプション のスタイル \n\n Set 例：{ "padding": 20, "backgroundColor": "yellow" }',
+    },
+    optionRowStyle: {
+      control: { type: 'object' },
+      description:
+        'オプション各行 のスタイル \n\n Set 例：{ "padding": 20, "backgroundColor": "white" }',
     },
     disabled: {
       control: { type: 'boolean' },
       description: '活性・非活性の制御',
     },
-    numberOfLines: {
-      control: { type: 'number' },
-      description: '行数',
+    options: {
+      control: { type: 'object' },
+      description: 'オプション',
     },
     control: {
       control: false,
       description: 'react-hook-form 用の props',
     },
   },
-} satisfies Meta<typeof TextArea>;
+} satisfies Meta<typeof CheckBoxCustom>;
 
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  args: {},
+  args: {
+    options: defaultOptions,
+  },
 };
 
-export const LabelAndPlaceholder: Story = {
+export const Label: Story = {
   args: {
-    label: 'ご相談の内容',
-    placeholder: 'ご要望やご質問をご記入ください',
+    options: defaultOptions,
+    label: 'お問い合わせ方法',
   },
 };
 
 export const Required: Story = {
   args: {
-    label: 'ご相談の内容',
-    placeholder: 'ご要望やご質問をご記入ください',
+    options: defaultOptions,
+    label: 'お問い合わせ方法',
     rules: { required: '必須項目です' },
   },
 };
 
 export const ErrorOccurred: Story = {
   args: {
-    label: 'ご相談の内容',
-    placeholder: 'ご要望やご質問をご記入ください',
+    options: defaultOptions,
+    label: 'お問い合わせ方法',
     rules: { required: '必須項目です' },
     errorText: '必須項目です',
   },
@@ -95,6 +108,7 @@ export const ErrorOccurred: Story = {
 
 export const Disabled: Story = {
   args: {
+    options: defaultOptions,
     disabled: true,
   },
 };

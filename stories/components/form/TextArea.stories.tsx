@@ -1,13 +1,13 @@
 import { View } from 'react-native';
 
-import { styles } from '../../.storybook/styles';
-import { Input } from '../../app/components/form';
+import { styles } from '../../../.storybook/styles';
+import { TextArea } from '../../../app/components/form';
 
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite';
 
 const meta = {
-  title: 'Form/Input',
-  component: Input,
+  title: 'Components/Form/TextArea',
+  component: TextArea,
   decorators: [
     (Story) => (
       <View style={styles.container}>
@@ -40,22 +40,26 @@ const meta = {
     containerStyle: {
       control: { type: 'object' },
       description:
-        'Input を包むコンテナ（View）スタイル \n\n Set 例：{ "padding": 20, "backgroundColor": "red" }',
+        'TextArea を包むコンテナ（View）スタイル \n\n Set例：{ "padding": 20, "backgroundColor": "red" }',
     },
     style: {
       control: { type: 'object' },
-      description: 'TextInput 自体のスタイル \n\n Set 例：{ "padding": 20, "borderRadius": 50 }',
+      description: 'TextInput 自体のスタイル \n\n Set例：{ "padding": 20, "borderRadius": 50 }',
     },
     disabled: {
       control: { type: 'boolean' },
       description: '活性・非活性の制御',
+    },
+    numberOfLines: {
+      control: { type: 'number' },
+      description: '行数',
     },
     control: {
       control: false,
       description: 'react-hook-form 用の props',
     },
   },
-} satisfies Meta<typeof Input>;
+} satisfies Meta<typeof TextArea>;
 
 export default meta;
 
@@ -67,25 +71,25 @@ export const Default: Story = {
 
 export const LabelAndPlaceholder: Story = {
   args: {
-    label: 'お名前',
-    placeholder: 'プレイスホルダー テキスト',
+    label: 'ご相談の内容',
+    placeholder: 'ご要望やご質問をご記入ください',
   },
 };
 
 export const Required: Story = {
   args: {
-    label: 'お名前',
-    placeholder: 'プレイスホルダー テキスト',
+    label: 'ご相談の内容',
+    placeholder: 'ご要望やご質問をご記入ください',
     rules: { required: '必須項目です' },
   },
 };
 
 export const ErrorOccurred: Story = {
   args: {
-    label: 'お名前',
-    errorText: '必須項目です',
-    placeholder: 'プレイスホルダー テキスト',
+    label: 'ご相談の内容',
+    placeholder: 'ご要望やご質問をご記入ください',
     rules: { required: '必須項目です' },
+    errorText: '必須項目です',
   },
 };
 

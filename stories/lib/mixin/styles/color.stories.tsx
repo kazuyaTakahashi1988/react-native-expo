@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native';
 
-import { styles as storyStyles } from '../../.storybook/styles';
-import { color } from '../../app/lib/mixin';
+import { styles as storyStyles } from '../../../../.storybook/styles';
+import { color } from '../../../../app/lib/mixin';
 
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite';
 import type React from 'react';
@@ -25,7 +25,7 @@ const ColorCatalog: React.FC = () => (
 );
 
 const meta = {
-  title: 'Lib/Color',
+  title: 'Lib/Mixin/Styles/Color',
   component: ColorCatalog,
   decorators: [
     (Story) => (

@@ -1,23 +1,23 @@
 import { StyleSheet, Text, View } from 'react-native';
 
-import { styles as storyStyles } from '../../.storybook/styles';
-import * as Icons from '../../app/components/svg/icon';
-import { color } from '../../app/lib/mixin';
+import { styles as storyStyles } from '../../../.storybook/styles';
+import * as Logos from '../../../app/components/svg/logo';
+import { color } from '../../../app/lib/mixin';
 
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite';
 import type React from 'react';
 
-const iconEntries = Object.entries(Icons).sort(([a], [b]) => a.localeCompare(b));
+const logoEntries = Object.entries(Logos).sort(([a], [b]) => a.localeCompare(b));
 
-const iconUsageSnippet = `import { ${iconEntries.map(([name]) => name).join(', ')} } from '../../app/components/svg/icon';
+const logoUsageSnippet = `import { ${logoEntries.map(([name]) => name).join(', ')} } from '../../../app/components/svg/logo';
 
-${iconEntries.map(([name]) => ['<', name, ' />'].join('')).join('\n')}`;
+${logoEntries.map(([name]) => ['<', name, ' />'].join('')).join('\n')}`;
 
-const IconCatalog: React.FC = () => (
+const LogoCatalog: React.FC = () => (
   <View style={[catalogStyles.grid, storyStyles.container]}>
-    {iconEntries.map(([name, IconComponent]) => (
+    {logoEntries.map(([name, LogoComponent]) => (
       <View key={name} style={catalogStyles.item}>
-        <IconComponent />
+        <LogoComponent />
         <Text style={catalogStyles.label}>{name}</Text>
       </View>
     ))}
@@ -25,8 +25,8 @@ const IconCatalog: React.FC = () => (
 );
 
 const meta = {
-  title: 'Svg/Icon',
-  component: IconCatalog,
+  title: 'Components/Svg/Logo',
+  component: LogoCatalog,
   decorators: [
     (Story) => (
       <View style={storyStyles.container}>
@@ -39,11 +39,11 @@ const meta = {
   parameters: {
     docs: {
       source: {
-        code: iconUsageSnippet,
+        code: logoUsageSnippet,
       },
     },
   },
-} satisfies Meta<typeof IconCatalog>;
+} satisfies Meta<typeof LogoCatalog>;
 
 export default meta;
 

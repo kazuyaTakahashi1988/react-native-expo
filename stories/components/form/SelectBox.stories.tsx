@@ -1,9 +1,9 @@
 import { View } from 'react-native';
 
-import { styles } from '../../.storybook/styles';
-import { SelectBox } from '../../app/components/form';
+import { styles } from '../../../.storybook/styles';
+import { SelectBox } from '../../../app/components/form';
 
-import type { TypeSelectBox } from '../../app/lib/types/typeComponents';
+import type { TypeSelectBox } from '../../../app/lib/types/typeComponents';
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite';
 
 type FormValues = { address: string };
@@ -15,7 +15,7 @@ const addressOptions: TypeSelectBox<FormValues>['options'] = [
 ];
 
 const meta = {
-  title: 'Form/SelectBox',
+  title: 'Components/Form/SelectBox',
   component: SelectBox,
   decorators: [
     (Story) => (

@@ -1,9 +1,9 @@
 import { View } from 'react-native';
 
-import { styles } from '../../.storybook/styles';
-import { RadioBox } from '../../app/components/form';
+import { styles } from '../../../.storybook/styles';
+import { RadioBox } from '../../../app/components/form';
 
-import type { TypeRadioBox } from '../../app/lib/types/typeComponents';
+import type { TypeRadioBox } from '../../../app/lib/types/typeComponents';
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite';
 
 type FormValues = { payment: string };
@@ -15,7 +15,7 @@ const defaultOptions: TypeRadioBox<FormValues>['options'] = [
 ];
 
 const meta = {
-  title: 'Form/RadioBox',
+  title: 'Components/Form/RadioBox',
   component: RadioBox,
   decorators: [
     (Story) => (
