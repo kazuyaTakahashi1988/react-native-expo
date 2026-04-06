@@ -17,6 +17,11 @@ export type TypeAmplifyClient = {
   configure: (config: TypeAuthConfig) => void;
 };
 
+export type TypeAuthContext = {
+  isSignedIn: boolean;
+  refreshAuthState: () => Promise<void>;
+};
+
 export type TypeSignInValues = {
   email: string;
   password: string;
