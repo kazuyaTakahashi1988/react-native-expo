@@ -68,6 +68,8 @@ Androidの場合
 $ eas build --platform android --profile development
 ```
 
+<br>
+
 ## Analysis with SonarQube
 
 Link to <a href="https://sonarcloud.io/project/overview?id=kazuyaTakahashi1988_react-native-expo" target="_blank">SonarQube</a><br>
