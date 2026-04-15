@@ -184,7 +184,7 @@ const AuthScreen: React.FC = () => {
 
       {!isSignedIn ? (
         <>
-          {/* Sign In フォーム */}
+          {/* Sign In フォーム  */}
           <SignInForm form={signInForm} onSubmit={onSignInSubmit} visible={isActive('signIn')} />
 
           {/* Sign Up フォーム */}
