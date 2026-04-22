@@ -26,35 +26,28 @@ const execute = async <TResponse = unknown, TRequest = unknown>(
     accessToken,
   } = options;
 
-  // ヘッダー情報のセット
-  const setHeaders = (
-    accessToken?: string,
-    headers?: Record<string, string>,
-  ): Record<string, string> => {
-    const bearerToken =
-      accessToken ??
-      (typeof sessionStorage !== 'undefined'
-        ? (sessionStorage.getItem('access_token') ?? undefined)
-        : undefined);
+  const bearerToken =
+    accessToken ??
+    (typeof sessionStorage !== 'undefined'
+      ? (sessionStorage.getItem('access_token') ?? undefined)
+      : undefined);
 
-    return {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      ...(bearerToken != null ? { Authorization: `Bearer ${bearerToken}` } : {}),
-      ...headers,
-    };
-  };
-
+  // リクエスト内容
   const requestConfig: AxiosRequestConfig = {
     method,
     url: `${baseURL}${apiPath}`,
     data: requestData,
     params,
-    headers: setHeaders(accessToken, headers), // ヘッダー情報のセット
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      ...(bearerToken != null ? { Authorization: `Bearer ${bearerToken}` } : {}),
+      ...headers,
+    },
   };
 
   try {
-    return await axios.request<TResponse>(requestConfig);
+    return await axios.request<TResponse>(requestConfig); // リクエスト実行
   } catch (err) {
     const axiosError = err as AxiosError;
     const message = axiosError.response?.data ?? axiosError.message;
