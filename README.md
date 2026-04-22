@@ -75,6 +75,11 @@ $ eas build --platform android --profile development
 Link to <a href="https://sonarcloud.io/project/overview?id=kazuyaTakahashi1988_react-native-expo" target="_blank">SonarQube</a><br>
 <br>
 
+## Architecture Review by Codex
+
+Link to <a href="https://github.com/kazuyaTakahashi1988/react-native-expo/blob/main/ARCHITECTURE_REVIEW.md" target="_blank">ARCHITECTURE_REVIEW.md</a><br>
+<br>
+
 ## Project Structure
 
 ```
