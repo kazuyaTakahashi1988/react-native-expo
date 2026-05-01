@@ -5,7 +5,6 @@ import { Button } from '../../../../../components/button';
 import { Layout } from '../../../../../components/layouts/layout';
 import { color } from '../../../../../lib/mixin';
 import { getArticleApi } from '../../../../../services/apiService';
-import { selectIsApiLoading, setLoading, useAppDispatch, useAppSelector } from '../../../../../services/storeService';
 
 import type { TypeArticle } from './_type';
 
@@ -15,21 +14,21 @@ import type { TypeArticle } from './_type';
 
 const Child01Screen: React.FC = () => {
   const [articles, setArticles] = React.useState<TypeArticle | null>(null);
-  const dispatch = useAppDispatch();
-  const isApiLoading = useAppSelector(selectIsApiLoading);
+  const [isDisabled, setIsDisabled] = React.useState<boolean>(false);
 
   /*
    * 記事取得 ボタン処理
    */
   const getArticles = async () => {
-    dispatch(setLoading(true));
+    setIsDisabled(true);
     try {
+      // 記事取得API処理
       const result = await getArticleApi();
       setArticles(result.data as TypeArticle);
     } catch (err) {
       console.error('Failed to fetch articles', err);
     } finally {
-      dispatch(setLoading(false));
+      setIsDisabled(false);
     }
   };
 
@@ -46,7 +45,7 @@ const Child01Screen: React.FC = () => {
 
       {/* 記事取得 ボタン */}
       <Button
-        disabled={isApiLoading || articles != null}
+        disabled={isDisabled || articles != null}
         onPress={() => {
           void getArticles();
         }}
