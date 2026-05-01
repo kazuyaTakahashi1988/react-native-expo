@@ -24,7 +24,7 @@ const GlobalLoading: React.FC = () => {
 const styles = StyleSheet.create({
   overlay: {
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.4)',
+    backgroundColor: color.backdrop,
     bottom: 0,
     justifyContent: 'center',
     left: 0,
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
   },
   loadingBody: {
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    backgroundColor: color.gray50,
     borderRadius: 8,
     minWidth: 120,
     paddingHorizontal: 16,

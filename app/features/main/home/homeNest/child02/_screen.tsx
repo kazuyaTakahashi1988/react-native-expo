@@ -6,7 +6,8 @@ import { Button } from '../../../../../components/button';
 import { CheckBox } from '../../../../../components/form';
 import { Layout } from '../../../../../components/layouts/layout';
 import { color } from '../../../../../lib/mixin';
-import { clearArticles, fetchCategorizedArticles, selectCategorizedArticles, selectIsApiLoading, useAppDispatch, useAppSelector } from '../../../../../services/storeService';
+import { getCategorizedArticleApi } from '../../../../../services/apiService';
+import { selectIsApiLoading, setLoading, useAppDispatch, useAppSelector } from '../../../../../services/storeService';
 
 import type { TypeArticle, TypeFormValues } from './_type';
 
@@ -15,8 +16,8 @@ import type { TypeArticle, TypeFormValues } from './_type';
  * ----------------------------------------------- */
 
 const Child02Screen: React.FC = () => {
+  const [articles, setArticles] = React.useState<TypeArticle | null>(null);
   const dispatch = useAppDispatch();
-  const articles = useAppSelector(selectCategorizedArticles) as TypeArticle | null;
   const isApiLoading = useAppSelector(selectIsApiLoading);
 
   /*
@@ -35,10 +36,21 @@ const Child02Screen: React.FC = () => {
    */
   const onSubmit = React.useCallback(() => {
     void form.handleSubmit(async (values: TypeFormValues) => {
+      const params = {
+        post: 'custompost',
+        'taxCategory01[]': values.taxCategory01,
+        'taxCategory02[]': values.taxCategory02,
+        'taxCategory03[]': values.taxCategory03,
+      };
+
+      dispatch(setLoading(true));
       try {
-        await dispatch(fetchCategorizedArticles(values)).unwrap();
+        const result = await getCategorizedArticleApi(params);
+        setArticles(result.data as TypeArticle);
       } catch (err) {
         console.error('Failed to fetch articles', err);
+      } finally {
+        dispatch(setLoading(false));
       }
     })();
   }, [dispatch, form]);
@@ -48,7 +60,7 @@ const Child02Screen: React.FC = () => {
    */
   const onReset = () => {
     form.reset();
-    dispatch(clearArticles());
+    setArticles(null);
   };
 
   return (

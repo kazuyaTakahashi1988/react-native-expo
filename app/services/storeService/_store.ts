@@ -1,10 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import { articleReducer } from './_articleSlice';
+import { loadingReducer } from './_loadingSlice';
 
 export const store = configureStore({
   reducer: {
-    article: articleReducer,
+    loading: loadingReducer,
   },
 });
 

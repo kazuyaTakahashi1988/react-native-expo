@@ -4,7 +4,8 @@ import { Linking, StyleSheet, Text, View } from 'react-native';
 import { Button } from '../../../../../components/button';
 import { Layout } from '../../../../../components/layouts/layout';
 import { color } from '../../../../../lib/mixin';
-import { fetchArticles, selectArticles, selectIsApiLoading, useAppDispatch, useAppSelector } from '../../../../../services/storeService';
+import { getArticleApi } from '../../../../../services/apiService';
+import { selectIsApiLoading, setLoading, useAppDispatch, useAppSelector } from '../../../../../services/storeService';
 
 import type { TypeArticle } from './_type';
 
@@ -13,18 +14,22 @@ import type { TypeArticle } from './_type';
  * ----------------------------------------------- */
 
 const Child01Screen: React.FC = () => {
+  const [articles, setArticles] = React.useState<TypeArticle | null>(null);
   const dispatch = useAppDispatch();
-  const articles = useAppSelector(selectArticles) as TypeArticle | null;
   const isApiLoading = useAppSelector(selectIsApiLoading);
 
   /*
    * 記事取得 ボタン処理
    */
   const getArticles = async () => {
+    dispatch(setLoading(true));
     try {
-      await dispatch(fetchArticles()).unwrap();
+      const result = await getArticleApi();
+      setArticles(result.data as TypeArticle);
     } catch (err) {
       console.error('Failed to fetch articles', err);
+    } finally {
+      dispatch(setLoading(false));
     }
   };
 
