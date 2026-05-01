@@ -1,7 +1,10 @@
 import { StyleSheet } from 'react-native';
+import { Provider } from 'react-redux';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
+import { GlobalLoading } from '../../components/layouts/layout';
+import { store } from '../storeService';
 import AuthProvider from './_authProvider';
 import ToastProvider from './_toastProvider';
 
@@ -12,13 +15,18 @@ import type React from 'react';
  * ----------------------------------------------- */
 
 const AppRootProvider: React.FC<React.PropsWithChildren> = ({ children }) => (
-  <GestureHandlerRootView style={styles.container}>
-    <SafeAreaProvider>
-      <AuthProvider>
-        <ToastProvider>{children}</ToastProvider>
-      </AuthProvider>
-    </SafeAreaProvider>
-  </GestureHandlerRootView>
+  <Provider store={store}>
+    <GestureHandlerRootView style={styles.container}>
+      <SafeAreaProvider>
+        <AuthProvider>
+          <ToastProvider>
+            {children}
+            <GlobalLoading />
+          </ToastProvider>
+        </AuthProvider>
+      </SafeAreaProvider>
+    </GestureHandlerRootView>
+  </Provider>
 );
 
 const styles = StyleSheet.create({

@@ -6,7 +6,7 @@ import { Button } from '../../../../../components/button';
 import { CheckBox } from '../../../../../components/form';
 import { Layout } from '../../../../../components/layouts/layout';
 import { color } from '../../../../../lib/mixin';
-import { getCategorizedArticleApi } from '../../../../../services/apiService';
+import { clearArticles, fetchCategorizedArticles, selectCategorizedArticles, selectIsApiLoading, useAppDispatch, useAppSelector } from '../../../../../services/storeService';
 
 import type { TypeArticle, TypeFormValues } from './_type';
 
@@ -15,8 +15,9 @@ import type { TypeArticle, TypeFormValues } from './_type';
  * ----------------------------------------------- */
 
 const Child02Screen: React.FC = () => {
-  const [articles, setArticles] = React.useState<TypeArticle | null>(null);
-  const [isDisabled, setIsDisabled] = React.useState<boolean>(false);
+  const dispatch = useAppDispatch();
+  const articles = useAppSelector(selectCategorizedArticles) as TypeArticle | null;
+  const isApiLoading = useAppSelector(selectIsApiLoading);
 
   /*
    * RHForm 使用設定
@@ -33,33 +34,21 @@ const Child02Screen: React.FC = () => {
    * 選択したカテゴリーで記事を絞り込み検索 ボタン処理
    */
   const onSubmit = React.useCallback(() => {
-    setIsDisabled(true);
     void form.handleSubmit(async (values: TypeFormValues) => {
-      // 選択したカテゴリーをクエリパラム化
-      const params = {
-        post: 'custompost',
-        'taxCategory01[]': values.taxCategory01,
-        'taxCategory02[]': values.taxCategory02,
-        'taxCategory03[]': values.taxCategory03,
-      };
       try {
-        // クエリパラム使用の記事取得API処理
-        const result = await getCategorizedArticleApi(params);
-        setArticles(result.data as TypeArticle);
+        await dispatch(fetchCategorizedArticles(values)).unwrap();
       } catch (err) {
         console.error('Failed to fetch articles', err);
-        setIsDisabled(false);
       }
     })();
-  }, [form]);
+  }, [dispatch, form]);
 
   /*
    * reset ボタン処理
    */
   const onReset = () => {
     form.reset();
-    setArticles(null);
-    setIsDisabled(false);
+    dispatch(clearArticles());
   };
 
   return (
@@ -71,7 +60,7 @@ const Child02Screen: React.FC = () => {
         <CheckBox
           containerStyle={styles.container}
           control={form.control}
-          disabled={isDisabled}
+          disabled={isApiLoading}
           label='[ - カテゴリー01 - ]'
           name='taxCategory01'
           options={[
@@ -87,7 +76,7 @@ const Child02Screen: React.FC = () => {
         <CheckBox
           containerStyle={styles.container}
           control={form.control}
-          disabled={isDisabled}
+          disabled={isApiLoading}
           label='[ - カテゴリー02 - ]'
           name='taxCategory02'
           options={[
@@ -103,7 +92,7 @@ const Child02Screen: React.FC = () => {
         <CheckBox
           containerStyle={styles.container}
           control={form.control}
-          disabled={isDisabled}
+          disabled={isApiLoading}
           label='[ - カテゴリー03 - ]'
           name='taxCategory03'
           options={[
@@ -118,7 +107,7 @@ const Child02Screen: React.FC = () => {
 
       {/* submit ボタン */}
       <Button
-        disabled={isDisabled}
+        disabled={isApiLoading}
         onPress={onSubmit}
         style={styles.button}
         title='選択したカテゴリーで記事を絞り込み検索'
