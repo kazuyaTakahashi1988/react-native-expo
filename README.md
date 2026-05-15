@@ -79,6 +79,15 @@ Link to <a href="https://sonarcloud.io/project/overview?id=kazuyaTakahashi1988_r
 
 Link to <a href="https://github.com/kazuyaTakahashi1988/react-native-expo/blob/main/ARCHITECTURE_REVIEW.md" target="_blank">ARCHITECTURE_REVIEW.md</a><br>
 <br>
+※ プロンプトは以下
+
+```
+コードベースで全体を評価してください。
+アーキテクチャ的に良い点と悪い点（改善できる余地）があれば詳しく解説お願いいたします。
+特に小規模・中規模・大規模プロジェクト、どのレベルまで実用的なのかも解説をお願いいたします。
+```
+
+<br>
 
 ## Project Structure
 
