@@ -17,7 +17,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
-          node-version: 22.x
+          node-version: 24.x
 
       - name: Cache dependencies # node_modulesのキャッシュ
         id: node_modules_cache_id # キャッシュID(名前は任意)
@@ -43,7 +43,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
-          node-version: 22.x
+          node-version: 24.x
 
       - name: Restore node_modules # キャッシュしたnode_modulesの使用
         id: node_modules_cache_id # キャッシュしたnode_modulesのID
@@ -78,7 +78,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
-          node-version: 22.x
+          node-version: 24.x
 
       - name: Restore node_modules # キャッシュしたnode_modulesの使用
         id: node_modules_cache_id # キャッシュしたnode_modulesのID
