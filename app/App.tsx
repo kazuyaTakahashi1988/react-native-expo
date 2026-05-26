@@ -1,5 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 
+import { Loading } from './components/layouts/layout';
 import { Navigation } from './navigation';
 import { appRootService } from './services/appRootService'; // App.tsx（AppRoot）用の処理まとめ
 import { AppRootProvider } from './services/providerService'; // App.tsx（AppRoot）用のプロバイダーまとめ
@@ -17,6 +18,7 @@ const App: React.FC = () => {
 
   return (
     <AppRootProvider>
+      <Loading />
       <Navigation />
       <StatusBar style='auto' />
     </AppRootProvider>

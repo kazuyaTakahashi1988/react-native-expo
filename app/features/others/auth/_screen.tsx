@@ -7,6 +7,7 @@ import { Button } from '../../../components/button';
 import { Layout } from '../../../components/layouts/layout';
 import { color } from '../../../lib/mixin';
 import { signIn, signOut, signUp, useAuth, verify } from '../../../services/authService';
+import { loadingFlagDown, loadingFlagUp, store } from '../../../services/storeService';
 
 import type { TypeResult, TypeTabKey } from './_type';
 import type {
@@ -39,6 +40,7 @@ const AuthScreen: React.FC = () => {
   // Sign In の submit ボタン処理
   const onSignInSubmit = React.useCallback(() => {
     void signInForm.handleSubmit((values: TypeSignInValues) => {
+      store.dispatch(loadingFlagUp()); // ローディングフラグを上げる
       setResult({});
 
       // Sign In 処理
@@ -54,6 +56,9 @@ const AuthScreen: React.FC = () => {
         .catch((err: unknown) => {
           const message = err instanceof Error ? err.message : 'Sign In に失敗したよ...';
           setResult({ type: 'error', message });
+        })
+        .finally(() => {
+          store.dispatch(loadingFlagDown()); // ローディングフラグを下げる
         });
     })();
   }, [refreshAuthState, signInForm]);
@@ -71,6 +76,7 @@ const AuthScreen: React.FC = () => {
   // Sign Up の submit ボタン処理
   const onSignUpSubmit = React.useCallback(() => {
     void signUpForm.handleSubmit((values: TypeSignUpValues) => {
+      store.dispatch(loadingFlagUp()); // ローディングフラグを上げる
       setResult({});
 
       // Sign Up 処理
@@ -87,6 +93,9 @@ const AuthScreen: React.FC = () => {
         .catch((err: unknown) => {
           const message = err instanceof Error ? err.message : 'Sign Up に失敗したよ...';
           setResult({ type: 'error', message });
+        })
+        .finally(() => {
+          store.dispatch(loadingFlagDown()); // ローディングフラグを下げる
         });
     })();
   }, [signUpForm]);
@@ -104,6 +113,7 @@ const AuthScreen: React.FC = () => {
   // Verify の submit ボタン処理
   const onVerifySubmit = React.useCallback(() => {
     void verifyForm.handleSubmit((values: TypeVerifyValues) => {
+      store.dispatch(loadingFlagUp()); // ローディングフラグを上げる
       setResult({});
 
       // Verify 処理
@@ -116,6 +126,9 @@ const AuthScreen: React.FC = () => {
         .catch((err: unknown) => {
           const message = err instanceof Error ? err.message : 'Verify に失敗したよ...';
           setResult({ type: 'error', message });
+        })
+        .finally(() => {
+          store.dispatch(loadingFlagDown()); // ローディングフラグを下げる
         });
     })();
   }, [verifyForm]);
@@ -124,6 +137,7 @@ const AuthScreen: React.FC = () => {
    * Sign Out ボタン処理
    */
   const onSignOutPress = React.useCallback(() => {
+    store.dispatch(loadingFlagUp()); // ローディングフラグを上げる
     setResult({});
 
     // Sign Out 処理
@@ -135,6 +149,9 @@ const AuthScreen: React.FC = () => {
       .catch((err: unknown) => {
         const message = err instanceof Error ? err.message : 'Sign Out に失敗したよ...';
         setResult({ type: 'error', message });
+      })
+      .finally(() => {
+        store.dispatch(loadingFlagDown()); // ローディングフラグを下げる
       });
   }, [refreshAuthState]);
 

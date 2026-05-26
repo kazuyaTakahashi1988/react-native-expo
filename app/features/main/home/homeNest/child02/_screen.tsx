@@ -16,7 +16,6 @@ import type { TypeArticle, TypeFormValues } from './_type';
 
 const Child02Screen: React.FC = () => {
   const [articles, setArticles] = React.useState<TypeArticle | null>(null);
-  const [isDisabled, setIsDisabled] = React.useState<boolean>(false);
 
   /*
    * RHForm 使用設定
@@ -33,7 +32,6 @@ const Child02Screen: React.FC = () => {
    * 選択したカテゴリーで記事を絞り込み検索 ボタン処理
    */
   const onSubmit = React.useCallback(() => {
-    setIsDisabled(true);
     void form.handleSubmit(async (values: TypeFormValues) => {
       // 選択したカテゴリーをクエリパラム化
       const params = {
@@ -48,7 +46,6 @@ const Child02Screen: React.FC = () => {
         setArticles(result.data as TypeArticle);
       } catch (err) {
         console.error('Failed to fetch articles', err);
-        setIsDisabled(false);
       }
     })();
   }, [form]);
@@ -59,19 +56,18 @@ const Child02Screen: React.FC = () => {
   const onReset = () => {
     form.reset();
     setArticles(null);
-    setIsDisabled(false);
   };
 
   return (
     <Layout>
-      <Text style={styles.title}>API Service & react-hook-form{`\n`}Example</Text>
+      <Text style={styles.title}>AAAAPI Service & react-hook-form{`\n`}Example</Text>
 
       <View style={styles.category}>
         {/* taxCategory01 チェックボックス項目 */}
         <CheckBox
           containerStyle={styles.container}
           control={form.control}
-          disabled={isDisabled}
+          disabled={Boolean(articles)}
           label='[ - カテゴリー01 - ]'
           name='taxCategory01'
           options={[
@@ -87,7 +83,7 @@ const Child02Screen: React.FC = () => {
         <CheckBox
           containerStyle={styles.container}
           control={form.control}
-          disabled={isDisabled}
+          disabled={Boolean(articles)}
           label='[ - カテゴリー02 - ]'
           name='taxCategory02'
           options={[
@@ -103,7 +99,7 @@ const Child02Screen: React.FC = () => {
         <CheckBox
           containerStyle={styles.container}
           control={form.control}
-          disabled={isDisabled}
+          disabled={Boolean(articles)}
           label='[ - カテゴリー03 - ]'
           name='taxCategory03'
           options={[
@@ -118,7 +114,7 @@ const Child02Screen: React.FC = () => {
 
       {/* submit ボタン */}
       <Button
-        disabled={isDisabled}
+        disabled={Boolean(articles)}
         onPress={onSubmit}
         style={styles.button}
         title='選択したカテゴリーで記事を絞り込み検索'

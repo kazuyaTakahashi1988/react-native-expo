@@ -3,6 +3,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import AuthProvider from './_authProvider';
+import StoreProvider from './_storeProvider';
 import ToastProvider from './_toastProvider';
 
 import type React from 'react';
@@ -15,7 +16,9 @@ const AppRootProvider: React.FC<React.PropsWithChildren> = ({ children }) => (
   <GestureHandlerRootView style={styles.container}>
     <SafeAreaProvider>
       <AuthProvider>
-        <ToastProvider>{children}</ToastProvider>
+        <StoreProvider>
+          <ToastProvider>{children}</ToastProvider>
+        </StoreProvider>
       </AuthProvider>
     </SafeAreaProvider>
   </GestureHandlerRootView>

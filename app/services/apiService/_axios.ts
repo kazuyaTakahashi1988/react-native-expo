@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+import { loadingFlagDown, loadingFlagUp, store } from '../storeService';
+
 import type { TypeOptions, TypeParams } from '../../lib/types/typeService';
 import type { AxiosError, AxiosRequestConfig, AxiosResponse, Method } from 'axios';
 
@@ -24,7 +26,10 @@ const execute = async <TResponse = unknown, TRequest = unknown>(
     headers,
     baseURL = DEFAULT_BASE_URL, // デフォルトのベースURL
     accessToken,
+    isLoading = true,
   } = options;
+
+  if (isLoading) store.dispatch(loadingFlagUp()); // ローディングフラグを上げる
 
   // ヘッダー情報のセット
   const setHeaders = (
@@ -62,6 +67,8 @@ const execute = async <TResponse = unknown, TRequest = unknown>(
 
     console.error('API request failed', message);
     throw axiosError;
+  } finally {
+    if (isLoading) store.dispatch(loadingFlagDown()); // ローディングフラグを下げる
   }
 };
 
@@ -98,6 +105,7 @@ export const getCategorizedArticleApi = (params: TypeParams) => {
     // headers, // 追加ヘッダー情報を付与
     // requestData, // リクエストデータ（リクエストボディ）
     // accessToken, // アクセストークン
+    // isLoading, // ローディングフラグの有無
   };
   return request('GET', '/wp-json/wp/v2/org_api', options);
 };
@@ -110,6 +118,7 @@ export const getCategorizedArticleApi = (params: TypeParams) => {
  *    headers, // 追加ヘッダー情報を付与
  *    requestData, // リクエストデータ（リクエストボディ）
  *    accessToken, // アクセストークン
+ *    isLoading, // ローディングフラグの有無
  *  };
  *  return request('POST', '/xxxx/xxxx', options);
  * };
