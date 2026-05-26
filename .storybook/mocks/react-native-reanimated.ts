@@ -140,6 +140,8 @@ const lerp = (value: number, start: number, end: number) => start + value * (end
 
 const now = () => (typeof performance !== 'undefined' ? performance.now() : Date.now());
 
+/* eslint-disable sonarjs/null-dereference */
+/** false positive で、コードは安全のため、ESLint例外処置 */
 const hexToRgb = (hex: string) => {
   let normalized = hex.replace('#', '');
   if (normalized.length === 3) {
@@ -148,14 +150,17 @@ const hexToRgb = (hex: string) => {
       .map((char) => char.repeat(2))
       .join('');
   }
+
   const r = parseInt(normalized.slice(0, 2), 16);
   const g = parseInt(normalized.slice(2, 4), 16);
   const b = parseInt(normalized.slice(4, 6), 16);
   return { r, g, b };
 };
 
-const rgbToHex = (r: number, g: number, b: number) =>
-  `#${[r, g, b].map((component) => component.toString(16).padStart(2, '0')).join('')}`;
+/* eslint-disable sonarjs/null-dereference */
+const rgbToHex = (r: number, g: number, b: number): string =>
+  `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
+/* eslint-enable sonarjs/null-dereference */
 
 export type SharedValue<T> = { value: T };
 
@@ -168,10 +173,9 @@ const isTimingAnimation = <T>(value: unknown): value is TimingAnimation<T> => {
 
 export const useSharedValue = <T>(initialValue: T): SharedValue<T> => {
   const ref = React.useRef<SharedValueImpl<T> | null>(null);
-  if (ref.current == null) {
-    ref.current = new SharedValueImpl<T>(initialValue);
-  }
-  return ref.current as SharedValue<T>;
+  const currentValue = ref.current ?? new SharedValueImpl<T>(initialValue);
+  ref.current = currentValue;
+  return currentValue;
 };
 
 let activeCollector: Set<CollectableSharedValue> | null = null;

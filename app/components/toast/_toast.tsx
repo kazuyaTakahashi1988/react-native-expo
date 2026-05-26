@@ -48,7 +48,7 @@ const useToastController = ({
   duration = 2000,
   onHide,
   onShow,
-  position = 'top',
+  position,
 }: Pick<TypeToast, 'visible' | 'duration' | 'onHide' | 'onShow' | 'position'>) => {
   const opacity = useSharedValue(0);
   const [mounted, setMounted] = React.useState(visible);
@@ -118,10 +118,10 @@ const Toast = ({
   visible,
   message,
   duration = 2000,
-  position = 'top',
+  position,
   onHide,
   onShow,
-  variant = 'default',
+  variant,
 }: TypeToast) => {
   /*
    * アニメーション & 表示位置を制御する関数

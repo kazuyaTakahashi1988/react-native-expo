@@ -10,7 +10,7 @@ import type { AxiosError, AxiosRequestConfig, AxiosResponse, Method } from 'axio
  * ----------------------------------------------- */
 
 // デフォルトのベースURL
-const DEFAULT_BASE_URL = process.env.EXPO_PUBLIC_API_BASE_URL ?? '';
+const DEFAULT_BASE_URL = (process.env.EXPO_PUBLIC_API_BASE_URL ?? '') as string;
 
 /*
  * APIリクエスト 実行処理
