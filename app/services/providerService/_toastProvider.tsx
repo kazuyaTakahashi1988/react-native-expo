@@ -9,62 +9,54 @@ import type { TypeToastState, TypeToastSubscribe } from '../../lib/types/typeCom
  * ----------------------------------------------- */
 
 const ToastProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
-  const [toastState, setToastState] = React.useState<TypeToastState>({
-    visible: false,
-    message: '',
-    position: 'top',
-    variant: 'default',
-    duration: 2000,
-  });
-  const toastQueueRef = React.useRef<TypeToastSubscribe[]>([]);
-  const isVisibleRef = React.useRef(false);
-
-  React.useEffect(() => {
-    isVisibleRef.current = toastState.visible;
-  }, [toastState.visible]);
-
-  const showNextToast = React.useCallback(() => {
-    const next = toastQueueRef.current.shift();
-    if (!next) {
-      return;
-    }
-
-    setToastState((prev) => ({
-      ...prev,
-      ...next,
-      visible: true,
-    }));
-  }, []);
+  const hideAnimationDuration = 250;
+  const [toastStates, setToastStates] = React.useState<Array<TypeToastState & { id: number }>>([]);
+  const toastIdRef = React.useRef(0);
 
   React.useEffect(() => {
     const unsubscribe = subscribeToast((options: TypeToastSubscribe) => {
       if (options.visible) {
-        toastQueueRef.current.push(options);
+        toastIdRef.current += 1;
+        const nextToast: TypeToastState & { id: number } = {
+          id: toastIdRef.current,
+          visible: true,
+          message: options.message ?? '',
+          position: options.position ?? 'top',
+          variant: options.variant ?? 'default',
+          duration: options.duration ?? 2000,
+        };
 
-        if (!isVisibleRef.current) {
-          showNextToast();
-        }
+        setToastStates((prev) => [...prev, nextToast]);
 
         return;
       }
 
-      setToastState((prev) => ({ ...prev, ...options }));
+      setToastStates((prev) => prev.map((toast) => ({ ...toast, visible: false })));
     });
 
     return unsubscribe;
-  }, [showNextToast]);
+  }, []);
 
   return (
     <>
       {children}
-      <Toast
-        {...toastState}
-        onHide={() => {
-          setToastState((prev) => ({ ...prev, visible: false }));
-          isVisibleRef.current = false;
-          showNextToast();
-        }}
-      />
+      {toastStates.map((toastState) => (
+        <Toast
+          key={toastState.id}
+          {...toastState}
+          onHide={() => {
+            setToastStates((prev) =>
+              prev.map((toast) =>
+                toast.id === toastState.id ? { ...toast, visible: false } : toast,
+              ),
+            );
+
+            setTimeout(() => {
+              setToastStates((prev) => prev.filter((toast) => toast.id !== toastState.id));
+            }, hideAnimationDuration);
+          }}
+        />
+      ))}
     </>
   );
 };
