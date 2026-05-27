@@ -7,7 +7,7 @@ import { color } from '../../../app/lib/mixin';
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite';
 import type React from 'react';
 
-const iconEntries = Object.entries(Icons).sort(([a], [b]) => a.localeCompare(b));
+const iconEntries = Object.entries(Icons).sort(([a = ''], [b = '']) => a.localeCompare(b));
 
 const iconUsageSnippet = `import { ${iconEntries.map(([name]) => name).join(', ')} } from '../../../app/components/svg/icon';
 

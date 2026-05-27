@@ -9,8 +9,7 @@ import type { TypeToastOptions } from '../../../app/lib/types/typeComponents';
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite';
 
 const escapeSingleQuotes = (text: string): string => {
-  const isText = Boolean(text);
-  if (!isText) {
+  if (text.length === 0) {
     return '';
   }
 
@@ -42,10 +41,8 @@ const formatToastOptions = (args: Partial<TypeToastOptions> | undefined): string
     `variant: '${normalizedVariant}'`,
   ];
 
-  const isNormalizedDuration = Boolean(normalizedDuration);
-
-  if (isNormalizedDuration) {
-    options.push(`duration: ${normalizedDuration ?? ''}`);
+  if (normalizedDuration !== null) {
+    options.push(`duration: ${normalizedDuration}`);
   }
 
   return options.join(', ');

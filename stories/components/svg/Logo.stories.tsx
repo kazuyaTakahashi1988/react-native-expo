@@ -7,7 +7,7 @@ import { color } from '../../../app/lib/mixin';
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite';
 import type React from 'react';
 
-const logoEntries = Object.entries(Logos).sort(([a], [b]) => a.localeCompare(b));
+const logoEntries = Object.entries(Logos).sort(([a = ''], [b = '']) => a.localeCompare(b));
 
 const logoUsageSnippet = `import { ${logoEntries.map(([name]) => name).join(', ')} } from '../../../app/components/svg/logo';
 

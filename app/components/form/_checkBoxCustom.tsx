@@ -60,7 +60,7 @@ const OptionRow: React.FC<TypeBoxCustomOption> = ({
     };
   });
 
-  const getOptionLabelStyle = (disabled: boolean) => {
+  const getOptionLabelStyle = (disabled: boolean): object | null => {
     if (!disabled) {
       return null;
     }
@@ -129,7 +129,7 @@ const CheckBoxCustom = <TFieldValues extends FieldValues>({
     allDisabled: boolean,
   ): boolean => optionDisabled === true || allDisabled;
 
-  const getToggleValue = (value: string) => {
+  const getToggleValue = (value: string): string[] => {
     if (selectedValues.includes(value)) {
       return selectedValues.filter((selected) => selected !== value);
     }
@@ -141,7 +141,8 @@ const CheckBoxCustom = <TFieldValues extends FieldValues>({
       <Label {...{ label, rules }} />
       <View style={[styles.checkBoxGroup, optionListStyle]}>
         {options.map((option) => {
-          const isSelected = selectedValues.includes(option.value);
+          const optionValue = String(option.value);
+          const isSelected = selectedValues.includes(optionValue);
           const isDisabled = getIsOptionDisabled(option.disabled, disabled);
 
           /*
@@ -152,14 +153,14 @@ const CheckBoxCustom = <TFieldValues extends FieldValues>({
               hasError={hasError}
               isDisabled={isDisabled}
               isSelected={isSelected}
-              key={option.key ?? option.value}
+              key={option.key ?? optionValue}
               label={option.label}
               onToggle={() => {
-                const toggleValue = getToggleValue(option.value);
+                const toggleValue = getToggleValue(optionValue);
                 controller.field.onChange(toggleValue);
               }}
               optionRowStyle={optionRowStyle}
-              value={option.value}
+              value={optionValue}
             />
           );
         })}

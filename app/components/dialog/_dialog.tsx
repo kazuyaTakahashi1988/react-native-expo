@@ -30,7 +30,7 @@ import type { TypeDialog } from '../../lib/types/typeComponents';
 const DialogBackGround = ({
   onClose,
   notBackGroundPress,
-}: Pick<TypeDialog, 'onClose' | 'notBackGroundPress'>) => {
+}: Pick<TypeDialog, 'onClose' | 'notBackGroundPress'>): React.JSX.Element | null => {
   if (notBackGroundPress !== false) {
     return null;
   }
@@ -45,7 +45,7 @@ const DialogBackGround = ({
 /*
  * タイトル
  */
-const DialogTitle = ({ title }: Pick<TypeDialog, 'title'>) => {
+const DialogTitle = ({ title }: Pick<TypeDialog, 'title'>): React.JSX.Element | null => {
   const istitle = Boolean(title);
   if (!istitle) {
     return null;
@@ -61,7 +61,7 @@ const DialogTitle = ({ title }: Pick<TypeDialog, 'title'>) => {
 /*
  * チャイルドコンテンツ
  */
-const DialogChildren = ({ children }: Pick<TypeDialog, 'children'>) => {
+const DialogChildren = ({ children }: Pick<TypeDialog, 'children'>): React.JSX.Element | null => {
   const ischildren = Boolean(children);
   if (!ischildren) {
     return null;
@@ -87,7 +87,7 @@ const DialogBottom = ({
   eventText,
   onClose,
   onEvent,
-}: Pick<TypeDialog, 'closeText' | 'eventText' | 'onClose' | 'onEvent'>) => {
+}: Pick<TypeDialog, 'closeText' | 'eventText' | 'onClose' | 'onEvent'>): React.JSX.Element | null => {
   const isCloseText = Boolean(closeText);
   const isEventText = Boolean(eventText);
   if (!isCloseText && !isEventText) {

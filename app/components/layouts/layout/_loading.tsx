@@ -10,7 +10,7 @@ import type React from 'react';
  * ローディングコンポーネント
  * ----------------------------------------------- */
 
-const Loading: React.FC = () => {
+const Loading: React.FC = (): React.JSX.Element | null => {
   /*
    * ローディングフラグ取得 & 表示・非表示制御
    */

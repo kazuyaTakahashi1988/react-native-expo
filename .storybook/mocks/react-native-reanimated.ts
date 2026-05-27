@@ -145,7 +145,7 @@ const hexToRgb = (hex: string) => {
   if (normalized.length === 3) {
     normalized = normalized
       .split('')
-      .map((char) => char.repeat(2))
+      .map((char = '') => char.repeat(2))
       .join('');
   }
   const r = parseInt(normalized.slice(0, 2), 16);
@@ -155,7 +155,7 @@ const hexToRgb = (hex: string) => {
 };
 
 const rgbToHex = (r: number, g: number, b: number) =>
-  `#${[r, g, b].map((component) => component.toString(16).padStart(2, '0')).join('')}`;
+  `#${[r, g, b].map((component = 0) => component.toString(16).padStart(2, '0')).join('')}`;
 
 export type SharedValue<T> = { value: T };
 
@@ -171,7 +171,7 @@ export const useSharedValue = <T>(initialValue: T): SharedValue<T> => {
   if (ref.current == null) {
     ref.current = new SharedValueImpl<T>(initialValue);
   }
-  return ref.current as SharedValue<T>;
+  return ref.current;
 };
 
 let activeCollector: Set<CollectableSharedValue> | null = null;
@@ -220,14 +220,17 @@ export const withTiming = <T>(
   toValue: T,
   config: WithTimingConfig = {},
   callback?: (finished: boolean) => void,
-): T =>
-  ({
+): T => {
+  const animation = {
     __mockAnimationType: 'timing',
     toValue,
     duration: config.duration ?? 300,
     easing: config.easing,
     callback,
-  }) as TimingAnimation<T> as unknown as T;
+  } satisfies TimingAnimation<T>;
+
+  return animation as unknown as T;
+};
 
 export const interpolate = (
   value: number,

@@ -39,7 +39,7 @@ const CheckBox = <TFieldValues extends FieldValues>({
     return optionDisabled === true || disabled;
   };
 
-  const getToggleValue = (value: string) => {
+  const getToggleValue = (value: string): string[] => {
     if (selectedValues.includes(value)) {
       return selectedValues.filter((selected) => selected !== value);
     }
@@ -49,14 +49,14 @@ const CheckBox = <TFieldValues extends FieldValues>({
   /*
    * 適用スタイル
    */
-  const getOptionLabelStyle = (disabled: boolean) => {
+  const getOptionLabelStyle = (disabled: boolean): object | null => {
     if (!disabled) {
       return null;
     }
     return styles.checkBoxTextDisabled;
   };
 
-  const getSelectedStyle = (disabled: boolean) => {
+  const getSelectedStyle = (disabled: boolean): object | null => {
     if (!disabled) {
       return null;
     }
@@ -68,16 +68,17 @@ const CheckBox = <TFieldValues extends FieldValues>({
       <Label {...{ label, rules }} />
       <View style={[styles.checkBoxGroup, optionListStyle]}>
         {options.map((option) => {
-          const isSelected = selectedValues.includes(option.value);
+          const optionValue = String(option.value);
+          const isSelected = selectedValues.includes(optionValue);
           const isDisabled = getIsOptionDisabled(option.disabled, disabled);
           return (
             <Pressable
               accessibilityRole='checkbox'
               accessibilityState={{ checked: isSelected }}
               disabled={isDisabled}
-              key={option.key ?? option.value}
+              key={option.key ?? optionValue}
               onPress={() => {
-                const toggleValue = getToggleValue(option.value);
+                const toggleValue = getToggleValue(optionValue);
                 controller.field.onChange(toggleValue);
               }}
               style={[styles.checkBoxRow, optionRowStyle]}

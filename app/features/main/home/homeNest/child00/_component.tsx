@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { color } from '../../../../../lib/mixin';
 
 import type { TypeResultArea } from './_type';
+import type React from 'react';
 
 /* -----------------------------------------------
  * 画面固有のコンポーネント
@@ -11,7 +12,7 @@ import type { TypeResultArea } from './_type';
 /*
  * 出力結果エリア
  */
-export const ResultArea: React.FC<TypeResultArea> = (formValues) => {
+export const ResultArea: React.FC<TypeResultArea> = (formValues): React.JSX.Element | null => {
   // formValues が空なら離脱
   const hasValues = Object.keys(formValues).length > 0;
   if (!hasValues) {

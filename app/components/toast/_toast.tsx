@@ -23,7 +23,7 @@ import type {
 /*
  * メッセージ箇所
  */
-const ToastMessage = ({ message }: Pick<TypeToast, 'message'>) => {
+const ToastMessage = ({ message }: Pick<TypeToast, 'message'>): React.JSX.Element | null => {
   const isMessage = Boolean(message);
   if (!isMessage) {
     return null;
@@ -45,10 +45,10 @@ const offsetOption = {
 
 const useToastController = ({
   visible,
-  duration = 2000,
+  duration,
   onHide,
   onShow,
-  position = 'top',
+  position,
 }: Pick<TypeToast, 'visible' | 'duration' | 'onHide' | 'onShow' | 'position'>) => {
   const opacity = useSharedValue(0);
   const [mounted, setMounted] = React.useState(visible);

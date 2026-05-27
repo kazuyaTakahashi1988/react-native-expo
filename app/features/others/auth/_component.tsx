@@ -32,7 +32,7 @@ export const SignInForm: React.FC<TypeAuthForm<TypeSignInValues>> = ({
   form,
   onSubmit,
   visible,
-}) => {
+}): React.JSX.Element | null => {
   if (!visible) {
     return null;
   }
@@ -83,7 +83,7 @@ export const SignUpForm: React.FC<TypeAuthForm<TypeSignUpValues>> = ({
   form,
   onSubmit,
   visible,
-}) => {
+}): React.JSX.Element | null => {
   if (!visible) {
     return null;
   }
@@ -134,7 +134,7 @@ export const VerifyForm: React.FC<TypeAuthForm<TypeVerifyValues>> = ({
   form,
   onSubmit,
   visible,
-}) => {
+}): React.JSX.Element | null => {
   if (!visible) {
     return null;
   }

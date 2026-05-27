@@ -42,7 +42,7 @@ const RadioBox = <TFieldValues extends FieldValues>({
   /*
    * 適用スタイル
    */
-  const getOptionLabelStyle = (disabled: boolean) => {
+  const getOptionLabelStyle = (disabled: boolean): object | null => {
     if (!disabled) {
       return null;
     }

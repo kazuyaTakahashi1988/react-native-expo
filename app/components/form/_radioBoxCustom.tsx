@@ -60,7 +60,7 @@ const OptionRow: React.FC<TypeBoxCustomOption> = ({
     };
   });
 
-  const getOptionLabelStyle = (disabled: boolean) => {
+  const getOptionLabelStyle = (disabled: boolean): object | null => {
     if (!disabled) {
       return null;
     }

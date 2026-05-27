@@ -8,7 +8,9 @@ import type { TypeErrorText } from '../../lib/types/typeComponents';
  * エラーテキスト
  * ----------------------------------------------- */
 
-const ErrorText: React.FC<{ errorText?: TypeErrorText }> = ({ errorText }) => {
+const ErrorText: React.FC<{ errorText?: TypeErrorText }> = ({
+  errorText,
+}): React.JSX.Element | null => {
   const isErrorText = Boolean(errorText);
   if (!isErrorText) {
     return null;
