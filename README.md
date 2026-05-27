@@ -8,11 +8,11 @@
 <img width="25%" height="auto" alt="0x0ss-1" src="https://github.com/user-attachments/assets/0021d4e8-32d7-4ac3-bc38-5a46a98b47e1" />　<img width="25%" height="auto" alt="0x0ss" src="https://github.com/user-attachments/assets/4ac9773c-752c-4a10-be5e-d8ae9fc80361" />
 <br><br>
 
-# ① node v22.x 下で yarn install & yarn start
+# ① node v24.x 下で yarn install & yarn start
 
 ```
 $ node -v
-v22.x
+v24.x
 
 $ yarn install
 $ cp .env.sample .env

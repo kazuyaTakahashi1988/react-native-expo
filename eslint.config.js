@@ -148,6 +148,10 @@ export default [
       'max-depth': ['error', 5],
       'no-else-return': ['error'],
 
+      /* TSコンパイラが戻り値の型を検証するため、SonarJS側ではoff */
+      'sonarjs/function-return-type': ['off'],
+      'sonarjs/argument-type': ['off'],
+
       /* -------------------------------------------------------
         'total-functions/no-unsafe-type-assertion': 'error'
         が最新のESlintに対応してないため以下にて代替

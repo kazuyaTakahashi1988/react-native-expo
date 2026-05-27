@@ -8,24 +8,24 @@ import { ToastProvider } from '../../../app/services/providerService/index.ts';
 import type { TypeToastOptions } from '../../../app/lib/types/typeComponents';
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite';
 
-const escapeSingleQuotes = (text: string): string => {
+const escapeSingleQuotes = (text: string | null | undefined): string => {
   const isText = Boolean(text);
   if (!isText) {
     return '';
   }
 
-  return text.replace("'", "\\'");
+  return String(text).replace("'", "\\'");
 };
 
 const normalizeStringOption = (value: string | undefined, fallback: string): string =>
   typeof value === 'string' ? value : fallback;
 
-const normalizeDuration = (value: number | undefined): string | null => {
-  if (typeof value !== 'number') {
+const normalizeDuration = (value: number | null | undefined): string | null => {
+  if (value == null || typeof value !== 'number') {
     return null;
   }
 
-  return value.toString();
+  return String(value);
 };
 
 const formatToastOptions = (args: Partial<TypeToastOptions> | undefined): string => {

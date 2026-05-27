@@ -9,7 +9,7 @@ import type React from 'react';
 const colorEntries = Object.entries(color);
 
 const colorUsageSnippet = `import { color } from '../../../app/lib/mixin';\n\n${colorEntries
-  .map(([name, value]) => `color.${name}; // ${String(value)}`)
+  .map(([name, value]) => `color.${name}; // ${value}`)
   .join('\n')}`;
 
 const ColorCatalog: React.FC = () => (
@@ -18,7 +18,7 @@ const ColorCatalog: React.FC = () => (
       <View key={name} style={catalogStyles.item}>
         <View style={[catalogStyles.swatch, { backgroundColor: value }]} />
         <Text style={catalogStyles.name}>{name}</Text>
-        <Text style={catalogStyles.value}>{String(value)}</Text>
+        <Text style={catalogStyles.value}>{value}</Text>
       </View>
     ))}
   </View>
