@@ -13,29 +13,58 @@ const ToastProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
   const [toastStates, setToastStates] = React.useState<Array<TypeToastState & { id: number }>>([]);
   const toastIdRef = React.useRef(0);
 
-  React.useEffect(() => {
-    const unsubscribe = subscribeToast((options: TypeToastSubscribe) => {
+  const hideAllToasts = React.useCallback(() => {
+    setToastStates((prev) => prev.map((toast) => ({ ...toast, visible: false })));
+  }, []);
+
+  const addToast = React.useCallback((options: TypeToastSubscribe) => {
+    toastIdRef.current += 1;
+    const nextToast: TypeToastState & { id: number } = {
+      id: toastIdRef.current,
+      visible: true,
+      message: options.message ?? '',
+      position: options.position ?? 'top',
+      variant: options.variant ?? 'default',
+      duration: options.duration ?? 2000,
+    };
+
+    setToastStates((prev) => [...prev, nextToast]);
+  }, []);
+
+  const handleToastSubscription = React.useCallback(
+    (options: TypeToastSubscribe) => {
       if (options.visible) {
-        toastIdRef.current += 1;
-        const nextToast: TypeToastState & { id: number } = {
-          id: toastIdRef.current,
-          visible: true,
-          message: options.message ?? '',
-          position: options.position ?? 'top',
-          variant: options.variant ?? 'default',
-          duration: options.duration ?? 2000,
-        };
-
-        setToastStates((prev) => [...prev, nextToast]);
-
+        addToast(options);
         return;
       }
 
-      setToastStates((prev) => prev.map((toast) => ({ ...toast, visible: false })));
-    });
+      hideAllToasts();
+    },
+    [addToast, hideAllToasts],
+  );
+
+  const removeToastById = React.useCallback((toastId: number) => {
+    setToastStates((prev) => prev.filter((toast) => toast.id !== toastId));
+  }, []);
+
+  const handleHideToast = React.useCallback(
+    (toastId: number) => {
+      setToastStates((prev) =>
+        prev.map((toast) => (toast.id === toastId ? { ...toast, visible: false } : toast)),
+      );
+
+      setTimeout(() => {
+        removeToastById(toastId);
+      }, hideAnimationDuration);
+    },
+    [hideAnimationDuration, removeToastById],
+  );
+
+  React.useEffect(() => {
+    const unsubscribe = subscribeToast(handleToastSubscription);
 
     return unsubscribe;
-  }, []);
+  }, [handleToastSubscription]);
 
   return (
     <>
@@ -45,15 +74,7 @@ const ToastProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
           key={toastState.id}
           {...toastState}
           onHide={() => {
-            setToastStates((prev) =>
-              prev.map((toast) =>
-                toast.id === toastState.id ? { ...toast, visible: false } : toast,
-              ),
-            );
-
-            setTimeout(() => {
-              setToastStates((prev) => prev.filter((toast) => toast.id !== toastState.id));
-            }, hideAnimationDuration);
+            handleHideToast(toastState.id);
           }}
         />
       ))}
