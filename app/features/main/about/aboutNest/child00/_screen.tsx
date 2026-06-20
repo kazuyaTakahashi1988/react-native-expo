@@ -66,6 +66,9 @@ const Child00Screen: React.FC = () => {
         title='Long Contents Only ダイアログを開く'
       />
 
+      {/* useDialog関数 ボタン */}
+      <Button onPress={() => {}} title='useDialogを用いて ダイアログを開く' />
+
       {/* ----------------------------------------
        * Dialog
        * ----------------------------------------- */}
