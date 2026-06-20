@@ -109,6 +109,7 @@ const DialogBottom = ({
 const Dialog = ({
   visible,
   title,
+  zIndex,
   notBackGroundPress = false,
   eventText,
   closeText,
@@ -138,7 +139,7 @@ const Dialog = ({
 
   return (
     <Modal animationType='none' onRequestClose={onClose} transparent visible={visible}>
-      <Animated.View style={[styles.container, animatedStyle]}>
+      <Animated.View style={[styles.container, { zIndex }, animatedStyle]}>
         {/*
          * 透過背景
          */}

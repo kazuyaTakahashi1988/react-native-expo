@@ -41,6 +41,9 @@ const meta = {
     onClose: {
       description: 'クローズボタン処理 （および背景タップ時の処理）',
     },
+    zIndex: {
+      description: 'ダイアログのzIndex',
+    },
   },
 } satisfies Meta<typeof DialogComponent>;
 

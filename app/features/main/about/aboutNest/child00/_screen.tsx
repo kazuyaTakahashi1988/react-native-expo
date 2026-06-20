@@ -2,7 +2,7 @@ import React from 'react';
 import { Alert, StyleSheet, Text } from 'react-native';
 
 import { Button } from '../../../../../components/button';
-import { Dialog } from '../../../../../components/dialog';
+import { Dialog, showDialog } from '../../../../../components/dialog';
 import { Layout } from '../../../../../components/layouts/layout';
 
 import type { TypeDialogPattern } from './_type';
@@ -23,15 +23,30 @@ const Child00Screen: React.FC = () => {
     onClose();
   }, [onClose]);
 
+  /*
+   * showDialog関数 ボタン処理
+   */
+  const onShowDialog = () => {
+    // コンポーネントではなく showDialog関数を用いてダイアログを表示する場合
+    showDialog({
+      title: 'showDialog関数で ダイアログを開く',
+      eventText: 'イベントボタン',
+      closeText: '閉じるボタン',
+      onEvent: () => {
+        Alert.alert('Thanks to Tap', 'EventButton Tapped!!');
+      },
+      children: <Text>showDialog関数を用いて開いたダイアログです。</Text>,
+    });
+  };
+
   return (
     <Layout>
       <Text style={styles.title}>Dialog Example</Text>
 
       {/* ----------------------------------------
-       * Dialog ボタン
+       * Basic ダイアログ
        * ----------------------------------------- */}
-
-      {/* Basic ボタン */}
+      {/* ボタン */}
       <Button
         containerStyle={styles.buttonSpacing}
         onPress={() => {
@@ -40,40 +55,7 @@ const Child00Screen: React.FC = () => {
         title='Basic ダイアログを開く'
       />
 
-      {/* Not BackGroundPress ボタン */}
-      <Button
-        containerStyle={styles.buttonSpacing}
-        onPress={() => {
-          setVisibleDialog('notBackGroundPress');
-        }}
-        title='Not BackGroundPress ダイアログを開く'
-      />
-
-      {/* Long Contents ボタン */}
-      <Button
-        containerStyle={styles.buttonSpacing}
-        onPress={() => {
-          setVisibleDialog('longContent');
-        }}
-        title='Long Contents ダイアログを開く'
-      />
-
-      {/* Long Contents Only ボタン */}
-      <Button
-        onPress={() => {
-          setVisibleDialog('longContentsOnly');
-        }}
-        title='Long Contents Only ダイアログを開く'
-      />
-
-      {/* useDialog関数 ボタン */}
-      <Button onPress={() => {}} title='useDialogを用いて ダイアログを開く' />
-
-      {/* ----------------------------------------
-       * Dialog
-       * ----------------------------------------- */}
-
-      {/* Basic ダイアログ */}
+      {/* ダイアログ */}
       <Dialog
         closeText='閉じるボタン'
         eventText='イベントボタン'
@@ -90,7 +72,19 @@ const Child00Screen: React.FC = () => {
         </Text>
       </Dialog>
 
-      {/* Not BackGroundPress ダイアログ */}
+      {/* ----------------------------------------
+       * Not BackGroundPress ダイアログ
+       * ----------------------------------------- */}
+      {/* ボタン */}
+      <Button
+        containerStyle={styles.buttonSpacing}
+        onPress={() => {
+          setVisibleDialog('notBackGroundPress');
+        }}
+        title='Not BackGroundPress ダイアログを開く'
+      />
+
+      {/* ダイアログ */}
       <Dialog
         closeText='閉じるボタン'
         eventText='イベントボタン'
@@ -107,7 +101,19 @@ const Child00Screen: React.FC = () => {
         </Text>
       </Dialog>
 
-      {/* Long Contents ダイアログ */}
+      {/* ----------------------------------------
+       * Long Contents ダイアログ
+       * ----------------------------------------- */}
+      {/* ボタン */}
+      <Button
+        containerStyle={styles.buttonSpacing}
+        onPress={() => {
+          setVisibleDialog('longContent');
+        }}
+        title='Long Contents ダイアログを開く'
+      />
+
+      {/* ダイアログ */}
       <Dialog
         closeText='閉じるボタン'
         eventText='イベントボタン'
@@ -136,7 +142,19 @@ const Child00Screen: React.FC = () => {
         </Text>
       </Dialog>
 
-      {/* Long Contents Only ダイアログ */}
+      {/* ----------------------------------------
+       * Long Contents Only ダイアログ
+       * ----------------------------------------- */}
+      {/* ボタン */}
+      <Button
+        containerStyle={styles.buttonSpacing}
+        onPress={() => {
+          setVisibleDialog('longContentsOnly');
+        }}
+        title='Long Contents Only ダイアログを開く'
+      />
+
+      {/* ダイアログ */}
       <Dialog onClose={onClose} visible={visibleDialog === 'longContentsOnly'}>
         <Text>
           ・Long Contents Only ダイアログ{'\n'}
@@ -159,6 +177,11 @@ const Child00Screen: React.FC = () => {
           ))}
         </Text>
       </Dialog>
+
+      {/* ----------------------------------------
+       * showDialog関数 ダイアログ
+       * ----------------------------------------- */}
+      <Button onPress={onShowDialog} title='showDialog関数で ダイアログを開く' />
     </Layout>
   );
 };
