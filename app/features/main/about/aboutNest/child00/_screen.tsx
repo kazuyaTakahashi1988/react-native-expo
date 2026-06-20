@@ -30,6 +30,7 @@ const Child00Screen: React.FC = () => {
     // コンポーネントではなく showDialog関数を用いてダイアログを表示する場合
     showDialog({
       dialogId: 'id-xxxx', // IDを指定することで、hideDialog関数で閉じることができます。
+      zIndex: 1000, // zIndexを指定することで、重なり順を制御できます。デフォルトは 1000 です。
       title: 'showDialog関数で ダイアログを開く',
       eventText: 'イベントボタン',
       closeText: '閉じるボタン',
