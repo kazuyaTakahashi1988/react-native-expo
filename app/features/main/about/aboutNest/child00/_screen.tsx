@@ -14,29 +14,35 @@ import type { TypeDialogPattern } from './_type';
 const Child00Screen: React.FC = () => {
   const [visibleDialog, setVisibleDialog] = React.useState<TypeDialogPattern>(null);
 
+  /*
+   * 閉じるボタン 処理
+   */
   const onClose = React.useCallback(() => {
     setVisibleDialog(null);
   }, []);
 
+  /*
+   * イベントボタン 処理
+   */
   const onEvent = React.useCallback(() => {
     Alert.alert('Thanks to Tap', 'EventButton Tapped!!');
     onClose();
   }, [onClose]);
 
   /*
-   * showDialog関数 ボタン処理
+   * showDialog関数で ダイアログを開くボタン 処理
    */
   const onShowDialog = () => {
-    // コンポーネントではなく showDialog関数を用いてダイアログを表示する場合
+    // コンポーネントではなく、showDialog関数を用いてダイアログを表示する場合
     showDialog({
-      dialogId: 'id-xxxx', // IDを指定することで、hideDialog関数で閉じることができます。
-      zIndex: 1000, // zIndexを指定することで、重なり順を制御できます。デフォルトは 1000 です。
+      dialogId: 'id-xxxx', // IDを指定することで、hideDialog関数で閉じることが可
+      zIndex: 1000, // zIndex指定することで、重なり順を制御可
       title: 'showDialog関数で ダイアログを開く',
       eventText: 'イベントボタン',
       closeText: '閉じるボタン',
       onEvent: () => {
         Alert.alert('Thanks to Tap', 'EventButton Tapped!!');
-        hideDialog('id-xxxx');
+        hideDialog('id-xxxx'); // IDを指定してダイアログを閉じる
       },
       children: <Text>showDialog関数を用いて開いたダイアログです。</Text>,
     });
@@ -184,6 +190,7 @@ const Child00Screen: React.FC = () => {
       {/* ----------------------------------------
        * showDialog関数 ダイアログ
        * ----------------------------------------- */}
+      {/* ボタン */}
       <Button onPress={onShowDialog} title='showDialog関数で ダイアログを開く' />
     </Layout>
   );
