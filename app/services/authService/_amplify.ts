@@ -7,7 +7,7 @@ import {
 } from 'aws-amplify/auth';
 import React from 'react';
 
-import { AuthContext } from '../providerService';
+import { AuthContext } from './_authProvider';
 
 import type {
   TypeAmplifyClient,

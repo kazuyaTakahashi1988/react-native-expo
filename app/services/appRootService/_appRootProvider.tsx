@@ -2,15 +2,15 @@ import { StyleSheet } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
-import AuthProvider from './_authProvider';
-import DialogProvider from './_dialogProvider';
-import StoreProvider from './_storeProvider';
-import ToastProvider from './_toastProvider';
+import { DialogProvider } from '../../components/dialog';
+import { ToastProvider } from '../../components/toast';
+import { AuthProvider } from '../authService';
+import { StoreProvider } from '../storeService';
 
 import type React from 'react';
 
 /* -----------------------------------------------
- * App.tsx（AppRoot）用のプロバイダー
+ * AppRoot（App.tsx）用のプロバイダーまとめ
  * ----------------------------------------------- */
 
 const AppRootProvider: React.FC<React.PropsWithChildren> = ({ children }) => (

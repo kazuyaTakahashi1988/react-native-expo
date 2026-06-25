@@ -1,6 +1,6 @@
 import { Provider } from 'react-redux';
 
-import { store } from '../storeService';
+import { store } from './_redux';
 
 import type React from 'react';
 

@@ -6,6 +6,7 @@ import type { TypeAuthContext } from '../../lib/types/typeService';
 /* -----------------------------------------------
  * Auth用 Provider
  * ----------------------------------------------- */
+
 export const AuthContext = React.createContext<TypeAuthContext | null>(null);
 
 export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) => {

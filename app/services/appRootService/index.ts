@@ -1,11 +1,6 @@
-import { enableScreens } from 'react-native-screens';
-
-import { useSplashDuration } from './_splash';
 /* -----------------------------------------------
- * App.tsx（AppRoot）用の処理まとめ
+ * AppRoot（App.tsx）用の処理・プロバイダーまとめ
  * ----------------------------------------------- */
 
-export const appRootService = {
-  enableScreens,
-  useSplashDuration,
-};
+export { AppRootEvent } from './_appRootEvent'; // AppRoot（App.tsx）用の処理まとめ
+export { default as AppRootProvider } from './_appRootProvider'; // AppRoot（App.tsx）用のプロバイダーまとめ

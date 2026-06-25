@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { subscribeToast, Toast } from '../../components/toast';
+import Toast from './_toast';
+import { subscribeToast } from './_useToast';
 
 import type { TypeToastState, TypeToastSubscribe } from '../../lib/types/typeComponents';
 

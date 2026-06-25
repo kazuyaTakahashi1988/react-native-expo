@@ -2,8 +2,10 @@ import { StatusBar } from 'expo-status-bar';
 
 import { Loading } from './components/layouts/layout';
 import { Navigation } from './navigation';
-import { appRootService } from './services/appRootService'; // App.tsx（AppRoot）用の処理まとめ
-import { AppRootProvider } from './services/providerService'; // App.tsx（AppRoot）用のプロバイダーまとめ
+import {
+  AppRootEvent, // AppRoot（App.tsx）用の処理まとめ
+  AppRootProvider, // AppRoot（App.tsx）用のプロバイダーまとめ
+} from './services/appRootService';
 
 import type React from 'react';
 
@@ -11,10 +13,10 @@ import type React from 'react';
  * AppRoot
  * ----------------------------------------------- */
 
-appRootService.enableScreens(); // アプリ起動前に呼び出す
+AppRootEvent.enableScreens(); // アプリ起動前に呼び出す
 
 const App: React.FC = () => {
-  appRootService.useSplashDuration(2000); // アプリ起動時、スプラッシュ画像を指定ミリ秒表示する処理
+  AppRootEvent.useSplashDuration(2000); // アプリ起動時、スプラッシュ画像を指定ミリ秒表示する処理
 
   return (
     <AppRootProvider>

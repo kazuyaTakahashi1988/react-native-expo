@@ -2,8 +2,7 @@ import { StyleSheet, View } from 'react-native';
 
 import { styles } from '../../../.storybook/styles.ts';
 import Button from '../../../app/components/button/_button.tsx';
-import { showToast } from '../../../app/components/toast';
-import { ToastProvider } from '../../../app/services/providerService/index.ts';
+import { showToast, ToastProvider } from '../../../app/components/toast';
 
 import type { TypeToastOptions } from '../../../app/lib/types/typeComponents';
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite';

@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { Dialog, subscribeDialog } from '../../components/dialog';
+import Dialog from './_dialog';
+import { subscribeDialog } from './_useDialog';
 
 import type { TypeDialogState, TypeDialogSubscribe } from '../../lib/types/typeComponents';
 
