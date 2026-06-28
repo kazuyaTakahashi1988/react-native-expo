@@ -1,21 +1,25 @@
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 import { useSelector } from 'react-redux';
 
-import { color } from '../../../lib/mixin';
+import { color } from '../../lib/mixin';
 
-import type { TypeSelectorState } from '../../../lib/types/typeService';
+import type { TypeSelectorState } from '../../lib/types/typeService';
 import type React from 'react';
 
 /* -----------------------------------------------
- * ローディングコンポーネント
+ * グローバルローディング
  * ----------------------------------------------- */
 
-const Loading: React.FC = () => {
+const GlobalLoading: React.FC = () => {
   /*
-   * ローディングフラグ取得 & 表示・非表示制御
+   * ローディングフラグ
    */
   const loadingFlagCount = useSelector((state: TypeSelectorState) => state.loadingFlagCount);
-  if (loadingFlagCount <= 0) return null;
+  const visible = loadingFlagCount > 0;
+
+  if (!visible) {
+    return null;
+  }
 
   return (
     <View style={styles.overlay}>
@@ -54,4 +58,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Loading;
+export default GlobalLoading;

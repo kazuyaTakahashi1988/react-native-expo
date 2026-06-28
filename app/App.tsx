@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 
-import { Loading } from './components/layouts/layout';
+import { GlobalLoading } from './components/loading';
 import { Navigation } from './navigation';
 import {
   AppRootEvent, // AppRoot（App.tsx）用の処理まとめ
@@ -20,7 +20,7 @@ const App: React.FC = () => {
 
   return (
     <AppRootProvider>
-      <Loading />
+      <GlobalLoading />
       <Navigation />
       <StatusBar style='auto' />
     </AppRootProvider>
