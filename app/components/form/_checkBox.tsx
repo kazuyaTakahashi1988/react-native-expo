@@ -19,6 +19,7 @@ const CheckBox = <TFieldValues extends FieldValues>({
   errorText,
   label,
   name,
+  onToggle,
   optionListStyle,
   optionRowStyle,
   options,
@@ -79,6 +80,7 @@ const CheckBox = <TFieldValues extends FieldValues>({
               onPress={() => {
                 const toggleValue = getToggleValue(option.value);
                 controller.field.onChange(toggleValue);
+                onToggle?.(toggleValue);
               }}
               style={[styles.checkBoxRow, optionRowStyle]}
             >

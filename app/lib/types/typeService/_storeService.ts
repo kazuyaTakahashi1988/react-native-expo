@@ -5,4 +5,6 @@ export type TypeDispatch = typeof store.dispatch;
 
 export type TypeState = {
   loadingFlagCount: number;
+  exampleString: string;
+  exampleFlag: boolean;
 };

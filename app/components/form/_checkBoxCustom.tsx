@@ -108,6 +108,7 @@ const CheckBoxCustom = <TFieldValues extends FieldValues>({
   errorText,
   label,
   name,
+  onToggle,
   optionListStyle,
   optionRowStyle,
   options,
@@ -157,6 +158,7 @@ const CheckBoxCustom = <TFieldValues extends FieldValues>({
               onToggle={() => {
                 const toggleValue = getToggleValue(option.value);
                 controller.field.onChange(toggleValue);
+                onToggle?.(toggleValue);
               }}
               optionRowStyle={optionRowStyle}
               value={option.value}

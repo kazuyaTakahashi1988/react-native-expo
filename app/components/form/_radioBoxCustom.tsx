@@ -107,6 +107,7 @@ const RadioBoxCustom = <TFieldValues extends FieldValues>({
   errorText,
   label,
   name,
+  onToggle,
   optionListStyle,
   optionRowStyle,
   options,
@@ -148,6 +149,7 @@ const RadioBoxCustom = <TFieldValues extends FieldValues>({
               label={option.label}
               onToggle={() => {
                 controller.field.onChange(option.value);
+                onToggle?.(option.value);
               }}
               optionRowStyle={optionRowStyle}
               value={option.value}

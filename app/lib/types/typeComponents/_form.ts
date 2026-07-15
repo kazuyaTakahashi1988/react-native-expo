@@ -36,6 +36,7 @@ export type TypeCheckBox<TFieldValues extends FieldValues> = {
   containerStyle?: StyleProp<ViewStyle>;
   optionListStyle?: StyleProp<ViewStyle>;
   optionRowStyle?: StyleProp<ViewStyle>;
+  onToggle?: (selectedValues: string[]) => void;
 };
 
 /*
@@ -84,6 +85,7 @@ export type TypeRadioBox<TFieldValues extends FieldValues> = {
   containerStyle?: StyleProp<ViewStyle>;
   optionListStyle?: StyleProp<ViewStyle>;
   optionRowStyle?: StyleProp<ViewStyle>;
+  onToggle?: (selectedValue: string) => void;
 };
 
 /*
@@ -112,6 +114,7 @@ export type TypeSelectBox<TFieldValues extends FieldValues> = {
   triggerStyle?: StyleProp<ViewStyle>;
   valueTextStyle?: StyleProp<TextStyle>;
   placeholderTextStyle?: StyleProp<TextStyle>;
+  onToggle?: (selectedValue: string) => void;
 };
 
 /*

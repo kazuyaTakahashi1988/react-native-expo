@@ -19,6 +19,7 @@ const RadioBox = <TFieldValues extends FieldValues>({
   errorText,
   label,
   name,
+  onToggle,
   optionListStyle,
   optionRowStyle,
   options,
@@ -71,6 +72,7 @@ const RadioBox = <TFieldValues extends FieldValues>({
               key={option.key ?? option.value}
               onPress={() => {
                 controller.field.onChange(option.value);
+                onToggle?.(option.value);
               }}
               style={[styles.radioRow, optionRowStyle]}
             >
