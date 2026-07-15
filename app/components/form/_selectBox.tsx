@@ -32,12 +32,15 @@ const toPickerValue = (value: string): string | null => {
 
 const buildValueChangeHandler = (
   onChange: ((value: string) => void) | undefined,
+  onToggle: ((value: string) => void) | undefined,
 ): ((selected: string | null) => void) => {
   if (!onChange) {
     return () => undefined;
   }
   return (selected: string | null) => {
-    onChange(selected ?? '');
+    const selectedValue = selected ?? '';
+    onChange(selectedValue);
+    onToggle?.(selectedValue);
   };
 };
 
@@ -49,6 +52,7 @@ const SelectBox = <TFieldValues extends FieldValues>({
   errorText,
   label,
   name,
+  onToggle,
   options,
   placeholder = '選択してください',
   placeholderTextStyle,
@@ -73,8 +77,8 @@ const SelectBox = <TFieldValues extends FieldValues>({
   }, []);
 
   const handleValueChange = React.useMemo(
-    () => buildValueChangeHandler(controller.field.onChange),
-    [controller.field.onChange],
+    () => buildValueChangeHandler(controller.field.onChange, onToggle),
+    [controller.field.onChange, onToggle],
   );
 
   /*

@@ -28,7 +28,9 @@ const OptionRow: React.FC<TypeBoxCustomOption> = ({
   isDisabled,
   hasError,
   optionRowStyle,
+  onPress,
   onToggle,
+  ...pressableProps
 }) => {
   const progress = useSharedValue(isSelected ? 1 : 0);
 
@@ -69,10 +71,14 @@ const OptionRow: React.FC<TypeBoxCustomOption> = ({
 
   return (
     <Pressable
+      {...pressableProps}
       accessibilityRole='radio'
       accessibilityState={{ selected: isSelected, disabled: isDisabled }}
       disabled={isDisabled}
-      onPress={onToggle}
+      onPress={(event) => {
+        onToggle();
+        onPress?.(event);
+      }}
       style={[styles.radioRow, optionRowStyle]}
     >
       <AnimatedView
@@ -107,17 +113,21 @@ const RadioBoxCustom = <TFieldValues extends FieldValues>({
   errorText,
   label,
   name,
+  onBlur,
+  onPress,
+  onToggle,
   optionListStyle,
   optionRowStyle,
   options,
   rules,
+  ...pressableProps
 }: TypeRadioBoxCustom<TFieldValues>) => {
   const { controller } = useRHFController({ control, name, rules });
   const hasError = Boolean(errorText);
 
-  const getSelectedValue = (value: unknown): string => {
+  const getSelectedValue = (value: unknown): string | undefined => {
     if (typeof value !== 'string') {
-      return '';
+      return undefined;
     }
     return value;
   };
@@ -141,13 +151,20 @@ const RadioBoxCustom = <TFieldValues extends FieldValues>({
            */
           return (
             <OptionRow
+              {...pressableProps}
               hasError={hasError}
               isDisabled={isDisabled}
               isSelected={isSelected}
               key={option.key ?? option.value}
               label={option.label}
+              onBlur={(event) => {
+                controller.field.onBlur();
+                onBlur?.(event);
+              }}
+              onPress={onPress}
               onToggle={() => {
                 controller.field.onChange(option.value);
+                onToggle?.(option.value);
               }}
               optionRowStyle={optionRowStyle}
               value={option.value}

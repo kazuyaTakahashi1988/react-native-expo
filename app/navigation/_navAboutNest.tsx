@@ -2,6 +2,7 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 
 import { Child00Screen } from '../features/main/about/aboutNest/child00';
 import { Child01Screen } from '../features/main/about/aboutNest/child01';
+import { Child02Screen } from '../features/main/about/aboutNest/child02';
 
 import type { TypeRootList } from '../lib/types/typeNavigation';
 import type React from 'react';
@@ -26,6 +27,11 @@ const NavAboutNest: React.FC = () => {
       {/* Child01 画面 */}
       <MaterialTopTab.Screen name='child01' options={{ title: 'Child01' }}>
         {() => <Child01Screen />}
+      </MaterialTopTab.Screen>
+
+      {/* Child02 画面 */}
+      <MaterialTopTab.Screen name='child02' options={{ title: 'Child02' }}>
+        {() => <Child02Screen />}
       </MaterialTopTab.Screen>
 
       {/* Childxx 画面 */}

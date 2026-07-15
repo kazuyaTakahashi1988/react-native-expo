@@ -28,7 +28,9 @@ const OptionRow: React.FC<TypeBoxCustomOption> = ({
   isDisabled,
   hasError,
   optionRowStyle,
+  onPress,
   onToggle,
+  ...pressableProps
 }) => {
   const progress = useSharedValue(isSelected ? 1 : 0);
 
@@ -69,10 +71,14 @@ const OptionRow: React.FC<TypeBoxCustomOption> = ({
 
   return (
     <Pressable
+      {...pressableProps}
       accessibilityRole='checkbox'
       accessibilityState={{ checked: isSelected, disabled: isDisabled }}
       disabled={isDisabled}
-      onPress={onToggle}
+      onPress={(event) => {
+        onToggle();
+        onPress?.(event);
+      }}
       style={[styles.checkBoxRow, optionRowStyle]}
     >
       <AnimatedView
@@ -108,10 +114,14 @@ const CheckBoxCustom = <TFieldValues extends FieldValues>({
   errorText,
   label,
   name,
+  onBlur,
+  onPress,
+  onToggle,
   optionListStyle,
   optionRowStyle,
   options,
   rules,
+  ...pressableProps
 }: TypeCheckBoxCustom<TFieldValues>) => {
   const { controller } = useRHFController({ control, name, rules });
   const hasError = Boolean(errorText);
@@ -149,14 +159,21 @@ const CheckBoxCustom = <TFieldValues extends FieldValues>({
            */
           return (
             <OptionRow
+              {...pressableProps}
               hasError={hasError}
               isDisabled={isDisabled}
               isSelected={isSelected}
               key={option.key ?? option.value}
               label={option.label}
+              onBlur={(event) => {
+                controller.field.onBlur();
+                onBlur?.(event);
+              }}
+              onPress={onPress}
               onToggle={() => {
                 const toggleValue = getToggleValue(option.value);
                 controller.field.onChange(toggleValue);
+                onToggle?.(toggleValue);
               }}
               optionRowStyle={optionRowStyle}
               value={option.value}

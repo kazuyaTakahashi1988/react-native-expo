@@ -40,6 +40,7 @@ const Linking: LinkingOptions<{
                 screens: {
                   child00: '',
                   child01: 'child01',
+                  child02: 'child02',
                 },
               },
             },

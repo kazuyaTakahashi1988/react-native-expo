@@ -8,8 +8,8 @@ import type { TypeState } from '../../lib/types/typeService';
 
 const initialState: TypeState = {
   loadingFlagCount: 0,
-  // dummyString: '',
-  // dummyFlag: false,
+  exampleString: '',
+  exampleFlag: false,
 };
 
 const appSlice = createSlice({
@@ -22,20 +22,16 @@ const appSlice = createSlice({
     loadingFlagDown: (state: TypeState) => {
       state.loadingFlagCount = Math.max(0, state.loadingFlagCount - 1);
     },
-    // dummyStringSet: (state: TypeState, action: { payload: string }) => {
-    //   state.dummyString = action.payload;
-    // },
-    // dummyFlagSet: (state: TypeState, action: { payload: boolean }) => {
-    //   state.dummyFlag = action.payload;
-    // },
+    exampleStringSet: (state: TypeState, action: { payload: string }) => {
+      state.exampleString = action.payload;
+    },
+    exampleFlagSet: (state: TypeState, action: { payload: boolean }) => {
+      state.exampleFlag = action.payload;
+    },
   },
 });
 
-export const {
-  loadingFlagUp,
-  loadingFlagDown,
-  // dummyStringSet,
-  // dummyFlagSet
-} = appSlice.actions;
+export const { loadingFlagUp, loadingFlagDown, exampleStringSet, exampleFlagSet } =
+  appSlice.actions;
 
 export const store = configureStore({ reducer: appSlice.reducer });

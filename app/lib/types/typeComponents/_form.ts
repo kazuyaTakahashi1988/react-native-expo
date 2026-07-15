@@ -1,6 +1,11 @@
 import type { Control, FieldValues, Path, RegisterOptions } from 'react-hook-form';
-import type { StyleProp, TextInputProps, TextStyle, ViewStyle } from 'react-native';
+import type { PressableProps, StyleProp, TextInputProps, TextStyle, ViewStyle } from 'react-native';
 import type { Item } from 'react-native-picker-select';
+
+type TypeBoxPressableProps = Omit<
+  PressableProps,
+  'accessibilityRole' | 'accessibilityState' | 'children' | 'disabled' | 'style'
+>;
 
 /*
  * type チェック・ラヂオ（カスタム含む）ボックス項目 共通
@@ -20,7 +25,7 @@ export type TypeBoxCustomOption = {
   hasError: boolean;
   optionRowStyle?: StyleProp<ViewStyle>;
   onToggle: () => void;
-};
+} & TypeBoxPressableProps;
 
 /*
  * type チェックボックス項目
@@ -36,7 +41,8 @@ export type TypeCheckBox<TFieldValues extends FieldValues> = {
   containerStyle?: StyleProp<ViewStyle>;
   optionListStyle?: StyleProp<ViewStyle>;
   optionRowStyle?: StyleProp<ViewStyle>;
-};
+  onToggle?: (selectedValues: string[]) => void;
+} & TypeBoxPressableProps;
 
 /*
  * type チェックボックスカスタム項目
@@ -84,7 +90,8 @@ export type TypeRadioBox<TFieldValues extends FieldValues> = {
   containerStyle?: StyleProp<ViewStyle>;
   optionListStyle?: StyleProp<ViewStyle>;
   optionRowStyle?: StyleProp<ViewStyle>;
-};
+  onToggle?: (selectedValue: string) => void;
+} & TypeBoxPressableProps;
 
 /*
  * type ラヂオボックスカスタム項目
@@ -112,6 +119,7 @@ export type TypeSelectBox<TFieldValues extends FieldValues> = {
   triggerStyle?: StyleProp<ViewStyle>;
   valueTextStyle?: StyleProp<TextStyle>;
   placeholderTextStyle?: StyleProp<TextStyle>;
+  onToggle?: (selectedValue: string) => void;
 };
 
 /*
