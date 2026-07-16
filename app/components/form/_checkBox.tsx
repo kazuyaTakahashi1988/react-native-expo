@@ -19,11 +19,14 @@ const CheckBox = <TFieldValues extends FieldValues>({
   errorText,
   label,
   name,
+  onBlur,
+  onPress,
   onToggle,
   optionListStyle,
   optionRowStyle,
   options,
   rules,
+  ...pressableProps
 }: TypeCheckBox<TFieldValues>) => {
   const { controller } = useRHFController({ control, name, rules });
   const hasError = Boolean(errorText);
@@ -73,14 +76,20 @@ const CheckBox = <TFieldValues extends FieldValues>({
           const isDisabled = getIsOptionDisabled(option.disabled, disabled);
           return (
             <Pressable
+              {...pressableProps}
               accessibilityRole='checkbox'
               accessibilityState={{ checked: isSelected }}
               disabled={isDisabled}
               key={option.key ?? option.value}
-              onPress={() => {
+              onBlur={(event) => {
+                controller.field.onBlur();
+                onBlur?.(event);
+              }}
+              onPress={(event) => {
                 const toggleValue = getToggleValue(option.value);
                 controller.field.onChange(toggleValue);
                 onToggle?.(toggleValue);
+                onPress?.(event);
               }}
               style={[styles.checkBoxRow, optionRowStyle]}
             >

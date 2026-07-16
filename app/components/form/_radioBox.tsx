@@ -19,11 +19,14 @@ const RadioBox = <TFieldValues extends FieldValues>({
   errorText,
   label,
   name,
+  onBlur,
+  onPress,
   onToggle,
   optionListStyle,
   optionRowStyle,
   options,
   rules,
+  ...pressableProps
 }: TypeRadioBox<TFieldValues>) => {
   const { controller } = useRHFController({ control, name, rules });
   const hasError = Boolean(errorText);
@@ -66,13 +69,19 @@ const RadioBox = <TFieldValues extends FieldValues>({
           const isDisabled = getIsOptionDisabled(option.disabled, disabled);
           return (
             <Pressable
+              {...pressableProps}
               accessibilityRole='radio'
               accessibilityState={{ selected: isSelected }}
               disabled={isDisabled}
               key={option.key ?? option.value}
-              onPress={() => {
+              onBlur={(event) => {
+                controller.field.onBlur();
+                onBlur?.(event);
+              }}
+              onPress={(event) => {
                 controller.field.onChange(option.value);
                 onToggle?.(option.value);
+                onPress?.(event);
               }}
               style={[styles.radioRow, optionRowStyle]}
             >
