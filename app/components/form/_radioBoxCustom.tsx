@@ -125,9 +125,9 @@ const RadioBoxCustom = <TFieldValues extends FieldValues>({
   const { controller } = useRHFController({ control, name, rules });
   const hasError = Boolean(errorText);
 
-  const getSelectedValue = (value: unknown): string => {
+  const getSelectedValue = (value: unknown): string | undefined => {
     if (typeof value !== 'string') {
-      return '';
+      return undefined;
     }
     return value;
   };
