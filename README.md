@@ -25,8 +25,8 @@ cd react-native-expo
 <sub># node バージョンを確認するコマンド</sub>
 
 ```bash
-node -v
 # v24.x であることを確認する
+node -v
 ```
 
 <sub># node モジュールをDLするコマンド</sub>
@@ -58,7 +58,8 @@ Open <a href="http://localhost:8081" target="_blank">http://localhost:8081</a> i
 <sub># node モジュールをDLするコマンド</sub>
 
 ```bash
-yarn install # 上述 ① の手順を終えてるなら必要なし
+# 上述 ① の手順を終えてるなら必要なし
+yarn install
 ```
 
 <sub># storybook を起動するコマンド</sub>
