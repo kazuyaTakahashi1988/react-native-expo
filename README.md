@@ -8,20 +8,44 @@
 <img width="25%" height="auto" alt="0x0ss-1" src="https://github.com/user-attachments/assets/0021d4e8-32d7-4ac3-bc38-5a46a98b47e1" />　<img width="25%" height="auto" alt="0x0ss" src="https://github.com/user-attachments/assets/4ac9773c-752c-4a10-be5e-d8ae9fc80361" />
 <br><br>
 
-# ① node v24.x 下で yarn install & yarn start
+# ① 初回セットアップ ( node v24.x )
 
+<sub># git clone でこのアプリのソースをダウンロードするコマンド</sub>
+
+```bash
+git clone https://github.com/kazuyaTakahashi1988/react-native-expo.git
 ```
-$ node -v
-v24.x
 
-$ yarn install
-$ cp .env.sample .env
-$ yarn start
-~~~
-› Press w │ open web
-~~~
+<sub># このアプリのソースがある階層に移動するコマンド</sub>
 
-※ EXPO GO （無料アプリ）インストール済みの方は、表示されたQRコード読み込みでスマホ確認可
+```bash
+cd react-native-expo
+```
+
+<sub># node バージョンを確認するコマンド</sub>
+
+```bash
+node -v
+# v24.x であることを確認する
+```
+
+<sub># node モジュールをDLするコマンド</sub>
+
+```bash
+yarn install
+```
+
+<sub># 環境変数ファイル（サンプル用）をコピーするコマンド</sub>
+
+```bash
+cp .env.sample .env
+```
+
+<sub># アプリを起動するコマンド</sub>
+
+```bash
+yarn start
+# EXPO GO （無料アプリ）インストール済みの方は、表示されたQRコード読み込みでスマホ確認可
 ```
 
 ↓↓↓↓<br>
@@ -31,41 +55,52 @@ Open <a href="http://localhost:8081" target="_blank">http://localhost:8081</a> i
 
 # ② storybook を利用する場合
 
+<sub># node モジュールをDLするコマンド</sub>
+
+```bash
+yarn install # 上述 ① の手順を終えてるなら必要なし
 ```
-$ yarn install // ←上述①の手順を終えてるなら必要なし
-$ yarn storybook
+
+<sub># storybook を起動するコマンド</sub>
+
+```bash
+yarn storybook
 ```
 
 ↓↓↓↓<br>
 
-Open <a href="http://localhost:6006" target="_blank">http://localhost:6006</a> in your browser<br>
+Open <a href="http://localhost:6006" target="_blank">http://localhost:6006</a> in your browser
 <br>
 
-```
-$ yarn build-storybook // ビルドコマンド
-```
-
-↓↓↓↓ ビルド成果物（GitHub Actionsでビルド・ホスティングしたもの）<br>
+<sub>ビルド成果物（GitHub Actionsでホスティング済みのもの）
 <br>
-Open <a href="https://storybook-for-expo.empty-service.com" target="_blank">https://storybook-for-expo.empty-service.com</a><br>
+Open <a href="https://storybook-for-expo.empty-service.com" target="_blank">https://storybook-for-expo.empty-service.com</a></sub><br>
 <br>
 
 # ③ EAS Build する場合
 
-以下、要必要<br>
+以下、要必須<br>
 ・ローカルに eas-cli インストール済み<br>
 ・Expoアカウント取得済み（かつ eas login コマンドでログイン済み）<br>
 ・Ios： Apple ID（←有償のApple Developer Programと紐付いたもの）取得済み<br>
-<br>
 
+<sub># 自分のExpoアカウント用のプロジェクトを作成するコマンド</sub>
+
+```bash
+eas init
 ```
-$ eas init // 自分のExpoアカウント用のプロジェクトを作成
 
-Iosの場合（Apple IDの認証など求められます）
-$ eas build --platform ios --profile development
+<sub># Ios で EAS Build するコマンド</sub>
 
-Androidの場合
-$ eas build --platform android --profile development
+```bash
+# Apple IDの認証など求められます
+eas build --platform ios --profile development
+```
+
+<sub># Android で EAS Build するコマンド</sub>
+
+```bash
+eas build --platform android --profile development
 ```
 
 <br>
