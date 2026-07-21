@@ -9,7 +9,9 @@ import type { TypeAuthContext } from '../../lib/types/typeService';
 
 export const AuthContext = React.createContext<TypeAuthContext | null>(null);
 
-export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
+export const AuthProvider: React.FC<React.PropsWithChildren> = ({
+  children,
+}) => {
   const [isSignedIn, setIsSignedIn] = React.useState(false); // Authフラグ
 
   /*

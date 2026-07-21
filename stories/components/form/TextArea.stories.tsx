@@ -35,7 +35,8 @@ const meta = {
     },
     rules: {
       control: { type: 'object' },
-      description: 'react-hook-form 用の バリデーションルール \n\n Set 例：{ "required": true }',
+      description:
+        'react-hook-form 用の バリデーションルール \n\n Set 例：{ "required": true }',
     },
     containerStyle: {
       control: { type: 'object' },
@@ -44,7 +45,8 @@ const meta = {
     },
     style: {
       control: { type: 'object' },
-      description: 'TextInput 自体のスタイル \n\n Set例：{ "padding": 20, "borderRadius": 50 }',
+      description:
+        'TextInput 自体のスタイル \n\n Set例：{ "padding": 20, "borderRadius": 50 }',
     },
     disabled: {
       control: { type: 'boolean' },

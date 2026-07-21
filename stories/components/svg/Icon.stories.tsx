@@ -8,8 +8,10 @@ import type { Meta, StoryObj } from '@storybook/react-native-web-vite';
 import type React from 'react';
 
 // false positive で、コードは安全のため、ESLint例外処置
-/* eslint-disable-next-line sonarjs/null-dereference */
-const iconEntries = Object.entries(Icons).sort(([a], [b]) => a.localeCompare(b));
+const iconEntries = Object.entries(Icons).sort(([a], [b]) =>
+  /* eslint-disable-next-line sonarjs/null-dereference */
+  a.localeCompare(b),
+);
 
 const iconUsageSnippet = `import { ${iconEntries.map(([name]) => name).join(', ')} } from '../../../app/components/svg/icon';
 

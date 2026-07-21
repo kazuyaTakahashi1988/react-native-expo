@@ -18,7 +18,9 @@ const InformationScreen: React.FC<TypeInformationScreen> = (props) => {
       <Button
         containerStyle={styles.buttonSpacing}
         onPress={() => {
-          void Linking.openURL('https://github.com/kazuyaTakahashi1988/react-native-expo');
+          void Linking.openURL(
+            'https://github.com/kazuyaTakahashi1988/react-native-expo',
+          );
         }}
         title='Go to GitHub Repository'
       />

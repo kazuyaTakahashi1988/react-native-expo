@@ -16,8 +16,10 @@ const escapeSingleQuotes = (text: string | null | undefined): string => {
   return String(text).replace("'", "\\'");
 };
 
-const normalizeStringOption = (value: string | undefined, fallback: string): string =>
-  typeof value === 'string' ? value : fallback;
+const normalizeStringOption = (
+  value: string | undefined,
+  fallback: string,
+): string => (typeof value === 'string' ? value : fallback);
 
 const normalizeDuration = (value: number | null | undefined): string | null => {
   if (value == null || typeof value !== 'number') {
@@ -27,10 +29,15 @@ const normalizeDuration = (value: number | null | undefined): string | null => {
   return String(value);
 };
 
-const formatToastOptions = (args: Partial<TypeToastOptions> | undefined): string => {
+const formatToastOptions = (
+  args: Partial<TypeToastOptions> | undefined,
+): string => {
   const safeArgs = args ?? {};
-  const safeArgsMessage = typeof safeArgs.message === 'string' ? safeArgs.message : '<></>';
-  const normalizedMessage = escapeSingleQuotes(normalizeStringOption(safeArgsMessage, ''));
+  const safeArgsMessage =
+    typeof safeArgs.message === 'string' ? safeArgs.message : '<></>';
+  const normalizedMessage = escapeSingleQuotes(
+    normalizeStringOption(safeArgsMessage, ''),
+  );
   const normalizedPosition = normalizeStringOption(safeArgs.position, 'bottom');
   const normalizedVariant = normalizeStringOption(safeArgs.variant, 'default');
   const normalizedDuration = normalizeDuration(safeArgs.duration);

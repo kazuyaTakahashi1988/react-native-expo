@@ -27,13 +27,19 @@ export const useRHFController = <TFieldValues extends FieldValues>(params: {
   const { control: fallbackControl } = useForm<TFieldValues>({
     defaultValues: {} as DefaultValues<TFieldValues>,
   });
-  const fallbackNameRef = React.useRef<Path<TFieldValues>>(FALLBACK_NAME as Path<TFieldValues>);
+  const fallbackNameRef = React.useRef<Path<TFieldValues>>(
+    FALLBACK_NAME as Path<TFieldValues>,
+  );
 
   const isActive = Boolean(params.control && params.name);
 
   const controller = useController<TFieldValues>({
-    control: (isActive ? params.control : fallbackControl) as Control<TFieldValues>,
-    name: (isActive ? params.name : fallbackNameRef.current) as Path<TFieldValues>,
+    control: (isActive
+      ? params.control
+      : fallbackControl) as Control<TFieldValues>,
+    name: (isActive
+      ? params.name
+      : fallbackNameRef.current) as Path<TFieldValues>,
     rules: params.rules,
   });
 

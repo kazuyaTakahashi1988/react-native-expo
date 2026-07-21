@@ -1,4 +1,9 @@
-import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet } from 'react-native';
+import {
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  StyleSheet,
+} from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { color } from '../../../lib/mixin';
@@ -21,7 +26,10 @@ const Layout: React.FC<TypeLayout> = (props) => {
       keyboardVerticalOffset={isIOS ? top : 0}
       style={styles.container}
     >
-      <ScrollView contentContainerStyle={styles.children} keyboardShouldPersistTaps='handled'>
+      <ScrollView
+        contentContainerStyle={styles.children}
+        keyboardShouldPersistTaps='handled'
+      >
         {children}
       </ScrollView>
     </KeyboardAvoidingView>

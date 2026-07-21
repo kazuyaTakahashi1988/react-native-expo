@@ -51,7 +51,10 @@ const NavMain: React.FC = () => {
            * ------------------------------------- */
           () => (
             <NativeStack.Navigator>
-              <NativeStack.Screen name='homeNest' options={{ headerShown: false }}>
+              <NativeStack.Screen
+                name='homeNest'
+                options={{ headerShown: false }}
+              >
                 {
                   /* homeNest（Home配下） 各画面 */
                   () => <NavHomeNest />
@@ -78,7 +81,10 @@ const NavMain: React.FC = () => {
            * ------------------------------------- */
           () => (
             <NativeStack.Navigator>
-              <NativeStack.Screen name='aboutNest' options={{ headerShown: false }}>
+              <NativeStack.Screen
+                name='aboutNest'
+                options={{ headerShown: false }}
+              >
                 {
                   /* aboutNest（About配下） 各画面 */
                   () => <NavAboutNest />
@@ -144,6 +150,9 @@ const bottomTabStyles: BottomTabNavigationOptions = {
   tabBarLabelStyle: { fontSize: 12, fontWeight: '600' },
 };
 // last-childに対するスタイル
-const tabBarItemStyleLastChild = [bottomTabStyles.tabBarItemStyle, { borderRightWidth: 0 }];
+const tabBarItemStyleLastChild = [
+  bottomTabStyles.tabBarItemStyle,
+  { borderRightWidth: 0 },
+];
 
 export default NavMain;

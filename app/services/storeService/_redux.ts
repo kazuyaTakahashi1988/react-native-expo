@@ -31,7 +31,11 @@ const appSlice = createSlice({
   },
 });
 
-export const { loadingFlagUp, loadingFlagDown, exampleStringSet, exampleFlagSet } =
-  appSlice.actions;
+export const {
+  loadingFlagUp,
+  loadingFlagDown,
+  exampleStringSet,
+  exampleFlagSet,
+} = appSlice.actions;
 
 export const store = configureStore({ reducer: appSlice.reducer });

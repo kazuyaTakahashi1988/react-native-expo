@@ -1,5 +1,12 @@
 import React from 'react';
-import { Keyboard, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
+import {
+  Keyboard,
+  Platform,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 
 import ErrorText from './_errorText';
@@ -67,7 +74,9 @@ const SelectBox = <TFieldValues extends FieldValues>({
   const hasError = Boolean(errorText);
   const isDisabled = disabled;
 
-  const selectedOption = options.find((option) => option.value === selectedValue);
+  const selectedOption = options.find(
+    (option) => option.value === selectedValue,
+  );
   const isPlaceholder = selectedOption == null;
   const displayLabel = selectedOption?.label ?? placeholder;
 

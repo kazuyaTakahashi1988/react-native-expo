@@ -60,7 +60,9 @@ const Child02Screen: React.FC = () => {
 
   return (
     <Layout>
-      <Text style={styles.title}>API Service & react-hook-form{`\n`}Example</Text>
+      <Text style={styles.title}>
+        API Service & react-hook-form{`\n`}Example
+      </Text>
 
       <View style={styles.category}>
         {/* taxCategory01 チェックボックス項目 */}
@@ -155,7 +157,12 @@ const Child02Screen: React.FC = () => {
         : null}
 
       {/* reset ボタン */}
-      <Button onPress={onReset} pattern='secondary' style={styles.button} title='Reset' />
+      <Button
+        onPress={onReset}
+        pattern='secondary'
+        style={styles.button}
+        title='Reset'
+      />
     </Layout>
   );
 };

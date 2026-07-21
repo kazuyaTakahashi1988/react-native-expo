@@ -14,7 +14,9 @@ const GlobalLoading: React.FC = () => {
   /*
    * ローディングフラグ
    */
-  const loadingFlagCount = useSelector((state: TypeSelectorState) => state.loadingFlagCount);
+  const loadingFlagCount = useSelector(
+    (state: TypeSelectorState) => state.loadingFlagCount,
+  );
   const visible = loadingFlagCount > 0;
 
   if (!visible) {

@@ -39,7 +39,8 @@ const meta = {
     },
     rules: {
       control: { type: 'object' },
-      description: 'react-hook-form 用の バリデーションルール \n\n Set 例：{ "required": true }',
+      description:
+        'react-hook-form 用の バリデーションルール \n\n Set 例：{ "required": true }',
     },
     containerStyle: {
       control: { type: 'object' },

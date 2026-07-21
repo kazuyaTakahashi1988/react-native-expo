@@ -3,7 +3,10 @@ import React from 'react';
 import Toast from './_toast';
 import { subscribeToast } from './_useToast';
 
-import type { TypeToastState, TypeToastSubscribe } from '../../lib/types/typeComponents';
+import type {
+  TypeToastState,
+  TypeToastSubscribe,
+} from '../../lib/types/typeComponents';
 
 /* -----------------------------------------------
  * Toast用 プロバイダー
@@ -11,7 +14,9 @@ import type { TypeToastState, TypeToastSubscribe } from '../../lib/types/typeCom
 
 const ToastProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
   const hideAnimationDuration = 250;
-  const [toastStates, setToastStates] = React.useState<Array<TypeToastState & { id: number }>>([]);
+  const [toastStates, setToastStates] = React.useState<
+    Array<TypeToastState & { id: number }>
+  >([]);
   const toastIdRef = React.useRef(0);
 
   /*
@@ -19,7 +24,9 @@ const ToastProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
    * - setToastStates を使用して、すべてのトーストの visible プロパティを false に更新する。
    */
   const hideAllToasts = React.useCallback(() => {
-    setToastStates((prev) => prev.map((toast) => ({ ...toast, visible: false })));
+    setToastStates((prev) =>
+      prev.map((toast) => ({ ...toast, visible: false })),
+    );
   }, []);
 
   /*
@@ -77,7 +84,9 @@ const ToastProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
   const handleHideToast = React.useCallback(
     (toastId: number) => {
       setToastStates((prev) =>
-        prev.map((toast) => (toast.id === toastId ? { ...toast, visible: false } : toast)),
+        prev.map((toast) =>
+          toast.id === toastId ? { ...toast, visible: false } : toast,
+        ),
       );
 
       setTimeout(() => {

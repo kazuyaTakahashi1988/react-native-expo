@@ -6,7 +6,10 @@ import { color as mixinColor } from '../../../lib/mixin';
 import type { TypeIcon } from '../../../lib/types/typeComponents';
 import type React from 'react';
 
-const IconLogin: React.FC<TypeIcon> = ({ color = mixinColor.gray, size = 24 }) => {
+const IconLogin: React.FC<TypeIcon> = ({
+  color = mixinColor.gray,
+  size = 24,
+}) => {
   const styles = StyleSheet.create({
     svgColor: {
       backgroundColor: mixinColor.white,
@@ -15,7 +18,12 @@ const IconLogin: React.FC<TypeIcon> = ({ color = mixinColor.gray, size = 24 }) =
   });
 
   return (
-    <Svg height={size} style={styles.svgColor} viewBox='0 0 512 512' width={size}>
+    <Svg
+      height={size}
+      style={styles.svgColor}
+      viewBox='0 0 512 512'
+      width={size}
+    >
       <Path
         d='M332.933,213.451c-20.713,17.784-47.559,28.624-76.938,28.624c-29.37,0-56.224-10.84-76.928-28.624
 		c-54.991,20.952-92.686,66.126-92.686,132.094v98.082c0,0,14.505,19.331,45.864,37.437v-69.339h28.992v83.228

@@ -22,7 +22,9 @@ import type { TypeFormValues } from './_type';
  * ----------------------------------------------- */
 
 const Child00Screen: React.FC = () => {
-  const [formValues, setFormValues] = React.useState<TypeFormValues | null>(null);
+  const [formValues, setFormValues] = React.useState<TypeFormValues | null>(
+    null,
+  );
 
   /*
    * RHForm 使用設定

@@ -30,7 +30,9 @@ const ToastMessage = ({ message }: Pick<TypeToast, 'message'>) => {
   }
 
   const isTypeString = typeof message === 'string';
-  return <Text {...(isTypeString && { style: styles.toastText })}>{message}</Text>;
+  return (
+    <Text {...(isTypeString && { style: styles.toastText })}>{message}</Text>
+  );
 };
 
 /*
@@ -49,7 +51,10 @@ const useToastController = ({
   onHide,
   onShow,
   position,
-}: Pick<TypeToast, 'visible' | 'duration' | 'onHide' | 'onShow' | 'position'>) => {
+}: Pick<
+  TypeToast,
+  'visible' | 'duration' | 'onHide' | 'onShow' | 'position'
+>) => {
   const opacity = useSharedValue(0);
   const [mounted, setMounted] = React.useState(visible);
 
@@ -154,9 +159,14 @@ const Toast = ({
   } as const satisfies TypeVariantStyle;
 
   return (
-    <View pointerEvents='none' style={[StyleSheet.absoluteFillObject, styles.container]}>
+    <View
+      pointerEvents='none'
+      style={[StyleSheet.absoluteFillObject, styles.container]}
+    >
       <View style={[styles.positionBase, positionStyle[position]]}>
-        <Animated.View style={[styles.toast, variantStyle[variant], animatedStyle]}>
+        <Animated.View
+          style={[styles.toast, variantStyle[variant], animatedStyle]}
+        >
           {/*
            * メッセージ箇所
            */}

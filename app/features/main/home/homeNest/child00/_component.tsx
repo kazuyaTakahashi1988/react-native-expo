@@ -18,7 +18,8 @@ export const ResultArea: React.FC<TypeResultArea> = (formValues) => {
     return null;
   }
 
-  const { name, genres, inquiry, payment, theme, address, description } = formValues;
+  const { name, genres, inquiry, payment, theme, address, description } =
+    formValues;
 
   return (
     <View style={styles.result}>

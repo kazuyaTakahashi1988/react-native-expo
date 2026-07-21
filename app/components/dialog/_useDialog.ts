@@ -1,4 +1,7 @@
-import type { TypeDialogOptions, TypeDialogSubscribe } from '../../lib/types/typeComponents';
+import type {
+  TypeDialogOptions,
+  TypeDialogSubscribe,
+} from '../../lib/types/typeComponents';
 
 /* -----------------------------------------------
  * Dialogを使用する際の関数
@@ -7,7 +10,9 @@ import type { TypeDialogOptions, TypeDialogSubscribe } from '../../lib/types/typ
 const subscribers = new Set<(options: TypeDialogSubscribe) => void>();
 
 // Dialogプロバイダー用
-export const subscribeDialog = (subscriber: (options: TypeDialogSubscribe) => void) => {
+export const subscribeDialog = (
+  subscriber: (options: TypeDialogSubscribe) => void,
+) => {
   subscribers.add(subscriber);
   return () => {
     subscribers.delete(subscriber);

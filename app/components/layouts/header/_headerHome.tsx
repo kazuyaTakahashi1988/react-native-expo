@@ -38,7 +38,10 @@ const HeaderHome: React.FC<TypeHeaderHome> = (props) => {
             goToAuth();
           }}
         >
-          <IconLogin {...(isSignedIn && { color: color.secondary })} size={34} />
+          <IconLogin
+            {...(isSignedIn && { color: color.secondary })}
+            size={34}
+          />
         </Pressable>
       </View>
     </View>

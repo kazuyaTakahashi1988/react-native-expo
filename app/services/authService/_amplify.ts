@@ -23,10 +23,12 @@ const isObject = (value: unknown): value is Record<string, unknown> =>
   typeof value === 'object' && value !== null;
 
 const isSignInResponse = (value: unknown): value is TypeSignInResult =>
-  isObject(value) && ('isSignedIn' in value || 'nextStep' in value || 'userId' in value);
+  isObject(value) &&
+  ('isSignedIn' in value || 'nextStep' in value || 'userId' in value);
 
 const isSignUpResponse = (value: unknown): value is TypeSignUpResult =>
-  isObject(value) && ('isSignUpComplete' in value || 'nextStep' in value || 'userId' in value);
+  isObject(value) &&
+  ('isSignUpComplete' in value || 'nextStep' in value || 'userId' in value);
 
 /* -----------------------------------------------
  * Amplify および Cognito Auth 処理
@@ -35,13 +37,15 @@ const isSignUpResponse = (value: unknown): value is TypeSignUpResult =>
 /*
  * Amplify 設定
  */
-const amplifyClient: TypeAmplifyClient = Amplify as unknown as TypeAmplifyClient;
+const amplifyClient: TypeAmplifyClient =
+  Amplify as unknown as TypeAmplifyClient;
 
 const authConfig: TypeAuthConfig = {
   Auth: {
     Cognito: {
       userPoolId: (process.env.EXPO_PUBLIC_AUTH_USER_POOL_ID ?? '') as string,
-      userPoolClientId: (process.env.EXPO_PUBLIC_AUTH_USER_POOL_CLIENT_ID ?? '') as string,
+      userPoolClientId: (process.env.EXPO_PUBLIC_AUTH_USER_POOL_CLIENT_ID ??
+        '') as string,
       loginWith: { email: true },
     },
   },
@@ -65,7 +69,9 @@ export const useAuth = () => {
 /*
  * Sign In 処理
  */
-export const signIn = async (values: TypeSignInValues): Promise<TypeSignInResult> => {
+export const signIn = async (
+  values: TypeSignInValues,
+): Promise<TypeSignInResult> => {
   const result: unknown = await cognitoSignIn({
     username: values.email,
     password: values.password,
@@ -84,7 +90,9 @@ export const signIn = async (values: TypeSignInValues): Promise<TypeSignInResult
 /*
  * Sign Up 処理
  */
-export const signUp = async (values: TypeSignUpValues): Promise<TypeSignUpResult> => {
+export const signUp = async (
+  values: TypeSignUpValues,
+): Promise<TypeSignUpResult> => {
   const result: unknown = await cognitoSignUp({
     username: values.email,
     password: values.password,
@@ -106,7 +114,10 @@ export const signUp = async (values: TypeSignUpValues): Promise<TypeSignUpResult
  * Verify 処理
  */
 export const verify = async (values: TypeVerifyValues): Promise<void> => {
-  await confirmSignUp({ username: values.email, confirmationCode: values.verificationCode });
+  await confirmSignUp({
+    username: values.email,
+    confirmationCode: values.verificationCode,
+  });
 };
 
 /*
