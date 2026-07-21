@@ -3,7 +3,12 @@ import axios from 'axios';
 import { loadingFlagDown, loadingFlagUp, store } from '../storeService';
 
 import type { TypeOptions, TypeParams } from '../../lib/types/typeService';
-import type { AxiosError, AxiosRequestConfig, AxiosResponse, Method } from 'axios';
+import type {
+  AxiosError,
+  AxiosRequestConfig,
+  AxiosResponse,
+  Method,
+} from 'axios';
 
 /* -----------------------------------------------
  * axios および API 処理
@@ -45,7 +50,9 @@ const execute = async <TResponse = unknown, TRequest = unknown>(
     return {
       Accept: 'application/json',
       'Content-Type': 'application/json',
-      ...(bearerToken != null ? { Authorization: `Bearer ${bearerToken}` } : {}),
+      ...(bearerToken != null
+        ? { Authorization: `Bearer ${bearerToken}` }
+        : {}),
       ...headers,
     };
   };

@@ -1,5 +1,16 @@
-import type { Control, FieldValues, Path, RegisterOptions } from 'react-hook-form';
-import type { PressableProps, StyleProp, TextInputProps, TextStyle, ViewStyle } from 'react-native';
+import type {
+  Control,
+  FieldValues,
+  Path,
+  RegisterOptions,
+} from 'react-hook-form';
+import type {
+  PressableProps,
+  StyleProp,
+  TextInputProps,
+  TextStyle,
+  ViewStyle,
+} from 'react-native';
 import type { Item } from 'react-native-picker-select';
 
 type TypeBoxPressableProps = Omit<
@@ -47,7 +58,8 @@ export type TypeCheckBox<TFieldValues extends FieldValues> = {
 /*
  * type チェックボックスカスタム項目
  */
-export type TypeCheckBoxCustom<TFieldValues extends FieldValues> = TypeCheckBox<TFieldValues>;
+export type TypeCheckBoxCustom<TFieldValues extends FieldValues> =
+  TypeCheckBox<TFieldValues>;
 
 /*
  * type エラーテキスト
@@ -96,7 +108,8 @@ export type TypeRadioBox<TFieldValues extends FieldValues> = {
 /*
  * type ラヂオボックスカスタム項目
  */
-export type TypeRadioBoxCustom<TFieldValues extends FieldValues> = TypeRadioBox<TFieldValues>;
+export type TypeRadioBoxCustom<TFieldValues extends FieldValues> =
+  TypeRadioBox<TFieldValues>;
 
 /*
  * type セレクトボックス項目
@@ -125,4 +138,5 @@ export type TypeSelectBox<TFieldValues extends FieldValues> = {
 /*
  * type テキストエリア項目
  */
-export type TypeTextArea<TFieldValues extends FieldValues> = TypeInput<TFieldValues>;
+export type TypeTextArea<TFieldValues extends FieldValues> =
+  TypeInput<TFieldValues>;

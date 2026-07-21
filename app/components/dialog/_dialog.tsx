@@ -96,7 +96,9 @@ const DialogBottom = ({
 
   return (
     <View style={styles.dialogBottom}>
-      {isCloseText ? <Button onPress={onClose} pattern='secondary' title={closeText} /> : null}
+      {isCloseText ? (
+        <Button onPress={onClose} pattern='secondary' title={closeText} />
+      ) : null}
       {isEventText ? <Button onPress={onEvent} title={eventText} /> : null}
     </View>
   );
@@ -138,7 +140,12 @@ const Dialog = ({
   }));
 
   return (
-    <Modal animationType='none' onRequestClose={onClose} transparent visible={visible}>
+    <Modal
+      animationType='none'
+      onRequestClose={onClose}
+      transparent
+      visible={visible}
+    >
       <Animated.View style={[styles.container, { zIndex }, animatedStyle]}>
         {/*
          * 透過背景

@@ -39,7 +39,10 @@ const RadioBox = <TFieldValues extends FieldValues>({
   };
   const selectedValue = getSelectedValue(controller.field.value);
 
-  const getIsOptionDisabled = (optionDisabled: boolean | undefined, disabled: boolean): boolean => {
+  const getIsOptionDisabled = (
+    optionDisabled: boolean | undefined,
+    disabled: boolean,
+  ): boolean => {
     return optionDisabled === true || disabled;
   };
 
@@ -92,9 +95,13 @@ const RadioBox = <TFieldValues extends FieldValues>({
                   isDisabled ? styles.radioBoxDisabled : null,
                 ]}
               >
-                {isSelected ? <View style={getOptionInnerStyle(isDisabled)} /> : null}
+                {isSelected ? (
+                  <View style={getOptionInnerStyle(isDisabled)} />
+                ) : null}
               </View>
-              <Text style={getOptionLabelStyle(isDisabled)}>{option.label}</Text>
+              <Text style={getOptionLabelStyle(isDisabled)}>
+                {option.label}
+              </Text>
             </Pressable>
           );
         })}

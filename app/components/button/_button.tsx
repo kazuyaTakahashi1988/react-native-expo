@@ -51,7 +51,15 @@ const Button = ({
         onPress={onPress}
         style={[styles.button, styleOption[stylePattern].button, style]}
       >
-        <Text style={[styles.text, styleOption[stylePattern].text, sizeOption[size]]}>{title}</Text>
+        <Text
+          style={[
+            styles.text,
+            styleOption[stylePattern].text,
+            sizeOption[size],
+          ]}
+        >
+          {title}
+        </Text>
       </TouchableOpacity>
     </View>
   );

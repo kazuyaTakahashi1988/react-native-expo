@@ -79,7 +79,10 @@ class SharedValueImpl<T> {
   private startTiming(animation: TimingAnimation<T>) {
     this.stopAnimation();
     const fromValue = this.internalValue;
-    if (typeof animation.toValue !== 'number' || typeof fromValue !== 'number') {
+    if (
+      typeof animation.toValue !== 'number' ||
+      typeof fromValue !== 'number'
+    ) {
       this.value = animation.toValue;
       animation.callback?.(true);
       return;
@@ -136,9 +139,11 @@ const clamp = (value: number, min: number, max: number) => {
   return Math.min(Math.max(value, min), max);
 };
 
-const lerp = (value: number, start: number, end: number) => start + value * (end - start);
+const lerp = (value: number, start: number, end: number) =>
+  start + value * (end - start);
 
-const now = () => (typeof performance !== 'undefined' ? performance.now() : Date.now());
+const now = () =>
+  typeof performance !== 'undefined' ? performance.now() : Date.now();
 
 /* eslint-disable sonarjs/null-dereference */
 /** false positive で、コードは安全のため、ESLint例外処置 */
@@ -168,7 +173,10 @@ const isTimingAnimation = <T>(value: unknown): value is TimingAnimation<T> => {
   if (typeof value !== 'object' || value === null) {
     return false;
   }
-  return (value as { __mockAnimationType?: unknown }).__mockAnimationType === 'timing';
+  return (
+    (value as { __mockAnimationType?: unknown }).__mockAnimationType ===
+    'timing'
+  );
 };
 
 export const useSharedValue = <T>(initialValue: T): SharedValue<T> => {
@@ -191,7 +199,10 @@ const collectSharedDependencies = <T>(factory: () => T) => {
   return { computed, deps, key };
 };
 
-export const useAnimatedStyle = <T>(factory: () => T, deps?: DependencyList): T => {
+export const useAnimatedStyle = <T>(
+  factory: () => T,
+  deps?: DependencyList,
+): T => {
   const [tick, forceTick] = React.useReducer((count) => count + 1, 0);
   const resolvedDeps = deps ?? EMPTY_DEPS;
   const collection = React.useMemo(() => {
@@ -243,7 +254,8 @@ export const interpolate = (
   if (inputMin === inputMax) {
     return outputMax;
   }
-  const progress = (clamp(value, inputMin, inputMax) - inputMin) / (inputMax - inputMin);
+  const progress =
+    (clamp(value, inputMin, inputMax) - inputMin) / (inputMax - inputMin);
   return lerp(progress, outputMin, outputMax);
 };
 
@@ -254,7 +266,10 @@ export const interpolateColor = (
 ) => {
   const [inputMin, inputMax] = inputRange;
   const clampedValue = clamp(value, inputMin, inputMax);
-  const progress = inputMin === inputMax ? 1 : (clampedValue - inputMin) / (inputMax - inputMin);
+  const progress =
+    inputMin === inputMax
+      ? 1
+      : (clampedValue - inputMin) / (inputMax - inputMin);
   const start = hexToRgb(outputRange[0]);
   const end = hexToRgb(outputRange[1]);
   const r = Math.round(lerp(progress, start.r, end.r));

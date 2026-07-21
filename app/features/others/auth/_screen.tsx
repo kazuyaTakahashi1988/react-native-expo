@@ -6,8 +6,18 @@ import { SignInForm, SignUpForm, VerifyForm } from './_component';
 import { Button } from '../../../components/button';
 import { Layout } from '../../../components/layouts/layout';
 import { color } from '../../../lib/mixin';
-import { signIn, signOut, signUp, useAuth, verify } from '../../../services/authService';
-import { loadingFlagDown, loadingFlagUp, store } from '../../../services/storeService';
+import {
+  signIn,
+  signOut,
+  signUp,
+  useAuth,
+  verify,
+} from '../../../services/authService';
+import {
+  loadingFlagDown,
+  loadingFlagUp,
+  store,
+} from '../../../services/storeService';
 
 import type { TypeResult, TypeTabKey } from './_type';
 import type {
@@ -54,7 +64,8 @@ const AuthScreen: React.FC = () => {
           void refreshAuthState(); // Auth情報 取得・更新処理
         })
         .catch((err: unknown) => {
-          const message = err instanceof Error ? err.message : 'Sign In に失敗したよ...';
+          const message =
+            err instanceof Error ? err.message : 'Sign In に失敗したよ...';
           setResult({ type: 'error', message });
         })
         .finally(() => {
@@ -91,7 +102,8 @@ const AuthScreen: React.FC = () => {
           signUpForm.reset();
         })
         .catch((err: unknown) => {
-          const message = err instanceof Error ? err.message : 'Sign Up に失敗したよ...';
+          const message =
+            err instanceof Error ? err.message : 'Sign Up に失敗したよ...';
           setResult({ type: 'error', message });
         })
         .finally(() => {
@@ -120,11 +132,15 @@ const AuthScreen: React.FC = () => {
       verify(values)
         .then(() => {
           setTabKey('signIn');
-          setResult({ type: 'success', message: 'Verify 完了、Sign In できるよ！' });
+          setResult({
+            type: 'success',
+            message: 'Verify 完了、Sign In できるよ！',
+          });
           verifyForm.reset();
         })
         .catch((err: unknown) => {
-          const message = err instanceof Error ? err.message : 'Verify に失敗したよ...';
+          const message =
+            err instanceof Error ? err.message : 'Verify に失敗したよ...';
           setResult({ type: 'error', message });
         })
         .finally(() => {
@@ -147,7 +163,8 @@ const AuthScreen: React.FC = () => {
         void refreshAuthState(); // Auth情報 取得・更新処理
       })
       .catch((err: unknown) => {
-        const message = err instanceof Error ? err.message : 'Sign Out に失敗したよ...';
+        const message =
+          err instanceof Error ? err.message : 'Sign Out に失敗したよ...';
         setResult({ type: 'error', message });
       })
       .finally(() => {
@@ -202,18 +219,34 @@ const AuthScreen: React.FC = () => {
       {!isSignedIn ? (
         <>
           {/* Sign In フォーム */}
-          <SignInForm form={signInForm} onSubmit={onSignInSubmit} visible={isActive('signIn')} />
+          <SignInForm
+            form={signInForm}
+            onSubmit={onSignInSubmit}
+            visible={isActive('signIn')}
+          />
 
           {/* Sign Up フォーム */}
-          <SignUpForm form={signUpForm} onSubmit={onSignUpSubmit} visible={isActive('signUp')} />
+          <SignUpForm
+            form={signUpForm}
+            onSubmit={onSignUpSubmit}
+            visible={isActive('signUp')}
+          />
 
           {/* Verify フォーム */}
-          <VerifyForm form={verifyForm} onSubmit={onVerifySubmit} visible={isActive('verify')} />
+          <VerifyForm
+            form={verifyForm}
+            onSubmit={onVerifySubmit}
+            visible={isActive('verify')}
+          />
         </>
       ) : (
         <>
           {/* Sign Out ボタン */}
-          <Button onPress={onSignOutPress} pattern='secondary' title='Sign Out' />
+          <Button
+            onPress={onSignOutPress}
+            pattern='secondary'
+            title='Sign Out'
+          />
         </>
       )}
     </Layout>

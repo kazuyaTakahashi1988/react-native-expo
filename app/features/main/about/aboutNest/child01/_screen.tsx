@@ -17,7 +17,11 @@ const Child01Screen: React.FC = () => {
       <View style={styles.buttons}>
         <Button
           onPress={() => {
-            showToast({ message: 'Default Top トースト', position: 'top', variant: 'default' });
+            showToast({
+              message: 'Default Top トースト',
+              position: 'top',
+              variant: 'default',
+            });
           }}
           title='Default Top トーストを表示'
         />
@@ -33,7 +37,11 @@ const Child01Screen: React.FC = () => {
         />
         <Button
           onPress={() => {
-            showToast({ message: 'Error Bottom トースト', position: 'bottom', variant: 'error' });
+            showToast({
+              message: 'Error Bottom トースト',
+              position: 'bottom',
+              variant: 'error',
+            });
           }}
           title='Error Bottom トーストを表示'
         />

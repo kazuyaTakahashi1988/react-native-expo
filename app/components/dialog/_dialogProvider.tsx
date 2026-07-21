@@ -3,7 +3,10 @@ import React from 'react';
 import Dialog from './_dialog';
 import { subscribeDialog } from './_useDialog';
 
-import type { TypeDialogState, TypeDialogSubscribe } from '../../lib/types/typeComponents';
+import type {
+  TypeDialogState,
+  TypeDialogSubscribe,
+} from '../../lib/types/typeComponents';
 
 /* -----------------------------------------------
  * Dialog用 プロバイダー
@@ -72,9 +75,12 @@ const DialogProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
     [hideDialogs],
   );
 
-  const handleEventDialog = React.useCallback((dialogState: TypeDialogState) => {
-    dialogState.onEvent?.();
-  }, []);
+  const handleEventDialog = React.useCallback(
+    (dialogState: TypeDialogState) => {
+      dialogState.onEvent?.();
+    },
+    [],
+  );
 
   React.useEffect(() => {
     const unsubscribe = subscribeDialog(handleDialogSubscription);

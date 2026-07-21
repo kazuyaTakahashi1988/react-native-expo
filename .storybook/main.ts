@@ -9,7 +9,10 @@ import type { StorybookConfig } from '@storybook/react-native-web-vite';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const config: StorybookConfig = {
-  stories: ['../stories/**/*.mdx', '../stories/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
+  stories: [
+    '../stories/**/*.mdx',
+    '../stories/**/*.stories.@(js|jsx|mjs|ts|tsx)',
+  ],
   addons: [
     '@chromatic-com/storybook',
     '@storybook/addon-docs',
@@ -31,7 +34,10 @@ const config: StorybookConfig = {
         alias: [
           {
             find: /^react-native-reanimated$/,
-            replacement: resolve(__dirname, './mocks/react-native-reanimated.ts'),
+            replacement: resolve(
+              __dirname,
+              './mocks/react-native-reanimated.ts',
+            ),
           },
         ],
       },

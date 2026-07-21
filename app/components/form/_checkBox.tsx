@@ -39,7 +39,10 @@ const CheckBox = <TFieldValues extends FieldValues>({
   };
   const selectedValues = getSelectedValues(controller.field.value);
 
-  const getIsOptionDisabled = (optionDisabled: boolean | undefined, disabled: boolean): boolean => {
+  const getIsOptionDisabled = (
+    optionDisabled: boolean | undefined,
+    disabled: boolean,
+  ): boolean => {
     return optionDisabled === true || disabled;
   };
 
@@ -101,11 +104,18 @@ const CheckBox = <TFieldValues extends FieldValues>({
                 ]}
               >
                 {isSelected ? (
-                  <View style={[styles.checkBoxSelected, getSelectedStyle(isDisabled)]} />
+                  <View
+                    style={[
+                      styles.checkBoxSelected,
+                      getSelectedStyle(isDisabled),
+                    ]}
+                  />
                 ) : null}
               </View>
 
-              <Text style={getOptionLabelStyle(isDisabled)}>{option.label}</Text>
+              <Text style={getOptionLabelStyle(isDisabled)}>
+                {option.label}
+              </Text>
             </Pressable>
           );
         })}

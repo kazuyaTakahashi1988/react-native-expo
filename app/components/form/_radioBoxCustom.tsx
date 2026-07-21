@@ -12,7 +12,10 @@ import Label from './_label';
 import { color } from '../../lib/mixin';
 import { useRHFController } from '../../services/formService';
 
-import type { TypeBoxCustomOption, TypeRadioBoxCustom } from '../../lib/types/typeComponents';
+import type {
+  TypeBoxCustomOption,
+  TypeRadioBoxCustom,
+} from '../../lib/types/typeComponents';
 import type React from 'react';
 import type { FieldValues } from 'react-hook-form';
 
@@ -47,7 +50,11 @@ const OptionRow: React.FC<TypeBoxCustomOption> = ({
       return {};
     }
 
-    const backgroundColor = interpolateColor(progress.value, [0, 1], [color.gray, color.primary]);
+    const backgroundColor = interpolateColor(
+      progress.value,
+      [0, 1],
+      [color.gray, color.primary],
+    );
 
     return {
       backgroundColor,

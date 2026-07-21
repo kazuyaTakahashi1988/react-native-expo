@@ -38,7 +38,8 @@ const meta = {
     },
     style: {
       control: { type: 'object' },
-      description: 'Button 自体のスタイル \n\n Set 例：{ "padding": 20, "borderRadius": 50 }',
+      description:
+        'Button 自体のスタイル \n\n Set 例：{ "padding": 20, "borderRadius": 50 }',
     },
   },
 } satisfies Meta<typeof Button>;

@@ -4,7 +4,11 @@ import { useSelector } from 'react-redux';
 import { CheckBoxCustom, Input } from '../../../../../components/form';
 import { Layout } from '../../../../../components/layouts/layout';
 import { color } from '../../../../../lib/mixin';
-import { exampleFlagSet, exampleStringSet, store } from '../../../../../services/storeService';
+import {
+  exampleFlagSet,
+  exampleStringSet,
+  store,
+} from '../../../../../services/storeService';
 
 import type { TypeSelectorState } from '../../../../../lib/types/typeService';
 import type React from 'react';
@@ -15,8 +19,12 @@ import type React from 'react';
 
 const Child02Screen: React.FC = () => {
   // ストアの値を取得
-  const currentExampleString = useSelector((state: TypeSelectorState) => state.exampleString);
-  const currentExampleFlag = useSelector((state: TypeSelectorState) => state.exampleFlag);
+  const currentExampleString = useSelector(
+    (state: TypeSelectorState) => state.exampleString,
+  );
+  const currentExampleFlag = useSelector(
+    (state: TypeSelectorState) => state.exampleFlag,
+  );
 
   return (
     <Layout>
@@ -61,7 +69,8 @@ const Child02Screen: React.FC = () => {
         />
 
         <Text style={styles.mt24}>
-          <Text style={styles.bold}>値を表示：</Text>[{!currentExampleFlag ? 'false' : 'true'}]
+          <Text style={styles.bold}>値を表示：</Text>[
+          {!currentExampleFlag ? 'false' : 'true'}]
         </Text>
       </View>
     </Layout>

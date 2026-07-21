@@ -80,7 +80,10 @@ export default [
       /* 配列や文字列に対して "indexOf(...) !== -1" よりも "includes(...)" を使うことを推奨するルール */
       '@typescript-eslint/prefer-includes': 'error',
       /* 型(type)だけをimportする場合は "import type ~~~" を使うことを強制 */
-      '@typescript-eslint/consistent-type-imports': ['error', { prefer: 'type-imports' }],
+      '@typescript-eslint/consistent-type-imports': [
+        'error',
+        { prefer: 'type-imports' },
+      ],
       /* truthy/falsy 判定を厳格化し、`undefined` を見逃さない */
       '@typescript-eslint/strict-boolean-expressions': [
         'error',
@@ -197,7 +200,8 @@ export default [
           patterns: [
             {
               group: ['**/features/**'],
-              message: 'app/features 配下の実装は app/navigation 配下でのみ import 可能です。',
+              message:
+                'app/features 配下の実装は app/navigation 配下でのみ import 可能です。',
             },
             {
               group: ['**/_*', '!./_*'],

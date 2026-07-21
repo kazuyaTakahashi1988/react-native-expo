@@ -8,7 +8,9 @@ import type React from 'react';
  * Store（Redux）用 Provider
  * ----------------------------------------------- */
 
-const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+const StoreProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   return <Provider store={store}>{children}</Provider>;
 };
 

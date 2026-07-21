@@ -2,7 +2,11 @@ import React from 'react';
 import { Alert, StyleSheet, Text } from 'react-native';
 
 import { Button } from '../../../../../components/button';
-import { Dialog, hideDialog, showDialog } from '../../../../../components/dialog';
+import {
+  Dialog,
+  hideDialog,
+  showDialog,
+} from '../../../../../components/dialog';
 import { Layout } from '../../../../../components/layouts/layout';
 
 import type { TypeDialogPattern } from './_type';
@@ -12,7 +16,8 @@ import type { TypeDialogPattern } from './_type';
  * ----------------------------------------------- */
 
 const Child00Screen: React.FC = () => {
-  const [visibleDialog, setVisibleDialog] = React.useState<TypeDialogPattern>(null);
+  const [visibleDialog, setVisibleDialog] =
+    React.useState<TypeDialogPattern>(null);
 
   /*
    * 閉じるボタン 処理
@@ -191,7 +196,10 @@ const Child00Screen: React.FC = () => {
        * showDialog関数 ダイアログ
        * ----------------------------------------- */}
       {/* ボタン */}
-      <Button onPress={onShowDialog} title='showDialog関数で ダイアログを開く' />
+      <Button
+        onPress={onShowDialog}
+        title='showDialog関数で ダイアログを開く'
+      />
     </Layout>
   );
 };

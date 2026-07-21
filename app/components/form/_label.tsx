@@ -9,7 +9,10 @@ import type { FieldValues } from 'react-hook-form';
  * ラベル
  * ----------------------------------------------- */
 
-const Label = <TFieldValues extends FieldValues>({ label, rules }: TypeLabel<TFieldValues>) => {
+const Label = <TFieldValues extends FieldValues>({
+  label,
+  rules,
+}: TypeLabel<TFieldValues>) => {
   const isLabel = Boolean(label);
   if (!isLabel) {
     return null;

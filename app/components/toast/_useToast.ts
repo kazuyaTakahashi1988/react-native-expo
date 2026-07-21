@@ -1,4 +1,7 @@
-import type { TypeToastOptions, TypeToastSubscribe } from '../../lib/types/typeComponents';
+import type {
+  TypeToastOptions,
+  TypeToastSubscribe,
+} from '../../lib/types/typeComponents';
 
 /* -----------------------------------------------
  * Toastを使用する際の関数
@@ -7,7 +10,9 @@ import type { TypeToastOptions, TypeToastSubscribe } from '../../lib/types/typeC
 const subscribers = new Set<(options: TypeToastSubscribe) => void>();
 
 // Toastプロバイダー用
-export const subscribeToast = (subscriber: (options: TypeToastSubscribe) => void) => {
+export const subscribeToast = (
+  subscriber: (options: TypeToastSubscribe) => void,
+) => {
   subscribers.add(subscriber);
   return () => {
     subscribers.delete(subscriber);
