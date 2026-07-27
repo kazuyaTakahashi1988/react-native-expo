@@ -11,8 +11,8 @@ import RNPickerSelect from 'react-native-picker-select';
 
 import ErrorText from './_errorText';
 import Label from './_label';
+import { useRHFController } from './_useRHFController';
 import { color } from '../../lib/mixin';
-import { useRHFController } from '../../services/formService';
 
 import type { TypeSelectBox } from '../../lib/types/typeComponents';
 import type { ComponentProps } from 'react';

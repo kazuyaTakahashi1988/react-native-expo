@@ -2,8 +2,8 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import ErrorText from './_errorText';
 import Label from './_label';
+import { useRHFController } from './_useRHFController';
 import { color } from '../../lib/mixin';
-import { useRHFController } from '../../services/formService';
 
 import type { TypeCheckBox } from '../../lib/types/typeComponents';
 import type { FieldValues } from 'react-hook-form';

@@ -9,8 +9,8 @@ import Animated, {
 
 import ErrorText from './_errorText';
 import Label from './_label';
+import { useRHFController } from './_useRHFController';
 import { color } from '../../lib/mixin';
-import { useRHFController } from '../../services/formService';
 
 import type {
   TypeBoxCustomOption,

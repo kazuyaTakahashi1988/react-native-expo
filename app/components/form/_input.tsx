@@ -2,8 +2,8 @@ import { StyleSheet, TextInput, View } from 'react-native';
 
 import ErrorText from './_errorText';
 import Label from './_label';
+import { useRHFController } from './_useRHFController';
 import { color } from '../../lib/mixin';
-import { useRHFController } from '../../services/formService';
 
 import type { TypeInput } from '../../lib/types/typeComponents';
 import type { FieldValues, UseControllerReturn } from 'react-hook-form';
