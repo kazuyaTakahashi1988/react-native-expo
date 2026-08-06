@@ -10,7 +10,7 @@ import {
   store,
 } from '../../../../../services/storeService';
 
-import type { TypeSelectorState } from '../../../../../lib/types/typeService';
+import type { RootState } from '../../../../../services/storeService';
 import type React from 'react';
 
 /* -----------------------------------------------
@@ -20,10 +20,10 @@ import type React from 'react';
 const Child02Screen: React.FC = () => {
   // ストアの値を取得
   const currentExampleString = useSelector(
-    (state: TypeSelectorState) => state.exampleString,
+    (state: RootState) => state.example.exampleString,
   );
   const currentExampleFlag = useSelector(
-    (state: TypeSelectorState) => state.exampleFlag,
+    (state: RootState) => state.example.exampleFlag,
   );
 
   return (
