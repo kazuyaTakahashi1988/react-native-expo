@@ -27,7 +27,7 @@ jobs:
           key: node-modules-key-${{ hashFiles('**/yarn.lock') }}
 
       - name: Install dependencies
-        run: yarn install
+        run: yarn install --immutable --ignore-scripts
 
   deploy-storybook-static: # ジョブ名(名前は任意)
     runs-on: ubuntu-latest
