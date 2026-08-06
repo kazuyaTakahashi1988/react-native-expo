@@ -1,41 +1,28 @@
-import { configureStore, createSlice } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
 
-import type { TypeState } from '../../lib/types/typeService';
+import { exampleReducer, loadingReducer /* xxxxReducer */ } from './_slices';
 
 /* -----------------------------------------------
- * Store管理（Redux）処理
+ * Redux Store 設定
+ * （用途ごとに ./_slices 内に分けて管理する）
  * ----------------------------------------------- */
 
-const initialState: TypeState = {
-  loadingFlagCount: 0,
-  exampleString: '',
-  exampleFlag: false,
-};
-
-const appSlice = createSlice({
-  name: 'app',
-  initialState,
-  reducers: {
-    loadingFlagUp: (state: TypeState) => {
-      state.loadingFlagCount += 1;
-    },
-    loadingFlagDown: (state: TypeState) => {
-      state.loadingFlagCount = Math.max(0, state.loadingFlagCount - 1);
-    },
-    exampleStringSet: (state: TypeState, action: { payload: string }) => {
-      state.exampleString = action.payload;
-    },
-    exampleFlagSet: (state: TypeState, action: { payload: boolean }) => {
-      state.exampleFlag = action.payload;
-    },
+export const store = configureStore({
+  reducer: {
+    example: exampleReducer, // redux-toolkit Example 画面用の Store
+    loading: loadingReducer, // Loading（表示/非表示フラグ）用の Store
+    // xxxx: xxxxReducer
   },
 });
 
-export const {
-  loadingFlagUp,
-  loadingFlagDown,
-  exampleStringSet,
+export {
   exampleFlagSet,
-} = appSlice.actions;
+  exampleStringSet,
+  loadingFlagDown,
+  loadingFlagUp,
+  // xxxxFlagSet,
+  // xxxxStringSet
+} from './_slices';
 
-export const store = configureStore({ reducer: appSlice.reducer });
+export type AppDispatch = typeof store.dispatch;
+export type RootState = ReturnType<typeof store.getState>;

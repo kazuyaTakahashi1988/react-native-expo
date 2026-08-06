@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 
 import { color } from '../../lib/mixin';
 
-import type { TypeSelectorState } from '../../lib/types/typeService';
+import type { RootState } from '../../services/storeService';
 import type React from 'react';
 
 /* -----------------------------------------------
@@ -15,7 +15,7 @@ const GlobalLoading: React.FC = () => {
    * ローディングフラグ
    */
   const loadingFlagCount = useSelector(
-    (state: TypeSelectorState) => state.loadingFlagCount,
+    (state: RootState) => state.loading.count,
   );
   const visible = loadingFlagCount > 0;
 
