@@ -4,8 +4,8 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { DialogProvider } from '../../components/dialog';
 import { ToastProvider } from '../../components/toast';
-import { AuthProvider } from '../authService';
-import { StoreProvider } from '../storeService';
+import { AuthProvider } from '../authHelper';
+import { StoreProvider } from '../storeHelper';
 
 import type React from 'react';
 

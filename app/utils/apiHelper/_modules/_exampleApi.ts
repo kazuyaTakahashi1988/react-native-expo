@@ -1,6 +1,6 @@
 import { request } from '../';
 
-import type { TypeParams } from '../../../lib/types/typeService';
+import type { TypeParams } from '../../../lib/types/typeUtils';
 
 /* -----------------------------------------------
  * 各 APIリクエスト

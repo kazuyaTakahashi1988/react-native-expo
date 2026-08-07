@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 
 import { color } from '../../lib/mixin';
 
-import type { RootState } from '../../services/storeService';
+import type { RootState } from '../../utils/storeHelper';
 import type React from 'react';
 
 /* -----------------------------------------------

@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-import { loadingFlagDown, loadingFlagUp, store } from '../storeService';
+import { loadingFlagDown, loadingFlagUp, store } from '../storeHelper';
 
-import type { TypeOptions } from '../../lib/types/typeService';
+import type { TypeOptions } from '../../lib/types/typeUtils';
 import type {
   AxiosError,
   AxiosRequestConfig,

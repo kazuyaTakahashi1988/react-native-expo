@@ -12,12 +12,12 @@ import {
   signUp,
   useAuth,
   verify,
-} from '../../../services/authService';
+} from '../../../utils/authHelper';
 import {
   loadingFlagDown,
   loadingFlagUp,
   store,
-} from '../../../services/storeService';
+} from '../../../utils/storeHelper';
 
 import type { TypeResult, TypeTabKey } from './_type';
 import type {
@@ -26,7 +26,7 @@ import type {
   TypeSignUpResult,
   TypeSignUpValues,
   TypeVerifyValues,
-} from '../../../lib/types/typeService';
+} from '../../../lib/types/typeUtils';
 
 /* -----------------------------------------------
  * Auth 画面

@@ -8,9 +8,9 @@ import {
   exampleFlagSet,
   exampleStringSet,
   store,
-} from '../../../../../services/storeService';
+} from '../../../../../utils/storeHelper';
 
-import type { RootState } from '../../../../../services/storeService';
+import type { RootState } from '../../../../../utils/storeHelper';
 import type React from 'react';
 
 /* -----------------------------------------------

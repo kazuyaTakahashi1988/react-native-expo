@@ -1,7 +1,7 @@
 import { fetchAuthSession } from 'aws-amplify/auth';
 import React from 'react';
 
-import type { TypeAuthContext } from '../../lib/types/typeService';
+import type { TypeAuthContext } from '../../lib/types/typeUtils';
 
 /* -----------------------------------------------
  * Auth用 Provider

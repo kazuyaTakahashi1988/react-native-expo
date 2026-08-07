@@ -2,7 +2,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { color } from '../../../lib/mixin';
-import { useAuth } from '../../../services/authService';
+import { useAuth } from '../../../utils/authHelper';
 import { IconLogin } from '../../svg/icon';
 import { Logo } from '../../svg/logo';
 

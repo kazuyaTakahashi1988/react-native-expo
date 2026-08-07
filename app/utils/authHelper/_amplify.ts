@@ -17,7 +17,7 @@ import type {
   TypeSignUpResult,
   TypeSignUpValues,
   TypeVerifyValues,
-} from '../../lib/types/typeService';
+} from '../../lib/types/typeUtils';
 
 const isObject = (value: unknown): value is Record<string, unknown> =>
   typeof value === 'object' && value !== null;

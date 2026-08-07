@@ -9,7 +9,7 @@ import type {
   TypeSignInValues,
   TypeSignUpValues,
   TypeVerifyValues,
-} from '../../../lib/types/typeService';
+} from '../../../lib/types/typeUtils';
 import type React from 'react';
 
 // メールアドレス項目のバリデーションルール

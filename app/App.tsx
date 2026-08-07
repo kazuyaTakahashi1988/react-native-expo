@@ -5,7 +5,7 @@ import { Navigation } from './navigation';
 import {
   AppRootEvent, // AppRoot（App.tsx）用の処理まとめ
   AppRootProvider, // AppRoot（App.tsx）用のプロバイダーまとめ
-} from './services/appRootService';
+} from './utils/appRootHelper';
 
 import type React from 'react';
 
