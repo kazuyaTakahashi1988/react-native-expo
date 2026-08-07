@@ -15,12 +15,8 @@ export const getArticleApi = () => {
 // クエリパラム使用の記事取得API
 export const getCategorizedArticleApi = (params: TypeParams) => {
   const options = {
-    params, // クエリパラム
-    baseURL: 'https://search-wp.empty-service.com', // DEFAULT_BASE_URL を使わない際のベースURLの指定
-    // headers, // 追加ヘッダー情報を付与
-    // requestData, // リクエストデータ（リクエストボディ）
-    // accessToken, // アクセストークン
-    // isLoading, // ローディングフラグの有無
+    params,
+    baseURL: 'https://search-wp.empty-service.com',
   };
   return request('GET', '/wp-json/wp/v2/org_api', options);
 };
