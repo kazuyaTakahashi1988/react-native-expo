@@ -35,7 +35,9 @@ import type {
 const AuthScreen: React.FC = () => {
   const [tabKey, setTabKey] = React.useState<TypeTabKey>('signIn');
   const [result, setResult] = React.useState<TypeResult>({});
-  const { isSignedIn, refreshAuthState } = useAuth(); // Auth情報 取得・更新処理
+  const { authStatus, refreshAuthState } = useAuth(); // Auth情報 取得・更新処理
+  const isInitializing = authStatus === 'initializing';
+  const isSignedIn = authStatus === 'signedIn';
 
   /*
    * Sign In の RHForm 使用設定
@@ -203,7 +205,7 @@ const AuthScreen: React.FC = () => {
             }}
             {...(!isActive(elm.key) && { pattern: 'secondary' })}
             containerStyle={styles.tabButton}
-            disabled={isSignedIn}
+            disabled={isInitializing || isSignedIn}
             title={elm.title}
           />
         ))}

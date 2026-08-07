@@ -16,7 +16,8 @@ import type React from 'react';
 const HeaderHome: React.FC<TypeHeaderHome> = (props) => {
   const { navigation } = props;
   const { top } = useSafeAreaInsets(); // デバイス固有のセーフエリアTop値
-  const { isSignedIn } = useAuth(); // Auth状態
+  const { authStatus } = useAuth(); // Auth状態
+  const isSignedIn = authStatus === 'signedIn';
 
   /*
    * Auth画面遷移 処理

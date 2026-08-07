@@ -8,6 +8,7 @@ import {
 import React from 'react';
 
 import { AuthContext } from './_authProvider';
+import { env } from '../../lib/env';
 
 import type {
   TypeAmplifyClient,
@@ -43,9 +44,8 @@ const amplifyClient: TypeAmplifyClient =
 const authConfig: TypeAuthConfig = {
   Auth: {
     Cognito: {
-      userPoolId: (process.env.EXPO_PUBLIC_AUTH_USER_POOL_ID ?? '') as string,
-      userPoolClientId: (process.env.EXPO_PUBLIC_AUTH_USER_POOL_CLIENT_ID ??
-        '') as string,
+      userPoolId: env.authUserPoolId,
+      userPoolClientId: env.authUserPoolClientId,
       loginWith: { email: true },
     },
   },

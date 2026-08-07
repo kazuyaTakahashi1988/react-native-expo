@@ -18,9 +18,11 @@ export type TypeAmplifyClient = {
 };
 
 export type TypeAuthContext = {
-  isSignedIn: boolean;
+  authStatus: TypeAuthStatus;
   refreshAuthState: () => Promise<void>;
 };
+
+export type TypeAuthStatus = 'initializing' | 'signedIn' | 'signedOut';
 
 export type TypeSignInValues = {
   email: string;

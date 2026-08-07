@@ -2,6 +2,7 @@ import { fetchAuthSession } from 'aws-amplify/auth';
 import React from 'react';
 
 import type { TypeAuthContext } from '../../lib/types/typeUtils';
+import type { TypeAuthStatus } from '../../lib/types/typeUtils';
 
 /* -----------------------------------------------
  * Auth用 Provider
@@ -12,18 +13,19 @@ export const AuthContext = React.createContext<TypeAuthContext | null>(null);
 export const AuthProvider: React.FC<React.PropsWithChildren> = ({
   children,
 }) => {
-  const [isSignedIn, setIsSignedIn] = React.useState(false); // Authフラグ
+  const [authStatus, setAuthStatus] =
+    React.useState<TypeAuthStatus>('initializing');
 
   /*
    * Auth状態を更新するための関数
-   * ユーザーのサインイン状態を確認し、isSignedIn ステートを更新する。
+   * ユーザーのサインイン状態を確認し、authStatus を更新する。
    */
   const refreshAuthState = React.useCallback(async () => {
     try {
       const session = await fetchAuthSession();
-      setIsSignedIn(Boolean(session.tokens));
+      setAuthStatus(session.tokens ? 'signedIn' : 'signedOut');
     } catch {
-      setIsSignedIn(false);
+      setAuthStatus('signedOut');
     }
   }, []);
 
@@ -36,10 +38,10 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({
 
   const value = React.useMemo(
     () => ({
-      isSignedIn,
+      authStatus,
       refreshAuthState,
     }),
-    [refreshAuthState, isSignedIn],
+    [authStatus, refreshAuthState],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
