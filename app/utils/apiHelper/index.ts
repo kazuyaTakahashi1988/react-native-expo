@@ -1,2 +1,2 @@
-export * from './_client';
+export * from './client';
 export * from './_modules';

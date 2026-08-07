@@ -1,4 +1,4 @@
-import { request } from '../';
+import { request } from '../client';
 
 import type { TypeParams } from '../../../lib/types/typeUtils';
 
