@@ -39,14 +39,14 @@ const setHeaders = (
 };
 
 /*
- * リクエスト実行 処理
+ * リクエスト 処理
  */
-const execute = async <TResponse = unknown, TRequest = unknown>(
-  options: TypeOptions<TRequest>,
+export const request = async <TResponse = unknown, TRequest = unknown>(
+  method: Method,
+  apiPath: string,
+  options: Omit<TypeOptions<TRequest>, 'apiPath' | 'method'> = {},
 ): Promise<AxiosResponse<TResponse>> => {
   const {
-    apiPath,
-    method,
     requestData,
     params,
     headers,
@@ -67,7 +67,7 @@ const execute = async <TResponse = unknown, TRequest = unknown>(
       headers: setHeaders(accessToken, headers), // リクエストヘッダー生成
     };
 
-    // リクエストを実行
+    // リクエスト実行
     return await axios.request<TResponse>(requestConfig);
   } catch (err) {
     const axiosError = err as AxiosError;
@@ -79,18 +79,3 @@ const execute = async <TResponse = unknown, TRequest = unknown>(
     if (isLoading) store.dispatch(loadingFlagDown()); // ローディングフラグを下げる
   }
 };
-
-/*
- * APIリクエスト（フォーマット） 処理
- */
-export const request = async <TResponse = unknown, TRequest = unknown>(
-  method: Method,
-  apiPath: string,
-  options: Omit<TypeOptions<TRequest>, 'apiPath' | 'method'> = {},
-): Promise<AxiosResponse<TResponse>> =>
-  // リクエスト実行
-  execute<TResponse, TRequest>({
-    method,
-    apiPath,
-    ...options,
-  });
