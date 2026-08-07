@@ -6,14 +6,14 @@ import { IconInfo } from '../components/svg/icon';
 import { AuthScreen } from '../features/others/auth';
 import { InformationScreen } from '../features/others/information';
 
-import type { TypeRootList } from '../lib/types/typeNavigation';
+import type { TypeOthersStackList } from '../lib/types/typeNavigation';
 import type React from 'react';
 
 /* -----------------------------------------------
  * その他 各画面追加
  * ----------------------------------------------- */
 
-const NativeStack = createNativeStackNavigator<TypeRootList>();
+const NativeStack = createNativeStackNavigator<TypeOthersStackList>();
 
 const NavOthers: React.FC = () => {
   /* ---------------------------------------------

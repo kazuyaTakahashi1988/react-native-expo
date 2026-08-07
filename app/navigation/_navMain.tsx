@@ -9,7 +9,11 @@ import { IconAbout, IconHome, IconWork } from '../components/svg/icon';
 import { WorkScreen } from '../features/main/work';
 import { color } from '../lib/mixin';
 
-import type { TypeRootList } from '../lib/types/typeNavigation';
+import type {
+  TypeAboutStackList,
+  TypeHomeStackList,
+  TypeMainTabList,
+} from '../lib/types/typeNavigation';
 import type { BottomTabNavigationOptions } from '@react-navigation/bottom-tabs';
 import type React from 'react';
 
@@ -17,8 +21,9 @@ import type React from 'react';
  * メイン 各画面追加
  * ----------------------------------------------- */
 
-const BottomTab = createBottomTabNavigator<TypeRootList>();
-const NativeStack = createNativeStackNavigator<TypeRootList>();
+const BottomTab = createBottomTabNavigator<TypeMainTabList>();
+const HomeStack = createNativeStackNavigator<TypeHomeStackList>();
+const AboutStack = createNativeStackNavigator<TypeAboutStackList>();
 
 const NavMain: React.FC = () => {
   // デバイス固有のセーフエリアBottom値
@@ -50,8 +55,8 @@ const NavMain: React.FC = () => {
            * homeNest（Home配下） 各画面追加
            * ------------------------------------- */
           () => (
-            <NativeStack.Navigator>
-              <NativeStack.Screen
+            <HomeStack.Navigator>
+              <HomeStack.Screen
                 name='homeNest'
                 options={{ headerShown: false }}
               >
@@ -59,8 +64,8 @@ const NavMain: React.FC = () => {
                   /* homeNest（Home配下） 各画面 */
                   () => <NavHomeNest />
                 }
-              </NativeStack.Screen>
-            </NativeStack.Navigator>
+              </HomeStack.Screen>
+            </HomeStack.Navigator>
           )
         }
       </BottomTab.Screen>
@@ -80,8 +85,8 @@ const NavMain: React.FC = () => {
            * aboutNest（About配下） 各画面追加
            * ------------------------------------- */
           () => (
-            <NativeStack.Navigator>
-              <NativeStack.Screen
+            <AboutStack.Navigator>
+              <AboutStack.Screen
                 name='aboutNest'
                 options={{ headerShown: false }}
               >
@@ -89,8 +94,8 @@ const NavMain: React.FC = () => {
                   /* aboutNest（About配下） 各画面 */
                   () => <NavAboutNest />
                 }
-              </NativeStack.Screen>
-            </NativeStack.Navigator>
+              </AboutStack.Screen>
+            </AboutStack.Navigator>
           )
         }
       </BottomTab.Screen>

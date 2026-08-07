@@ -1,20 +1,13 @@
 import * as ExpoLinking from 'expo-linking';
 
-import type {
-  LinkingOptions,
-  NavigatorScreenParams,
-  ParamListBase,
-  PathConfig,
-} from '@react-navigation/native';
+import type { TypeRootList } from '../lib/types/typeNavigation';
+import type { LinkingOptions } from '@react-navigation/native';
 
 /* -----------------------------------------------
  * ディープリンク設定
  * ----------------------------------------------- */
 
-const Linking: LinkingOptions<{
-  main: NavigatorScreenParams<ParamListBase>;
-  others: NavigatorScreenParams<ParamListBase>;
-}> = {
+const Linking: LinkingOptions<TypeRootList> = {
   prefixes: [ExpoLinking.createURL('/')],
   config: {
     initialRouteName: 'main',
@@ -47,13 +40,13 @@ const Linking: LinkingOptions<{
           },
           work: 'work',
         },
-      } as PathConfig<ParamListBase>,
+      },
       others: {
         screens: {
           auth: 'auth',
           information: 'information',
         },
-      } as PathConfig<ParamListBase>,
+      },
     },
   },
 };

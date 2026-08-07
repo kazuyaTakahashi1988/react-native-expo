@@ -4,14 +4,14 @@ import { Child00Screen } from '../features/main/about/aboutNest/child00';
 import { Child01Screen } from '../features/main/about/aboutNest/child01';
 import { Child02Screen } from '../features/main/about/aboutNest/child02';
 
-import type { TypeRootList } from '../lib/types/typeNavigation';
+import type { TypeAboutTabList } from '../lib/types/typeNavigation';
 import type React from 'react';
 
 /* -----------------------------------------------
  * aboutNest（About配下） 各画面追加
  * ----------------------------------------------- */
 
-const MaterialTopTab = createMaterialTopTabNavigator<TypeRootList>();
+const MaterialTopTab = createMaterialTopTabNavigator<TypeAboutTabList>();
 
 const NavAboutNest: React.FC = () => {
   /* ---------------------------------------------
