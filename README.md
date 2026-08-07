@@ -139,7 +139,7 @@ react-native-expo/
 │   ├── features         # 各画面（コロケーション）
 │   ├── lib              # 静的な値・処理
 │   ├── navigation       # ナビゲーション
-│   ├── services         # 動的な処理
+│   ├── utils            # 動的な処理
 │   └── App.tsx          # アプリルートファイル
 ├── stories          # ストーリーブック
 ├── ...
