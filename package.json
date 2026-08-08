@@ -15,7 +15,6 @@
     "fix": "yarn format && yarn lint:fix",
     "checker": "prettier --check . && yarn lint",
     "test": "vitest run --project unit",
-    "test:unit": "vitest run --project unit",
     "test:coverage": "vitest run --project unit --coverage",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
