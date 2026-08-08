@@ -214,7 +214,15 @@ export default [
     },
   },
   {
-    ignores: ['node_modules', '.expo', 'ios', 'android', 'eslint.config.js'],
+    ignores: [
+      'node_modules',
+      '.expo',
+      'ios',
+      'android',
+      'dist',
+      'storybook-static',
+      'eslint.config.js',
+    ],
   },
   ...storybook.configs['flat/recommended'],
   prettier, // ←prettierはこの位置（最後尾近く）に置いておくこと
