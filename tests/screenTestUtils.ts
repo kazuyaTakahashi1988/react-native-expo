@@ -24,10 +24,7 @@ export const resetScreenTestState = () => {
 
 export const getScreenTestState = getTestState;
 
-export const renderScreen = <TProps>(
-  Screen: FC<TProps>,
-  props: TProps,
-) => {
+export const renderScreen = <TProps>(Screen: FC<TProps>, props: TProps) => {
   const result = Screen(props);
   if (result instanceof Promise) {
     throw new Error('Screen behavior tests only support synchronous screens');
