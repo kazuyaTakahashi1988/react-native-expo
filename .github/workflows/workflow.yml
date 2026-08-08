@@ -1,6 +1,7 @@
 name: workflow
 
 on:
+  pull_request:
   push:
     branches:
       - main
@@ -12,10 +13,10 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Setup Node
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v4
         with:
           node-version: 24.x
 
@@ -30,6 +31,7 @@ jobs:
         run: yarn install --immutable --ignore-scripts
 
   deploy-storybook-static: # ジョブ名(名前は任意)
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
     needs: setup-node # 分岐元のジョブ
     timeout-minutes: 10
@@ -38,10 +40,10 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Setup Node
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v4
         with:
           node-version: 24.x
 
@@ -73,10 +75,10 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Setup Node
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v4
         with:
           node-version: 24.x
 
@@ -89,3 +91,26 @@ jobs:
 
       - name: Prettier-eslint Checker
         run: yarn checker # Prettier・ESlintで未フォーマット箇所やLintエラーを検出
+
+  unit-tests:
+    runs-on: ubuntu-latest
+    needs: setup-node
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.x
+
+      - name: Restore node_modules
+        uses: actions/cache@v3
+        with:
+          path: '**/node_modules'
+          key: node-modules-key-${{ hashFiles('**/yarn.lock') }}
+
+      - name: Unit tests with coverage
+        run: yarn test:coverage

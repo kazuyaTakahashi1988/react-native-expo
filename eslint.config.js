@@ -35,6 +35,8 @@ export default [
       '.storybook/**/*.tsx',
       'stories/**/*.ts',
       'stories/**/*.tsx',
+      'tests/**/*.ts',
+      'tests/**/*.tsx',
       'vitest.config.ts',
       'vitest.shims.d.ts',
     ],
