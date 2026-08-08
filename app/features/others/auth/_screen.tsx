@@ -35,7 +35,9 @@ import type {
 const AuthScreen: React.FC = () => {
   const [tabKey, setTabKey] = React.useState<TypeTabKey>('signIn');
   const [result, setResult] = React.useState<TypeResult>({});
-  const { isSignedIn, refreshAuthState } = useAuth(); // Auth情報 取得・更新処理
+  const { status, error: authError, refreshAuthState } = useAuth(); // Auth情報 取得・更新処理
+  const isAuthenticated = status === 'authenticated';
+  const isChecking = status === 'checking';
 
   /*
    * Sign In の RHForm 使用設定
@@ -203,7 +205,7 @@ const AuthScreen: React.FC = () => {
             }}
             {...(!isActive(elm.key) && { pattern: 'secondary' })}
             containerStyle={styles.tabButton}
-            disabled={isSignedIn}
+            disabled={isAuthenticated || isChecking}
             title={elm.title}
           />
         ))}
@@ -216,27 +218,31 @@ const AuthScreen: React.FC = () => {
         </Text>
       ) : null}
 
-      {!isSignedIn ? (
+      {status === 'error' && authError !== null ? (
+        <Text style={styles.error}>{authError.message}</Text>
+      ) : null}
+
+      {!isAuthenticated ? (
         <>
           {/* Sign In フォーム */}
           <SignInForm
             form={signInForm}
             onSubmit={onSignInSubmit}
-            visible={isActive('signIn')}
+            visible={!isChecking && isActive('signIn')}
           />
 
           {/* Sign Up フォーム */}
           <SignUpForm
             form={signUpForm}
             onSubmit={onSignUpSubmit}
-            visible={isActive('signUp')}
+            visible={!isChecking && isActive('signUp')}
           />
 
           {/* Verify フォーム */}
           <VerifyForm
             form={verifyForm}
             onSubmit={onVerifySubmit}
-            visible={isActive('verify')}
+            visible={!isChecking && isActive('verify')}
           />
         </>
       ) : (
