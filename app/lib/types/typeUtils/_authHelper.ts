@@ -1,3 +1,4 @@
+/* 認証設定 */
 export type TypeAuthConfig = {
   Auth?: {
     Cognito?: {
@@ -13,20 +14,32 @@ export type TypeAuthConfig = {
   };
 };
 
+/* 認証クライアント */
 export type TypeAmplifyClient = {
   configure: (config: TypeAuthConfig) => void;
 };
 
+/* 認証状態 */
+export type AuthStatus =
+  | 'checking' // 確認中
+  | 'guest' // 未認証
+  | 'authenticated' // 認証済み
+  | 'error'; // エラー
+
+/* 認証コンテキスト */
 export type TypeAuthContext = {
-  isSignedIn: boolean;
+  status: AuthStatus;
+  error: Error | null;
   refreshAuthState: () => Promise<void>;
 };
 
+/* 認証情報 */
 export type TypeSignInValues = {
   email: string;
   password: string;
 };
 
+/* サインイン結果 */
 export type TypeSignInResult = {
   isSignedIn: boolean;
   nextStep?: {
@@ -35,11 +48,13 @@ export type TypeSignInResult = {
   };
 };
 
+/* サインアップ情報 */
 export type TypeSignUpValues = {
   email: string;
   password: string;
 };
 
+/* サインアップ結果 */
 export type TypeSignUpResult = {
   isSignUpComplete?: boolean;
   nextStep?: {
@@ -52,6 +67,7 @@ export type TypeSignUpResult = {
   };
 };
 
+/* 認証コード確認情報 */
 export type TypeVerifyValues = {
   email: string;
   verificationCode: string;
