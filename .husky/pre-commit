@@ -1,2 +1,2 @@
 #!/bin/sh
-yarn checker
+yarn checker && yarn test
