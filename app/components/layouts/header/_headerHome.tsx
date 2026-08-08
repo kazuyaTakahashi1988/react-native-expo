@@ -17,6 +17,7 @@ const HeaderHome: React.FC<TypeHeaderHome> = (props) => {
   const { navigation } = props;
   const { top } = useSafeAreaInsets(); // デバイス固有のセーフエリアTop値
   const { status } = useAuth(); // Auth状態
+  const isAuthenticated = status === 'authenticated'; // 認証済みフラグ
 
   /*
    * Auth画面遷移 処理
@@ -39,7 +40,7 @@ const HeaderHome: React.FC<TypeHeaderHome> = (props) => {
           }}
         >
           <IconLogin
-            {...(status === 'authenticated' && { color: color.secondary })}
+            {...(isAuthenticated && { color: color.secondary })}
             size={34}
           />
         </Pressable>

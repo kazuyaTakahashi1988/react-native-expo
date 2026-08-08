@@ -36,8 +36,8 @@ const AuthScreen: React.FC = () => {
   const [tabKey, setTabKey] = React.useState<TypeTabKey>('signIn');
   const [result, setResult] = React.useState<TypeResult>({});
   const { status, error: authError, refreshAuthState } = useAuth(); // Auth情報 取得・更新処理
-  const isAuthenticated = status === 'authenticated';
-  const isChecking = status === 'checking';
+  const isAuthenticated = status === 'authenticated'; // 認証済みフラグ
+  const isChecking = status === 'checking'; // 認証確認中フラグ
 
   /*
    * Sign In の RHForm 使用設定
