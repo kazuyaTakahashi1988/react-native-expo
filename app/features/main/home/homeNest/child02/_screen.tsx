@@ -40,12 +40,16 @@ const Child02Screen: React.FC = () => {
         'taxCategory02[]': values.taxCategory02,
         'taxCategory03[]': values.taxCategory03,
       };
-      try {
-        // クエリパラム使用の記事取得API処理
-        const result = await getCategorizedArticleApi(params);
-        setArticles(result.data as TypeArticle);
-      } catch (err) {
-        console.error('Failed to fetch articles', err);
+
+      // クエリパラム使用の記事取得API
+      const result = await getCategorizedArticleApi(params);
+
+      if (result.ok) {
+        // 記事一覧をセット
+        setArticles(result.response.data as TypeArticle);
+      } else {
+        // エラー処理
+        console.error('Failed to fetch articles', result.error);
       }
     })();
   }, [form]);

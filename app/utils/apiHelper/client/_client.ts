@@ -2,13 +2,8 @@ import axios from 'axios';
 
 import { loadingFlagDown, loadingFlagUp, store } from '../../storeHelper';
 
-import type { TypeOptions } from '../../../lib/types/typeUtils';
-import type {
-  AxiosError,
-  AxiosRequestConfig,
-  AxiosResponse,
-  Method,
-} from 'axios';
+import type { ApiResult, RequestOptions } from '../../../lib/types/typeUtils';
+import type { AxiosRequestConfig, Method } from 'axios';
 
 // デフォルトのベースURL
 const DEFAULT_BASE_URL = (process.env.EXPO_PUBLIC_API_BASE_URL ?? '') as string;
@@ -38,14 +33,29 @@ const setHeaders = (
   };
 };
 
+// エラーレスポンス 処理
+const getErrorResponse = <TResponse>(error: unknown): ApiResult<TResponse> => {
+  if (axios.isAxiosError(error)) {
+    return {
+      error: {
+        data: error.response?.data,
+        message: error.message !== '' ? error.message : 'API request failed',
+        status: error.response?.status,
+      },
+      ok: false,
+    };
+  }
+  throw error;
+};
+
 /*
  * リクエスト 処理
  */
 export const request = async <TResponse = unknown, TRequest = unknown>(
   method: Method,
   apiPath: string,
-  options: Omit<TypeOptions<TRequest>, 'apiPath' | 'method'> = {},
-): Promise<AxiosResponse<TResponse>> => {
+  options: Omit<RequestOptions<TRequest>, 'apiPath' | 'method'> = {},
+): Promise<ApiResult<TResponse>> => {
   const {
     requestData,
     params,
@@ -68,13 +78,11 @@ export const request = async <TResponse = unknown, TRequest = unknown>(
     };
 
     // リクエスト実行
-    return await axios.request<TResponse>(requestConfig);
-  } catch (err) {
-    const axiosError = err as AxiosError;
-    const message = axiosError.response?.data ?? axiosError.message;
-
-    console.error('API request failed', message);
-    throw axiosError;
+    const response = await axios.request<TResponse>(requestConfig);
+    return { ok: true, response };
+  } catch (error) {
+    // エラーレスポンス
+    return getErrorResponse(error);
   } finally {
     if (isLoading) store.dispatch(loadingFlagDown()); // ローディングフラグを下げる
   }

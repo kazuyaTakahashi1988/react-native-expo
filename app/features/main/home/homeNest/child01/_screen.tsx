@@ -19,12 +19,14 @@ const Child01Screen: React.FC = () => {
    * 記事取得 ボタン処理
    */
   const getArticles = async () => {
-    try {
-      // 記事取得API処理
-      const result = await getArticleApi();
-      setArticles(result.data as TypeArticle);
-    } catch (err) {
-      console.error('Failed to fetch articles', err);
+    const result = await getArticleApi(); // 記事取得API
+
+    if (result.ok) {
+      // 記事一覧をセット
+      setArticles(result.response.data as TypeArticle);
+    } else {
+      // エラー処理
+      console.error('Failed to fetch articles', result.error);
     }
   };
 

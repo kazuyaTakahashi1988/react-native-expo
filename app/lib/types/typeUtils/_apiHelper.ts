@@ -1,14 +1,25 @@
 import type { Method } from 'axios';
 
-export type TypeOptions<TRequest> = {
-  apiPath: string;
-  method: Method;
-  requestData?: TRequest;
-  params?: Record<string, unknown>;
-  headers?: Record<string, string>;
-  baseURL?: string;
+export type ApiError = {
+  data?: unknown;
+  message: string;
+  status?: number;
+};
+
+export type ApiSuccess<T> = { data: T; headers: unknown; status: number };
+export type ApiResult<T> =
+  | { error: ApiError; ok: false }
+  | { ok: true; response: ApiSuccess<T> };
+
+export type RequestOptions<TRequest> = {
   accessToken?: string;
+  apiPath: string;
+  baseURL?: string;
+  headers?: Record<string, string>;
   isLoading?: boolean;
+  method: Method;
+  params?: Record<string, unknown>;
+  requestData?: TRequest;
 };
 
 export type TypeParams = {
