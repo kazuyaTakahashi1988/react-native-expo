@@ -1,10 +1,8 @@
 name: workflow
 
 on:
-  pull_request:
   push:
-    branches:
-      - main
+  pull_request:
 
 jobs:
   setup-node: # ジョブ名(名前は任意)
@@ -30,8 +28,35 @@ jobs:
       - name: Install dependencies
         run: yarn install --immutable --ignore-scripts
 
+  build-storybook:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    needs: setup-node # 分岐元のジョブ
+    timeout-minutes: 10
+    env:
+      NODE_ENV: production
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.x
+
+      - name: Restore node_modules # キャッシュしたnode_modulesの使用
+        id: node_modules_cache_id # キャッシュしたnode_modulesのID
+        uses: actions/cache@v3
+        with:
+          path: '**/node_modules'
+          key: node-modules-key-${{ hashFiles('**/yarn.lock') }}
+
+      - name: Storybook-static Building
+        run: yarn build-storybook
+
   deploy-storybook-static: # ジョブ名(名前は任意)
-    if: github.event_name == 'push'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     needs: setup-node # 分岐元のジョブ
     timeout-minutes: 10
@@ -92,7 +117,7 @@ jobs:
       - name: Prettier-eslint Checker
         run: yarn checker # Prettier・ESlintで未フォーマット箇所やLintエラーを検出
 
-  unit-tests:
+  vitest-run:
     runs-on: ubuntu-latest
     needs: setup-node
     timeout-minutes: 10
