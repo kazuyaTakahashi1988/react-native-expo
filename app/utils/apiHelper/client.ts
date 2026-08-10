@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-import { loadingFlagDown, loadingFlagUp, store } from '../../storeHelper';
+import { loadingFlagDown, loadingFlagUp, store } from '../storeHelper';
 
-import type { ApiResult, RequestOptions } from '../../../lib/types/typeUtils';
+import type { ApiResult, RequestOptions } from '../../lib/types/typeUtils';
 import type { AxiosRequestConfig, Method } from 'axios';
 
 // デフォルトのベースURL
