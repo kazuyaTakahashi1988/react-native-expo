@@ -33,21 +33,6 @@ const setHeaders = (
   };
 };
 
-// エラーレスポンス 処理
-const getErrorResponse = <TResponse>(error: unknown): ApiResult<TResponse> => {
-  if (axios.isAxiosError(error)) {
-    return {
-      error: {
-        data: error.response?.data,
-        message: error.message !== '' ? error.message : 'API request failed',
-        status: error.response?.status,
-      },
-      ok: false,
-    };
-  }
-  throw error;
-};
-
 /*
  * リクエスト 処理
  */
@@ -82,7 +67,17 @@ export const request = async <TResponse = unknown, TRequest = unknown>(
     return { ok: true, response };
   } catch (error) {
     // エラーレスポンス
-    return getErrorResponse(error);
+    if (axios.isAxiosError(error)) {
+      return {
+        error: {
+          data: error.response?.data,
+          message: error.message,
+          status: error.response?.status,
+        },
+        ok: false,
+      };
+    }
+    throw error;
   } finally {
     if (isLoading) store.dispatch(loadingFlagDown()); // ローディングフラグを下げる
   }
