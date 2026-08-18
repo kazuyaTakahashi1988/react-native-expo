@@ -34,25 +34,6 @@ const Child00Screen: React.FC = () => {
     onClose();
   }, [onClose]);
 
-  /*
-   * showDialog関数で ダイアログを開くボタン 処理
-   */
-  const onShowDialog = () => {
-    // コンポーネントではなく、showDialog関数を用いてダイアログを表示する場合
-    showDialog({
-      dialogId: 'id-xxxx', // IDを指定することで、hideDialog関数で閉じることが可
-      zIndex: 1000, // zIndex指定することで、重なり順を制御可
-      title: 'showDialog関数で ダイアログを開く',
-      eventText: 'イベントボタン',
-      closeText: '閉じるボタン',
-      onEvent: () => {
-        Alert.alert('Thanks to Tap', 'EventButton Tapped!!');
-        hideDialog('id-xxxx'); // IDを指定してダイアログを閉じる
-      },
-      children: <Text>showDialog関数を用いて開いたダイアログです。</Text>,
-    });
-  };
-
   return (
     <Layout>
       <Text style={styles.title}>Dialog Example</Text>
@@ -197,7 +178,23 @@ const Child00Screen: React.FC = () => {
        * ----------------------------------------- */}
       {/* ボタン */}
       <Button
-        onPress={onShowDialog}
+        onPress={() => {
+          /*
+           * showDialog関数で開くダイアログ
+           */
+          showDialog({
+            dialogId: 'id-xxxx', // IDを指定すると、hideDialog関数を用いて閉じることが可
+            zIndex: 1000, // zIndex指定することで、重なり順を制御可
+            title: 'showDialog関数で ダイアログを開く',
+            eventText: 'イベントボタン',
+            closeText: '閉じるボタン',
+            onEvent: () => {
+              Alert.alert('Thanks to Tap', 'EventButton Tapped!!');
+              hideDialog('id-xxxx'); // IDを指定してダイアログを閉じる
+            },
+            children: <Text>showDialog関数を用いて開いたダイアログです。</Text>,
+          });
+        }}
         title='showDialog関数で ダイアログを開く'
       />
     </Layout>
