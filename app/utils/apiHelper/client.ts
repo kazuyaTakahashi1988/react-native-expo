@@ -69,12 +69,12 @@ export const request = async <TResponse = unknown, TRequest = unknown>(
     // エラーレスポンス
     if (axios.isAxiosError(error)) {
       return {
+        success: false,
         error: {
           data: error.response?.data,
           message: error.message,
           status: error.response?.status,
         },
-        success: false,
       };
     }
     throw error;
