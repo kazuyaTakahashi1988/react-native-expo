@@ -44,7 +44,7 @@ const Child02Screen: React.FC = () => {
       // クエリパラム使用の記事取得API
       const result = await getCategorizedArticleApi(params);
 
-      if (result.ok) {
+      if (result.success) {
         // 記事一覧をセット
         setArticles(result.response.data as TypeArticle);
       } else {

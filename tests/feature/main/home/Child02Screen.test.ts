@@ -25,7 +25,7 @@ describe('Home Child02Screen', () => {
 
   it('searches with the selected category values and can reset', async () => {
     getCategorizedArticleApiMock.mockResolvedValueOnce({
-      ok: true,
+      success: true,
       response: { data: [] },
     });
     const tree = renderScreen(Child02Screen, {});

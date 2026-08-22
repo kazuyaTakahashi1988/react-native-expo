@@ -42,7 +42,7 @@ describe('request', () => {
       params: { page: 2 },
       url: 'https://example.com/articles',
     });
-    expect(result).toEqual({ ok: true, response });
+    expect(result).toEqual({ success: true, response });
   });
 
   it('normalizes Axios errors', async () => {
@@ -61,7 +61,7 @@ describe('request', () => {
         message: 'Not found',
         status: 404,
       },
-      ok: false,
+      success: false,
     });
   });
 

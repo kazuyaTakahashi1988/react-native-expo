@@ -64,7 +64,7 @@ export const request = async <TResponse = unknown, TRequest = unknown>(
 
     // リクエスト実行
     const response = await axios.request<TResponse>(requestConfig);
-    return { ok: true, response };
+    return { success: true, response };
   } catch (error) {
     // エラーレスポンス
     if (axios.isAxiosError(error)) {
@@ -74,7 +74,7 @@ export const request = async <TResponse = unknown, TRequest = unknown>(
           message: error.message,
           status: error.response?.status,
         },
-        ok: false,
+        success: false,
       };
     }
     throw error;

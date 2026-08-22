@@ -21,7 +21,7 @@ const Child01Screen: React.FC = () => {
   const getArticles = async () => {
     const result = await getArticleApi(); // 記事取得API
 
-    if (result.ok) {
+    if (result.success) {
       // 記事一覧をセット
       setArticles(result.response.data as TypeArticle);
     } else {

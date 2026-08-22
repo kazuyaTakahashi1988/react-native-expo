@@ -28,7 +28,7 @@ describe('Home Child01Screen', () => {
       { id: 1, link: 'https://example.com', title: { rendered: 'Article' } },
     ];
     getArticleApiMock.mockResolvedValueOnce({
-      ok: true,
+      success: true,
       response: { data: articles },
     });
     const tree = renderScreen(Child01Screen, {});

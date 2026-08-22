@@ -8,8 +8,8 @@ export type ApiError = {
 
 export type ApiSuccess<T> = { data: T; headers: unknown; status: number };
 export type ApiResult<T> =
-  | { error: ApiError; ok: false }
-  | { ok: true; response: ApiSuccess<T> };
+  | { error: ApiError; success: false }
+  | { success: true; response: ApiSuccess<T> };
 
 export type RequestOptions<TRequest> = {
   accessToken?: string;
