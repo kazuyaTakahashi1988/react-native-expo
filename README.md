@@ -141,6 +141,7 @@ react-native-expo/
 │   ├── navigation       # ナビゲーション
 │   ├── utils            # 動的な処理
 │   └── App.tsx          # アプリルートファイル
+├── docs             # 各ドキュメント（各設計書の雛形.etc）
 ├── stories          # ストーリーブック
 ├── tests            # テスト
 ├── ...
