@@ -37,10 +37,7 @@ describe('Home Child02Screen', () => {
     await flushPromises();
 
     expect(getCategorizedArticleApiMock).toHaveBeenCalledWith({
-      post: 'custompost',
-      'taxCategory01[]': [],
-      'taxCategory02[]': [],
-      'taxCategory03[]': [],
+      filters: '',
     });
     expect(getScreenTestState().stateSetters[0]).toHaveBeenCalledWith([]);
 

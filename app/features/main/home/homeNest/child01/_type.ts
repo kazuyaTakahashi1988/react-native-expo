@@ -3,9 +3,26 @@
  * ----------------------------------------------- */
 
 export type TypeArticle = {
-  id: number;
-  title: {
-    rendered: string;
-  };
-  link: string;
-}[];
+  contents: {
+    id: string;
+    createdAt: string;
+    updatedAt: string;
+    publishedAt: string;
+    revisedAt: string;
+    title: string;
+    category: {
+      id: string;
+      createdAt: string;
+      updatedAt: string;
+      publishedAt: string;
+      revisedAt: string;
+      name: string;
+    };
+    content: string;
+    eyecatch: {
+      url: string;
+      height: number;
+      width: number;
+    };
+  }[];
+};

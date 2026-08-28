@@ -3,16 +3,48 @@
  * ----------------------------------------------- */
 
 export type TypeFormValues = {
-  taxCategory01?: string[];
-  taxCategory02?: string[];
-  taxCategory03?: string[];
+  category: string;
+  category02: string;
+  category03: string;
 };
 
 export type TypeArticle = {
-  id: number;
-  getTheTitle: string;
-  getPermalink: string;
-  getTaxCategory01: { name: string }[];
-  getTaxCategory02: { name: string }[];
-  getTaxCategory03: { name: string }[];
-}[];
+  contents: {
+    id: string;
+    createdAt: string;
+    updatedAt: string;
+    publishedAt: string;
+    revisedAt: string;
+    title: string;
+    category: {
+      id: string;
+      createdAt: string;
+      updatedAt: string;
+      publishedAt: string;
+      revisedAt: string;
+      name: string;
+    };
+    category02: {
+      id: string;
+      createdAt: string;
+      updatedAt: string;
+      publishedAt: string;
+      revisedAt: string;
+      name: string;
+    };
+    category03: {
+      id: string;
+      createdAt: string;
+      updatedAt: string;
+      publishedAt: string;
+      revisedAt: string;
+      name: string;
+    };
+    content: string;
+    eyecatch: {
+      url: string;
+      height: number;
+      width: number;
+    };
+  }[];
+};

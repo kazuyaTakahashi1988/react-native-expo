@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { Linking, StyleSheet, Text, View } from 'react-native';
 
 import { Button } from '../../../../../components/button';
-import { CheckBox } from '../../../../../components/form';
+import { RadioBox } from '../../../../../components/form';
 import { Layout } from '../../../../../components/layouts/layout';
 import { color } from '../../../../../lib/mixin';
 import { getCategorizedArticleApi } from '../../../../../utils/apiHelper';
@@ -22,9 +22,9 @@ const Child02Screen: React.FC = () => {
    */
   const form = useForm<TypeFormValues>({
     defaultValues: {
-      taxCategory01: [],
-      taxCategory02: [],
-      taxCategory03: [],
+      category: '',
+      category02: '',
+      category03: '',
     },
   });
 
@@ -33,13 +33,19 @@ const Child02Screen: React.FC = () => {
    */
   const onSubmit = React.useCallback(() => {
     void form.handleSubmit(async (values: TypeFormValues) => {
-      // 選択したカテゴリーをクエリパラム化
-      const params = {
-        post: 'custompost',
-        'taxCategory01[]': values.taxCategory01,
-        'taxCategory02[]': values.taxCategory02,
-        'taxCategory03[]': values.taxCategory03,
-      };
+      /*
+       * 選択したカテゴリーでクエリパラム（以下の形を）生成
+       * {filters: 'category[equals]value[and]category02[equals]value[and]category03[equals]value'}
+       */
+      const filters = [
+        ['category', values.category],
+        ['category02', values.category02],
+        ['category03', values.category03],
+      ]
+        .filter(([, value]) => value !== '')
+        .map(([key, value]) => `${key}[equals]${value}`)
+        .join('[and]');
+      const params = { filters };
 
       // クエリパラム使用の記事取得API
       const result = await getCategorizedArticleApi(params);
@@ -53,6 +59,15 @@ const Child02Screen: React.FC = () => {
       }
     })();
   }, [form]);
+
+  /*
+   * 記事へ飛ぶ ボタン処理
+   */
+  const goToLink = (link: string) => {
+    void Linking.openURL(
+      `https://micro-cms.empty-service.com/customblog/detail/${link}`,
+    );
+  };
 
   /*
    * reset ボタン処理
@@ -69,51 +84,45 @@ const Child02Screen: React.FC = () => {
       </Text>
 
       <View style={styles.category}>
-        {/* taxCategory01 チェックボックス項目 */}
-        <CheckBox
+        {/* category ラジオボックス項目 */}
+        <RadioBox
           containerStyle={styles.container}
           control={form.control}
           disabled={Boolean(articles)}
-          label='[ - カテゴリー01 - ]'
-          name='taxCategory01'
+          label='[ - カテゴリ01 - ]'
+          name='category'
           options={[
-            { label: 'カテゴリー01_A', value: '18' },
-            { label: 'カテゴリー01_B', value: '19' },
-            { label: 'カテゴリー01_C', value: '20' },
-            { label: 'カテゴリー01_D', value: '21' },
-            { label: 'カテゴリー01_E', value: '22' },
+            { label: 'テクノロジー', value: '3xciupsonl' },
+            { label: 'チュートリアル', value: '5ci_ujb_2' },
+            { label: '更新情報', value: '750gmh55dvw9' },
           ]}
         />
 
-        {/* taxCategory02 チェックボックス項目 */}
-        <CheckBox
+        {/* category02 ラジオボックス項目 */}
+        <RadioBox
           containerStyle={styles.container}
           control={form.control}
           disabled={Boolean(articles)}
-          label='[ - カテゴリー02 - ]'
-          name='taxCategory02'
+          label='[ - カテゴリ02 - ]'
+          name='category02'
           options={[
-            { label: 'カテゴリー02_A', value: '23' },
-            { label: 'カテゴリー02_B', value: '24' },
-            { label: 'カテゴリー02_C', value: '25' },
-            { label: 'カテゴリー02_D', value: '26' },
-            { label: 'カテゴリー02_E', value: '27' },
+            { label: '雑記', value: 'jkicehskeu17' },
+            { label: '生活の知恵', value: 'dm3k91z2f0m' },
+            { label: '趣味', value: 'oykfhu616' },
           ]}
         />
 
-        {/* taxCategory03 チェックボックス項目 */}
-        <CheckBox
+        {/* category03 ラジオボックス項目 */}
+        <RadioBox
           containerStyle={styles.container}
           control={form.control}
           disabled={Boolean(articles)}
-          label='[ - カテゴリー03 - ]'
-          name='taxCategory03'
+          label='[ - カテゴリ03 - ]'
+          name='category03'
           options={[
-            { label: 'カテゴリー03_A', value: '28' },
-            { label: 'カテゴリー03_B', value: '29' },
-            { label: 'カテゴリー03_C', value: '30' },
-            { label: 'カテゴリー03_D', value: '31' },
-            { label: 'カテゴリー03_E', value: '32' },
+            { label: '黄色', value: 'csgjis8q26wg' },
+            { label: '赤色', value: 'fj437k900' },
+            { label: '青色', value: 'jbwnpdv6h' },
           ]}
         />
       </View>
@@ -125,31 +134,29 @@ const Child02Screen: React.FC = () => {
         style={styles.button}
         title='選択したカテゴリーで記事を絞り込み検索'
       />
-      <Text style={styles.container}>※ no ﾁｪｯｸなら全件取得</Text>
+      <Text style={styles.container}>※ 未選択なら全件取得</Text>
 
       {/* 記事一覧の表示 */}
-      <Text style={styles.container}>取得件数：{articles?.length}</Text>
-      {articles
-        ? articles.map((elm) => (
+      <Text style={styles.container}>
+        取得件数：{articles ? articles.contents.length : 0}
+      </Text>
+
+      {articles ? (
+        <View>
+          {articles.contents.map((elm) => (
             <View key={elm.id} style={styles.article}>
               <Text>記事ID: {elm.id}</Text>
-              <Text style={styles.articleTitle}>{elm.getTheTitle}</Text>
-
-              <View style={styles.articleCategories}>
-                {elm.getTaxCategory01.map((_elm, _i) => (
-                  <Text key={_i}>・{_elm.name}</Text>
-                ))}
-                {elm.getTaxCategory02.map((_elm, _i) => (
-                  <Text key={_i}>・{_elm.name}</Text>
-                ))}
-                {elm.getTaxCategory03.map((_elm, _i) => (
-                  <Text key={_i}>・{_elm.name}</Text>
-                ))}
-              </View>
-
+              <Text style={styles.articleTitle}>{elm.title}</Text>
+              <Text style={styles.articleCategories}>
+                カテゴリ01：{elm.category.name}
+                <br />
+                カテゴリ02：{elm.category02.name}
+                <br />
+                カテゴリ03：{elm.category03.name}
+              </Text>
               <Button
                 onPress={() => {
-                  void Linking.openURL(elm.getPermalink);
+                  goToLink(elm.id);
                 }}
                 pattern='secondary'
                 size='small'
@@ -157,8 +164,9 @@ const Child02Screen: React.FC = () => {
                 title='- 記事へ飛ぶ -'
               />
             </View>
-          ))
-        : null}
+          ))}
+        </View>
+      ) : null}
 
       {/* reset ボタン */}
       <Button

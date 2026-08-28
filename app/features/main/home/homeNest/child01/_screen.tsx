@@ -34,7 +34,9 @@ const Child01Screen: React.FC = () => {
    * 記事へ飛ぶ ボタン処理
    */
   const goToLink = (link: string) => {
-    void Linking.openURL(link);
+    void Linking.openURL(
+      `https://micro-cms.empty-service.com/blog/detail/${link}`,
+    );
   };
 
   return (
@@ -43,10 +45,8 @@ const Child01Screen: React.FC = () => {
 
       {/* 記事取得 ボタン */}
       <Button
-        disabled={Boolean(articles)}
-        onPress={() => {
-          void getArticles();
-        }}
+        disabled={!!articles}
+        onPress={() => void getArticles()}
         style={styles.button}
         title='- 記事取得 -'
       />
@@ -54,13 +54,13 @@ const Child01Screen: React.FC = () => {
       {/* 記事一覧の表示 */}
       {articles ? (
         <View>
-          {articles.map((elm) => (
+          {articles.contents.map((elm) => (
             <View key={elm.id} style={styles.article}>
               <Text>記事ID: {elm.id}</Text>
-              <Text style={styles.articleTitle}>{elm.title.rendered}</Text>
+              <Text style={styles.articleTitle}>{elm.title}</Text>
               <Button
                 onPress={() => {
-                  goToLink(elm.link);
+                  goToLink(elm.id);
                 }}
                 pattern='secondary'
                 size='small'

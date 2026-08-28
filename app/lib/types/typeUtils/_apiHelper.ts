@@ -23,8 +23,5 @@ export type RequestOptions<TRequest> = {
 };
 
 export type TypeParams = {
-  post: string;
-  'taxCategory01[]'?: string[];
-  'taxCategory02[]'?: string[];
-  'taxCategory03[]'?: string[];
+  filters?: string;
 };
