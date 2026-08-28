@@ -149,9 +149,9 @@ const Child02Screen: React.FC = () => {
               <Text style={styles.articleTitle}>{elm.title}</Text>
               <Text style={styles.articleCategories}>
                 カテゴリ01：{elm.category.name}
-                <br />
+                {`\n`}
                 カテゴリ02：{elm.category02.name}
-                <br />
+                {`\n`}
                 カテゴリ03：{elm.category03.name}
               </Text>
               <Button
