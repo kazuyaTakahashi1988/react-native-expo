@@ -148,10 +148,31 @@ export default [
         ※ プロジェクトメンバーと相談して適宜調整してください
       ---------------------------------------------------------- */
       'sonarjs/cognitive-complexity': ['error', 10],
-      'sonarjs/no-small-switch': ['error'],
       complexity: ['error', { max: 10 }],
       'max-depth': ['error', 5],
       'no-else-return': ['error'],
+      /* 条件分岐のネストは2階層・switch文禁止で各々オブジェクトルックアップで実装させるルール */
+      'sonarjs/no-nested-conditional': 'off',
+      'sonarjs/no-small-switch': 'off',
+      'no-restricted-syntax': [
+        'error',
+        {
+          selector:
+            'ConditionalExpression ConditionalExpression ConditionalExpression',
+          message:
+            '三項演算子のネストは2階層まで。それ以上はオブジェクトルックアップで実装してください。',
+        },
+        {
+          selector: 'IfStatement IfStatement IfStatement',
+          message:
+            'if文のネストは2階層まで。それ以上はオブジェクトルックアップで実装してください。',
+        },
+        {
+          selector: 'SwitchStatement',
+          message:
+            'switch文は禁止です。オブジェクトルックアップで実装してください。',
+        },
+      ],
 
       /* TSコンパイラが戻り値の型を検証するため、SonarJS側ではoff */
       'sonarjs/function-return-type': ['off'],
