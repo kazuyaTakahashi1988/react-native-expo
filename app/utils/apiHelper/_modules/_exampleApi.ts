@@ -4,7 +4,8 @@ import type { TypeParams } from '../../../lib/types/typeUtils';
 
 // microCMSとの通信に必要なヘッダー情報（APIキー）
 const headers = {
-  'X-MICROCMS-API-KEY': '25428d9c98a04363bc1305d0b293978ab774',
+  'X-MICROCMS-API-KEY': (process.env.EXPO_PUBLIC_MICROCMS_API_KEY ??
+    '') as string,
 };
 
 /* -----------------------------------------------

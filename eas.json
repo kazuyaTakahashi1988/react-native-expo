@@ -9,6 +9,7 @@
       "distribution": "internal",
       "env": {
         "EXPO_PUBLIC_API_BASE_URL": "https://emptyservice.microcms.io",
+        "EXPO_PUBLIC_MICROCMS_API_KEY": "25428d9c98a04363bc1305d0b293978ab774",
         "EXPO_PUBLIC_AUTH_USER_POOL_ID": "ap-northeast-1_XXXXXX",
         "EXPO_PUBLIC_AUTH_USER_POOL_CLIENT_ID": "XXXXXX"
       }
@@ -18,6 +19,7 @@
       "distribution": "internal",
       "env": {
         "EXPO_PUBLIC_API_BASE_URL": "https://emptyservice.microcms.io",
+        "EXPO_PUBLIC_MICROCMS_API_KEY": "25428d9c98a04363bc1305d0b293978ab774",
         "EXPO_PUBLIC_AUTH_USER_POOL_ID": "ap-northeast-1_XXXXXX",
         "EXPO_PUBLIC_AUTH_USER_POOL_CLIENT_ID": "XXXXXX"
       }
@@ -26,6 +28,7 @@
       "autoIncrement": true,
       "env": {
         "EXPO_PUBLIC_API_BASE_URL": "https://emptyservice.microcms.io",
+        "EXPO_PUBLIC_MICROCMS_API_KEY": "25428d9c98a04363bc1305d0b293978ab774",
         "EXPO_PUBLIC_AUTH_USER_POOL_ID": "ap-northeast-1_XXXXXX",
         "EXPO_PUBLIC_AUTH_USER_POOL_CLIENT_ID": "XXXXXX"
       }
