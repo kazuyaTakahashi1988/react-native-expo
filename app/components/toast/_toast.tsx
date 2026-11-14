@@ -161,7 +161,7 @@ const Toast = ({
   return (
     <View
       pointerEvents='none'
-      style={[StyleSheet.absoluteFillObject, styles.container]}
+      style={[StyleSheet.absoluteFill, styles.container]}
     >
       <View style={[styles.positionBase, positionStyle[position]]}>
         <Animated.View

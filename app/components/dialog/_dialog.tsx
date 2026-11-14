@@ -174,17 +174,17 @@ const Dialog = ({
 
 const styles = StyleSheet.create({
   container: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
     alignItems: 'center',
     backgroundColor: color.backdrop,
     justifyContent: 'center',
     padding: 24,
   },
   dialogBackGround: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
   },
   backGround: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
   },
   dialog: {
     alignItems: 'center',
