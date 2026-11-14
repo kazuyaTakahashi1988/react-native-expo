@@ -7,7 +7,6 @@
     "orientation": "portrait",
     "icon": "./app/assets/images/appInfo/icon.png",
     "userInterfaceStyle": "light",
-    "newArchEnabled": true,
     "splash": {
       "image": "./app/assets/images/appInfo/splash-icon.png",
       "resizeMode": "contain",
@@ -18,16 +17,13 @@
       "bundleIdentifier": "com.kazuya631130.reactnativeexpo",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
-      },
-      "resourceClass": "large"
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./app/assets/images/appInfo/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true,
-      "resourceClass": "medium",
       "softwareKeyboardLayoutMode": "pan",
       "package": "com.kazuya631130.reactnativeexpo"
     },
