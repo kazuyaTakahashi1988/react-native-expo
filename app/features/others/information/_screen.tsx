@@ -35,7 +35,7 @@ const InformationScreen: React.FC<TypeInformationScreen> = (props) => {
       />
       <Button
         onPress={() => {
-          navigation.navigate('main', { screen: 'about' });
+          navigation.navigate('main', { screen: 'about' }, { pop: true });
         }}
         title='Go to About'
       />
