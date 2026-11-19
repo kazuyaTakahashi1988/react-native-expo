@@ -22,14 +22,14 @@ export type TypeAboutStackList = {
   aboutNest: NavigatorScreenParams<TypeAboutTabList> | undefined;
 };
 
-/** メイン画面の Bottom Tab */
+/** main 画面の Bottom Tab */
 export type TypeMainTabList = {
   home: NavigatorScreenParams<TypeHomeStackList> | undefined;
   about: NavigatorScreenParams<TypeAboutStackList> | undefined;
   work: undefined;
 };
 
-/** その他画面の Stack */
+/** others 画面の Stack */
 export type TypeOthersStackList = {
   auth: undefined;
   information: undefined;

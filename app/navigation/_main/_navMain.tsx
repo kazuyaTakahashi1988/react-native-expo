@@ -4,21 +4,21 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import NavAboutNest from './_navAboutNest';
 import NavHomeNest from './_navHomeNest';
-import { HeaderHome, HeaderSub } from '../components/layouts/header';
-import { IconAbout, IconHome, IconWork } from '../components/svg/icon';
-import { WorkScreen } from '../features/main/work';
-import { color } from '../lib/mixin';
+import { HeaderHome, HeaderSub } from '../../components/layouts/header';
+import { IconAbout, IconHome, IconWork } from '../../components/svg/icon';
+import { WorkScreen } from '../../features/main/work';
+import { color } from '../../lib/mixin';
 
 import type {
   TypeAboutStackList,
   TypeHomeStackList,
   TypeMainTabList,
-} from '../lib/types/typeNavigation';
+} from '../../lib/types/typeNavigation';
 import type { BottomTabNavigationOptions } from '@react-navigation/bottom-tabs';
 import type React from 'react';
 
 /* -----------------------------------------------
- * メイン 各画面追加
+ * main 各画面追加
  * ----------------------------------------------- */
 
 const BottomTab = createBottomTabNavigator<TypeMainTabList>();
@@ -29,9 +29,6 @@ const NavMain: React.FC = () => {
   // デバイス固有のセーフエリアBottom値
   const { bottom } = useSafeAreaInsets();
 
-  /* ---------------------------------------------
-   * メイン 各画面
-   * --------------------------------------------- */
   return (
     <BottomTab.Navigator
       screenOptions={() => ({
@@ -40,7 +37,9 @@ const NavMain: React.FC = () => {
         tabBarStyle: [bottomTabStyles.tabBarStyle, { minHeight: bottom + 60 }],
       })}
     >
-      {/* Home 画面 */}
+      {/* ----------------------------------------
+       * Home 画面
+       * ----------------------------------------- */}
       <BottomTab.Screen
         name='home'
         options={{
@@ -70,7 +69,9 @@ const NavMain: React.FC = () => {
         }
       </BottomTab.Screen>
 
-      {/* About 画面 */}
+      {/* ----------------------------------------
+       * About 画面
+       * ----------------------------------------- */}
       <BottomTab.Screen
         name='about'
         options={{
@@ -100,7 +101,9 @@ const NavMain: React.FC = () => {
         }
       </BottomTab.Screen>
 
-      {/* Work 画面 */}
+      {/* ----------------------------------------
+       * Work 画面
+       * ----------------------------------------- */}
       <BottomTab.Screen
         name='work'
         options={{
@@ -114,7 +117,9 @@ const NavMain: React.FC = () => {
         {(props) => <WorkScreen {...props} />}
       </BottomTab.Screen>
 
-      {/* Xxxx 画面 */}
+      {/* ----------------------------------------
+       * Xxxx 画面
+       * ----------------------------------------- */}
       {/* <BottomTab.Screen
         name='xxxx'
         options={{

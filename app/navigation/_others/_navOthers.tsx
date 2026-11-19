@@ -1,27 +1,26 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Pressable } from 'react-native';
 
-import { HeaderSub } from '../components/layouts/header';
-import { IconInfo } from '../components/svg/icon';
-import { AuthScreen } from '../features/others/auth';
-import { InformationScreen } from '../features/others/information';
+import { HeaderSub } from '../../components/layouts/header';
+import { IconInfo } from '../../components/svg/icon';
+import { AuthScreen } from '../../features/others/auth';
+import { InformationScreen } from '../../features/others/information';
 
-import type { TypeOthersStackList } from '../lib/types/typeNavigation';
+import type { TypeOthersStackList } from '../../lib/types/typeNavigation';
 import type React from 'react';
 
 /* -----------------------------------------------
- * その他 各画面追加
+ * others 各画面追加
  * ----------------------------------------------- */
 
 const NativeStack = createNativeStackNavigator<TypeOthersStackList>();
 
 const NavOthers: React.FC = () => {
-  /* ---------------------------------------------
-   * その他 各画面
-   * --------------------------------------------- */
   return (
     <NativeStack.Navigator>
-      {/* Auth 画面 */}
+      {/* ----------------------------------------
+       * Auth 画面
+       * ----------------------------------------- */}
       <NativeStack.Screen
         name='auth'
         options={{
@@ -43,7 +42,9 @@ const NavOthers: React.FC = () => {
         {() => <AuthScreen />}
       </NativeStack.Screen>
 
-      {/* Information 画面 */}
+      {/* ----------------------------------------
+       * Information 画面
+       * ----------------------------------------- */}
       <NativeStack.Screen
         name='information'
         options={{
@@ -54,7 +55,9 @@ const NavOthers: React.FC = () => {
         {(props) => <InformationScreen {...props} />}
       </NativeStack.Screen>
 
-      {/* Xxxx 画面 */}
+      {/* ----------------------------------------
+       * Xxxx 画面
+       * ----------------------------------------- */}
       {/* <NativeStack.Screen
         name='xxxx'
         options={{

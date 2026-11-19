@@ -2,8 +2,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import Linking from './_linking';
-import NavMain from './_navMain';
-import NavOthers from './_navOthers';
+import { NavMain } from './_main';
+import { NavOthers } from './_others';
 
 import type { TypeRootList } from '../lib/types/typeNavigation';
 import type React from 'react';
@@ -19,23 +19,23 @@ const Navigation: React.FC = () => {
     <NavigationContainer linking={Linking}>
       <NativeStack.Navigator>
         {/* --------------------------------------
-         * メイン 各画面追加
+         * main 各画面追加
          *（ Home / About / Work / ネスト画面など）
          * --------------------------------------- */}
         <NativeStack.Screen name='main' options={{ headerShown: false }}>
           {
-            /* メイン 各画面 */
+            /* main 各画面 */
             () => <NavMain />
           }
         </NativeStack.Screen>
 
         {/* --------------------------------------
-         * その他 各画面追加
+         * others 各画面追加
          *（ Auth / Information 画面など）
          * --------------------------------------- */}
         <NativeStack.Screen name='others' options={{ headerShown: false }}>
           {
-            /* その他 各画面 */
+            /* others 各画面 */
             () => <NavOthers />
           }
         </NativeStack.Screen>
