@@ -25,6 +25,10 @@ describe('InformationScreen', () => {
     );
 
     (findByProp(tree, 'title', 'Go to About').onPress as () => void)();
-    expect(navigate).toHaveBeenCalledWith('main', { screen: 'about' });
+    expect(navigate).toHaveBeenCalledWith(
+      'main',
+      { screen: 'about' },
+      { pop: true },
+    );
   });
 });
