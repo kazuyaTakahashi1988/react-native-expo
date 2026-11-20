@@ -5,8 +5,11 @@ import { createSlice } from '@reduxjs/toolkit';
  * ----------------------------------------------- */
 
 const loadingSlice = createSlice({
+  // ストアの初期値
   initialState: { count: 0 },
+  // ストアの名前
   name: 'loading',
+  // ストアの値を更新する関数群
   reducers: {
     loadingFlagDown: (state) => {
       state.count = Math.max(0, state.count - 1);
@@ -14,8 +17,14 @@ const loadingSlice = createSlice({
     loadingFlagUp: (state) => {
       state.count += 1;
     },
+    // loadingFlagXxxx: (state) => {},
   },
 });
 
-export const { loadingFlagDown, loadingFlagUp } = loadingSlice.actions;
+export const {
+  loadingFlagDown,
+  loadingFlagUp,
+  // loadingFlagXxxx:
+} = loadingSlice.actions;
+
 export const loadingReducer = loadingSlice.reducer;
