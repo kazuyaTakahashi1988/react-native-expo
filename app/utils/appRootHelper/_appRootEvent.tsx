@@ -1,5 +1,6 @@
 import { enableScreens } from 'react-native-screens';
 
+import { initializeNotifications } from '../notificationHelper';
 import { useSplashDuration } from './_splash';
 
 /* -----------------------------------------------
@@ -8,5 +9,6 @@ import { useSplashDuration } from './_splash';
 
 export const AppRootEvent = {
   enableScreens,
+  initializeNotifications,
   useSplashDuration,
 };

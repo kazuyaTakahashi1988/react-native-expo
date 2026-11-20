@@ -13,10 +13,17 @@ import type React from 'react';
  * AppRoot
  * ----------------------------------------------- */
 
-AppRootEvent.enableScreens(); // アプリ起動前に呼び出す
+// React Navigation の画面遷移を高速化する処理
+AppRootEvent.enableScreens();
+
+// 通知の初期化処理
+void AppRootEvent.initializeNotifications().catch(() => {
+  console.warn('通知の初期化に失敗しました。配信設定を確認してください。');
+});
 
 const App: React.FC = () => {
-  AppRootEvent.useSplashDuration(2000); // アプリ起動時、スプラッシュ画像を指定ミリ秒表示する処理
+  // アプリ起動時、スプラッシュ画像を指定ミリ秒表示する処理
+  AppRootEvent.useSplashDuration(2000);
 
   return (
     <AppRootProvider>
