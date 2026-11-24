@@ -41,7 +41,6 @@ export const initializeNotifications = async (): Promise<void> => {
     await notifications.setNotificationChannelAsync('announcements', {
       name: 'お知らせ',
       importance: notifications.AndroidImportance.DEFAULT,
-      sound: 'default',
     });
   }
 };
